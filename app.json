@@ -1,5 +1,8 @@
 {
   "pages": [
+    "pages/input/input",
+    "pages/me/me",
+    "pages/recite/recite",
     "pages/index/index",
     "pages/logs/logs"
   ],
@@ -10,5 +13,31 @@
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#04BE02",
+    "borderStyle": "black",
+    "backgroundColor": "#f7f7fa",
+    "list": [
+      {
+        "pagePath": "pages/input/input",
+        "text": "录入",
+        "iconPath": "images/tabbar_icon_input_default.png",
+        "selectedIconPath": "images/tabbar_icon_input_active.png"
+      },
+      {
+        "pagePath": "pages/recite/recite",
+        "text": "背诵",
+        "iconPath": "images/tabbar_icon_recite_default.png",
+        "selectedIconPath": "images/tabbar_icon_recite_active.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我",
+        "iconPath": "images/tabbar_icon_me_default.png",
+        "selectedIconPath": "images/tabbar_icon_me_active.png"
+      }
+    ]
+  }
 }
