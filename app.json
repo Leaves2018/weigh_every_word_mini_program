@@ -4,7 +4,9 @@
     "pages/me/me",
     "pages/recite/recite",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/vocabulary/vocabulary",
+    "pages/familiar/familiar"
   ],
   "window": {
     "backgroundTextStyle": "light",

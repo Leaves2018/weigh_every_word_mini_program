@@ -1,2 +1,48 @@
-<!--pages/me/me.wxml-->
-<text>pages/me/me.wxml</text>
+  <view class="userinfo">
+
+    <button 
+      wx:if="{{!hasUserInfo && canIUse}}" 
+      open-type="getUserInfo"     
+      bindgetuserinfo="getUserInfo"> 获取头像昵称 
+    </button>
+
+    <block 
+      wx:else>
+      <image 
+        bindtap="bindViewTap" 
+        class="userinfo-avatar" 
+        src="{{userInfo.avatarUrl}}" 
+        mode="aspectFit">
+      </image>
+
+      <text 
+        class="userinfo-nickname">{{userInfo.nickName}}
+      </text>
+
+    </block>
+    
+  </view>
+
+
+  <view class="page_cells">
+
+    <mp-cells title="消息">
+      <mp-cell link url="/pages/vocabulary" value="历史记录"></mp-cell>
+    </mp-cells>
+    
+    <mp-cells title="单词本">
+      <mp-cell link url="/pages/vocabulary/vocabulary" value="生词本"></mp-cell>
+      <mp-cell link url="/pages/familiar/familiar" value="熟词本"></mp-cell>
+    </mp-cells>
+
+    <mp-cells title="背诵">
+      <mp-cell link url="/pages/vocabulary" value="背诵选项"></mp-cell>
+      <mp-cell link url="/pages/familiar" value="驯化算法"></mp-cell>
+    </mp-cells>
+
+    <mp-cells title="其他">
+      <mp-cell link url="/pages/vocabulary" value="使用教程"></mp-cell>
+      <mp-cell link url="/pages/vocabulary" value="关于"></mp-cell>
+    </mp-cells>
+
+  </view>
