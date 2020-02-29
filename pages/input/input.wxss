@@ -1,1 +1,29 @@
 /* pages/input/input.wxss */
+page {
+  height:100%;
+}
+
+.page-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.btn {
+  width: 100%;
+  position: fixed;
+  bottom: 20rpx;
+  margin-left:auto;
+  margin-right:auto;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  background: #0afc01;
+}
+
+.section {
+  height: 1200rpx;
+  background: #e4e1e1;
+}

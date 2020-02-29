@@ -1,66 +1,57 @@
 // pages/input/input.js
+const app = getApp()
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
+    data: {
+      height: 30,
+      focus: false,
+      inputValue: '',
+      mHidden:true,
+      nHidden:true
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+    bindButtonTap: function () {
+    this.setData({
+      focus: true
+    })
+  },
+  bindTextAreaBlur: function (e) {
+    console.log(e.detail.value)
+  },
+  bindFormSubmit: function (e) {
+    console.log(e.detail.value.textarea)
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  search: function (e) {
+    this.setData({
+      mHidden: false
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  modalconfirm: function () {
+    this.setData({
+      mHidden: true
+    });
+    wx.showToast({
+      title: '加载中...',
+      icon: 'loading',
+      duration: 1500
+    })
+    wx.switchTab({
+      url: '../recite/recite',
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  modalcancel: function () {
+    this.setData({
+      mHidden: true,
+      nHidden: false
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  modalconfirm1: function () {
+    this.setData({
+      nHidden: true
+    });
   }
 })
