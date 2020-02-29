@@ -1,9 +1,10 @@
-<!--pages/input/input.wxml-->
+<!--index.wxml-->
 <view class="container">
   <view class="page-body">
     <view class="section">
-      <textarea bindblur="bindTextAreaBlur" auto-focus maxlength = "-1" placeholder="请输入要筛选的文本" />
+      <textarea bindblur="bindTextAreaBlur" auto-focus="true" maxlength = "-1" placeholder="请输入要筛选的文本" />
     </view>
+
     <button class='btn' type="default" bindtap="search"> 搜索 </button>
 
     <modal title="提示" cancel-text="稍后再背" confirm-text="开始背诵"
@@ -13,7 +14,8 @@
 
     <modal title="提示" no-cancel = "true" confirm-text="知道了"
           hidden="{{nHidden}}" bindconfirm="modalconfirm1">
-        您可在“我/历史记录“查看本次筛选结果并继续背诵
+        您可在“我/历史记录“查看本次筛选结果并继续背诵。
     </modal>
+
   </view>
 </view>

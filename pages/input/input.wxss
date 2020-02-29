@@ -1,6 +1,9 @@
-/* pages/input/input.wxss */
 page {
   height:100%;
+}
+
+.container {
+  padding: 0rpx;
 }
 
 .page-body {
@@ -24,6 +27,7 @@ page {
 }
 
 .section {
-  height: 1200rpx;
-  background: #e4e1e1;
+  border: 3rpx solid rgb(0, 0, 0);
+  position: fixed;
+  background: #f0f0ee;
 }

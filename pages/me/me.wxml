@@ -36,7 +36,7 @@
     </mp-cells>
 
     <mp-cells title="背诵">
-      <mp-cell link url="/pages/vocabulary" value="背诵选项"></mp-cell>
+      <mp-cell link url="/pages/recite_settings/recite_settings" value="背诵选项"></mp-cell>
       <mp-cell link url="/pages/familiar" value="驯化算法"></mp-cell>
     </mp-cells>
 

@@ -1,16 +1,16 @@
-// pages/input/input.js
+//search.js
 const app = getApp()
 
 Page({
-    data: {
-      height: 30,
-      focus: false,
-      inputValue: '',
-      mHidden:true,
-      nHidden:true
+  data: {
+    height: 30,
+    focus: false,
+    inputValue: '',
+    mHidden: true,
+    nHidden: true
   },
 
-    bindButtonTap: function () {
+  bindButtonTap: function () {
     this.setData({
       focus: true
     })
