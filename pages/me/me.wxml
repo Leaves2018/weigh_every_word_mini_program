@@ -27,7 +27,7 @@
   <view class="page_cells">
 
     <mp-cells title="消息">
-      <mp-cell link url="/pages/vocabulary" value="历史记录"></mp-cell>
+      <mp-cell link url="/pages/history/history" value="历史记录"></mp-cell>
     </mp-cells>
     
     <mp-cells title="单词本">

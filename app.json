@@ -7,7 +7,8 @@
     "pages/logs/logs",
     "pages/vocabulary/vocabulary",
     "pages/familiar/familiar",
-    "pages/recite_settings/recite_settings"
+    "pages/recite_settings/recite_settings",
+    "pages/history/history"
   ],
   "window": {
     "backgroundTextStyle": "light",
