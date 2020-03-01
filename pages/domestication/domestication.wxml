@@ -1,0 +1,15 @@
+<view class="page">
+  
+  <view class='title'>
+    <input name="title" placeholder-class="placeholder" placeholder="背诵设置" />
+  </view>
+
+  <view class="divLine"></view>
+
+  <checkbox-group bindchange="checkboxChange">
+    <label class="checkbox" wx:for="{{items}}">
+      <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+    </label>
+  </checkbox-group>
+  
+</view>
