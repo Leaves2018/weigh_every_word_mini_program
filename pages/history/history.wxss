@@ -10,3 +10,7 @@ page {
  height: 5rpx;
 }
 
+.cardviews {
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}

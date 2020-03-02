@@ -1,7 +1,7 @@
 <view class="page">
   
   <view class='title'>
-    <input name="title" placeholder-class="placeholder" placeholder="背诵设置" />
+    <input name="title" placeholder-class="placeholder" placeholder="选择熟词范围" />
   </view>
 
   <view class="divLine"></view>
