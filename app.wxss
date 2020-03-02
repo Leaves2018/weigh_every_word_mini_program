@@ -1,5 +1,7 @@
 /**app.wxss**/
 @import "components/weui-wxss/dist/style/weui.wxss";
+@import "colorui/main.wxss";
+@import "colorui/icon.wxss";
 .container {
   height: 100%;
   display: flex;
