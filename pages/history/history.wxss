@@ -10,12 +10,3 @@ page {
  height: 5rpx;
 }
 
-.weui-slidecell{
-  margin:8px;
-  background-color:#FFFFFF;
-  border-radius:8px;
-  padding:24px;
-  line-height:1.4;
-  font-size:17px;
-  color:rgba(0,0,0,.9);
-}

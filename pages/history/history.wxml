@@ -1,18 +1,24 @@
 <view class="page">
   <view class='title'>
-    <input name="title" placeholder-class="placeholder" placeholder="历史记录(左滑可查看文章、标记、删除)" />
+    <input name="title" placeholder-class="placeholder" placeholder="历史记录" />
   </view>
 
   <view class="divLine"></view>
 
-  <block wx:for="{{items}}" wx:key="*this">
-    <view class="weui-slidecells">
-      <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" bindbuttontap="slideButtonTap">
-        <view class="weui-slidecell">
-          {{item.name}}
-        </view>
-      </mp-slideview>
-    </view>
-  </block>
+  <view class="cardview">
+    <i-card title="Love" extra="未背诵" >
+    <view slot="content">2020.2.25</view>
+    <view slot="footer">mature love is union under the condition</view>
+  </i-card>
 
+  <i-card title="Friend" extra="已背诵" >
+    <view slot="content">2020.2.4 </view>
+    <view slot="footer">iness. If I feel that I'm complete and worthwhile in </view>
+  </i-card>
+
+  <i-card title="Time" extra="已背诵" >
+      <view slot="content">2020.1.10</view>
+      <view slot="footer">on we love. In my love for another, I view her or him</view>
+  </i-card>
+  </view>
 </view>
