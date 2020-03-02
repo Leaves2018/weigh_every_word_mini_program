@@ -1,7 +1,10 @@
 {
   "usingComponents": {
-    "mp-cells": "../../components/cells/cells",
-    "mp-cell": "../../components/cell/cell",
-    "mp-slideview": "../../components/slideview/slideview"
-  }
+    "mp-searchbar": "../../components/searchbar/searchbar",
+    "i-grid": "../../dist/grid/index",
+    "i-grid-item": "../../dist/grid-item/index",
+    "i-grid-icon": "../../dist/grid-icon/index",
+    "i-grid-label": "../../dist/grid-label/index"
+  },
+  "navigationBarTitleText": "熟词本"
 }

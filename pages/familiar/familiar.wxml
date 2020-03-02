@@ -1,36 +1,8 @@
-<!--pages/familiar/familiar.wxml-->
-<text>pages/familiar/familiar.wxml</text>
-
-<!-- <view class="page">
-    <view class="page__hd">
-        <view class="page__title">Slideview</view>
-        <view class="page__desc">左滑操作</view>
-    </view>
-    <view class="page__bd">
-      <view class="weui-cells">
-          <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
-              <mp-cell value="左滑可以删除" footer="说明文字"></mp-cell>
-          </mp-slideview>
-      </view>
-
-      <view class="weui-slidecells">
-        <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" bindbuttontap="slideButtonTap">
-          <view class="weui-slidecell">
-            左滑可以删除（图标Button）
-          </view>
-        </mp-slideview>
-      </view>
-    </view>
-</view> -->
-
+<mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
 <block wx:for="{{words}}" wx:key="*this">
-  <view class="weui-slidecells">
-    <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" bindbuttontap="slideButtonTap">
-      <view class="weui-slidecell">
-        {{index}}. {{item.name}}: {{item.chinese}}
-      </view>
-    </mp-slideview>
-  </view>
+  <i-grid class="wordgrid">
+      <i-grid-item>{{item.first}}</i-grid-item>
+      <i-grid-item>{{item.second}}</i-grid-item>
+      <i-grid-item>{{item.third}}</i-grid-item>
+  </i-grid>
 </block>
-
-
