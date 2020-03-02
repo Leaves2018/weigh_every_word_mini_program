@@ -1,8 +1,12 @@
 <mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
-<block wx:for="{{words}}" wx:key="*this">
-  <i-grid class="wordgrid">
-      <i-grid-item>{{item.first}}</i-grid-item>
-      <i-grid-item>{{item.second}}</i-grid-item>
-      <i-grid-item>{{item.third}}</i-grid-item>
+<block wx:for="{{words}}">
+  <i-grid>
+      <i-grid-item data-position="{{index}}.first" bindtap="showDetail">{{item.first}}</i-grid-item>
+      <i-grid-item data-position="{{index}}.second" bindtap="showDetail">{{item.second}}</i-grid-item>
+      <i-grid-item data-position="{{index}}.third" bindtap="showDetail">{{item.third}}</i-grid-item>
   </i-grid>
 </block>
+
+<mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
+<view>{{dialogContent}}</view>
+</mp-dialog>
