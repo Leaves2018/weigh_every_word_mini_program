@@ -4,13 +4,12 @@ page {
   background-color:#F7F7F7;
 }
 
-.divLine{
- background: #E0E3DA;
- width: 100%;
- height: 5rpx;
-}
-
-.cardviews {
-  padding-top: 10rpx;
-  padding-bottom: 10rpx;
+.history-slidecell {
+  margin:8px;
+  background-color:#FFFFFF;
+  border-radius:8px;
+  padding:24px;
+  line-height:1.4;
+  font-size:17px;
+  color:rgba(0,0,0,.9);
 }
