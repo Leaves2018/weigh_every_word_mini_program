@@ -1,26 +1,18 @@
-<i-button bind:click="toggleLeft1" type="ghost">左边弹出1</i-button>
-<i-button bind:click="toggleLeft2" type="primary">左边弹出2</i-button>
-<i-button bind:click="toggleRight1" type="ghost">右边弹出1</i-button>
-<i-button bind:click="toggleRight2" type="primary">右边弹出2</i-button>
-<i-drawer mode="left" visible="{{showLeft1}}" bind:close="toggleLeft1">
-    <view class="demo-container">
-        单击遮罩层关闭
-    </view>
-</i-drawer>
-<i-drawer mode="left" visible="{{showLeft2}}" mask-closable="{{false}}">
-    <view class="demo-container">
-        禁止单击遮罩关闭
-        <i-button bind:click="toggleLeft2" type="primary">关闭</i-button>
-    </view>
-</i-drawer>
-<i-drawer mode="right" visible="{{showRight1}}" bind:close="toggleRight1">
-    <view class="demo-container">
-        单击遮罩层关闭
-    </view>
-</i-drawer>
-<i-drawer mode="right" visible="{{showRight2}}" mask-closable="{{false}}">
-    <view class="demo-container">
-        禁止单击遮罩关闭
-        <i-button bind:click="toggleRight2" type="primary">关闭</i-button>
-    </view>
-</i-drawer>
+<progress percent="{{progressOverall}}" show-info border-radius="5"/>
+<view class="word">
+  <view class="word__detail">
+    <view class="word__itself">{{word}}</view>
+    <view class="word__chinese">{{chinese}}</view>
+  </view>
+  <view class="word__options">
+    <button type="default" size="{{defaultSize}}" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="tapHesitate"> 模糊 </button>
+    <button type="warn" size="{{warnSize}}" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="tapForget"> 忘了 </button>
+    <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}"
+            disabled="{{disabled}}" bindtap="tapRemember"> 记得 </button>
+    <progress percent="{{progressThis}}" border-radius="5" 
+    active="{{progressThisActive}}" duration="{{thisDuration}}"         bindactiveend="activateButtons"/>
+
+  </view>
+</view>

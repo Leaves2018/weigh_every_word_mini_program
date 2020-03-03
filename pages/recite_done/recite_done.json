@@ -2,5 +2,5 @@
   "usingComponents": {
     "mp-msg": "../../components/msg/msg"
   },
-  "navigationBarTitleText": "背诵"
+  "navigationBarTitleText": "背诵完毕"
 }

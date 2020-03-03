@@ -1,28 +1,74 @@
+var words = [{
+  name: "weigh",
+  chinese: "称量"
+}, {
+  name: "every",
+  chinese: "每一个"
+}, {
+  name: "word",
+  chinese: "单词"
+}];
+var cnt = -1;
+var len = words.length;
+
 Page({
   data: {
-    showLeft1: false,
-    showLeft2: false,
-    showRight1: false,
-    showRigh2: false,
+    progressOverall: 0,
+    word: "word",
+    chinese: "单词",
+    progressThis: 100,
+    progressThisActive: false,
+    thisDuration: 30,
+    defaultSize: 'default',
+    primarySize: 'default',
+    warnSize: 'default',
+    disabled: false,
+    plain: true,
+    loading: false
   },
-  toggleLeft1() {
+  onLoad: function () {
+    this.next();
+  },
+  next: function () {
+    cnt++;
+    if (cnt < len) {
+      this.setData({
+        progressOverall: Math.round((cnt + 1) / len * 100),
+        word: words[cnt].name,
+        chinese: words[cnt].chinese
+      });
+      if (cnt === len - 1) {
+        this.reciteDone();
+      }
+    } else {
+      this.reciteDone();
+    }
+  },
+  activateButtons: function () {
     this.setData({
-      showLeft1: !this.data.showLeft1
+      disabled: false,
+      progressThisActive: false
     });
   },
-  toggleLeft2() {
+  tapHesitate: function () {
     this.setData({
-      showLeft2: !this.data.showLeft2
-    });
+      disabled: true,
+      progressThisActive: true
+    })
   },
-  toggleRight1() {
-    this.setData({
-      showRight1: !this.data.showRight1
-    });
+  tapForget: function () {
+    this.next();
   },
-  toggleRight2() {
-    this.setData({
-      showRight2: !this.data.showRight2
-    });
+  tapRemember: function () {
+    this.next();
+  },
+  reciteDone: function () {
+    console.log("recite done");
+    wx.navigateTo({
+      url: '../recite_done/recite_done',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   }
 });
