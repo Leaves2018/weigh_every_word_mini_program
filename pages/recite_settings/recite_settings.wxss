@@ -3,11 +3,6 @@ page {
   padding: 0rpx;
 }
 
-.divLine{
- background: #E0E3DA;
- width: 100%;
- height: 5rpx;
-}
 
 .body-view {
   width: 80%;

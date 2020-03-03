@@ -1,29 +1,12 @@
 <view class="page">
-  <view class='title'>
-    <input name="title" placeholder-class="placeholder" placeholder="历史记录" />
+  <mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
+  <block wx:for="{{items}}" wx:key="*this">
+  <view class="history-slidecells">
+    <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" bindbuttontap="slideButtonTap">
+      <view class="history-slidecell">
+        {{index + 1}}. {{item.title}}
+      </view>
+    </mp-slideview>
   </view>
-
-  <view class="divLine"></view>
-
-  <view class="cardview">
-    <i-card class="cardviews" title="Love" thumb="https://i.loli.net/2017/08/21/599a521472424.jpg" >
-      <view slot="content">2020.2.25</view>
-      <view slot="footer">mature love is union under the condition</view>
-    </i-card>
-
-    <i-card class="cardviews" title="Friend" thumb="https://i.loli.net/2017/08/21/599a521472424.jpg" >
-      <view slot="content">2020.2.4 </view>
-      <view slot="footer">iness. If I feel that I'm complete and worthwhile in </view>
-    </i-card>
-
-    <i-card class="cardviews" title="Time" thumb="https://i.loli.net/2017/08/21/599a521472424.jpg" >
-        <view slot="content">2020.1.10</view>
-        <view slot="footer">on we love. In my love for another, I view her or him</view>
-    </i-card>
-
-    <i-card class="cardviews" title="Time" thumb="https://i.loli.net/2017/08/21/599a521472424.jpg" >
-        <view slot="content">2020.1.10</view>
-        <view slot="footer">on we love. In my love for another, I view her or him</view>
-    </i-card>
-  </view>
+</block>
 </view>
