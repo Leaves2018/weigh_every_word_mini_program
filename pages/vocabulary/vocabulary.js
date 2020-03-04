@@ -1,4 +1,14 @@
-var base64 = require("../../images/base64");
+var base64 = require("../../images/base64")
+const db = wx.cloud.database()
+const words = db.collection("vocabulary")
+words.add({
+  data: {
+    name: "every",
+    chinese: "每个"
+  }
+}).then(res => {
+  console.log(res)
+})
 Page({
   data: {
     inputShowed: false,

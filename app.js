@@ -32,6 +32,11 @@ App({
         }
       }
     })
+
+    wx.cloud.init({
+      env: "xingxi-p57mz",
+      traceUser: true
+    })
   },
   globalData: {
     userInfo: null
