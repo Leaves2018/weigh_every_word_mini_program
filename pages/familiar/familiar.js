@@ -1,4 +1,14 @@
 var base64 = require("../../images/base64");
+const db = wx.cloud.database()
+const words = db.collection("familiar")
+words.add({
+  data: {
+    name: "notos",
+    chinese: "南风"
+  }
+}).then(res => {
+  console.log(res)
+})
 Page({
   data: {
     inputShowed: false,
