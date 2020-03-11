@@ -1,14 +1,15 @@
 var base64 = require("../../images/base64")
-const db = wx.cloud.database()
-const words = db.collection("vocabulary")
-words.add({
-  data: {
-    name: "every",
-    chinese: "每个"
-  }
-}).then(res => {
-  console.log(res)
+wx.cloud.init()
+wx.cloud.callFunction({
+  // 云函数名称
+  name: 'vocabulary_get',
+  // 传给云函数的参数
 })
+  .then(res => {
+    console.log(res.result) // 3
+  })
+  .catch(console.error)
+
 Page({
   data: {
     inputShowed: false,
