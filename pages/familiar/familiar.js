@@ -8,6 +8,7 @@ Page({
     dialogTitle: "",
     dialogContent: "",
     buttons: [{text: "忘了"}, {text: "记得"}],
+    test_text: "there is no test word",
     words: [{
       first: "weigh",
       second: "every",
@@ -62,10 +63,27 @@ Page({
       dialogContent: word,
       dialogShow: true
     })
+    wx.setStorage({
+      key: 'test_key',
+      data: word,
+    })
   },
   tapDialogButton(e) {
     this.setData({
       dialogShow: false
     })
+    let that = this
+    wx.getStorage({
+      key: 'test_key',
+      success: function(res) {
+        console.log(res.data)
+        that.setData({
+          test_text: res.data
+        })
+      },
+    })
   }
 });
+
+
+
