@@ -1,3 +1,11 @@
+const util = require('../../utils/util.js');
+let Trie = util.Trie;
+let trie = new Trie();
+trie.insertData('weigh');
+trie.insertData('every');
+trie.insertData('word');
+trie.printData();
+
 var words = [{
   name: "weigh",
   chinese: "称量"
