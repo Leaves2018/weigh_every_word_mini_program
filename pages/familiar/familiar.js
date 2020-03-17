@@ -7,6 +7,13 @@ wx.cloud.callFunction({
 })
   .then(res => {
     console.log(res.result) // 3
+    
+    wx.getStorage({
+      key: 'familiar',
+      success(res) {
+        console.log(res.data)
+      }
+    })
   })
   .catch(console.error)
 
