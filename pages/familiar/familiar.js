@@ -1,21 +1,4 @@
 var base64 = require("../../images/base64");
-wx.cloud.init()
-wx.cloud.callFunction({
-  // 云函数名称
-  name: 'familiar_get',
-  // 传给云函数的参数
-})
-  .then(res => {
-    console.log(res.result) // 3
-    
-    wx.getStorage({
-      key: 'familiar',
-      success(res) {
-        console.log(res.data)
-      }
-    })
-  })
-  .catch(console.error)
 
 Page({
   data: {
