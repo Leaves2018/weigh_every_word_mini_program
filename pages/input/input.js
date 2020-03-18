@@ -28,35 +28,34 @@ Page({
   },
   bindTextAreaBlur: function (e) {
     console.log(e.detail.value)
-    s = e.detail.value
-    sentences = s.split(/[\.|\?|\!|\,|\;|\`]/g)
-    sentences = sentences.filter(function (x) { return x && x.trim(); });
+    s = e.detail.value  //获取录入信息
+    sentences = s.split(/[\.|\?|\!|\,|\;|\`]/g) //获取例句
+    sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
     console.log(sentences)
-    s = s.toLowerCase()
-    words = s.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’]/g); 
-    words = [...new Set(words)]
-    words = words.filter(function (x) { return x && x.trim(); });
-    words = words.filter(function (x) { return x.length > 1; });
+    s = s.toLowerCase()//文本转小写
+    words = s.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’]/g); //获取单词
+    words = [...new Set(words)]//单词去重
+    words = words.filter(function (x) { return x && x.trim(); });//单词去空
     for (var element of words) {
-      if(stop_words.indexOf(element) < 0){
+      if(stop_words.indexOf(element) === -1){//过滤停止词
         vocabulary.push(element)
       }
     }
     console.log(vocabulary)
     for (var element of vocabulary) {
       for (var i = 0; i < sentences.length; i++) {
-        sentences[i].toLowerCase()
-        if (sentences[i].indexOf(element) != -1) {
+        let lows = sentences[i].toLowerCase()
+        if (lows.indexOf(element) != -1) {
           var word_example = new word(element, "", i)
           vocabulary_words.push(word_example)
           break
         }
-        sentences[i].toUpperCase()
       }
     }
     console.log(vocabulary_words)
     
   },
+
   bindFormSubmit: function (e) {
     console.log(e.detail.value.textarea)
   },
