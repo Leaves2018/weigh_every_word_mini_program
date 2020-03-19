@@ -1,4 +1,4 @@
-const util = require('../../utils/util.js');
+const util = require('../../utils/trie.js');
 let Trie = util.Trie;
 let trie = new Trie();
 trie.insertData('weigh');
