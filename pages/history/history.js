@@ -27,8 +27,26 @@ Page({
       }],
     });
   },
+  buttonClick(e) {
+    console.log("ooooo")
+  },
   slideButtonTap(e) {
     console.log('slide button tap', e.detail)
+
+    wx.getStorage({
+      key: 'article',
+      success(res) {
+        console.log(res.data)
+      }
+    })
+    try {
+      var value = wx.getStorageSync('article')
+      if (value) {
+        // Do something with return value
+      }
+    } catch (e) {
+      // Do something when catch error
+    }
   },
   search: function (value) {
     return new Promise((resolve, reject) => {

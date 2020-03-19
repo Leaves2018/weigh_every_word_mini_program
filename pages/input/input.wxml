@@ -5,7 +5,7 @@
       <textarea bindblur="bindTextAreaBlur" auto-focus="true" maxlength = "-1" placeholder="请输入要筛选的文本" />
     </view>
 
-    <button class='btn' type="default" bindtap="search"> 搜索 </button>
+    <button class='btn' type="default" bindtap="search"> 处理 </button>
 
     <modal title="提示" cancel-text="稍后再背" confirm-text="开始背诵"
           hidden="{{mHidden}}" bindconfirm="modalconfirm" bindcancel="modalcancel">

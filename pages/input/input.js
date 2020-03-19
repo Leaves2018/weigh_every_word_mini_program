@@ -53,7 +53,14 @@ Page({
       }
     }
     console.log(vocabulary_words)
-    
+    wx.setStorage({
+      key: 'article',
+      data: vocabulary_words
+    })
+    try {
+      wx.setStorageSync('article', vocabulary_words)
+    } catch (e) {
+    }
   },
 
   bindFormSubmit: function (e) {

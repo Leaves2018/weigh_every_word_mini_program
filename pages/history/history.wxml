@@ -2,7 +2,7 @@
   <mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
   <block wx:for="{{items}}" wx:key="*this">
   <view class="history-slidecells">
-    <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" bindbuttontap="slideButtonTap">
+    <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" slideButtonTap = "buttonClick" bindbuttontap="slideButtonTap">
       <view class="history-slidecell">
         {{index + 1}}. {{item.title}}
       </view>
