@@ -1,3 +1,4 @@
+const util_word = require('../../utils/word.js');
 var base64 = require("../../images/base64");
 
 Page({
@@ -10,34 +11,14 @@ Page({
     buttons: [{text: "忘了"}, {text: "记得"}],
     test_text: "there is no test word",
     words: [{
-      first: "weigh",
-      second: "every",
+      first: "a",
+      second: "about",
       third: "word"
     }, {
-        first: "weigh",
-        second: "every",
-        third: "word"
-      }, {
-        first: "weigh",
-        second: "every",
-        third: "word"
-      }, {
-        first: "weigh",
-        second: "every",
-        third: "word"
-      }, {
-        first: "weigh",
-        second: "every",
-        third: "word"
-      }, {
-        first: "weigh",
-        second: "every",
-        third: "word"
-      }, {
-        first: "weigh",
-        second: "every",
-        third: "word"
-      }]
+        first: "you",
+        second: "and",
+        third: "me"
+    }]
   },
   onLoad: function () {
     this.setData({
@@ -58,9 +39,10 @@ Page({
     let index, order;
     [index, order] = e.currentTarget.dataset.position.split(".");
     let word = this.data.words[index][order];
+    let metaword = util_word.getWordFromStorage(word);
     this.setData({
       dialogTitle: word,
-      dialogContent: word,
+      dialogContent: metaword.chinese,
       dialogShow: true
     })
     wx.setStorage({

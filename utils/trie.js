@@ -209,3 +209,4 @@ module.exports = {
   getTrieFromStorage: getTrieFromStorage,
   setTrieInStorage: setTrieInStorage,
 }
+
