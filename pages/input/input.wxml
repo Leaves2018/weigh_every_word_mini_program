@@ -2,7 +2,7 @@
 <view class="container">
   <view class="page-body">
     <view class="section">
-      <textarea bindblur="bindTextAreaBlur" auto-focus="true" maxlength = "-1" placeholder="请输入要筛选的文本" />
+      <textarea bindinput="bindFormSubmit" auto-focus="true" maxlength = "-1" placeholder="请输入要筛选的文本" />
     </view>
 
     <button class='btn' type="default" bindtap="search"> 处理 </button>

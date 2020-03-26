@@ -3,7 +3,6 @@ const utils_trie = require('../../utils/trie.js');
 const utils_his = require('../../utils/history.js');
 
 const app = getApp()
-var s = "";
 var sentences = [];
 var words = [];
 var passage = "";
@@ -31,7 +30,9 @@ Page({
     focus: false,
     inputValue: '',
     mHidden: true,
-    nHidden: true
+    nHidden: true,
+    s: '',
+    s1: ''
   },
 
   bindButtonTap: function () {
@@ -39,19 +40,25 @@ Page({
       focus: true
     })
   },
-  bindTextAreaBlur: function (e) {
-    console.log(e.detail.value);
-    s = e.detail.value;  //获取录入信息
-    passage = s;
-    sentences = s.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
+  bindFormSubmit: function (e) {
+    this.setData({
+      s: e.detail.value
+    })
+  },
+
+  search: function (e) {
+    console.log(this.data.s);
+    passage = this.data.s;
+    var passage_temp = this.data.s;
+    sentences = passage.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
     sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
     console.log(sentences);
-    s = s.toLowerCase();//文本转小写
-    words = s.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’]/g); //获取单词
+    passage = passage.toLowerCase();//文本转小写
+    words = passage.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’]/g); //获取单词
     words = [...new Set(words)];//单词去重
     words = words.filter(function (x) { return x && x.trim(); });//单词去空
     for (var element of words) {
-      if(stop_words.indexOf(element) === -1){//过滤停止词
+      if (stop_words.indexOf(element) === -1) {//过滤停止词
         vocabulary.push(element);
       }
     }
@@ -69,22 +76,29 @@ Page({
     console.log(vocabulary_words)
 
     var fam_trie = utils_trie.getTrieFromStorage('familiar');
-    var voc_trie = utils_trie.getTrieFromStorage('vocabulary')
-    var voc_temp = []
+    var voc_trie = utils_trie.getTrieFromStorage('vocabulary');
+    var voc_temp = [];
     for (var v_word of vocabulary_words) {
-      if ((fam_trie.search(v_word))===false) {
-        voc_temp.append(v_word)
+      if ((fam_trie.search(v_word)) === false) {
+        voc_temp.push(v_word)
       }
     }
     for (var t_word of voc_temp) {
       if ((voc_trie.search(t_word)) === false) {
-        unknown_words.append(t_word)
+        unknown_words.push(t_word)
+      }
+    }
+    var voc_really = [];
+    for (var element of voc_temp) {
+      if (unknown_words.indexOf(element) === -1) {
+        voc_really.push(element);
+        break;
       }
     }
 
     // history存入本地
-    mydate = new Date();
-    var history_example = new history(sentences[0], passage, v_word,unknown_words,mydate);
+    var mydate = new Date();
+    var history_example = new history(sentences[0], passage_temp, voc_really, unknown_words, mydate);
     wx.setStorage({
       key: sentences[0],
       data: history_example
@@ -93,19 +107,16 @@ Page({
       wx.setStorageSync(sentences[0], history_example)
     } catch (e) {
     }
-    let history_list = utils_his.getHistoryListFromStorage()
-    history_list.append(sentences[0])
-    utils_his.setHistoryListInStorage(history_list)
-  },
-
-  bindFormSubmit: function (e) {
-    console.log(e.detail.value.textarea)
-  },
-
-  search: function (e) {
+    var history_list = utils_his.getHistoryListFromStorage();
+    var getType = Object.prototype.toString;
+    var res = getType.call(history_list);
+    console.log(res)
+    history_list.push(sentences[0]);
+    utils_his.setHistoryListInStorage(history_list);
     this.setData({
       mHidden: false
     });
+
   },
 
   modalconfirm: function () {

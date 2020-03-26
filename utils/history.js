@@ -28,7 +28,7 @@ const getHistoryFromStorage = headline => {
   }
 }
 
-const setHistoryFromStorage = (headline, history) => {
+const setHistoryInStorage = (headline, history) => {
   wx.setStorage({
     key: headline,
     data: history,
@@ -38,6 +38,6 @@ const setHistoryFromStorage = (headline, history) => {
 module.exports = {
   getHistoryFromStorage: getHistoryFromStorage,
   setHistoryInStorage: setHistoryInStorage,
-  getHistoryListFromStorage: getHistoryFromStorage,
-  setHistoryListInStorage: setHistoryFromStorage,
+  getHistoryListFromStorage: getHistoryListFromStorage,
+  setHistoryListInStorage: setHistoryListInStorage,
 }
