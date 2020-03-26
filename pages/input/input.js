@@ -1,17 +1,30 @@
 //search.js
+const utils_trie = require('../../utils/trie.js');
+const utils_his = require('../../utils/history.js');
+
 const app = getApp()
-var s = ""
-var sentences = []
-var words = []
-var stop_words = ["I’m", "I’ve", 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]
-var vocabulary = []
-var vocabulary_words = [] 
+var s = "";
+var sentences = [];
+var words = [];
+var passage = "";
+var stop_words = ["I’m", "I’ve", 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"];
+var vocabulary = [];
+var vocabulary_words = [];
+var unknown_words = [];
 
 function word(name, chinese, sentence) {
-  this.name = name
-  this.chinese = chinese
-  this.sentence = sentence
+  this.name = name;
+  this.chinese = chinese;
+  this.sentence = sentence;
 }
+function history(headline, body, vocabulary, unknown, date) {
+  this.headline = headline;
+  this.body = body;
+  this.vocabulary = vocabulary;
+  this.unknown = unknown;
+  this.date = date;
+}
+
 Page({
   data: {
     height: 30,
@@ -27,40 +40,62 @@ Page({
     })
   },
   bindTextAreaBlur: function (e) {
-    console.log(e.detail.value)
-    s = e.detail.value  //获取录入信息
-    sentences = s.split(/[\.|\?|\!|\,|\;|\`]/g) //获取例句
+    console.log(e.detail.value);
+    s = e.detail.value;  //获取录入信息
+    passage = s;
+    sentences = s.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
     sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
-    console.log(sentences)
-    s = s.toLowerCase()//文本转小写
+    console.log(sentences);
+    s = s.toLowerCase();//文本转小写
     words = s.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’]/g); //获取单词
-    words = [...new Set(words)]//单词去重
+    words = [...new Set(words)];//单词去重
     words = words.filter(function (x) { return x && x.trim(); });//单词去空
     for (var element of words) {
       if(stop_words.indexOf(element) === -1){//过滤停止词
-        vocabulary.push(element)
+        vocabulary.push(element);
       }
     }
-    console.log(vocabulary)
+    console.log(vocabulary);
     for (var element of vocabulary) {
       for (var i = 0; i < sentences.length; i++) {
-        let lows = sentences[i].toLowerCase()
+        let lows = sentences[i].toLowerCase();
         if (lows.indexOf(element) != -1) {
-          var word_example = new word(element, "", i)
-          vocabulary_words.push(word_example)
-          break
+          var word_example = new word(element, "", i);
+          vocabulary_words.push(word_example);
+          break;
         }
       }
     }
     console.log(vocabulary_words)
+
+    var fam_trie = utils_trie.getTrieFromStorage('familiar');
+    var voc_trie = utils_trie.getTrieFromStorage('vocabulary')
+    var voc_temp = []
+    for (var v_word of vocabulary_words) {
+      if ((fam_trie.search(v_word))===false) {
+        voc_temp.append(v_word)
+      }
+    }
+    for (var t_word of voc_temp) {
+      if ((voc_trie.search(t_word)) === false) {
+        unknown_words.append(t_word)
+      }
+    }
+
+    // history存入本地
+    mydate = new Date();
+    var history_example = new history(sentences[0], passage, v_word,unknown_words,mydate);
     wx.setStorage({
-      key: 'article',
-      data: vocabulary_words
+      key: sentences[0],
+      data: history_example
     })
     try {
-      wx.setStorageSync('article', vocabulary_words)
+      wx.setStorageSync(sentences[0], history_example)
     } catch (e) {
     }
+    let history_list = utils_his.getHistoryListFromStorage()
+    history_list.append(sentences[0])
+    utils_his.setHistoryListInStorage(history_list)
   },
 
   bindFormSubmit: function (e) {

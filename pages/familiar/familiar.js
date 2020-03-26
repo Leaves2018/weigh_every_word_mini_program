@@ -2,7 +2,7 @@ const util_word = require('../../utils/word.js');
 var base64 = require("../../images/base64");
 
 Page({
-  data: {
+  data: { 
     inputShowed: false,
     inputVal: "",
     dialogShow: false,
