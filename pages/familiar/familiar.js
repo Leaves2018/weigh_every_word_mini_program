@@ -39,31 +39,19 @@ Page({
     let index, order;
     [index, order] = e.currentTarget.dataset.position.split(".");
     let word = this.data.words[index][order];
-    let metaword = util_word.getWordFromStorage(word);
-    this.setData({
-      dialogTitle: word,
-      dialogContent: metaword.chinese,
-      dialogShow: true
-    })
-    wx.setStorage({
-      key: 'test_key',
-      data: word,
-    })
+    let metaword = util_word.getWord(word).then(result => {
+      this.setData({
+        dialogTitle: word,
+        dialogContent: result.chinese,
+        dialogShow: true
+      })
+    });
+
   },
   tapDialogButton(e) {
     this.setData({
       dialogShow: false
-    })
-    let that = this
-    wx.getStorage({
-      key: 'test_key',
-      success: function(res) {
-        console.log(res.data)
-        that.setData({
-          test_text: res.data
-        })
-      },
-    })
+    });
   }
 });
 

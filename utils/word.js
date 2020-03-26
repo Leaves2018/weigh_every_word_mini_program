@@ -3,14 +3,13 @@ const db = wx.cloud.database();
 const dictionary = db.collection('dictionary');
 const _ = db.command;
 
-const getWordFromStorage = async (id) => {
+const getWord = async (id) => {
   var word = null;
   try {
     word = wx.getStorageSync(id);
     if (typeof (word) === "string") {
       throw id + " is undefined in storage."
     }
-    return word;
   } catch (e) {
     console.log(e);
     await dictionary.doc(id).get().then(res => {
@@ -27,6 +26,15 @@ const getWordFromStorage = async (id) => {
   return word;
 }
 
+// const getWordFromStorage = id => {
+//   var p = getWord(id);
+//   var word = null;
+//   p.then(result => {
+//     word = result;
+//   })
+//   return word;
+// }
+
 module.exports = {
-  getWordFromStorage: getWordFromStorage,
+  getWord: getWord,
 }
