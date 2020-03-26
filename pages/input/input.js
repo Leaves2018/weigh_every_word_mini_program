@@ -113,7 +113,6 @@ Page({
     this.setData({
       mHidden: false
     });
-
   },
 
   modalconfirm: function () {
