@@ -108,9 +108,6 @@ Page({
     } catch (e) {
     }
     var history_list = utils_his.getHistoryListFromStorage();
-    var getType = Object.prototype.toString;
-    var res = getType.call(history_list);
-    console.log(res)
     history_list.push(sentences[0]);
     utils_his.setHistoryListInStorage(history_list);
     this.setData({
