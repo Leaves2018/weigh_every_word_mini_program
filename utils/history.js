@@ -2,8 +2,12 @@ const getHistoryListFromStorage = () => {
   var history_list = [];
   try {
     history_list = wx.getStorageSync('history_list');
+    if (typeof (history_list) === "string") {
+      throw "'history_list' is not existed. A new history_list will be created.";
+    }
   } catch (e) {
-    console.warn("'history_list' is not existed. A new history_list will be created.")
+    console.warn(e);
+    history_list=[];
     setHistoryListInStorage(history_list);
   } finally {
     return history_list;
@@ -21,6 +25,9 @@ const getHistoryFromStorage = headline => {
   var history = null;
   try {
     var history = wx.getStorageSync(headline);
+    if (typeof (history) === "string") {
+      throw "History '{$headline}' is not existed.";
+    }
   } catch (e) {
     console.warn(e);
   } finally {
