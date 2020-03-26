@@ -39,7 +39,7 @@ Page({
     let index, order;
     [index, order] = e.currentTarget.dataset.position.split(".");
     let word = this.data.words[index][order];
-    let metaword = util_word.getWordFromStorage(word);
+    let metaword = util_word.getWord(word);
     this.setData({
       dialogTitle: word,
       dialogContent: metaword.chinese,
