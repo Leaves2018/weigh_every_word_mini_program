@@ -1,13 +1,13 @@
-<view class="page">
-    <mp-msg type="success" title="操作成功">
-        <view slot="desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<navigator url="" class="weui-msg__link">文字链接</navigator></view>
+<!-- <view class="page">
+    <mp-msg type="success" title="背诵完毕">
+        <view slot="desc">所有操作已保存至历史记录。是否再背一遍生词？<navigator url="" class="weui-msg__link">文字链接</navigator></view>
         <view slot="extend">
             <view>1. 说明1</view>
             <view>2. 说明2</view>
         </view>
         <view slot="handle">
-            <button class="weui-btn" type="primary">主要操作</button>
-            <button class="weui-btn" type="default">辅助操作</button>
+            <button class="weui-btn" type="primary">再来一遍</button>
+            <button class="weui-btn" type="default">查看历史</button>
         </view>
         <view slot="footer">
             <view class="weui-footer__links">
@@ -15,5 +15,23 @@
             </view>
             <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
         </view>
+    </mp-msg>
+</view> -->
+
+<view class="page">
+    <mp-msg type="success" title="背诵完毕">
+        <view slot="desc">所有操作已保存至历史记录。是否再背一遍生词？</view>
+
+        <!-- <view slot="handle">
+            <button class="weui-btn" type="primary">再来一遍</button>
+            <button class="weui-btn" type="default">查看历史</button>
+        </view> -->
+
+        <view slot="handle">
+                <navigator url="../recite/recite" open-type="navigateBack" hover-class="navigator-hover">再来一遍</navigator>
+        <navigator url="../history/history" open-type="redirect" hover-class="other-navigator-hover">查看历史</navigator>
+        </view>
+
+
     </mp-msg>
 </view>

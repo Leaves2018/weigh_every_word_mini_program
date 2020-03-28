@@ -32,7 +32,7 @@ Page({
 
   },
   onShow: function () {
-    new Promise(this.loadHistory).then(this.next2).catch(function() {console.log("Something wrong.")});
+    new Promise(this.loadHistory).then(this.next).catch(function() {console.log("Something wrong.")});
   },
   loadHistory: function(resolve, reject) {
     console.log("In loadHistory,")
@@ -65,39 +65,6 @@ Page({
     util_his.setHistoryInStorage(this.otherdata.history.headline, this.otherdata.history);
   },
   next: function () {
-    console.log("In next:");
-    // console.log(this.otherdata.words);
-    this.otherdata.cnt++;
-    if (this.otherdata.cnt < this.otherdata.len) {
-      let wordFromHistory = this.otherdata.words[this.otherdata.cnt];
-      util_word.getWord(wordFromHistory.name).then(word => {
-        // console.log(typeof(word));
-        // console.log(word);
-        // console.log(this.otherdata.history.body);
-        // console.log(wordFromHistory.sentence);
-        word.context = this.otherdata.history.body[wordFromHistory.sentence];
-        wx.setStorage({
-          key: word._id,
-          data: word,
-        })
-        this.setData({
-          progressOverall: Math.round((this.otherdata.cnt + 1) / this.otherdata.len * 100),
-          word_level: word.level,
-          word_id: word._id,
-          word_phonetic: word.phonetic,
-          word_chinese: word.chinese,
-          word_context: word.context,
-          word_english: word.english,
-        });
-      });
-      if (this.otherdata.cnt === this.otherdata.len - 1) {
-        this.reciteDone();
-      }
-    } else {
-      this.reciteDone();
-    }
-  },
-  next2: function () {
     if (this.otherdata.unknown_words.length>0) {
       this.setData({
         word_tag: "「未知」",
@@ -148,12 +115,12 @@ Page({
   tapForget: function () {
     this.otherdata.new_vocabulary_words.push(this.otherdata.thisword);
     // this.saveWord();
-    this.next2();
+    this.next();
   },
   tapRemember: function () {
     this.otherdata.new_familiar_words.push(this.otherdata.thisword.name);
     // this.saveWord();
-    this.next2();
+    this.next();
   },
   reciteDone: function () {
     console.log("recite done");

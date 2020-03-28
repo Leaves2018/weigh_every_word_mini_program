@@ -62,5 +62,24 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 回到背诵页面，再背一次
+   */
+  goBackToRecite: function () {
+    wx.navigateBack({
+      delta: 1,
+    })
+  },
+
+  /**
+   * 跳转历史记录
+   */
+  goToHistory: function () {
+    wx.redirectTo({
+      url: '../history/history',
+    })
   }
+
 })
