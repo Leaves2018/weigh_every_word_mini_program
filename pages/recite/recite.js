@@ -17,15 +17,22 @@ Page({
     loading: false
   },
   otherdata: {
+    thisword: null,
     words: [],
     cnt: -1,
     len: 0,
     vocabulary_words: [],
     unknown_words: [],
-    hisotry: null,
+    history: null,
+    new_unknown_words: [],
+    new_vocabulary_words: [],
+    new_familiar_words: [],
   },
   onLoad: function () {
-    new Promise(this.loadHistory).then(this.next).catch(function() {console.log("Something wrong.")});
+
+  },
+  onShow: function () {
+    new Promise(this.loadHistory).then(this.next2).catch(function() {console.log("Something wrong.")});
   },
   loadHistory: function(resolve, reject) {
     console.log("In loadHistory,")
@@ -52,20 +59,23 @@ Page({
     }
   },
   saveHistory: function() {
-    
+    this.otherdata.history.vocabulary = this.otherdata.new_vocabulary_words;
+    this.otherdata.history.unknown = this.otherdata.new_unknown_words;
+    this.otherdata.history.familiar
+    util_his.setHistoryInStorage(this.otherdata.history.headline, this.otherdata.history);
   },
   next: function () {
     console.log("In next:");
     // console.log(this.otherdata.words);
     this.otherdata.cnt++;
     if (this.otherdata.cnt < this.otherdata.len) {
-      let wordFromInput = this.otherdata.words[this.otherdata.cnt];
-      util_word.getWord(wordFromInput.name).then(word => {
+      let wordFromHistory = this.otherdata.words[this.otherdata.cnt];
+      util_word.getWord(wordFromHistory.name).then(word => {
         // console.log(typeof(word));
         // console.log(word);
         // console.log(this.otherdata.history.body);
-        // console.log(wordFromInput.sentence);
-        word.context = this.otherdata.history.body[wordFromInput.sentence];
+        // console.log(wordFromHistory.sentence);
+        word.context = this.otherdata.history.body[wordFromHistory.sentence];
         wx.setStorage({
           key: word._id,
           data: word,
@@ -87,6 +97,41 @@ Page({
       this.reciteDone();
     }
   },
+  next2: function () {
+    if (this.otherdata.unknown_words.length>0) {
+      this.setData({
+        word_tag: "「未知」",
+      })
+      this.otherdata.thisword = this.otherdata.unknown_words.shift();
+    } else if (this.otherdata.vocabulary_words.length>0) {
+      this.otherdata.thisword = this.otherdata.vocabulary_words.shift();
+      this.setData({
+        word_tag: "「生词」",
+      })
+    } else {
+      this.reciteDone();
+    }
+    util_word.getWord(this.otherdata.thisword.name).then(word => {
+      // word.hesitateNum = 0;
+      word.context = this.otherdata.history.body[this.otherdata.thisword.sentence];
+      this.setData({
+        progressOverall: Math.round((this.otherdata.cnt + 1) / this.otherdata.len * 100),
+        word_level: word.level,
+        word_id: word._id,
+        word_phonetic: word.phonetic,
+        word_chinese: word.chinese,
+        word_context: word.context,
+        word_english: word.english,
+      });
+    });
+  },
+  // saveWord: function () {
+  //   let word = this.otherdata.thisword;
+  //   wx.setStorage({
+  //     key: word._id,
+  //     data: word,
+  //   })
+  // },
   activateButtons: function () {
     this.setData({
       disabled: false,
@@ -94,19 +139,25 @@ Page({
     });
   },
   tapHesitate: function () {
+    // thisword.hesitateNum += 1;
     this.setData({
       disabled: true,
       progressThisActive: true
     })
   },
   tapForget: function () {
-    this.next();
+    this.otherdata.new_vocabulary_words.push(this.otherdata.thisword);
+    // this.saveWord();
+    this.next2();
   },
   tapRemember: function () {
-    this.next();
+    this.otherdata.new_familiar_words.push(this.otherdata.thisword.name);
+    // this.saveWord();
+    this.next2();
   },
   reciteDone: function () {
     console.log("recite done");
+    this.saveHistory();
     wx.navigateTo({
       url: '../recite_done/recite_done',
       success: function(res) {},
