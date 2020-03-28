@@ -62,14 +62,14 @@ Page({
   saveHistory: function() {
     this.otherdata.history.vocabulary = this.otherdata.new_vocabulary_words;
     this.otherdata.history.unknown = this.otherdata.new_unknown_words;
-    // let nvw = this.otherdata.new_vocabulary_words;
-    // nvw = nvw.map(word => word.name);
-    // let nfw = this.otherdata.new_familiar_words;
-    // nfw = nfw.map(word => word.name);
-    // util_word.appendFamiliar(nfw);
-    // util_word.deleteFamiliar(nfw);
-    // util_word.appendVocabulary(nvw);
-    // util_word.deleteVocabulary(nvw);
+    let nvw = this.otherdata.new_vocabulary_words;
+    nvw = nvw.length > 0 ? nvw.map(word => word.name) : [];
+    let nfw = this.otherdata.new_familiar_words;
+    nfw = nfw.length > 0 ? nfw.map(word => word.name) : [];
+    util_word.appendFamiliar(nfw);
+    util_word.deleteFamiliar(nfw);
+    util_word.appendVocabulary(nvw);
+    util_word.deleteVocabulary(nvw);
     util_his.setHistoryInStorage(this.otherdata.history.headline, this.otherdata.history);
   },
   next: function () {
@@ -126,7 +126,7 @@ Page({
     this.next();
   },
   tapRemember: function () {
-    this.otherdata.new_familiar_words.push(this.otherdata.thisword.name);
+    this.otherdata.new_familiar_words.push(this.otherdata.thisword);
     // this.saveWord();
     this.next();
   },
