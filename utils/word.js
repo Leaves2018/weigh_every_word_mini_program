@@ -1,4 +1,4 @@
-const util_trie = require('../../utils/trie.js');
+const util_trie = require('./trie.js');
 // 查询传入的单词，返回单词对象
 const db = wx.cloud.database();
 const dictionary = db.collection('dictionary');
@@ -36,47 +36,63 @@ const getWord = async (id) => {
 }
 
 const getFamiliar = () => {
-  return util_trie.getTrieFromStorage('familiar');
+  return util_trie.getTrieFromStorage('familiar_list');
 }
 
 const setFamiliar = (familiar) => {
-  util_trie.setTrieInStorage(familiar);
+  util_trie.setTrieInStorage('familiar_list', familiar);
 }
 
 const appendFamiliar = (familiar_words) => {
+  if (familiar_words.length===0) {
+    return;
+  }
   var familiar_trie = getFamiliar();
   familiar_words.map(word => {
     familiar_trie.insertData(word);
   })
+  setFamiliar(familiar_trie);
 }
 
 const deleteVocabulary = (vocabulary_words) => {
+  if (vocabulary_words.length === 0) {
+    return;
+  }
   var familiar_trie = getFamiliar();
   vocabulary_words.map(word => {
     familiar_trie.deleteData(word);
   })
+  setFamiliar(familiar_trie);
 }
 
 const getVocabulary = () => {
-  return util_trie.getTrieFromStorage('vocabulary');
+  return util_trie.getTrieFromStorage('vocabulary_list');
 }
 
 const setVocabulary = (vocabulary) => {
-  util_trie.setTrieInStorage(vocabulary);
+  util_trie.setTrieInStorage('vocabulary_list', vocabulary);
 }
 
 const appendVocabulary = (vocabulary_words) => {
+  if (vocabulary_words.length === 0) {
+    return;
+  }
   var vocabulary_trie = getVocabulary();
   vocabulary_words.map(word => {
     vocabulary_trie.insertData(word);
   })
+  setVocabulary(vocabulary_trie);
 }
 
 const deleteFamiliar = (familiar_words) => {
+  if (familiar_words.length === 0) {
+    return;
+  }
   var vocabulary_trie = getVocabulary();
   familiar_words.map(word => {
     vocabulary_trie.deleteData(word);
   })
+  setVocabulary(vocabulary_trie);
 }
 
 module.exports = {
