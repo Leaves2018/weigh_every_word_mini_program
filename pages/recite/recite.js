@@ -1,29 +1,6 @@
 const util_his = require('../../utils/history.js');
 const util_word = require('../../utils/word.js');
-// let Trie = util.Trie;
-// let trie = new Trie();
-// trie.insertData('weigh');
-// trie.insertData('every');
-// trie.insertData('word');
-// trie.printData();
 
-// var words = [{
-//   name: "weigh",
-//   chinese: "称量"
-// }, {
-//   name: "every",
-//   chinese: "每一个"
-// }, {
-//   name: "word",
-//   chinese: "单词"
-// }];
-
-// var words = [];
-// var cnt = -1;
-// var len = 0;
-// var vocabulary_words = [];
-// var unknown_words=[];
-// var history = null;
 
 Page({
   data: {
@@ -61,7 +38,7 @@ Page({
     console.log(headline);
     this.otherdata.history = util_his.getHistoryFromStorage(headline);
     
-    console.log(this.otherdata.hisotry);
+    console.log(this.otherdata.history);
     this.otherdata.vocabulary_words = this.otherdata.history.vocabulary;
     this.otherdata.unknown_words = this.otherdata.history.unknown;
     this.otherdata.words = this.otherdata.unknown_words.concat(this.otherdata.vocabulary_words);
@@ -79,16 +56,16 @@ Page({
   },
   next: function () {
     console.log("In next:");
-    console.log(this.otherdata.words);
+    // console.log(this.otherdata.words);
     this.otherdata.cnt++;
     if (this.otherdata.cnt < this.otherdata.len) {
       let wordFromInput = this.otherdata.words[this.otherdata.cnt];
       util_word.getWord(wordFromInput.name).then(word => {
         // console.log(typeof(word));
         // console.log(word);
-        console.log(this.otherdata.hisotry.body);
-        console.log(wordFromInput.sentence);
-        word_context = this.otherdata.hisotry.body[wordFromInput.sentence];
+        // console.log(this.otherdata.history.body);
+        // console.log(wordFromInput.sentence);
+        word.context = this.otherdata.history.body[wordFromInput.sentence];
         wx.setStorage({
           key: word._id,
           data: word,
