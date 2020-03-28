@@ -1,4 +1,5 @@
 const util_his = require('../../utils/history.js');
+const util_trie = require('../../utils/trie.js');
 const util_word = require('../../utils/word.js');
 
 
@@ -61,7 +62,14 @@ Page({
   saveHistory: function() {
     this.otherdata.history.vocabulary = this.otherdata.new_vocabulary_words;
     this.otherdata.history.unknown = this.otherdata.new_unknown_words;
-    this.otherdata.history.familiar
+    // let nvw = this.otherdata.new_vocabulary_words;
+    // nvw = nvw.map(word => word.name);
+    // let nfw = this.otherdata.new_familiar_words;
+    // nfw = nfw.map(word => word.name);
+    // util_word.appendFamiliar(nfw);
+    // util_word.deleteFamiliar(nfw);
+    // util_word.appendVocabulary(nvw);
+    // util_word.deleteVocabulary(nvw);
     util_his.setHistoryInStorage(this.otherdata.history.headline, this.otherdata.history);
   },
   next: function () {

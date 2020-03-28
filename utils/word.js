@@ -1,3 +1,4 @@
+const util_trie = require('../../utils/trie.js');
 // 查询传入的单词，返回单词对象
 const db = wx.cloud.database();
 const dictionary = db.collection('dictionary');
@@ -34,15 +35,58 @@ const getWord = async (id) => {
   return word;
 }
 
-// const getWordFromStorage = id => {
-//   var p = getWord(id);
-//   var word = null;
-//   p.then(result => {
-//     word = result;
-//   })
-//   return word;
-// }
+const getFamiliar = () => {
+  return util_trie.getTrieFromStorage('familiar');
+}
+
+const setFamiliar = (familiar) => {
+  util_trie.setTrieInStorage(familiar);
+}
+
+const appendFamiliar = (familiar_words) => {
+  var familiar_trie = getFamiliar();
+  familiar_words.map(word => {
+    familiar_trie.insertData(word);
+  })
+}
+
+const deleteVocabulary = (vocabulary_words) => {
+  var familiar_trie = getFamiliar();
+  vocabulary_words.map(word => {
+    familiar_trie.deleteData(word);
+  })
+}
+
+const getVocabulary = () => {
+  return util_trie.getTrieFromStorage('vocabulary');
+}
+
+const setVocabulary = (vocabulary) => {
+  util_trie.setTrieInStorage(vocabulary);
+}
+
+const appendVocabulary = (vocabulary_words) => {
+  var vocabulary_trie = getVocabulary();
+  vocabulary_words.map(word => {
+    vocabulary_trie.insertData(word);
+  })
+}
+
+const deleteFamiliar = (familiar_words) => {
+  var vocabulary_trie = getVocabulary();
+  familiar_words.map(word => {
+    vocabulary_trie.deleteData(word);
+  })
+}
 
 module.exports = {
   getWord: getWord,
+  getFamiliar: getFamiliar,
+  setFamiliar: setFamiliar,
+  appendFamiliar: appendFamiliar,
+  deleteFamiliar: deleteFamiliar,
+  getVocabulary: getVocabulary,
+  setVocabulary: setVocabulary,
+  appendVocabulary: appendVocabulary,
+  deleteVocabulary: deleteVocabulary,
 }
