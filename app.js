@@ -50,15 +50,15 @@ App({
       traceUser: true
     })
 
-    wx.setStorage({
-      key: 'test_familiar',
-      data: test_familiar_words,
-    })
+    // wx.setStorage({
+    //   key: 'test_familiar',
+    //   data: test_familiar_words,
+    // })
 
-    wx.setStorage({
-      key: 'test_vocabulary',
-      data: test_vocabulary_words,
-    })
+    // wx.setStorage({
+    //   key: 'test_vocabulary',
+    //   data: test_vocabulary_words,
+    // })
   },
   globalData: {
     userInfo: null

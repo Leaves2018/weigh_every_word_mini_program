@@ -1,8 +1,13 @@
 <progress percent="{{progressOverall}}" show-info border-radius="5"/>
 <view class="word">
   <view class="word__detail">
-    <view class="word__itself">{{word}}</view>
-    <view class="word__chinese">{{chinese}}</view>
+    <view class="word__tag">标签：{{word_tag}}</view>
+    <view class="word__level">分级：{{word_level}}</view>
+    <view class="word__id">单词：{{word_id}}</view>
+    <view class="word__phonetic">音标：{{word_phonetic}}</view>
+    <view class="word__context">语境：{{word_context}}</view>
+    <view class="word__chinese">汉解：{{word_chinese}}</view>
+    <!-- <view class="word__english">英文解释：{{word_english}}</view> -->
   </view>
   <view class="word__options">
     <button type="default" size="{{defaultSize}}" loading="{{loading}}" plain="{{plain}}"
@@ -13,6 +18,5 @@
             disabled="{{disabled}}" bindtap="tapRemember"> 记得 </button>
     <progress percent="{{progressThis}}" border-radius="5" 
     active="{{progressThisActive}}" duration="{{thisDuration}}"         bindactiveend="activateButtons"/>
-
   </view>
 </view>
