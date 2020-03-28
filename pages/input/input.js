@@ -11,9 +11,8 @@ var vocabulary = [];
 var vocabulary_words = [];
 var unknown_words = [];
 
-function word(name, chinese, sentence) {
+function word(name, sentence) {
   this.name = name;
-  this.chinese = chinese;
   this.sentence = sentence;
 }
 function history(headline, body, vocabulary, unknown, date) {
@@ -67,7 +66,7 @@ Page({
       for (var i = 0; i < sentences.length; i++) {
         let lows = sentences[i].toLowerCase();
         if (lows.indexOf(element) != -1) {
-          var word_example = new word(element, "", i);
+          var word_example = new word(element, i);
           vocabulary_words.push(word_example);
           break;
         }
@@ -98,7 +97,7 @@ Page({
 
     // history存入本地
     var mydate = new Date();
-    var history_example = new history(sentences[0], passage_temp, voc_really, unknown_words, mydate);
+    var history_example = new history(sentences[0], sentences, voc_really, unknown_words, mydate);
     wx.setStorage({
       key: sentences[0],
       data: history_example
