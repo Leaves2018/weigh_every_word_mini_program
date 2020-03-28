@@ -165,7 +165,7 @@ const getTrieFromStorage = (key) => {
     if (!isTrie(trie)) {
       console.warn(
         `Data corresponded to the given key is not an instance of Trie.
-          Not it has been replaced by a new instance of Trie.`);
+          Now it has been replaced by a new instance of Trie.`);
       trie = new Trie();
       wx.setStorage({
         key: key,
