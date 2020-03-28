@@ -21,6 +21,14 @@ const getWord = async (id) => {
     }).catch(reason => {
       console.log(reason);
       console.log("Fail to get word from cloud database dictionary.")
+      word = {
+        _id: id,
+        level: "暂无",
+        phonetic: "暂无",
+        context: "暂无",
+        chinese: "暂无",
+        english: "暂无",
+      }
     })
   }
   return word;
