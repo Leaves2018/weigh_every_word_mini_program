@@ -11,6 +11,7 @@ Page({
   },
   onLoad: function () {
     var history_list = utils_his.getHistoryListFromStorage();
+    history_list.reverse();
     this.setData({
       his_list:history_list,
       search: this.search.bind(this),
@@ -27,6 +28,10 @@ Page({
     console.log(number);
     switch (e.detail.index) {
       case 0:
+        var history_list = utils_his.getHistoryListFromStorage();
+        history_list.reverse();
+        console.log(history_list);
+        let recite_his = history_list[number];
         
         break;
       case 1:
@@ -40,6 +45,7 @@ Page({
   modalconfirm: function () {
     console.log(number);
     var history_list = utils_his.getHistoryListFromStorage();
+    history_list.reverse();
     console.log(history_list);
     let del_his = history_list[number];
     history_list.splice(number,1);

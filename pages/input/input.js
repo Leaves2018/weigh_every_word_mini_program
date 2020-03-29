@@ -119,6 +119,9 @@ Page({
       icon: 'loading',
       duration: 1500
     })
+    wx.switchTab({
+      url: '/pages/recite/recite',
+    })
   },
 
   modalcancel: function () {
