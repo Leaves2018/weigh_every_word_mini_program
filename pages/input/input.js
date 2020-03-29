@@ -64,17 +64,7 @@ Page({
       }
     }
     console.log(vocabulary);
-    for (var element of vocabulary) {
-      for (var i = 0; i < sentences.length; i++) {
-        let lows = sentences[i].toLowerCase();
-        if (lows.indexOf(element) != -1) {
-          var word_example = new word(element, i); 
-          vocabulary_words.push(word_example); // 初步形成文章的“未知词”列表
-          break;
-        }
-      }
-    }
-    console.log(vocabulary_words)
+    
     var fam_trie = utils_word.getFamiliar(); // 从本地获取熟词库
     var voc_trie = utils_word.getVocabulary(); // 从本地获取生词库
     var voc_temp = [];
@@ -91,10 +81,35 @@ Page({
         voc_really.push(t_word);
       }
     }
+    var voc_result = [];
+    for (var element of voc_really) {
+      for (var i = 0; i < sentences.length; i++) {
+        let lows = sentences[i].toLowerCase();
+        if (lows.indexOf(element) != -1) {
+          var word_example = new word(element, i);
+          voc_result.push(word_example); // 初步形成文章的“未知词”列表
+          break;
+        }
+      }
+    }
+    console.log(voc_result)
+
+    var unknown_result = [];
+    for (var element of unknown_words) {
+      for (var i = 0; i < sentences.length; i++) {
+        let lows = sentences[i].toLowerCase();
+        if (lows.indexOf(element) != -1) {
+          var word_example = new word(element, i);
+          unknown_result.push(word_example); // 初步形成文章的“未知词”列表
+          break;
+        }
+      }
+    }
+    console.log(unknown_result)
 
     // history存入本地
     var mydate = new Date();
-    var history_example = new history(sentences[0], sentences, voc_really, unknown_words, mydate);
+    var history_example = new history(sentences[0], sentences, voc_result, unknown_result, mydate);
     utils_his.setHistoryInStorage(sentences[0], history_example);
     var history_list = utils_his.getHistoryListFromStorage();
     history_list.push(sentences[0]);
