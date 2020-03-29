@@ -72,23 +72,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.generateHeadline();
-  },
-
-  /**
-   * 生成标题
-   */
-  generateHeadline: function () {
     try {
       var history_choice = wx.getStorageSync('history_choice');
-      if (history_choice === "" || history_choice === -1) {
-        // TODO 给历史记录列表每个选项添加一个"done"属性，标志其是否已经背完
-        // TODO 并在没背完的部分中随机挑一个
-        // TODO 如果全部背完，修改reciteDone对话框内容并弹出
-        var history_list = util_his.getHistoryListFromStorage();
-        var len = history_list.length;
-        this.otherdata.headline = history_list[parseInt(Math.random() * len)];
-        // throw "history_choice is undefined in storage.";
+      if (history_choice === "") {
+        throw "history_choice is undefined in storage.";
       } else if (typeof (history_choice) === "string") {
         // TODO 安全性检查：确保history_choice就是history_list中的某个headline
         this.otherdata.headline = history_choice;
@@ -102,6 +89,18 @@ Page({
         data: -1,
       })
     }
+  },
+
+  /**
+   * 生成标题
+   */
+  generateHeadline: function () {
+    // TODO 给历史记录列表每个选项添加一个"done"属性，标志其是否已经背完
+    // TODO 并在没背完的部分中随机挑一个
+    // TODO 如果全部背完，修改reciteDone对话框内容并弹出
+    var history_list = util_his.getHistoryListFromStorage();
+    var len = history_list.length;
+    this.otherdata.headline = history_list[parseInt(Math.random() * len)];
   },  
 
    /**
@@ -232,8 +231,12 @@ Page({
     this.setData({
       condition: false,
     });
-    this.generateHeadline();
     new Promise(this.loadHistory).then(this.next).catch(this.onNoWordsToRecite);
+  },
+
+  tapReciteButton: function () {
+    this.generateHeadline();
+    this.goToRecite();
   },
 
   /**

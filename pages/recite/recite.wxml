@@ -6,7 +6,7 @@
               <view wx:for="{{msg_extend}}" wx:key="*this">{{item}}</view>
           </view>
           <view slot="handle">
-              <button class="weui-btn" type="primary" bindtap="goToRecite">再来一组</button>
+              <button class="weui-btn" type="primary" bindtap="tapReciteButton">再来一组</button>
               <button class="weui-btn" type="default" bindtap="goToHistory">查看历史</button>
           </view>
           <!-- <view slot="footer">
