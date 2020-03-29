@@ -134,6 +134,10 @@ Page({
       icon: 'loading',
       duration: 1500
     })
+    wx.setStorage({
+      key: 'history_choice',
+      data: sentences[0],
+    })
     wx.switchTab({
       url: '/pages/recite/recite',
     })
