@@ -31,8 +31,14 @@ Page({
         var history_list = utils_his.getHistoryListFromStorage();
         history_list.reverse();
         console.log(history_list);
-        let recite_his = history_list[number];
-        
+        let his_detail = history_list[number];
+        wx.setStorage({
+          key: 'history_choice',
+          data: his_detail,
+        })
+        wx.navigateTo({
+          url: '/pages/history_detail/history_detail',
+        })
         break;
       case 1:
         this.setData({
