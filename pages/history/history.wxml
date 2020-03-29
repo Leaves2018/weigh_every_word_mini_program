@@ -1,12 +1,16 @@
 <view class="page">
   <mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
-  <block wx:for="{{items}}" wx:key="*this">
+  <block wx:for="{{his_list}}" wx:key="*this">
   <view class="history-slidecells">
-    <mp-slideview buttons="{{slideButtons}}" icon="{{true}}" slideButtonTap = "buttonClick" bindbuttontap="slideButtonTap">
+    <mp-slideview data-position = "{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindbuttontap="slideButtonTap">
       <view class="history-slidecell">
-        {{index + 1}}. {{item.title}}
+        {{index + 1}}. {{item}}
       </view>
     </mp-slideview>
   </view>
-</block>
+  </block>
+  <modal title="提示" cancel-text="取消" confirm-text="确定"
+          hidden="{{mHidden}}" bindconfirm="modalconfirm" bindcancel="modalcancel">
+        你确定要删除此历史记录吗？（已确认的生词不会被删除）
+  </modal>
 </view>

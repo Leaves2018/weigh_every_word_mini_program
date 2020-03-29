@@ -1,5 +1,5 @@
 //search.js
-const utils_trie = require('../../utils/trie.js');
+const utils_word = require('../../utils/word.js');
 const utils_his = require('../../utils/history.js');
 
 const app = getApp()
@@ -47,13 +47,15 @@ Page({
 
   search: function (e) {
     console.log(this.data.s);
+    if (this.data.s === "") {
+      return;
+    }
     passage = this.data.s;
-    var passage_temp = this.data.s;
     sentences = passage.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
     sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
     console.log(sentences);
     passage = passage.toLowerCase();//文本转小写
-    words = passage.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’]/g); //获取单词
+    words = passage.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’|\u4e00-\u9fa5|\^0-9]/g); //获取单词
     words = [...new Set(words)];//单词去重
     words = words.filter(function (x) { return x && x.trim(); });//单词去空
     for (var element of words) {
@@ -66,49 +68,43 @@ Page({
       for (var i = 0; i < sentences.length; i++) {
         let lows = sentences[i].toLowerCase();
         if (lows.indexOf(element) != -1) {
-          var word_example = new word(element, i);
-          vocabulary_words.push(word_example);
+          var word_example = new word(element, i); 
+          vocabulary_words.push(word_example); // 初步形成文章的“未知词”列表
           break;
         }
       }
     }
     console.log(vocabulary_words)
-
-    var fam_trie = utils_trie.getTrieFromStorage('familiar');
-    var voc_trie = utils_trie.getTrieFromStorage('vocabulary');
+    var fam_trie = utils_word.getFamiliar(); // 从本地获取熟词库
+    var voc_trie = utils_word.getVocabulary(); // 从本地获取生词库
     var voc_temp = [];
-    for (var v_word of vocabulary_words) {
+    var voc_really = [];
+    for (var v_word of vocabulary) {
       if ((fam_trie.search(v_word)) === false) {
         voc_temp.push(v_word)
       }
     }
     for (var t_word of voc_temp) {
       if ((voc_trie.search(t_word)) === false) {
-        unknown_words.push(t_word)
-      }
-    }
-    var voc_really = [];
-    for (var element of voc_temp) {
-      if (unknown_words.indexOf(element) === -1) {
-        voc_really.push(element);
-        break;
+        unknown_words.push(t_word) // 筛选出未知词
+      }else{
+        voc_really.push(t_word);
       }
     }
 
     // history存入本地
     var mydate = new Date();
     var history_example = new history(sentences[0], sentences, voc_really, unknown_words, mydate);
-    wx.setStorage({
-      key: sentences[0],
-      data: history_example
-    })
-    try {
-      wx.setStorageSync(sentences[0], history_example)
-    } catch (e) {
-    }
+    utils_his.setHistoryInStorage(sentences[0], history_example);
     var history_list = utils_his.getHistoryListFromStorage();
     history_list.push(sentences[0]);
     utils_his.setHistoryListInStorage(history_list);
+
+    vocabulary = [];
+    vocabulary_words = [];
+    voc_temp = [];
+    voc_really = [];
+    unknown_words = [];
     this.setData({
       mHidden: false
     });
@@ -122,9 +118,6 @@ Page({
       title: '加载中...',
       icon: 'loading',
       duration: 1500
-    })
-    wx.switchTab({
-      url: '../recite/recite',
     })
   },
 
