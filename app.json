@@ -9,8 +9,7 @@
     "pages/familiar/familiar",
     "pages/recite_settings/recite_settings",
     "pages/history/history",
-    "pages/domestication/domestication",
-    "pages/recite_done/recite_done"
+    "pages/domestication/domestication"
   ],
   "window": {
     "backgroundTextStyle": "light",
