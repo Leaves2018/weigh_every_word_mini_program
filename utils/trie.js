@@ -179,7 +179,10 @@ const getTrieFromStorage = (key) => {
 }
 
 // 提供key和data，缓存至本地记录
+// key  string类型
+// data Trie类型或者[string]类型
 const setTrieInStorage = (key, data) => {
+  // 增加了判断输入data是否为字典树，封装了自动用字符串数组建字典树的方法
   if (!isTrie(data)) {
     console.warn(
       `Data corresponded to the given key is not an instance of Trie.

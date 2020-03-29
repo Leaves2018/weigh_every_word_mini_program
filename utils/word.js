@@ -1,4 +1,5 @@
 const util_trie = require('./trie.js');
+
 // 查询传入的单词，返回单词对象
 const db = wx.cloud.database();
 const dictionary = db.collection('dictionary');
@@ -20,8 +21,8 @@ const getWord = async (id) => {
         data: word,
       })
     }).catch(reason => {
-      console.log(reason);
-      console.log("Fail to get word from cloud database dictionary.")
+      console.warn(reason);
+      console.warn("Fail to get word from cloud database dictionary.")
       word = {
         _id: id,
         level: "暂无",
@@ -39,10 +40,12 @@ const getFamiliar = () => {
   return util_trie.getTrieFromStorage('familiar_list');
 }
 
+// familiar可以为Trie类型或者[string]类型（后者会被自动解析成trie）
 const setFamiliar = (familiar) => {
   util_trie.setTrieInStorage('familiar_list', familiar);
 }
 
+// INPUT  字符串列表类型，每个属性是一个单词
 const appendFamiliar = (familiar_words) => {
   if (familiar_words.length===0) {
     return;
@@ -54,6 +57,7 @@ const appendFamiliar = (familiar_words) => {
   setFamiliar(familiar_trie);
 }
 
+// INPUT  字符串列表类型，每个属性是一个单词
 const deleteVocabulary = (vocabulary_words) => {
   if (vocabulary_words.length === 0) {
     return;

@@ -21,6 +21,7 @@ const setHistoryListInStorage = (history_list) => {
   })
 }
 
+// 如果本地存储找不到以headline为key的记录，会返回空字符串
 const getHistoryFromStorage = headline => {
   var history = null;
   try {
