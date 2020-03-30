@@ -1,5 +1,35 @@
 <view class="page">
   <view class="body-view">
+  <text>标题</text>
+  <view class="divLine"></view>
     <text>{{his_headline}}</text>
   </view>
+  <view class="divLine"></view>
+  <text>正文</text>
+  <view class="divLine"></view>
+  <view class="body-view">
+    <text>{{his_body}}</text>
+  </view>
+  <view class="divLine"></view>
+  <text>未处理词</text>
+  <block wx:for="{{his_unknown}}">
+    <i-grid>
+        <i-grid-item data-position="{{index}}.0" bindtap="showDetail_unknown">{{item[0]}}</i-grid-item>
+        <i-grid-item data-position="{{index}}.1" bindtap="showDetail_unknown">{{item[1]}}</i-grid-item>
+        <i-grid-item data-position="{{index}}.2" bindtap="showDetail_unknown">{{item[2]}}</i-grid-item>
+    </i-grid>
+  </block>
+
+  <text>生词</text>
+  <block wx:for="{{his_vocabulary}}">
+    <i-grid>
+        <i-grid-item data-position="{{index}}.0" bindtap="showDetail_vocabulary">{{item[0]}}</i-grid-item>
+        <i-grid-item data-position="{{index}}.1" bindtap="showDetail_vocabulary">{{item[1]}}</i-grid-item>
+        <i-grid-item data-position="{{index}}.2" bindtap="showDetail_vocabulary">{{item[2]}}</i-grid-item>
+    </i-grid>
+  </block>
+
+  <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
+  <view>{{dialogContent}}</view>
+  </mp-dialog>
 </view>
