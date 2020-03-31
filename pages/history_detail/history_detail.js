@@ -172,7 +172,7 @@ Page({
     this.localdownload();
     this.setData({
       his_vocabulary: vocabulary_result,
-      unknown_dialogShow: true,
+      vocabulary_dialogShow: true,
     });
   },
 
