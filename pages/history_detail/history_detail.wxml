@@ -1,9 +1,13 @@
 <view class="page">
   <view class="body-view">
-  <text>标题</text>
-  <view class="divLine"></view>
-    <text>{{his_headline}}</text>
-  </view>
+    <form bindsubmit='loginForm'>
+      <view class="title_edit">
+      <text>标题</text>
+      <button formType="submit" class='btn' type="default">确认修改</button>
+      </view>
+      <view class="divLine"></view>
+      <input class="weui-input" name='headline' value='{{his_headline}}'/>
+    </form>
   <view class="divLine"></view>
   <text>正文</text>
   <view class="divLine"></view>
@@ -12,7 +16,7 @@
   </view>
   <view class="divLine"></view>
   <text>未处理词</text>
-  <block wx:for="{{his_unknown}}">
+  <block wx:for="{{his_unknown}}" wx:key="*this_unknown">
     <i-grid>
         <i-grid-item data-position="{{index}}.0" bindtap="showDetail_unknown">{{item[0]}}</i-grid-item>
         <i-grid-item data-position="{{index}}.1" bindtap="showDetail_unknown">{{item[1]}}</i-grid-item>
@@ -20,8 +24,9 @@
     </i-grid>
   </block>
 
+  <view class="divLine"></view>
   <text>生词</text>
-  <block wx:for="{{his_vocabulary}}">
+  <block wx:for="{{his_vocabulary}}" wx:key="*this_vocabulary">
     <i-grid>
         <i-grid-item data-position="{{index}}.0" bindtap="showDetail_vocabulary">{{item[0]}}</i-grid-item>
         <i-grid-item data-position="{{index}}.1" bindtap="showDetail_vocabulary">{{item[1]}}</i-grid-item>
@@ -29,7 +34,13 @@
     </i-grid>
   </block>
 
-  <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
-  <view>{{dialogContent}}</view>
-  </mp-dialog>
+  <modal title="{{dialogTitle}}" cancel-text="忘了" confirm-text="记得"
+          hidden="{{unknown_dialogShow}}" bindconfirm="unknown_modalconfirm" bindcancel="unknown_modalcancel">
+        {{dialogContent}}
+  </modal>
+  <modal title="{{dialogTitle}}" cancel-text="忘了" confirm-text="记得"
+          hidden="{{vocabulary_dialogShow}}" bindconfirm="vocabulary_modalconfirm" bindcancel="vocabulary_modalcancel">
+        {{dialogContent}}
+  </modal>
+  </view>
 </view>

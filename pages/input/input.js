@@ -87,7 +87,7 @@ Page({
         let lows = sentences[i].toLowerCase();
         if (lows.indexOf(element) != -1) {
           var word_example = new word(element, i);
-          voc_result.push(word_example); // 初步形成文章的“未知词”列表
+          voc_result.push(word_example); // 初步形成文章的生词列表
           break;
         }
       }
@@ -113,6 +113,7 @@ Page({
     utils_his.setHistoryInStorage(sentences[0], history_example);
     var history_list = utils_his.getHistoryListFromStorage();
     history_list.push(sentences[0]);
+    history_list = [...new Set(history_list)];
     utils_his.setHistoryListInStorage(history_list);
 
     vocabulary = [];
