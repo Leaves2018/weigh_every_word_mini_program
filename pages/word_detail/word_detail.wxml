@@ -1,18 +1,5 @@
-<!--pages/vocabulary/vocabulary.wxml-->
-<!-- <block wx:if="{{!showWordDetail}}"> -->
-  <mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
-  <block wx:for="{{vocabulary_words}}" wx:key="*this">
-    <view class="weui-slidecells">
-      <mp-slideview data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView">
-        <view class="weui-slidecell">
-          {{index}}. {{item}}
-        </view>
-      </mp-slideview>
-    </view>
-  </block>
-<!-- </block> -->
-
-<!-- <block wx:else>
+<!--pages/word_detail/word_detail.wxml-->
+<block>
   <view class="word">
     <view class="word__detail">
       <view class="word__level">分级：{{word_level}}</view>
@@ -29,8 +16,6 @@
           disabled="{{disabled}}" bindtap="tapForget"> 忘了 </button>
       <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}"
               disabled="{{disabled}}" bindtap="tapRemember"> 记得 </button>
-      <progress percent="{{progressThis}}" border-radius="5" 
-      active="{{progressThisActive}}" duration="{{thisDuration}}"         bindactiveend="activateButtons"/>
     </view>
   </view>
-</block> -->
+</block>

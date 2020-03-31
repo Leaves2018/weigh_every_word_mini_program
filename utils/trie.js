@@ -1,6 +1,7 @@
 class Trie {
   constructor(root = new TrieNode(null)) {
     this.root = root;
+    this.allData = [];
   }
 
   insert(stringData, node) {
@@ -124,7 +125,7 @@ class Trie {
 
   // 递归输出字符串
   printHelper(node, data) {
-    if (node.children.length == 0) {
+    if (node.children.length === 0) {
       console.log('>', data.join(''));
       return;
     }
@@ -132,6 +133,25 @@ class Trie {
       data.push(node.children[i].key);
       this.printHelper(node.children[i], data);
       data.pop(); // 注意，找打一个单词后，返回下一个初始节点继续遍历
+    }
+  }
+
+  getAllData() {
+    for (let i in this.root.children) {
+      this.getAllDataHelper(this.root.children[i], [this.root.children[i].key]);
+    }
+    return this.allData;
+  }
+
+  getAllDataHelper(node, data) {
+    if (node.children.length === 0) {
+      this.allData.push(data.join(''));
+      return;
+    }
+    for (let i in node.children) {
+      data.push(node.children[i].key);
+      this.getAllDataHelper(node.children[i], data);
+      data.pop();
     }
   }
 }
