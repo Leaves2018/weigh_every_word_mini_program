@@ -23,6 +23,13 @@ Page({
       }],
     });
   },
+  onShow: function() {
+    var history_list = utils_his.getHistoryListFromStorage();
+    history_list.reverse();
+    this.setData({
+      his_list: history_list,
+    });
+  },
   slideButtonTap(e) {
     number = e.currentTarget.dataset.position;
     console.log(number);
