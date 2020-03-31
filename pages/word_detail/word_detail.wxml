@@ -1,5 +1,5 @@
 <!--pages/word_detail/word_detail.wxml-->
-<block>
+<view bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
   <view class="word">
     <view class="word__detail">
       <view class="word__level">分级：{{word_level}}</view>
@@ -18,4 +18,4 @@
               disabled="{{disabled}}" bindtap="tapRemember"> 记得 </button>
     </view>
   </view>
-</block>
+</view>
