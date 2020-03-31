@@ -179,11 +179,12 @@ Page({
       this.reciteDone();
       return;
     }
+    this.otherdata.cnt += 1;
     util_word.getWord(this.otherdata.thisword.name).then(word => {
       // word.hesitateNum = 0;
       word.context = this.otherdata.history.body[this.otherdata.thisword.sentence];
       this.setData({
-        progressOverall: Math.round((this.otherdata.cnt + 1) / this.otherdata.len * 100),
+        progressOverall: Math.round((this.otherdata.cnt) / this.otherdata.len * 100),
         word_level: word.level,
         word_id: word._id,
         word_phonetic: word.phonetic,
