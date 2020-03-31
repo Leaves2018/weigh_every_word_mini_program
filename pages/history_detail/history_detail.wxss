@@ -9,3 +9,11 @@ page {
  height: 5rpx;
 }
 
+.title_edit{
+  display: flex;
+  flex-direction: row;
+}
+
+.btn{
+  margin-left: 0rpx;
+}
