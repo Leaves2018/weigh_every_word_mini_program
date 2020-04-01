@@ -41,8 +41,8 @@
     </mp-cells>
 
     <mp-cells title="其他">
-      <mp-cell link url="/pages/vocabulary" value="使用教程"></mp-cell>
-      <mp-cell link url="/pages/vocabulary" value="关于"></mp-cell>
+      <mp-cell link url="/pages/tutorial/tutorial" value="使用教程"></mp-cell>
+      <mp-cell link url="/pages/tutorial/tutorial" value="关于"></mp-cell>
     </mp-cells>
 
   </view>
