@@ -10,10 +10,13 @@ Page({
     his_list: []
   },
   onLoad: function () {
+    
+  },
+  onShow: function() {
     var history_list = utils_his.getHistoryListFromStorage();
     history_list.reverse();
     this.setData({
-      his_list:history_list,
+      his_list: history_list,
       search: this.search.bind(this),
       icon: base64.icon20,
       slideButtons: [{
@@ -21,13 +24,6 @@ Page({
       }, {
         src: '/images/icon_del.svg', // icon的路径
       }],
-    });
-  },
-  onShow: function() {
-    var history_list = utils_his.getHistoryListFromStorage();
-    history_list.reverse();
-    this.setData({
-      his_list: history_list,
     });
   },
   slideButtonTap(e) {

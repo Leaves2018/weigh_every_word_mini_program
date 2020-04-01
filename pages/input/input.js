@@ -34,6 +34,13 @@ Page({
     s1: ''
   },
 
+  onLoad: function() {
+    wx.getClipboardData({
+      success(res) {
+        console.log(res.data)
+      }
+    })
+  },
   bindButtonTap: function () {
     this.setData({
       focus: true
