@@ -146,7 +146,7 @@ Page({
       key: 'history_choice',
       data: sentences[0],
     })
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/recite/recite',
     })
   },
