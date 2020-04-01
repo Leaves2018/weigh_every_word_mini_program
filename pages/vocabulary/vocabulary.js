@@ -13,13 +13,11 @@ Page({
   
   onLoad: function () {
     console.log("Page Vocabulary is in onLoad");
-    vocabulary_trie = util_word.getVocabulary();
-    vocabulary_words = vocabulary_trie.getAllData();
+
     // console.log("In onLoad of vocabulary.js,");
     // console.log(vocabulary_words);
     this.setData({
       search: this.search.bind(this),
-      vocabulary_words: vocabulary_words,
       icon: base64.icon20,
       slideButtons: [
       //   {
@@ -42,6 +40,11 @@ Page({
 
   onShow: function () {
     console.log("Page Vocabulary is in onShow");
+    vocabulary_trie = util_word.getVocabulary();
+    vocabulary_words = vocabulary_trie.getAllData();
+    this.setData({
+      vocabulary_words: vocabulary_words,
+    });
   },
 
   onReady: function () {
@@ -50,11 +53,11 @@ Page({
 
   onHide: function () {
     console.log("Page Vocabulary is in onHide");
+    util_word.setVocabulary(vocabulary_trie);
   },
 
   onUnload: function () {
     console.log("Page Vocabulary is in onUnload");
-    util_word.setVocabulary(vocabulary_trie);
   },
 
   tapSlideView: function (e) {
