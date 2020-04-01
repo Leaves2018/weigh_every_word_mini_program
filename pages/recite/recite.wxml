@@ -1,7 +1,6 @@
-<block wx:if="{{condition}}">
+<block wx:if="{{!startReciting}}">
   <view class="page">
       <mp-msg type="{{msg_type}}" title="{{msg_title}}">
-          <!-- <view slot="desc">{{msg_detail}}</view> -->
           <view slot="extend">
               <view wx:for="{{msg_extend}}" wx:key="*this">{{item}}</view>
           </view>
@@ -9,15 +8,9 @@
               <button class="weui-btn" type="primary" bindtap="tapReciteButton">再来一组</button>
               <button class="weui-btn" type="default" bindtap="goToHistory">查看历史</button>
           </view>
-          <!-- <view slot="footer">
-              <view class="weui-footer__links">
-                  <navigator url="" class="weui-footer__link">底部链接文本</navigator>
-              </view>
-              <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
-          </view> -->
       </mp-msg>
   </view>
-  <mp-dialog title="这篇文章已经背诵完成" show="{{showReciteDoneDialog}}" bindbuttontap="tapReciteDoneDialogButton" buttons="知道了"></mp-dialog>
+  <mp-dialog title="{{reciteDoneDialogTitle}}" show="{{showReciteDoneDialog}}" bindbuttontap="tapReciteDoneDialogButton" buttons="{{reciteDoneDialogButtons}}">{{reciteDoneDialogText}}</mp-dialog>
 </block>
 <block wx:else>
   <progress percent="{{progressOverall}}" show-info border-radius="5"/>
