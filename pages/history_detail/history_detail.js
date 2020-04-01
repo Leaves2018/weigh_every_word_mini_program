@@ -29,7 +29,7 @@ Page({
     buttons: [{ text: "忘了" }, { text: "记得" }]
   },
   onLoad: function () {
-    var history_choice = wx.getStorageSync('history_choice');
+    var history_choice = wx.getStorageSync('history_detail');
     history_example = utils_his.getHistoryFromStorage(history_choice);
     vocabulary = [];
     unknown = [];
@@ -38,11 +38,11 @@ Page({
     for (var v_word of history_example.vocabulary) {
       vocabulary.push(v_word.name);
     }
-    console.log(vocabulary);
+    //console.log(vocabulary);
     for (var v_word of history_example.unknown) {
       unknown.push(v_word.name);
     }
-    console.log(unknown);
+    //console.log(unknown);
     var unknown_result = [];
     var vocabulary_result = [];
     for (var i = 0; i < unknown.length; i += 3) {
@@ -65,7 +65,7 @@ Page({
     wx.removeStorage({
       key: before_headline,
       success: function (res) {
-        console.log(res);
+        //console.log(res);
       },
     })
     var history_list = utils_his.getHistoryListFromStorage();
@@ -76,7 +76,7 @@ Page({
       }
     }
     history_list.splice(temp, 1, history_example.headline);
-    console.log(history_list);
+    //console.log(history_list);
     utils_his.setHistoryListInStorage(history_list);
     var history_result = new history(history_example.headline, history_example.body, history_example.vocabulary, history_example.unknown, history_example.date);
     utils_his.setHistoryInStorage(history_example.headline, history_result);
@@ -86,7 +86,7 @@ Page({
   },
 
   loginForm: function (data) {
-    console.log(data.detail.value.headline)
+    //console.log(data.detail.value.headline)
     history_example.headline = data.detail.value.headline;
     this.setData({
       his_headline:history_example.headline,
@@ -95,11 +95,11 @@ Page({
 
   showDetail_unknown: function (e) {
     let a = e.currentTarget.dataset.position.split(".");
-    console.log(e.currentTarget.dataset.position.split("."));
+    //console.log(e.currentTarget.dataset.position.split("."));
     let x = parseInt(a[0]);
     let y = parseInt(a[1]);
     index = 3 * x + y;
-    console.log(index);
+    //console.log(index);
     let word = unknown[index];
     let metaword = util_word.getWord(word).then(result => {
       this.setData({
@@ -111,7 +111,7 @@ Page({
   },
   showDetail_vocabulary: function (e) {
     let a = e.currentTarget.dataset.position.split(".");
-    console.log(e.currentTarget.dataset.position.split("."));
+    //console.log(e.currentTarget.dataset.position.split("."));
     let x = parseInt(a[0]);
     let y = parseInt(a[1]);
     index = 3 * x + y;

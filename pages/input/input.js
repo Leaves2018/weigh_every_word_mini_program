@@ -53,14 +53,12 @@ Page({
   },
 
   search: function (e) {
-    console.log(this.data.s);
     if (this.data.s === "") {
       return;
     }
     passage = this.data.s;
     sentences = passage.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
     sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
-    console.log(sentences);
     passage = passage.toLowerCase();//文本转小写
     words = passage.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’|\u4e00-\u9fa5|\^0-9]/g); //获取单词
     words = [...new Set(words)];//单词去重
@@ -70,7 +68,6 @@ Page({
         vocabulary.push(element);
       }
     }
-    console.log(vocabulary);
     
     var fam_trie = utils_word.getFamiliar(); // 从本地获取熟词库
     var voc_trie = utils_word.getVocabulary(); // 从本地获取生词库
@@ -99,7 +96,6 @@ Page({
         }
       }
     }
-    console.log(voc_result)
 
     var unknown_result = [];
     for (var element of unknown_words) {
@@ -112,7 +108,6 @@ Page({
         }
       }
     }
-    console.log(unknown_result)
 
     // history存入本地
     var mydate = new Date();
