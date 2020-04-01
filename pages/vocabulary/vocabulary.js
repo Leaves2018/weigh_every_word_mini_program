@@ -12,7 +12,6 @@ Page({
   },
   
   onLoad: function () {
-    console.log("Page Vocabulary is in onLoad");
 
     // console.log("In onLoad of vocabulary.js,");
     // console.log(vocabulary_words);
@@ -39,7 +38,6 @@ Page({
   },
 
   onShow: function () {
-    console.log("Page Vocabulary is in onShow");
     vocabulary_trie = util_word.getVocabulary();
     vocabulary_words = vocabulary_trie.getAllData();
     this.setData({
@@ -48,16 +46,13 @@ Page({
   },
 
   onReady: function () {
-    console.log("Page Vocabulary is in onReady");
   },
 
   onHide: function () {
-    console.log("Page Vocabulary is in onHide");
     util_word.setVocabulary(vocabulary_trie);
   },
 
   onUnload: function () {
-    console.log("Page Vocabulary is in onUnload");
   },
 
   tapSlideView: function (e) {
