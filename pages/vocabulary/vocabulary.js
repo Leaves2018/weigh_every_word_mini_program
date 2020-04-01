@@ -2,33 +2,36 @@ var base64 = require("../../images/base64")
 const util_trie = require('../../utils/trie.js');
 const util_word = require('../../utils/word.js');
 
+var vocabulary_trie = null;
+var vocabulary_words = [];
 Page({
   data: {
     showWordDetail: false,
     inputVal: "",
     vocabulary_words: [],
   },
-  otherdata: {
-    vocabulary_trie: null,
-    vocabulary_words: [],
-  },
+  
   onLoad: function () {
-    this.otherdata.vocabulary_trie = util_word.getVocabulary();
-    this.otherdata.vocabulary_words = this.otherdata.vocabulary_trie.getAllData();
+    console.log("Page Vocabulary is in onLoad");
+    vocabulary_trie = util_word.getVocabulary();
+    vocabulary_words = vocabulary_trie.getAllData();
     // console.log("In onLoad of vocabulary.js,");
-    // console.log(this.otherdata.vocabulary_words);
+    // console.log(vocabulary_words);
     this.setData({
       search: this.search.bind(this),
-      vocabulary_words: this.otherdata.vocabulary_words,
+      vocabulary_words: vocabulary_words,
       icon: base64.icon20,
-      slideButtons: [{
-        text: '普通',
-        src: '/images/icon_love.svg', // icon的路径
-      }, {
-        text: '普通',
-        extClass: 'test',
-        src: '/images/icon_star.svg', // icon的路径
-      }, {
+      slideButtons: [
+      //   {
+      //   text: '普通',
+      //   src: '/images/icon_love.svg', // icon的路径
+      // }, 
+      // {
+      //   text: '普通',
+      //   extClass: 'test',
+      //   src: '/images/icon_star.svg', // icon的路径
+      // }, 
+      {
         type: 'warn',
         text: '警示',
         extClass: 'test',
@@ -36,10 +39,27 @@ Page({
       }],
     });
   },
-  tapSlideView(e) {
+
+  onShow: function () {
+    console.log("Page Vocabulary is in onShow");
+  },
+
+  onReady: function () {
+    console.log("Page Vocabulary is in onReady");
+  },
+
+  onHide: function () {
+    console.log("Page Vocabulary is in onHide");
+  },
+
+  onUnload: function () {
+    console.log("Page Vocabulary is in onUnload");
+  },
+
+  tapSlideView: function (e) {
     // console.log('slide view ', e.detail);
     let index = e.currentTarget.dataset.position;
-    // let _id = this.otherdata.vocabulary_words[index];
+    // let _id = vocabulary_words[index];
     // util_word.getWord(_id).then(word => {
     //   this.setData({
     //     showWordDetail: true,
@@ -55,8 +75,8 @@ Page({
     wx.setStorage({
       key: 'word_detail_list',
       data: {
-        trie: this.otherdata.vocabulary_trie,
-        words: this.otherdata.vocabulary_words,
+        trie: vocabulary_trie,
+        words: vocabulary_words,
         currentIndex: index,
       },
     });
@@ -65,6 +85,25 @@ Page({
       url: '../word_detail/word_detail',
     });
   },
+
+  tapSlideViewButtons: function (e) {
+    var pos = e.currentTarget.dataset.position;
+    switch (e.detail.index) {
+      case 0:
+        this.deleteItem(pos);
+        this.setData({
+          vocabulary_words: vocabulary_words,
+        });
+        break;
+    }
+  },
+
+  deleteItem: function (index) {
+    var _id = vocabulary_words[index];
+    vocabulary_words.splice(index,1);
+    vocabulary_trie.deleteData(_id);
+  },
+
   search: function (value) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

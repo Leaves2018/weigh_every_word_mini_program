@@ -3,7 +3,7 @@
   <mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
   <block wx:for="{{vocabulary_words}}" wx:key="*this">
     <view class="weui-slidecells">
-      <mp-slideview data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView">
+      <mp-slideview data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons">
         <view class="weui-slidecell">
           {{index}}. {{item}}
         </view>
