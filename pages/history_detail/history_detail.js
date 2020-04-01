@@ -61,7 +61,7 @@ Page({
     });
   },
 
-  localdownload: function() {
+  onUnload: function() {
     wx.removeStorage({
       key: before_headline,
       success: function (res) {
@@ -88,7 +88,6 @@ Page({
   loginForm: function (data) {
     console.log(data.detail.value.headline)
     history_example.headline = data.detail.value.headline;
-    this.localdownload();
     this.setData({
       his_headline:history_example.headline,
     })
@@ -125,6 +124,22 @@ Page({
       })
     });
   },
+
+//TODO:
+  // tapSlideView(e) {
+  //   let index = e.currentTarget.dataset.position;
+  //   wx.setStorage({
+  //     key: 'word_detail_list',
+  //     data: {
+  //       trie: this.otherdata.vocabulary_trie,
+  //       currentIndex: index,
+  //     },
+  //   });
+  //   wx.navigateTo({
+  //     url: '../word_detail/word_detail',
+  //   });
+  // },
+
   unknown_modalconfirm: function () {
     unknown.splice(index, 1);
     history_example.unknown.splice(index, 1);
@@ -132,7 +147,6 @@ Page({
     for (var i = 0; i < unknown.length; i += 3) {
       unknown_result.push(unknown.slice(i, i + 3));
     }
-    this.localdownload();
     this.setData({
       his_unknown: unknown_result,
       unknown_dialogShow: true,
@@ -154,7 +168,6 @@ Page({
     for (var i = 0; i < vocabulary.length; i += 3) {
       vocabulary_result.push(vocabulary.slice(i, i + 3));
     }
-    this.localdownload();
     this.setData({
       his_vocabulary: vocabulary_result,
       his_unknown: unknown_result,
@@ -169,7 +182,6 @@ Page({
     for (var i = 0; i < vocabulary.length; i += 3) {
       vocabulary_result.push(vocabulary.slice(i, i + 3));
     }
-    this.localdownload();
     this.setData({
       his_vocabulary: vocabulary_result,
       vocabulary_dialogShow: true,
