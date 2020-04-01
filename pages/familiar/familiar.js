@@ -1,6 +1,7 @@
 const util_word = require('../../utils/word.js');
 var base64 = require("../../images/base64");
-
+var familiar_trie = null;
+var familiar_words = [];
 Page({
   data: { 
     inputShowed: false,
@@ -9,20 +10,13 @@ Page({
     dialogTitle: "",
     dialogContent: "",
     buttons: [{text: "忘了"}, {text: "记得"}],
-    test_text: "there is no test word",
-    words: [{
-      first: "a",
-      second: "about",
-      third: "word"
-    }, {
-        first: "you",
-        second: "and",
-        third: "me"
-    }]
   },
   onLoad: function () {
+    familiar_trie = util_word.getFamiliar();
+    familiar_words = familiar_trie.getAllData();
     this.setData({
-      search: this.search.bind(this)
+      search: this.search.bind(this),
+      words: familiar_words,
     });
   },
   search: function (value) {
@@ -36,13 +30,13 @@ Page({
     console.log('select result', e.detail);
   },
   showDetail: function (e) {
-    let index, order;
-    [index, order] = e.currentTarget.dataset.position.split(".");
-    let word = this.data.words[index][order];
-    let metaword = util_word.getWord(word).then(result => {
+    let index;
+    index = e.currentTarget.dataset.position;
+    let id = this.data.words[index];
+    util_word.getWord(id).then(word => {
       this.setData({
-        dialogTitle: word,
-        dialogContent: result.chinese,
+        dialogTitle: word._id,
+        dialogContent: word.chinese,
         dialogShow: true
       })
     });
