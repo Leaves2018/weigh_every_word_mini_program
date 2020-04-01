@@ -5,7 +5,7 @@
     <view class="weui-slidecells">
       <mp-slideview data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons">
         <view class="weui-slidecell">
-          {{index}}. {{item}}
+          {{index+1}}. {{item}}
         </view>
       </mp-slideview>
     </view>
