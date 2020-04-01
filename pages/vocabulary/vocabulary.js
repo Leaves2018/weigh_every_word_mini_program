@@ -77,7 +77,7 @@ Page({
       key: 'word_detail_list',
       data: {
         trie: vocabulary_trie,
-        words: vocabulary_words,
+        // words: vocabulary_words,
         currentIndex: index,
       },
     });

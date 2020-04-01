@@ -1,5 +1,10 @@
 // pages/word_detail/word_detail.js
 const util_word = require('../../utils/word.js');
+const util_trie = require('../../utils/trie.js');
+
+var trie = null;
+var words = [];
+var currentIndex = -1;
 
 var minOffset = 30;
 var minTime = 60;
@@ -17,23 +22,16 @@ Page({
   },
 
   /**
-   * 页面的其余数据
-   */
-  otherdata: {
-    trie: null,
-    words: [],
-    currentIndex: -1,
-  },
-
-  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     try {
-      var { trie, words, currentIndex } = wx.getStorageSync('word_detail_list');
-      this.otherdata.trie = trie;
-      this.otherdata.words = words;
-      this.otherdata.currentIndex = currentIndex;
+      var word_detail_list = wx.getStorageSync('word_detail_list');
+      trie = new util_trie.Trie(word_detail_list.trie.root);
+      currentIndex = word_detail_list.currentIndex;
+      words = trie.getAllData();
+
+    
     } catch (e) {
       console.warn(e);
     }
@@ -149,31 +147,31 @@ Page({
   },
   swipeUp: function () {
     console.log("Swipe up.");
-    this.otherdata.currentIndex += 1;
+    currentIndex += 1;
     this.loadIndexWord();
   },
   swipeDown: function () {
     console.log("Swipe down.");
-    this.otherdata.currentIndex -= 1;
+    currentIndex -= 1;
     this.loadIndexWord();
   },
   loadIndexWord: function () {
-    if (this.otherdata.currentIndex < 0) {
-      this.otherdata.currentIndex = 0;
+    if (currentIndex < 0) {
+      currentIndex = 0;
       wx.showToast({
         title: '前面没有啦',
         icon: 'info',
         duration: 2000,
       });
-    } else if (this.otherdata.currentIndex >= this.otherdata.words.length) {
-      this.otherdata.currentIndex = this.otherdata.words.length - 1;
+    } else if (currentIndex >= words.length) {
+      currentIndex = words.length - 1;
       wx.showToast({
         title: '后面没有啦',
         icon: 'info',
         duration: 2000,
       })
     }
-    util_word.getWord(this.otherdata.words[this.otherdata.currentIndex]).then(word => {
+    util_word.getWord(words[currentIndex]).then(word => {
       this.setData({
         word_level: word.level,
         word_id: word._id,
