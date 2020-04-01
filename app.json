@@ -10,7 +10,8 @@
     "pages/recite_settings/recite_settings",
     "pages/history/history",
     "pages/domestication/domestication",
-    "pages/word_detail/word_detail"
+    "pages/word_detail/word_detail",
+    "pages/tutorial/tutorial"
   ],
   "window": {
     "backgroundTextStyle": "light",

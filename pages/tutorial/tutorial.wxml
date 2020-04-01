@@ -1,0 +1,5 @@
+<!--pages/tutorial/tutorial.wxml-->
+<text>pages/tutorial/tutorial.wxml</text>
+<view id="container">
+  <view class="item" wx:for="123456789123456789">{{item}}</view>
+</view>
