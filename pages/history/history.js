@@ -28,15 +28,15 @@ Page({
   },
   slideButtonTap(e) {
     number = e.currentTarget.dataset.position;
-    console.log(number);
+    //console.log(number);
     switch (e.detail.index) {
       case 0:
         var history_list = utils_his.getHistoryListFromStorage();
         history_list.reverse();
-        console.log(history_list);
+        //console.log(history_list);
         let his_recite = history_list[number];
         wx.setStorage({
-          key: 'history_choice',
+          key: 'history_detail',
           data: his_recite,
         })
         wx.switchTab({
@@ -52,18 +52,18 @@ Page({
   },
 
   modalconfirm: function () {
-    console.log(number);
+    //console.log(number);
     var history_list = utils_his.getHistoryListFromStorage();
     history_list.reverse();
-    console.log(history_list);
+    //console.log(history_list);
     let del_his = history_list[number];
     history_list.splice(number,1);
-    console.log(history_list);
+    //console.log(history_list);
     utils_his.setHistoryListInStorage(history_list);
     wx.removeStorage({
       key: del_his,
       success: function(res) {
-        console.log(res);
+        //console.log(res);
       },
     })
     this.setData({
@@ -78,13 +78,13 @@ Page({
   },
   buttonnavigate: function (e) {
     number = e.currentTarget.dataset.position;
-    console.log(number);
+    //console.log(number);
     var history_list = utils_his.getHistoryListFromStorage();
     history_list.reverse();
-    console.log(history_list);
+    //console.log(history_list);
     let his_detail = history_list[number];
     wx.setStorage({
-      key: 'history_choice',
+      key: 'history_detail',
       data: his_detail,
     })
     wx.navigateTo({
@@ -100,7 +100,7 @@ Page({
     })
   },
   selectResult: function (e) {
-    console.log('select result', e.detail);
+    //console.log('select result', e.detail);
   }
 
 });
