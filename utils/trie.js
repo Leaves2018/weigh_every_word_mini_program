@@ -1,7 +1,58 @@
 class Trie {
+  // 封装字符串数组建树方法（setTrieInStorage的）
   constructor(root = new TrieNode(null)) {
     this.root = root;
     this.allData = [];
+    /** 第一次尝试失败 
+    if (isTrie(root)) {
+      this.root = root;
+      this.data = [];
+    } else if (Array.isArray(root)) {
+      try {
+        var node = new Trie(null);
+        root.map(_id => {
+          node.insertData(_id);
+        });
+        this.root = node;
+        this.data = root;
+      } catch (e) {
+        console.warn(e);
+        this.root = new TrieNode(null);
+      } finally {
+        this.allData = [];
+      }
+    }
+    */
+    
+    /** 第二次尝试失败：似乎传递参数后，Array类型丢失（如何更方便地调试？）
+    if (Array.isArray(root)) {
+      // 如果输入参数是数组类型，尝试建一棵新字典树并插入
+      try {
+        var node = new Trie(null);
+        root.map(_id => {
+          node.insertData(_id);
+        });
+        this.root = node.root;
+        this.data = root;
+      } catch (e) {
+        console.warn(e);
+        this.root = new TrieNode(null);
+      } 
+    } else {
+      // 否则假定输入为TrieNode类型
+      try {
+        this.root = root;
+        if (!isTrie(this)) {
+          throw "It is not a trie.";
+        } 
+      } catch (e) {
+        console.warn(e);
+        this.root = new TrieNode(null);
+      }
+    }
+    this.allData = [];
+    */
+    
   }
 
   insert(stringData, node) {
@@ -163,6 +214,14 @@ class TrieNode {
   }
 }
 
+function getTrieFromStringArray (words) {
+  var trie = new Trie();
+  words.map(_id => {
+    trie.insertData(_id);
+  })
+  return trie;
+}
+
 // 通过插入"trie"和删除“trie"来判断是否为Trie类型对象
 function isTrie(trie) {
   try {
@@ -231,5 +290,6 @@ module.exports = {
   Trie: Trie,
   getTrieFromStorage: getTrieFromStorage,
   setTrieInStorage: setTrieInStorage,
+  getTrieFromStringArray: getTrieFromStringArray,
 }
 
