@@ -216,9 +216,14 @@ class TrieNode {
 
 function getTrieFromStringArray (words) {
   var trie = new Trie();
-  words.map(_id => {
-    trie.insertData(_id);
-  })
+  try {
+    words.map(_id => {
+      trie.insertData(_id);
+    })
+  } catch (e) {
+    console.warn(e);
+    console.warn('An empty trie will be returned.')
+  }
   return trie;
 }
 
