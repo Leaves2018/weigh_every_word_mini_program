@@ -54,6 +54,7 @@ Page({
 
   onUnload: function () {
     console.log("Page Vocabulary is in onUnload");
+    util_word.setVocabulary(vocabulary_trie);
   },
 
   tapSlideView: function (e) {
