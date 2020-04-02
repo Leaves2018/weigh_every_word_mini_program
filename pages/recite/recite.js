@@ -127,7 +127,7 @@ Page({
         duration: 2000,
       })
     }
-    util_word.getWord(wordList[currentIndex]).then(word => {
+    utilWord.getWord(wordList[currentIndex]).then(word => {
       this.setData({
         word_level: word.level,
         word_id: word._id,
@@ -139,113 +139,110 @@ Page({
     })
   },
 
-  /**
-   * 保存历史记录到本地缓存
-   * DELETE 逻辑应改为将处理结果写回缓存，谁调用谁保存
-  saveHistory: function() {
-    history.vocabulary = vocabularyWordList;
-    history.unknown = new_unknown_words;
-    let nvw = vocabularyWordList;
-    nvw = nvw.length > 0 ? nvw.map(word => word.name) : [];
-    let nfw = familiarWordList;
-    nfw = nfw.length > 0 ? nfw.map(word => word.name) : [];
-    utilWord.appendFamiliar(nfw);
-    utilWord.deleteFamiliar(nfw);
-    utilWord.appendVocabulary(nvw);
-    utilWord.deleteVocabulary(nvw);
-    utilHis.setHistoryInStorage(history.headline, history);
+  touchStart: function (e) {
+    console.log("touchStart", e);
+    startX = e.touches[0].pageX;
+    startY = e.touches[0].pageY;
+    startTime = new Date().getTime();
   },
-  /
+
+  touchCancel: function (e) {
+    startX = 0;
+    startY = 0;
+    startTime = 0;
+  },
+
+  touchMove: function (e) {
+
+  },
 
   /**
-   * 背诵流程控制：切换页面数据到下一个单词
-   * DELETE 换用loadIndexWord实现
-  next: function() {
-    if (unknown_words.length > 0) {
-      this.setData({
-        word_tag: "「未知」",
-      })
-      thisword = unknown_words.shift();
-    } else if (vocabulary_words.length > 0) {
-      thisword = vocabulary_words.shift();
-      this.setData({
-        word_tag: "「生词」",
-      })
+   * 触摸结束事件：主要的判断流程
+   */
+  touchEnd: function (e) {
+    console.log("touchEnd", e);
+    var endX = e.changedTouches[0].pageX;
+    var endY = e.changedTouches[0].pageY;
+    var touchTime = new Date().getTime() - startTime;
+
+    // 开始判断
+    // 1. 时间是否达到阈值
+    if (touchTime >= minTime) {
+      // 2. 偏移量是否达到阈值
+      var xOffset = endX - startX;
+      var yOffset = endY - startY;
+      // 判断左右滑动还是上下滑动
+      if (Math.abs(xOffset) >= Math.abs(yOffset) && Math.abs(xOffset) >= minOffset) {
+        // 判断向左滑动还是向右滑动
+        if (xOffset < 0) {
+          this.swipeLeft();
+        } else {
+          this.swipeRight();
+        }
+      } else if (Math.abs(xOffset) < Math.abs(yOffset) && Math.abs(yOffset) >= minOffset) {
+        // 判断向上滑动还是向下滑动
+        if (yOffset < 0) {
+          this.swipeUp();
+        } else {
+          this.swipeDown();
+        }
+      }
     } else {
-      this.reciteDone();
-      return;
+      console.log("滑动时间过短", touchTime);
     }
-    cnt += 1;
-    utilWord.getWord(thisword.name).then(word => {
-      word.context = history.body[thisword.sentence];
-      this.setData({
-        progressOverall: Math.round((cnt) / len * 100),
-        word_level: word.level,
-        word_id: word._id,
-        word_phonetic: word.phonetic,
-        word_chinese: word.chinese,
-        word_context: word.context,
-        word_english: word.english,
-      });
-    });
   },
-  /
+  /**
+   * 向左滑动处理方法
+   */
+  swipeLeft: function () {
+    console.log("Swipe left.");
+    familiarWordList.push(wordList[currentIndex]);
+    wordList.splice(currentIndex, 1);
+    this.loadIndexWord();
+  },
+  /**
+   * 向右滑动处理方法
+   */
+  swipeRight: function () {
+    console.log("Swipe right.");
+    vocabularyWordList.push(wordList[currentIndex]);
+    wordList.splice(currentIndex, 1);
+    this.loadIndexWord();
+  },
+  /**
+   * 向上滑动处理方法
+   */
+  swipeUp: function () {
+    console.log("Swipe up.");
+    currentIndex += 1;
+    this.loadIndexWord();
+  },
+  /**
+   * 向下滑动处理方法
+   */
+  swipeDown: function () {
+    console.log("Swipe down.");
+    currentIndex -= 1;
+    this.loadIndexWord();
+  },
 
   /**
-   * 跳转上一级页面（历史记录）
+   * 将用户修改保存到用户本地的生熟词本
+   * 并将结果保存到key为recite_info的本地缓存，供调用recite页面的页面进行数据处理
    */
-  goToHistory: function() {
-    wx.navigateBack({
-      delta: 1,
+  saveChanges: function () {
+    utilWord.appendFamiliar(familiarWordList);
+    utilWord.deleteFamiliar(familiarWordList);
+    utilWord.appendVocabulary(vocabularyWordList);
+    utilWord.deleteVocabulary(vocabularyWordList);
+    wx.setStorage({
+      key: 'recite_info',
+      data: {
+        type: 'result',
+        vocabulary: vocabularyWordList,
+        familiar: familiarWordList,
+      },
     })
-  },
-
-  /**
-   * 前往背诵页面
-   */
-  goToInput: function () {
-    wx.switchTab({
-      url: '/pages/input/input',
-    })
-  },
-
-  /**
-   * 背诵流程控制：激活“记得”“忘了”“模糊”按钮
-   */
-  activateButtons: function() {
-    this.setData({
-      disabled: false,
-      progressThisActive: false
-    });
-  },
-
-  /**
-   * 背诵流程控制：“模糊”按钮点击方法
-   */
-  tapHesitate: function() {
-    // thisword.hesitateNum += 1;
-    this.setData({
-      disabled: true,
-      progressThisActive: true
-    })
-  },
-
-  /**
-   * 背诵流程控制：“忘了”按钮点击方法
-   */
-  tapForget: function() {
-    vocabularyWordList.push(thisword);
-    // this.saveWord();
-    this.next();
-  },
-
-  /**
-   * 背诵流程控制：“记得”按钮点击方法
-   */
-  tapRemember: function() {
-    familiarWordList.push(thisword);
-    // this.saveWord();
-    this.next();
   },
 
   /**
@@ -259,5 +256,23 @@ Page({
       msg_title: "背诵完成",
       msg_extend: ["Congratulations!"],
     });
+  },
+
+  /**
+   * 跳转上一级页面（历史记录）
+   */
+  goToHistory: function () {
+    wx.navigateBack({
+      delta: 1,
+    })
+  },
+
+  /**
+   * 前往背诵页面
+   */
+  goToInput: function () {
+    wx.switchTab({
+      url: '/pages/input/input',
+    })
   },
 });
