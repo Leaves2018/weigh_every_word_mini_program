@@ -7,9 +7,9 @@
       <view class="word__level">分级：{{word_level}}</view>
       <view class="word__id">单词：{{word_id}}</view>
       <view class="word__phonetic">音标：{{word_phonetic}}</view>
-      <view class="word__context">语境：{{word_context}}</view>
       <view class="word__chinese">汉解：{{word_chinese}}</view>
       <!-- <view class="word__english">英文解释：{{word_english}}</view> -->
+      <view class="word__context">语境：{{word_context}}</view>
     </view>
   </view>
 </block>
