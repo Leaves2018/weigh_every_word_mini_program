@@ -36,7 +36,7 @@ Page({
         //console.log(history_list);
         let his_recite = history_list[number];
         wx.setStorage({
-          key: 'history_detail',
+          key: 'history_choice',
           data: his_recite,
         })
         wx.navigateTo({
