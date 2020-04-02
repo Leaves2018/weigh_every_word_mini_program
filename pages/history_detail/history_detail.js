@@ -78,6 +78,14 @@ Page({
       }
     }
     history_list.splice(temp, 1, history_example.headline);
+
+    if (history_example.vocabulary.length === 0 && history_example.unknown.length === 0) {
+      let history_done_list = utils_his.getHistoryListDoneFromStorage();
+      history_done_list.push(history_example.headline);
+      history_done_list = [...new Set(history_done_list)];
+      utils_his.setHistoryListDoneInStorage(history_done_list);
+    }
+
     //console.log(history_list);
     utils_his.setHistoryListInStorage(history_list);
     var history_result = new history(history_example.headline, history_example.body, history_example.vocabulary, history_example.unknown, history_example.date);

@@ -7,7 +7,7 @@ const getHistoryListFromStorage = () => {
     }
   } catch (e) {
     console.warn(e);
-    history_list=[];
+    history_list = [];
     setHistoryListInStorage(history_list);
   } finally {
     return history_list;
@@ -43,9 +43,34 @@ const setHistoryInStorage = (headline, history) => {
   })
 }
 
+const getHistoryListDoneFromStorage = () => {
+  var history_done_list = [];
+  try {
+    history_done_list = wx.getStorageSync('history_done_list');
+    if (typeof (history_done_list) === "string") {
+      throw "'history_done_list' is not existed. A new history_done_list will be created.";
+    }
+  } catch (e) {
+    console.warn(e);
+    history_done_list = [];
+    setHistoryListInStorage(history_done_list);
+  } finally {
+    return history_done_list;
+  }
+}
+
+const setHistoryListDoneInStorage = (history_done_list) => {
+  wx.setStorage({
+    key: 'history_done_list',
+    data: history_done_list,
+  })
+}
+
 module.exports = {
   getHistoryFromStorage: getHistoryFromStorage,
   setHistoryInStorage: setHistoryInStorage,
   getHistoryListFromStorage: getHistoryListFromStorage,
   setHistoryListInStorage: setHistoryListInStorage,
+  getHistoryListDoneFromStorage: getHistoryListDoneFromStorage,
+  setHistoryListDoneInStorage: setHistoryListDoneInStorage,
 }
