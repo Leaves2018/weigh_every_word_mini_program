@@ -2,6 +2,8 @@
 const utils_his = require('../../utils/history.js');
 var base64 = require("../../images/base64");
 var number;
+var history_list;
+var history_done_list;
 Page({
   data: {
     inputShowed: false,
@@ -10,11 +12,21 @@ Page({
     his_list: []
   },
   onLoad: function () {
-    
+    history_list = utils_his.getHistoryListFromStorage();
+    history_list.reverse();
+    history_done_list = utils_his.getHistoryListDoneFromStorage();
+    // var done_list_index = [];
+    // for (var element of history_done_list) {
+    //   for (var i = 0; i < history_list.length; i++) {
+    //     if (element === history_list[i]) {
+    //       done_list_index.push(i);
+    //     }
+    //   }
+    // }
+    // console.log(done_list_index);
   },
   onShow: function() {
-    var history_list = utils_his.getHistoryListFromStorage();
-    history_list.reverse();
+    
     this.setData({
       his_list: history_list,
       search: this.search.bind(this),

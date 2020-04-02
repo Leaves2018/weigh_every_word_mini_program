@@ -53,7 +53,7 @@ const getHistoryListDoneFromStorage = () => {
   } catch (e) {
     console.warn(e);
     history_done_list = [];
-    setHistoryListInStorage(history_done_list);
+    setHistoryListDoneInStorage(history_done_list);
   } finally {
     return history_done_list;
   }
