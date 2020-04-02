@@ -37,7 +37,7 @@ Page({
   onLoad: function() {
     wx.getClipboardData({
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
       }
     })
   },
@@ -138,11 +138,16 @@ Page({
       duration: 1500
     })
     wx.setStorage({
-      key: 'history_choice',
-      data: sentences[0],
-    })
-    wx.navigateTo({
-      url: '/pages/recite/recite',
+      key: 'reciteInfo',
+      data: {
+        type: 'history',
+        headline: sentences[0],
+      },
+      success: function () {
+        wx.navigateTo({
+          url: '/pages/recite/recite',
+        });
+      }
     })
   },
 

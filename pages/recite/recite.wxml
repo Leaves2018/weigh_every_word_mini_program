@@ -1,20 +1,7 @@
-<block wx:if="{{!startReciting}}">
-  <view class="page">
-      <mp-msg type="{{msg_type}}" title="{{msg_title}}">
-          <view slot="extend">
-              <view wx:for="{{msg_extend}}" wx:key="*this">{{item}}</view>
-          </view>
-          <view slot="handle">
-              <button class="weui-btn" type="primary" bindtap="tapReciteButton">再来一组</button>
-              <button class="weui-btn" type="default" bindtap="goToHistory">查看历史</button>
-          </view>
-      </mp-msg>
-  </view>
-  <mp-dialog title="{{reciteDoneDialogTitle}}" show="{{showReciteDoneDialog}}" bindbuttontap="tapReciteDoneDialogButton" buttons="{{reciteDoneDialogButtons}}">{{reciteDoneDialogText}}</mp-dialog>
-</block>
-<block wx:else>
+<block wx:if="{{startReciting}}">
   <progress percent="{{progressOverall}}" show-info border-radius="5"/>
-  <view class="word">
+  <view class="word" 
+  bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
     <view class="word__detail">
       <view class="word__tag">标签：{{word_tag}}</view>
       <view class="word__level">分级：{{word_level}}</view>
@@ -24,15 +11,19 @@
       <view class="word__chinese">汉解：{{word_chinese}}</view>
       <!-- <view class="word__english">英文解释：{{word_english}}</view> -->
     </view>
-    <view class="word__options">
-      <button type="default" size="{{defaultSize}}" loading="{{loading}}" plain="{{plain}}"
-          disabled="{{disabled}}" bindtap="tapHesitate"> 模糊 </button>
-      <button type="warn" size="{{warnSize}}" loading="{{loading}}" plain="{{plain}}"
-          disabled="{{disabled}}" bindtap="tapForget"> 忘了 </button>
-      <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}"
-              disabled="{{disabled}}" bindtap="tapRemember"> 记得 </button>
-      <progress percent="{{progressThis}}" border-radius="5" 
-      active="{{progressThisActive}}" duration="{{thisDuration}}"         bindactiveend="activateButtons"/>
-    </view>
+  </view>
+</block>
+
+<block wx:else>
+  <view class="page">
+      <mp-msg type="{{msg_type}}" title="{{msg_title}}">
+          <view slot="extend">
+              <view wx:for="{{msg_extend}}" wx:key="*this">{{item}}</view>
+          </view>
+          <!-- <view slot="handle">
+              <button class="weui-btn" type="primary" bindtap="goToHistory">回到历史记录</button>
+              <button class="weui-btn" type="default" bindtap="goToInput">录入新的文本</button>
+          </view> -->
+      </mp-msg>
   </view>
 </block>

@@ -48,11 +48,16 @@ Page({
         //console.log(history_list);
         let his_recite = history_list[number];
         wx.setStorage({
-          key: 'history_choice',
-          data: his_recite,
-        })
-        wx.navigateTo({
-          url: '/pages/recite/recite',
+          key: 'reciteInfo',
+          data: {
+            type: 'history',
+            headline: his_recite,
+          },
+          success: function () {
+            wx.navigateTo({
+              url: '/pages/recite/recite',
+            });
+          }
         })
         break;
       case 1:

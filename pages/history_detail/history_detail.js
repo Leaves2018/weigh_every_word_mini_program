@@ -2,6 +2,7 @@
 const utils_his = require('../../utils/history.js');
 var base64 = require("../../images/base64");
 const util_word = require('../../utils/word.js');
+const util_trie = require('../../utils/trie.js');
 function history(headline, body, vocabulary, unknown, date) {
   this.headline = headline;
   this.body = body;
@@ -12,6 +13,7 @@ function history(headline, body, vocabulary, unknown, date) {
 var number;
 var index;
 var vocabulary = [];
+var remember_vocabulary = [];
 var unknown = [];
 var history_example;
 var before_headline;
@@ -88,6 +90,8 @@ Page({
     utils_his.setHistoryListInStorage(history_list);
     var history_result = new history(history_example.headline, history_example.body, history_example.vocabulary, history_example.unknown, history_example.date);
     utils_his.setHistoryInStorage(history_example.headline, history_result);
+    util_word.appendVocabulary(vocabulary);
+    util_word.deleteVocabulary(remember_vocabulary);
   },
 
   onHide: function() {
@@ -107,7 +111,14 @@ Page({
     let x = parseInt(a[0]);
     let y = parseInt(a[1]);
     index = 3 * x + y;
-    //console.log(index);
+    let unknown_trie = util_trie.getTrieFromStringArray(unknown);
+    wx.setStorage({
+      key: 'word_detail_list',
+      data: {
+        trie: unknown_trie,
+        currentIndex: index,
+      },
+    });
     let word = unknown[index];
     let metaword = util_word.getWord(word).then(result => {
       this.setData({
@@ -117,12 +128,21 @@ Page({
       })
     });
   },
+  
   showDetail_vocabulary: function (e) {
     let a = e.currentTarget.dataset.position.split(".");
     //console.log(e.currentTarget.dataset.position.split("."));
     let x = parseInt(a[0]);
     let y = parseInt(a[1]);
     index = 3 * x + y;
+    let vocabulary_trie = util_trie.getTrieFromStringArray(vocabulary);
+    wx.setStorage({
+      key: 'word_detail_list',
+      data: {
+        trie: vocabulary_trie,
+        currentIndex: index,
+      },
+    });
     let word = vocabulary[index];
     let metaword = util_word.getWord(word).then(result => {
       this.setData({
@@ -132,21 +152,6 @@ Page({
       })
     });
   },
-
-//TODO:
-  // tapSlideView(e) {
-  //   let index = e.currentTarget.dataset.position;
-  //   wx.setStorage({
-  //     key: 'word_detail_list',
-  //     data: {
-  //       trie: this.otherdata.vocabulary_trie,
-  //       currentIndex: index,
-  //     },
-  //   });
-  //   wx.navigateTo({
-  //     url: '../word_detail/word_detail',
-  //   });
-  // },
 
   unknown_modalconfirm: function () {
     unknown.splice(index, 1);
@@ -184,6 +189,7 @@ Page({
   },
 
   vocabulary_modalconfirm: function () {
+    remember_vocabulary.push(vocabulary[index]);
     vocabulary.splice(index, 1);
     history_example.vocabulary.splice(index, 1);
     var vocabulary_result = [];

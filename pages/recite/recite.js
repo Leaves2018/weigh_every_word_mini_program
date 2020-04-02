@@ -1,19 +1,19 @@
-const util_his = require('../../utils/history.js');
-const util_trie = require('../../utils/trie.js');
-const util_word = require('../../utils/word.js');
+const utilHis = require('../../utils/history.js');
+const utilTrie = require('../../utils/trie.js');
+const utilWord = require('../../utils/word.js');
 
-var thisword = null;
-var words = [];
-var cnt = -1;
-var len = 0;
-var vocabulary_words = [];
-var unknown_words = [];
-var headline = "";
-var history = null;
-var new_unknown_words = [];
-var new_vocabulary_words = [];
-var new_familiar_words = [];
+var currentIndex = 0;         // 当前显示单词位于总体位置的下标
+var history = {};             // 当输入参数为历史记录时使用
+var wordList = [];            // 解析得到的单词列表
 
+var vocabularyWordList = [];  // 记录用户修改得到的生熟词
+var familiarWordList = [];
+
+var minOffset = 30;
+var minTime = 60;
+var startX = 0;
+var startY = 0;
+var startTime = 0;
 
 Page({
   data: {
@@ -30,50 +30,42 @@ Page({
   },
 
   /**
-   * 清空背诵流程使用变量
-   */
-  clearOtherData: function() {
-    thisword = null;
-    words = [];
-    cnt = -1;
-    len = 0;
-    vocabulary_words = [];
-    unknown_words = [];
-    headline = "";
-    history = null;
-    new_unknown_words = [];
-    new_vocabulary_words = [];
-    new_familiar_words = [];
-  },
-
-  /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function() {
-    this.initialRecitePage();
+  onLoad: function () {
+    try {
+      var reciteInfo = wx.getStorageSync('reciteInfo');
+      if (reciteInfo === "") {
+        throw "reciteInfo is undefined in storage.";
+      } else {
+        switch (reciteInfo.type) {
+          case "trie":
+            this.parseTrieInfo(new utilTrie.Trie(reciteInfo.trie.root));
+            currentIndex = reciteInfo.currentIndex;
+            break;
+          case "history":
+            this.parseHistoryInfo(reciteInfo.headline);
+            currentIndex = 0;
+            break;
+        }
+      } 
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      // reciteInfo即用即废止，所存信息是一次性的
+      wx.setStorage({
+        key: 'reciteInfo',
+        data: -1,
+      });
+      this.startReciting();
+    }
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    try {
-      var history_choice = wx.getStorageSync('history_choice');
-      if (history_choice === "") {
-        throw "history_choice is undefined in storage.";
-      } else if (typeof(history_choice) === "string") {
-        // TODO 安全性检查：确保history_choice就是history_list中的某个headline
-        headline = history_choice;
-        this.goToRecite();
-      }
-    } catch (e) {
-      console.warn(e);
-    } finally {
-      wx.setStorage({
-        key: 'history_choice',
-        data: -1,
-      })
-    }
+
   },
 
   /**
@@ -94,203 +86,198 @@ Page({
    * 生命周期函数--监听页面被销毁
    */
   onUnload: function () {
-
+    this.saveChanges();
   },
 
   /**
-   * 生成标题
+   * 解析字典树
    */
-  generateHeadline: function() {
-    // TODO 给历史记录列表每个选项添加一个"done"属性，标志其是否已经背完
-    // TODO 并在没背完的部分中随机挑一个
-    // TODO 如果全部背完，修改reciteDone对话框内容并弹出
-    var history_list = util_his.getHistoryListFromStorage();
-    var len = history_list.length;
-    var flag = true;
-    if (len === 0) {
-      flag = false;
-    } else {
-      headline = history_list[parseInt(Math.random() * len)];
-    }
-    return flag;
+  parseTrieInfo: function (trie) {
+    wordList = trie.getAllData();
   },
 
   /**
-   * 初始化背诵页面
+   * 解析历史记录
    */
-  initialRecitePage: function() {
-    this.setData({
-      startReciting: false,
-      msg_type: "info",
-      msg_title: "要背单词吗？",
-      msg_extend: ["可以再来一组随机抽一组", "也可查看历史自己选择"],
+  parseHistoryInfo: function (headline) {
+    history = utilHis.getHistoryFromStorage(headline);
+    history.isHistory = true;
+    history.hisSenLocMap = new Map();
+    history.unknown.concat(history.vocabulary).map(word => {
+      wordList.push(word.name);
+      history.hisSenLocMap.set(word.name, word.sentence);
     });
   },
 
   /**
-   * 解析、加载历史记录
+   * 开始背诵流程
    */
-  loadHistory: function(resolve, reject) {
-    history = util_his.getHistoryFromStorage(headline);
-    console.log(history);
-    vocabulary_words = history.vocabulary;
-    unknown_words = history.unknown;
-    words = unknown_words.concat(vocabulary_words);
-    len = words.length;
-    if (len > 0) {
-      resolve();
-    } else {
-      reject();
-    }
+  startReciting: function () {
+    this.setData({
+      startReciting: true,
+    });
+    this.loadIndexWord();
   },
 
   /**
-   * 保存历史记录到本地缓存
+   * 加载wordList[currentIndex]指定的单词
    */
-  saveHistory: function() {
-    history.vocabulary = new_vocabulary_words;
-    history.unknown = new_unknown_words;
-    let nvw = new_vocabulary_words;
-    nvw = nvw.length > 0 ? nvw.map(word => word.name) : [];
-    let nfw = new_familiar_words;
-    nfw = nfw.length > 0 ? nfw.map(word => word.name) : [];
-    util_word.appendFamiliar(nfw);
-    util_word.deleteFamiliar(nfw);
-    util_word.appendVocabulary(nvw);
-    util_word.deleteVocabulary(nvw);
-    util_his.setHistoryInStorage(history.headline, history);
-    // 背诵完成，清空过程变量
-    this.clearOtherData();
-  },
-
-  /**
-   * 背诵流程控制：切换页面数据到下一个单词
-   */
-  next: function() {
-    if (unknown_words.length > 0) {
-      this.setData({
-        word_tag: "「未知」",
-      })
-      thisword = unknown_words.shift();
-    } else if (vocabulary_words.length > 0) {
-      thisword = vocabulary_words.shift();
-      this.setData({
-        word_tag: "「生词」",
-      })
-    } else {
-      this.reciteDone();
-      return;
+  loadIndexWord: function () {
+    var that = this;
+    if (currentIndex < 0) {
+      currentIndex = 0;
+      wx.showModal({
+        title: '提示',
+        content: '前面没有啦，是否结束并保存？',
+        success (res) {
+          if (res.confirm) {
+            that.reciteDone();
+          }
+        }
+      });
+    } else if (currentIndex >= wordList.length) {
+      currentIndex = wordList.length - 1;
+      wx.showModal({
+        title: '提示',
+        content: '后面没有啦，是否结束并保存？',
+        success(res) {
+          if (res.confirm) {
+            that.reciteDone();
+          }
+        }
+      });
     }
-    cnt += 1;
-    util_word.getWord(thisword.name).then(word => {
-      // word.hesitateNum = 0;
-      word.context = history.body[thisword.sentence];
+    var context = "";
+    utilWord.getWord(wordList[currentIndex]).then(word => {
+      context = word.context;
       this.setData({
-        progressOverall: Math.round((cnt) / len * 100),
+        progressOverall: Math.round(currentIndex / wordList.length * 100),
         word_level: word.level,
         word_id: word._id,
         word_phonetic: word.phonetic,
         word_chinese: word.chinese,
-        word_context: word.context,
-        word_english: word.english,
+        // word_english: word.english,
       });
     });
-  },
-
-  /**
-   * 没有单词背诵的处理方法
-   */
-  onNoWordsToRecite: function() {
+    if (history.isHistory) {
+      context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
+    }
     this.setData({
-      showReciteDoneDialog: true,
-      reciteDoneDialogTitle: "Congratulations！",
-      reciteDoneDialogText: "历史记录已刷完，没有更多单词可以背诵了",
-      reciteDoneDialogButtons: [{text: "知道了"}],
+      word_context: context,
     });
   },
 
-  /**
-   * 对话框提示没有单词背诵
-   */
-  tapReciteDoneDialogButton: function(e) {
-    this.setData({
-      showReciteDoneDialog: false,
-    });
+  touchStart: function (e) {
+    console.log("touchStart", e);
+    startX = e.touches[0].pageX;
+    startY = e.touches[0].pageY;
+    startTime = new Date().getTime();
+  },
+
+  touchCancel: function (e) {
+    startX = 0;
+    startY = 0;
+    startTime = 0;
+  },
+
+  touchMove: function (e) {
+
   },
 
   /**
-   * 再次开始背诵流程
+   * 触摸结束事件：主要的判断流程
    */
-  goToRecite: function() {
-    this.setData({
-      startReciting: true,
-    });
-    new Promise(this.loadHistory).then(this.next).catch(this.onNoWordsToRecite);
-  },
+  touchEnd: function (e) {
+    console.log("touchEnd", e);
+    var endX = e.changedTouches[0].pageX;
+    var endY = e.changedTouches[0].pageY;
+    var touchTime = new Date().getTime() - startTime;
 
-  tapReciteButton: function() {
-    if (this.generateHeadline()) {
-      // 如果headline生成成功，进入背诵流程
-      this.goToRecite();
+    // 开始判断
+    // 1. 时间是否达到阈值
+    if (touchTime >= minTime) {
+      // 2. 偏移量是否达到阈值
+      var xOffset = endX - startX;
+      var yOffset = endY - startY;
+      // 判断左右滑动还是上下滑动
+      if (Math.abs(xOffset) >= Math.abs(yOffset) && Math.abs(xOffset) >= minOffset) {
+        // 判断向左滑动还是向右滑动
+        if (xOffset < 0) {
+          this.swipeLeft();
+        } else {
+          this.swipeRight();
+        }
+      } else if (Math.abs(xOffset) < Math.abs(yOffset) && Math.abs(yOffset) >= minOffset) {
+        // 判断向上滑动还是向下滑动
+        if (yOffset < 0) {
+          this.swipeUp();
+        } else {
+          this.swipeDown();
+        }
+      }
     } else {
-      // 否则提示用户无单词可背
-      this.onNoWordsToRecite();
+      console.log("滑动时间过短", touchTime);
     }
   },
+  /**
+   * 向左滑动处理方法
+   */
+  swipeLeft: function () {
+    console.log("Swipe left.");
+    familiarWordList.push(wordList[currentIndex]);
+    wordList.splice(currentIndex, 1);
+    this.loadIndexWord();
+  },
+  /**
+   * 向右滑动处理方法
+   */
+  swipeRight: function () {
+    console.log("Swipe right.");
+    vocabularyWordList.push(wordList[currentIndex]);
+    wordList.splice(currentIndex, 1);
+    this.loadIndexWord();
+  },
+  /**
+   * 向上滑动处理方法
+   */
+  swipeUp: function () {
+    console.log("Swipe up.");
+    currentIndex += 1;
+    this.loadIndexWord();
+  },
+  /**
+   * 向下滑动处理方法
+   */
+  swipeDown: function () {
+    console.log("Swipe down.");
+    currentIndex -= 1;
+    this.loadIndexWord();
+  },
 
   /**
-   * 跳转历史记录页面
+   * 将用户修改保存到用户本地的生熟词本
+   * 并将结果保存到key为recite_info的本地缓存，供调用recite页面的页面进行数据处理
    */
-  goToHistory: function() {
-    wx.navigateTo({
-      url: '../history/history',
+  saveChanges: function () {
+    utilWord.appendFamiliar(familiarWordList);
+    utilWord.deleteFamiliar(familiarWordList);
+    utilWord.appendVocabulary(vocabularyWordList);
+    utilWord.deleteVocabulary(vocabularyWordList);
+    wx.setStorage({
+      key: 'reciteInfo',
+      data: {
+        type: 'result',
+        vocabulary: vocabularyWordList,
+        familiar: familiarWordList,
+      },
     })
-  },
-
-  /**
-   * 背诵流程控制：激活“记得”“忘了”“模糊”按钮
-   */
-  activateButtons: function() {
-    this.setData({
-      disabled: false,
-      progressThisActive: false
-    });
-  },
-
-  /**
-   * 背诵流程控制：“模糊”按钮点击方法
-   */
-  tapHesitate: function() {
-    // thisword.hesitateNum += 1;
-    this.setData({
-      disabled: true,
-      progressThisActive: true
-    })
-  },
-
-  /**
-   * 背诵流程控制：“忘了”按钮点击方法
-   */
-  tapForget: function() {
-    new_vocabulary_words.push(thisword);
-    // this.saveWord();
-    this.next();
-  },
-
-  /**
-   * 背诵流程控制：“记得”按钮点击方法
-   */
-  tapRemember: function() {
-    new_familiar_words.push(thisword);
-    // this.saveWord();
-    this.next();
   },
 
   /**
    * 背诵完成控制方法
    */
   reciteDone: function() {
-    this.saveHistory();
+    this.saveChanges();
     this.setData({
       startReciting: false,
       msg_type: "success",
@@ -298,4 +285,24 @@ Page({
       msg_extend: ["Congratulations!"],
     });
   },
+
+  /**
+   * 跳转上一级页面（历史记录）
+   *
+  goToHistory: function () {
+    wx.navigateBack({
+      delta: 1,
+    })
+  },
+  */
+
+  /**
+   * 前往背诵页面
+   *
+  goToInput: function () {
+    wx.switchTab({
+      url: '/pages/input/input',
+    })
+  },
+  */
 });
