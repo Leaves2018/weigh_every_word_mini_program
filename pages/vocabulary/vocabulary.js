@@ -40,21 +40,23 @@ Page({
   },
 
   onUnload: function () {
+    util_word.setVocabulary(vocabulary_trie);
   },
 
   tapSlideView: function (e) {
     let index = e.currentTarget.dataset.position;
 
     wx.setStorage({
-      key: 'word_detail_list',
+      key: 'reciteInfo',
       data: {
+        type: 'trie',
         trie: vocabulary_trie,
         currentIndex: index,
       },
     });
 
     wx.navigateTo({
-      url: '../word_detail/word_detail',
+      url: '../recite/recite',
     });
   },
 
