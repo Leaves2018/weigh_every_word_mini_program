@@ -9,6 +9,12 @@ var wordList = [];            // 解析得到的单词列表
 var vocabularyWordList = [];  // 记录用户修改得到的生熟词
 var familiarWordList = [];
 
+var minOffset = 30;
+var minTime = 60;
+var startX = 0;
+var startY = 0;
+var startTime = 0;
+
 Page({
   data: {
     // 背诵流程页面数据
@@ -80,7 +86,7 @@ Page({
    * 生命周期函数--监听页面被销毁
    */
   onUnload: function () {
-
+    this.saveChanges();
   },
 
   /**
@@ -112,23 +118,39 @@ Page({
    * 加载wordList[currentIndex]指定的单词
    */
   loadIndexWord: function () {
+    var that = this;
     if (currentIndex < 0) {
       currentIndex = 0;
-      wx.showToast({
-        title: '前面没有啦',
-        icon: 'info',
-        duration: 2000,
+      wx.showModal({
+        title: '提示',
+        content: '前面没有啦，是否保存并返回？',
+        success (res) {
+          if (res.confirm) {
+            that.saveChanges();
+            wx.navigateBack({
+              delta: 1,
+            });
+          }
+        }
       });
     } else if (currentIndex >= wordList.length) {
       currentIndex = wordList.length - 1;
-      wx.showToast({
-        title: '后面没有啦',
-        icon: 'info',
-        duration: 2000,
-      })
+      wx.showModal({
+        title: '提示',
+        content: '后面没有啦，是否保存并返回？',
+        success(res) {
+          if (res.confirm) {
+            that.saveChanges();
+            wx.navigateBack({
+              delta: 1,
+            });
+          }
+        }
+      });
     }
     utilWord.getWord(wordList[currentIndex]).then(word => {
       this.setData({
+        progressOverall: Math.round(currentIndex / wordList.length * 100),
         word_level: word.level,
         word_id: word._id,
         word_phonetic: word.phonetic,
