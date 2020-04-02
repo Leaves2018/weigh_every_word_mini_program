@@ -1,19 +1,13 @@
-const util_his = require('../../utils/history.js');
-const util_trie = require('../../utils/trie.js');
-const util_word = require('../../utils/word.js');
+const utilHis = require('../../utils/history.js');
+const utilTrie = require('../../utils/trie.js');
+const utilWord = require('../../utils/word.js');
 
-var thisword = null;
-var words = [];
-var cnt = -1;
-var len = 0;
-var vocabulary_words = [];
-var unknown_words = [];
-var headline = "";
-var history = null;
-var new_unknown_words = [];
-var new_vocabulary_words = [];
-var new_familiar_words = [];
+var currentIndex = 0;        // 当前显示单词位于总体位置的下标
 
+var wordList = [];            // 解析得到的单词列表
+
+var vocabularyWordList = [];  // 记录用户修改得到的生熟词
+var familiarWordList = [];
 
 Page({
   data: {
@@ -30,55 +24,34 @@ Page({
   },
 
   /**
-   * 清空背诵流程使用变量
-   */
-  clearOtherData: function() {
-    thisword = null;
-    words = [];
-    cnt = -1;
-    len = 0;
-    vocabulary_words = [];
-    unknown_words = [];
-    headline = "";
-    history = null;
-    new_unknown_words = [];
-    new_vocabulary_words = [];
-    new_familiar_words = [];
-  },
-
-  /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function() {
-    if (true) {
-      // 如果该记录已处理完成，不再进入背诵流程
-      this.setData({
-        startReciting: false,
-        msg_type: "info",
-        msg_title: "这篇文本已经处理完成",
-        msg_extend: ["这篇文本的所有单词已经分类完毕", "所有归类为生词的单词您也已经背诵完成", "可以在 我/生词本 及 我/熟词本 查看"],
-      });
-    } else {
-      // 否则进入背诵流程：首先尝试获取作为key的headline
-      try {
-        var history_choice = wx.getStorageSync('history_choice');
-        if (history_choice === "") {
-          throw "history_choice is undefined in storage.";
-        } else if (typeof (history_choice) === "string") {
-          // TODO 安全性检查：确保history_choice就是history_list中的某个headline
-          headline = history_choice;
-          // 如果前述没有抛出异常，则获取headline成功，进入背诵流程
-          this.goToRecite();
+  onLoad: function () {
+    try {
+      var reciteInfo = wx.getStorageSync('reciteInfo');
+      if (reciteInfo === "") {
+        throw "reciteInfo is undefined in storage.";
+      } else {
+        switch (reciteInfo.type) {
+          case "trie":
+            this.parseTrieInfo(new utilTrie.Trie(reciteInfo.trie.root));
+            currentIndex = reciteInfo.currentIndex;
+            break;
+          case "history":
+            this.parseHistoryInfo(reciteInfo.headline);
+            currentIndex = 0;
+            break;
         }
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        // history_choice即用即废止，所存信息是一次性的
-        wx.setStorage({
-          key: 'history_choice',
-          data: -1,
-        })
-      }
+      } 
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      // reciteInfo即用即废止，所存信息是一次性的
+      wx.setStorage({
+        key: 'reciteInfo',
+        data: -1,
+      });
+      this.startReciting();
     }
   },
 
@@ -111,76 +84,82 @@ Page({
   },
 
   /**
-   * 生成标题
-   * DELETE 没有必要随机挑选背诵，需求不存在
-  generateHeadline: function() {
-    // TODO 给历史记录列表每个选项添加一个"done"属性，标志其是否已经背完
-    // TODO 并在没背完的部分中随机挑一个
-    // TODO 如果全部背完，修改reciteDone对话框内容并弹出
-    var history_list = util_his.getHistoryListFromStorage();
-    var len = history_list.length;
-    var flag = true;
-    if (len === 0) {
-      flag = false;
-    } else {
-      headline = history_list[parseInt(Math.random() * len)];
-    }
-    return flag;
+   * 解析字典树
+   */
+  parseTrieInfo: function (trie) {
+    wordList = trie.getAllData();
   },
-  */
+
+  /**
+   * 解析历史记录
+   */
+  parseHistoryInfo: function (headline) {
+    var history = utilHis.getHistoryFromStorage(headline);
+    wordList = history.unknown.concat(history.vocabulary);
+  },
 
   /**
    * 开始背诵流程
    */
-  goToRecite: function () {
-    // 渲染页面切换到背诵流程页面
+  startReciting: function () {
     this.setData({
       startReciting: true,
     });
-    // 尝试解析历史记录：解析成功即开始加载；解析失败则
-    // new Promise(this.loadHistory).then(this.next).catch(this.onNoWordsToRecite);
-    new Promise(this.loadHistory).then(this.next);
+    this.loadIndexWord();
   },
 
   /**
-   * 解析、加载历史记录
+   * 加载wordList[currentIndex]指定的单词
    */
-  loadHistory: function(resolve, reject) {
-    history = util_his.getHistoryFromStorage(headline);
-    console.log(history);
-    vocabulary_words = history.vocabulary;
-    unknown_words = history.unknown;
-    words = unknown_words.concat(vocabulary_words);
-    len = words.length;
-    if (len > 0) {
-      resolve();
-    } else {
-      reject();
+  loadIndexWord: function () {
+    if (currentIndex < 0) {
+      currentIndex = 0;
+      wx.showToast({
+        title: '前面没有啦',
+        icon: 'info',
+        duration: 2000,
+      });
+    } else if (currentIndex >= wordList.length) {
+      currentIndex = wordList.length - 1;
+      wx.showToast({
+        title: '后面没有啦',
+        icon: 'info',
+        duration: 2000,
+      })
     }
+    util_word.getWord(wordList[currentIndex]).then(word => {
+      this.setData({
+        word_level: word.level,
+        word_id: word._id,
+        word_phonetic: word.phonetic,
+        word_chinese: word.chinese,
+        word_context: word.context,
+        // word_english: word.english,
+      });
+    })
   },
 
   /**
    * 保存历史记录到本地缓存
-   */
+   * DELETE 逻辑应改为将处理结果写回缓存，谁调用谁保存
   saveHistory: function() {
-    history.vocabulary = new_vocabulary_words;
+    history.vocabulary = vocabularyWordList;
     history.unknown = new_unknown_words;
-    let nvw = new_vocabulary_words;
+    let nvw = vocabularyWordList;
     nvw = nvw.length > 0 ? nvw.map(word => word.name) : [];
-    let nfw = new_familiar_words;
+    let nfw = familiarWordList;
     nfw = nfw.length > 0 ? nfw.map(word => word.name) : [];
-    util_word.appendFamiliar(nfw);
-    util_word.deleteFamiliar(nfw);
-    util_word.appendVocabulary(nvw);
-    util_word.deleteVocabulary(nvw);
-    util_his.setHistoryInStorage(history.headline, history);
-    // 背诵完成，清空过程变量
-    this.clearOtherData();
+    utilWord.appendFamiliar(nfw);
+    utilWord.deleteFamiliar(nfw);
+    utilWord.appendVocabulary(nvw);
+    utilWord.deleteVocabulary(nvw);
+    utilHis.setHistoryInStorage(history.headline, history);
   },
+  /
 
   /**
    * 背诵流程控制：切换页面数据到下一个单词
-   */
+   * DELETE 换用loadIndexWord实现
   next: function() {
     if (unknown_words.length > 0) {
       this.setData({
@@ -197,7 +176,7 @@ Page({
       return;
     }
     cnt += 1;
-    util_word.getWord(thisword.name).then(word => {
+    utilWord.getWord(thisword.name).then(word => {
       word.context = history.body[thisword.sentence];
       this.setData({
         progressOverall: Math.round((cnt) / len * 100),
@@ -210,43 +189,7 @@ Page({
       });
     });
   },
-
-  /**
-   * 没有单词背诵的处理方法
-   * DELETE 随机背诵单词需求砍掉后，所有历史记录刷完的情况应该放在历史记录列表页面处理（静态页面）
-  onNoWordsToRecite: function() {
-    this.setData({
-      showReciteDoneDialog: true,
-      reciteDoneDialogTitle: "Congratulations！",
-      reciteDoneDialogText: "历史记录已刷完，没有更多单词可以背诵了",
-      reciteDoneDialogButtons: [{text: "知道了"}],
-    });
-  },
-  */
-
-  /**
-   * 对话框提示没有单词背诵
-   * DELETE 随机背诵单词需求砍掉后，对话框提示也丧失意义 
-  tapReciteDoneDialogButton: function(e) {
-    this.setData({
-      showReciteDoneDialog: false,
-    });
-  },
-  */
-
-
-  /**
-   * DELETE 随机背诵单词需求砍掉后，对话框提示也丧失意义
-  tapReciteButton: function() {
-    if (this.generateHeadline()) {
-      // 如果headline生成成功，进入背诵流程
-      this.goToRecite();
-    } else {
-      // 否则提示用户无单词可背
-      this.onNoWordsToRecite();
-    }
-  },
-  */
+  /
 
   /**
    * 跳转上一级页面（历史记录）
@@ -291,7 +234,7 @@ Page({
    * 背诵流程控制：“忘了”按钮点击方法
    */
   tapForget: function() {
-    new_vocabulary_words.push(thisword);
+    vocabularyWordList.push(thisword);
     // this.saveWord();
     this.next();
   },
@@ -300,7 +243,7 @@ Page({
    * 背诵流程控制：“记得”按钮点击方法
    */
   tapRemember: function() {
-    new_familiar_words.push(thisword);
+    familiarWordList.push(thisword);
     // this.saveWord();
     this.next();
   },
