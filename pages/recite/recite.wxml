@@ -5,8 +5,8 @@
               <view wx:for="{{msg_extend}}" wx:key="*this">{{item}}</view>
           </view>
           <view slot="handle">
-              <button class="weui-btn" type="primary" bindtap="tapReciteButton">再来一组</button>
-              <button class="weui-btn" type="default" bindtap="goToHistory">查看历史</button>
+              <button class="weui-btn" type="primary" bindtap="goToHistory">回到历史记录</button>
+              <button class="weui-btn" type="default" bindtap="goToInput">录入新的文本</button>
           </view>
       </mp-msg>
   </view>

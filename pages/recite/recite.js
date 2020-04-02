@@ -50,30 +50,43 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
-    this.initialRecitePage();
+    if (true) {
+      // 如果该记录已处理完成，不再进入背诵流程
+      this.setData({
+        startReciting: false,
+        msg_type: "info",
+        msg_title: "这篇文本已经处理完成",
+        msg_extend: ["这篇文本的所有单词已经分类完毕", "所有归类为生词的单词您也已经背诵完成", "可以在 我/生词本 及 我/熟词本 查看"],
+      });
+    } else {
+      // 否则进入背诵流程：首先尝试获取作为key的headline
+      try {
+        var history_choice = wx.getStorageSync('history_choice');
+        if (history_choice === "") {
+          throw "history_choice is undefined in storage.";
+        } else if (typeof (history_choice) === "string") {
+          // TODO 安全性检查：确保history_choice就是history_list中的某个headline
+          headline = history_choice;
+          // 如果前述没有抛出异常，则获取headline成功，进入背诵流程
+          this.goToRecite();
+        }
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // history_choice即用即废止，所存信息是一次性的
+        wx.setStorage({
+          key: 'history_choice',
+          data: -1,
+        })
+      }
+    }
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    try {
-      var history_choice = wx.getStorageSync('history_choice');
-      if (history_choice === "") {
-        throw "history_choice is undefined in storage.";
-      } else if (typeof(history_choice) === "string") {
-        // TODO 安全性检查：确保history_choice就是history_list中的某个headline
-        headline = history_choice;
-        this.goToRecite();
-      }
-    } catch (e) {
-      console.warn(e);
-    } finally {
-      wx.setStorage({
-        key: 'history_choice',
-        data: -1,
-      })
-    }
+
   },
 
   /**
@@ -99,7 +112,7 @@ Page({
 
   /**
    * 生成标题
-   */
+   * DELETE 没有必要随机挑选背诵，需求不存在
   generateHeadline: function() {
     // TODO 给历史记录列表每个选项添加一个"done"属性，标志其是否已经背完
     // TODO 并在没背完的部分中随机挑一个
@@ -114,17 +127,19 @@ Page({
     }
     return flag;
   },
+  */
 
   /**
-   * 初始化背诵页面
+   * 开始背诵流程
    */
-  initialRecitePage: function() {
+  goToRecite: function () {
+    // 渲染页面切换到背诵流程页面
     this.setData({
-      startReciting: false,
-      msg_type: "info",
-      msg_title: "要背单词吗？",
-      msg_extend: ["可以再来一组随机抽一组", "也可查看历史自己选择"],
+      startReciting: true,
     });
+    // 尝试解析历史记录：解析成功即开始加载；解析失败则
+    // new Promise(this.loadHistory).then(this.next).catch(this.onNoWordsToRecite);
+    new Promise(this.loadHistory).then(this.next);
   },
 
   /**
@@ -183,7 +198,6 @@ Page({
     }
     cnt += 1;
     util_word.getWord(thisword.name).then(word => {
-      // word.hesitateNum = 0;
       word.context = history.body[thisword.sentence];
       this.setData({
         progressOverall: Math.round((cnt) / len * 100),
@@ -199,7 +213,7 @@ Page({
 
   /**
    * 没有单词背诵的处理方法
-   */
+   * DELETE 随机背诵单词需求砍掉后，所有历史记录刷完的情况应该放在历史记录列表页面处理（静态页面）
   onNoWordsToRecite: function() {
     this.setData({
       showReciteDoneDialog: true,
@@ -208,26 +222,21 @@ Page({
       reciteDoneDialogButtons: [{text: "知道了"}],
     });
   },
+  */
 
   /**
    * 对话框提示没有单词背诵
-   */
+   * DELETE 随机背诵单词需求砍掉后，对话框提示也丧失意义 
   tapReciteDoneDialogButton: function(e) {
     this.setData({
       showReciteDoneDialog: false,
     });
   },
+  */
+
 
   /**
-   * 再次开始背诵流程
-   */
-  goToRecite: function() {
-    this.setData({
-      startReciting: true,
-    });
-    new Promise(this.loadHistory).then(this.next).catch(this.onNoWordsToRecite);
-  },
-
+   * DELETE 随机背诵单词需求砍掉后，对话框提示也丧失意义
   tapReciteButton: function() {
     if (this.generateHeadline()) {
       // 如果headline生成成功，进入背诵流程
@@ -237,13 +246,23 @@ Page({
       this.onNoWordsToRecite();
     }
   },
+  */
 
   /**
-   * 跳转历史记录页面
+   * 跳转上一级页面（历史记录）
    */
   goToHistory: function() {
-    wx.navigateTo({
-      url: '../history/history',
+    wx.navigateBack({
+      delta: 1,
+    })
+  },
+
+  /**
+   * 前往背诵页面
+   */
+  goToInput: function () {
+    wx.switchTab({
+      url: '/pages/input/input',
     })
   },
 
