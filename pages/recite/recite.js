@@ -2,8 +2,8 @@ const utilHis = require('../../utils/history.js');
 const utilTrie = require('../../utils/trie.js');
 const utilWord = require('../../utils/word.js');
 
-var currentIndex = 0;        // 当前显示单词位于总体位置的下标
-
+var currentIndex = 0;         // 当前显示单词位于总体位置的下标
+var history = {};             // 当输入参数为历史记录时使用
 var wordList = [];            // 解析得到的单词列表
 
 var vocabularyWordList = [];  // 记录用户修改得到的生熟词
@@ -100,8 +100,13 @@ Page({
    * 解析历史记录
    */
   parseHistoryInfo: function (headline) {
-    var history = utilHis.getHistoryFromStorage(headline);
-    wordList = history.unknown.concat(history.vocabulary);
+    history = utilHis.getHistoryFromStorage(headline);
+    history.isHistory = true;
+    history.hisSenLocMap = new Map();
+    history.unknown.concat(history.vocabulary).map(word => {
+      wordList.push(word.name);
+      history.hisSenLocMap.set(word.name, word.sentence);
+    });
   },
 
   /**
@@ -123,13 +128,10 @@ Page({
       currentIndex = 0;
       wx.showModal({
         title: '提示',
-        content: '前面没有啦，是否保存并返回？',
+        content: '前面没有啦，是否结束并保存？',
         success (res) {
           if (res.confirm) {
-            that.saveChanges();
-            wx.navigateBack({
-              delta: 1,
-            });
+            that.reciteDone();
           }
         }
       });
@@ -137,28 +139,32 @@ Page({
       currentIndex = wordList.length - 1;
       wx.showModal({
         title: '提示',
-        content: '后面没有啦，是否保存并返回？',
+        content: '后面没有啦，是否结束并保存？',
         success(res) {
           if (res.confirm) {
-            that.saveChanges();
-            wx.navigateBack({
-              delta: 1,
-            });
+            that.reciteDone();
           }
         }
       });
     }
+    var context = "";
     utilWord.getWord(wordList[currentIndex]).then(word => {
+      context = word.context;
       this.setData({
         progressOverall: Math.round(currentIndex / wordList.length * 100),
         word_level: word.level,
         word_id: word._id,
         word_phonetic: word.phonetic,
         word_chinese: word.chinese,
-        word_context: word.context,
         // word_english: word.english,
       });
-    })
+    });
+    if (history.isHistory) {
+      context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
+    }
+    this.setData({
+      word_context: context,
+    });
   },
 
   touchStart: function (e) {
@@ -258,7 +264,7 @@ Page({
     utilWord.appendVocabulary(vocabularyWordList);
     utilWord.deleteVocabulary(vocabularyWordList);
     wx.setStorage({
-      key: 'recite_info',
+      key: 'reciteInfo',
       data: {
         type: 'result',
         vocabulary: vocabularyWordList,
@@ -271,7 +277,7 @@ Page({
    * 背诵完成控制方法
    */
   reciteDone: function() {
-    this.saveHistory();
+    this.saveChanges();
     this.setData({
       startReciting: false,
       msg_type: "success",
@@ -282,19 +288,21 @@ Page({
 
   /**
    * 跳转上一级页面（历史记录）
-   */
+   *
   goToHistory: function () {
     wx.navigateBack({
       delta: 1,
     })
   },
+  */
 
   /**
    * 前往背诵页面
-   */
+   *
   goToInput: function () {
     wx.switchTab({
       url: '/pages/input/input',
     })
   },
+  */
 });

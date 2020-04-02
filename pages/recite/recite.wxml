@@ -20,10 +20,10 @@
           <view slot="extend">
               <view wx:for="{{msg_extend}}" wx:key="*this">{{item}}</view>
           </view>
-          <view slot="handle">
+          <!-- <view slot="handle">
               <button class="weui-btn" type="primary" bindtap="goToHistory">回到历史记录</button>
               <button class="weui-btn" type="default" bindtap="goToInput">录入新的文本</button>
-          </view>
+          </view> -->
       </mp-msg>
   </view>
 </block>
