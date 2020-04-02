@@ -11,16 +11,6 @@
       <view class="word__chinese">汉解：{{word_chinese}}</view>
       <!-- <view class="word__english">英文解释：{{word_english}}</view> -->
     </view>
-    <view class="word__options">
-      <button type="default" size="{{defaultSize}}" loading="{{loading}}" plain="{{plain}}"
-          disabled="{{disabled}}" bindtap="tapHesitate"> 模糊 </button>
-      <button type="warn" size="{{warnSize}}" loading="{{loading}}" plain="{{plain}}"
-          disabled="{{disabled}}" bindtap="tapForget"> 忘了 </button>
-      <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}"
-              disabled="{{disabled}}" bindtap="tapRemember"> 记得 </button>
-      <progress percent="{{progressThis}}" border-radius="5" 
-      active="{{progressThisActive}}" duration="{{thisDuration}}"         bindactiveend="activateButtons"/>
-    </view>
   </view>
 </block>
 
