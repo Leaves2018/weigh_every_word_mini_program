@@ -34,7 +34,7 @@
         "selectedIconPath": "images/tabbar_icon_input_active.png"
       },
       {
-        "pagePath": "pages/recite/recite",
+        "pagePath": "pages/history/history",
         "text": "背诵",
         "iconPath": "images/tabbar_icon_recite_default.png",
         "selectedIconPath": "images/tabbar_icon_recite_active.png"
