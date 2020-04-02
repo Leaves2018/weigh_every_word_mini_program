@@ -35,7 +35,7 @@
       },
       {
         "pagePath": "pages/history/history",
-        "text": "背诵",
+        "text": "历史",
         "iconPath": "images/tabbar_icon_recite_default.png",
         "selectedIconPath": "images/tabbar_icon_recite_active.png"
       },
