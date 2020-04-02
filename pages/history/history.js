@@ -39,7 +39,7 @@ Page({
           key: 'history_detail',
           data: his_recite,
         })
-        wx.switchTab({
+        wx.navigateTo({
           url: '/pages/recite/recite',
         })
         break;
