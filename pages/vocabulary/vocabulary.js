@@ -36,7 +36,6 @@ Page({
   },
 
   onHide: function () {
-    util_word.setVocabulary(vocabulary_trie);
   },
 
   onUnload: function () {

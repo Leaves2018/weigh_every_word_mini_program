@@ -1,7 +1,7 @@
-const util_word = require('../../utils/word.js');
+const utilWord = require('../../utils/word.js');
 var base64 = require("../../images/base64");
-var familiar_trie = null;
-var familiar_words = [];
+var familiarTrie = null;
+var familiarWords = [];
 Page({
   data: { 
     inputShowed: false,
@@ -12,12 +12,15 @@ Page({
     buttons: [{text: "忘了"}, {text: "记得"}],
   },
   onLoad: function () {
-    familiar_trie = util_word.getFamiliar();
-    familiar_words = familiar_trie.getAllData();
+    familiarTrie = utilWord.getFamiliar();
+    familiarWords = familiarTrie.getAllData();
     this.setData({
       search: this.search.bind(this),
-      words: familiar_words,
+      words: familiarWords,
     });
+  },
+  onUnload: function () {
+
   },
   search: function (value) {
     return new Promise((resolve, reject) => {
@@ -32,15 +35,14 @@ Page({
   showDetail: function (e) {
     let index;
     index = e.currentTarget.dataset.position;
-    let id = this.data.words[index];
-    util_word.getWord(id).then(word => {
+    let _id = this.data.words[index];
+    utilWord.getWord(_id).then(word => {
       this.setData({
         dialogTitle: word._id,
         dialogContent: word.chinese,
         dialogShow: true
       })
     });
-
   },
   tapDialogButton(e) {
     this.setData({

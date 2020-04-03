@@ -33,6 +33,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
+    console.log("Page recite is onLoad");
     try {
       var reciteInfo = wx.getStorageSync('reciteInfo');
       if (reciteInfo === "") {
@@ -87,6 +88,19 @@ Page({
    */
   onUnload: function () {
     this.saveChanges();
+    this.clearOtherData();
+  },
+
+  /**
+   * 清理使用参数
+   */
+  clearOtherData: function () {
+    currentIndex = 0;         // 当前显示单词位于总体位置的下标
+    history = {};             // 当输入参数为历史记录时使用
+    wordList = [];            // 解析得到的单词列表
+
+    vocabularyWordList = [];  // 记录用户修改得到的生熟词
+    familiarWordList = [];
   },
 
   /**
@@ -147,23 +161,19 @@ Page({
         }
       });
     }
-    var context = "";
     utilWord.getWord(wordList[currentIndex]).then(word => {
-      context = word.context;
+      if (history.isHistory) {
+        word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
+      }
       this.setData({
         progressOverall: Math.round(currentIndex / wordList.length * 100),
         word_level: word.level,
         word_id: word._id,
         word_phonetic: word.phonetic,
         word_chinese: word.chinese,
+        word_context: word.context,
         // word_english: word.english,
       });
-    });
-    if (history.isHistory) {
-      context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
-    }
-    this.setData({
-      word_context: context,
     });
   },
 
