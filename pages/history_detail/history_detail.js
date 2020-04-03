@@ -31,8 +31,8 @@ Page({
     buttons: [{ text: "忘了" }, { text: "记得" }]
   },
   onLoad: function () {
-    var history_choice = wx.getStorageSync('history_detail');
-    history_example = utils_his.getHistoryFromStorage(history_choice);
+    var history_detail = wx.getStorageSync('history_detail');
+    history_example = utils_his.getHistoryFromStorage(history_detail);
     vocabulary = [];
     unknown = [];
     unknown_result = [];

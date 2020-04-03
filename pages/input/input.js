@@ -60,9 +60,10 @@ Page({
     sentences = passage.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
     sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
     passage = passage.toLowerCase();//文本转小写
-    words = passage.split(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’|\u4e00-\u9fa5|\^0-9]/g); //获取单词
+    words = passage.split(/[\r\n|\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\：|\“|\”|\——|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’|\u4e00-\u9fa5|\^0-9]/g); //获取单词
     words = [...new Set(words)];//单词去重
     words = words.filter(function (x) { return x && x.trim(); });//单词去空
+    words = words.filter(function (x) { return x.length > 1; }); 
     for (var element of words) {
       if (stop_words.indexOf(element) === -1) {//过滤停止词
         vocabulary.push(element);
