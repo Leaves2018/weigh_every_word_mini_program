@@ -1,5 +1,11 @@
 <!--pages/tutorial/tutorial.wxml-->
 <text>pages/tutorial/tutorial.wxml</text>
-<view id="container">
+<view id="container" animation="{{animationData}}">
   <view class="item" wx:for="123456789123456789">{{item}}</view>
 </view>
+<button bindtap="rotateAndScale">旋转同时放大</button>
+<button bindtap="rotateThenScale">先旋转后放大</button>
+<button bindtap="rotateThenScaleBack">先旋转后放大-回退</button>
+<button bindtap="rotateAndScaleThenTranslate">先旋转同时放大，然后平移</button>
+<button bindtap="translateLeft">向左平移出屏幕并绕到屏幕上方</button>
+<button bindtap="translateBack">向下移动到可视区域</button>
