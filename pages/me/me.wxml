@@ -31,8 +31,8 @@
     </mp-cells> -->
     
     <mp-cells title="单词本">
-      <mp-cell link url="/pages/vocabulary/vocabulary" value="生词本"></mp-cell>
-      <mp-cell link url="/pages/familiar/familiar" value="熟词本"></mp-cell>
+      <mp-cell link url="/pages/vocabulary/vocabulary" value="生词本" footer="生词数：{{vocabularyWordsLength}}"></mp-cell>
+      <mp-cell link url="/pages/familiar/familiar" value="熟词本" footer="词汇量：{{familiarWordsLength}}"></mp-cell>
     </mp-cells>
 
     <mp-cells title="背诵">

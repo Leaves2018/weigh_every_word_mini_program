@@ -42,6 +42,13 @@ Page({
       })
     }
   },
+  onShow: function () {
+    // 如果第一次打开直接查看，这里是否会为空？
+    this.setData({
+      vocabularyWordsLength: wx.getStorageSync('vocabularyWordsLength'),
+      familiarWordsLength: wx.getStorageSync('familiarWordsLength'),
+    });
+  },
   getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -49,5 +56,5 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
 })
