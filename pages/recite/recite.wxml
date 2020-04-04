@@ -1,15 +1,15 @@
 <block wx:if="{{startReciting}}">
   <progress percent="{{progressOverall}}" show-info border-radius="5"/>
-  <view class="word" 
-  bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
+  <view class="word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
     <view class="word__detail">
-      <view class="word__tag">标签：{{word_tag}}</view>
-      <view class="word__level">分级：{{word_level}}</view>
-      <view class="word__id">单词：{{word_id}}</view>
-      <view class="word__phonetic">音标：{{word_phonetic}}</view>
-      <view class="word__chinese">汉解：{{word_chinese}}</view>
+      <!-- <view class="word__tag">标签：{{word_tag}}</view> -->
+      <view class="word__level">{{word_level}}</view>
+      <view class="word__id">{{word_id}}</view>
+      <view class="word__phonetic">{{word_phonetic}}</view>
+      <view class="word__chinese">{{word_chinese}}</view>
+      <view class="word__context">{{word_context}}</view>
       <!-- <view class="word__english">英文解释：{{word_english}}</view> -->
-      <view class="word__context">语境：{{word_context}}</view>
+      <scroll-view class="word__english" scroll-y="true" >{{word_english}}</scroll-view>
     </view>
   </view>
 </block>
@@ -20,10 +20,11 @@
           <view slot="extend">
               <view wx:for="{{msg_extend}}" wx:key="*this">{{item}}</view>
           </view>
-          <!-- <view slot="handle">
-              <button class="weui-btn" type="primary" bindtap="goToHistory">回到历史记录</button>
-              <button class="weui-btn" type="default" bindtap="goToInput">录入新的文本</button>
-          </view> -->
+          <view slot="handle">
+              <button class="weui-btn" type="primary" bindtap="goBack">返回</button>
+              <!-- <button class="weui-btn" type="primary" bindtap="goToHistory">回到历史记录</button>
+              <button class="weui-btn" type="default" bindtap="goToInput">录入新的文本</button> -->
+          </view>
       </mp-msg>
   </view>
 </block>

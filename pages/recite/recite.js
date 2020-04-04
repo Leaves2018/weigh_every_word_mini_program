@@ -15,6 +15,20 @@ var startX = 0;
 var startY = 0;
 var startTime = 0;
 
+var windowWidth = 0;
+var windowHeight = 0;
+wx.getSystemInfo({
+  success: function(res) {
+    windowWidth = res.windowWidth;
+    windowHeight = res.windowHeight;
+  },
+});
+
+var animation = wx.createAnimation({
+  duration: 50,
+  timingFunction: 'ease',
+})
+
 Page({
   data: {
     // 背诵流程页面数据
@@ -33,7 +47,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    console.log("Page recite is onLoad");
+    // console.log("Page recite is onLoad");
     try {
       var reciteInfo = wx.getStorageSync('reciteInfo');
       if (reciteInfo === "") {
@@ -101,6 +115,10 @@ Page({
 
     vocabularyWordList = [];  // 记录用户修改得到的生熟词
     familiarWordList = [];
+    animation = wx.createAnimation({
+      duration: 50,
+      timingFunction: 'ease',
+    });
   },
 
   /**
@@ -161,6 +179,7 @@ Page({
         }
       });
     }
+    // 数据处理
     utilWord.getWord(wordList[currentIndex]).then(word => {
       if (history.isHistory) {
         word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
@@ -172,13 +191,19 @@ Page({
         word_phonetic: word.phonetic,
         word_chinese: word.chinese,
         word_context: word.context,
-        // word_english: word.english,
+        word_english: word.english,
       });
+    });
+
+    // 动画处理
+    animation.translateY(0).step({duration: 500});
+    this.setData({
+      animationData: animation.export(),
     });
   },
 
   touchStart: function (e) {
-    console.log("touchStart", e);
+    // console.log("touchStart", e);
     startX = e.touches[0].pageX;
     startY = e.touches[0].pageY;
     startTime = new Date().getTime();
@@ -198,7 +223,7 @@ Page({
    * 触摸结束事件：主要的判断流程
    */
   touchEnd: function (e) {
-    console.log("touchEnd", e);
+    // console.log("touchEnd", e);
     var endX = e.changedTouches[0].pageX;
     var endY = e.changedTouches[0].pageY;
     var touchTime = new Date().getTime() - startTime;
@@ -233,35 +258,65 @@ Page({
    * 向左滑动处理方法
    */
   swipeLeft: function () {
-    console.log("Swipe left.");
-    familiarWordList.push(wordList[currentIndex]);
+    // 动画处理
+    animation.translateX(-windowWidth).step();  //  向左移出窗口
+    animation.translateY(-windowHeight).step();
+    animation.translateX(0).step(); // 移动到窗口正上方
+    this.setData({
+      animationData: animation.export(),
+    });
+    // 数据处理
+    familiarWordList.push(wordList[currentIndex]);  // 左滑记作熟词
     wordList.splice(currentIndex, 1);
-    this.loadIndexWord();
+    setTimeout(this.loadIndexWord, 200);
   },
   /**
    * 向右滑动处理方法
    */
   swipeRight: function () {
-    console.log("Swipe right.");
+    // 动画处理
+    animation.translateX(windowWidth).step(); // 向右移出窗口
+    animation.translateY(-windowHeight).step();
+    animation.translateX(0).step(); // 移动到窗口正上方
+    this.setData({
+      animationData: animation.export(),
+    });
+    // 数据处理
     vocabularyWordList.push(wordList[currentIndex]);
     wordList.splice(currentIndex, 1);
-    this.loadIndexWord();
+    setTimeout(this.loadIndexWord,200);
   },
   /**
    * 向上滑动处理方法
    */
   swipeUp: function () {
-    console.log("Swipe up.");
-    currentIndex += 1;
-    this.loadIndexWord();
+    // 动画处理
+    animation.translateY(-windowHeight).step(); // 向上移出窗口
+    animation.translateX(-windowWidth).step();
+    animation.translateY(windowHeight).step();
+    animation.translateX(0).step(); // 移动到窗口下方
+    this.setData({
+      animationData: animation.export(),
+    });
+    // 数据处理
+    currentIndex -= 1;
+    setTimeout(this.loadIndexWord, 300);
   },
   /**
    * 向下滑动处理方法
    */
   swipeDown: function () {
-    console.log("Swipe down.");
-    currentIndex -= 1;
-    this.loadIndexWord();
+    // 动画处理
+    animation.translateY(windowHeight).step(); // 向上移出窗口
+    animation.translateX(-windowWidth).step();
+    animation.translateY(-windowHeight).step();
+    animation.translateX(0).step(); // 移动到窗口下方
+    this.setData({
+      animationData: animation.export(),
+    });
+    // 数据处理
+    currentIndex += 1;
+    setTimeout(this.loadIndexWord, 300);
   },
 
   /**
@@ -298,13 +353,13 @@ Page({
 
   /**
    * 跳转上一级页面（历史记录）
-   *
-  goToHistory: function () {
+  */
+  goBack: function () {
     wx.navigateBack({
       delta: 1,
     })
   },
-  */
+
 
   /**
    * 前往背诵页面
