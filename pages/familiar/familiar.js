@@ -36,6 +36,11 @@ Page({
   onUnload: function () {
     utilWord.setFamiliar(familiarTrie);
     utilWord.appendVocabulary(vocabularyWords);
+    // 存储熟词本中单词数量
+    wx.setStorage({
+      key: 'familiarWordsLength',
+      data: familiarWords.length,
+    });
     // 手动清空
     familiarTrie = null;
     familiarWords = [];
@@ -47,8 +52,13 @@ Page({
   search: function (value) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve([{ text: '搜索结果', value: 1 }, { text: '搜索结果2', value: 2 }])
-      }, 200)
+        resolve([{ text: value, value: value }])
+      }, 200);
+      if (familiarTrie.search(value)) {
+        resolve([{ text: value, value: 1 }]);
+      } else {
+        reject(value+" is not found.");
+      }
     })
   },
   selectResult: function (e) {
