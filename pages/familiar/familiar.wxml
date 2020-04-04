@@ -9,8 +9,11 @@
   </i-grid>
 </block> -->
 
-<view id="wordscontainer">
-  <view class="item" data-position="{{index}}" wx:for="{{words}}" wx:key="*this" bindtap="showDetail">{{item}}</view>
+<view class="initial" wx:for="{{initials}}" wx:key="*this" wx:for-index="initialIndex" wx:for-item="initialValue">
+  <text>{{initialValue}}</text>
+  <view id="wordscontainer">
+    <view class="item" data-position="{{initialIndex}}.{{index}}" wx:for="{{words[initialIndex]}}" wx:key="*this" bindtap="showDetail">{{item}}</view>
+  </view>
 </view>
 
 <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
