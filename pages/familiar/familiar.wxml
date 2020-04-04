@@ -1,14 +1,6 @@
 <mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
 <!-- <view>{{test_text}}</view> -->
 
-<!-- <block wx:for="{{words}}">
-  <i-grid>
-      <i-grid-item data-position="{{index}}.first" bindtap="showDetail">{{item.first}}</i-grid-item>
-      <i-grid-item data-position="{{index}}.second" bindtap="showDetail">{{item.second}}</i-grid-item>
-      <i-grid-item data-position="{{index}}.third" bindtap="showDetail">{{item.third}}</i-grid-item>
-  </i-grid>
-</block> -->
-
 <view class="initial" wx:for="{{initials}}" wx:key="*this" wx:for-index="initialIndex" wx:for-item="initialValue">
   <text>{{initialValue}}</text>
   <view id="wordscontainer">
