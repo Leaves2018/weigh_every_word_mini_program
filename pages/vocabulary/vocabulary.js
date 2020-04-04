@@ -1,14 +1,14 @@
 var base64 = require("../../images/base64")
-const util_trie = require('../../utils/trie.js');
-const util_word = require('../../utils/word.js');
+const utilTrie = require('../../utils/trie.js');
+const utilWord = require('../../utils/word.js');
 
-var vocabulary_trie = null;
-var vocabulary_words = [];
+var vocabularyTrie = null;
+var vocabularyWords = [];
 Page({
   data: {
     showWordDetail: false,
     inputVal: "",
-    vocabulary_words: [],
+    vocabularyWords: [],
   },
   
   onLoad: function () {
@@ -25,10 +25,10 @@ Page({
   },
 
   onShow: function () {
-    vocabulary_trie = util_word.getVocabulary();
-    vocabulary_words = vocabulary_trie.getAllData();
+    vocabularyTrie = utilWord.getVocabulary();
+    vocabularyWords = vocabularyTrie.getAllData();
     this.setData({
-      vocabulary_words: vocabulary_words,
+      words: vocabularyWords,
     });
   },
 
@@ -39,7 +39,12 @@ Page({
   },
 
   onUnload: function () {
-    util_word.setVocabulary(vocabulary_trie);
+    utilWord.setVocabulary(vocabularyTrie);
+    // 缓存生词本数量
+    wx.setStorage({
+      key: 'vocabularyWordsLength',
+      data: vocabularyWords.length,
+    });
   },
 
   tapSlideView: function (e) {
@@ -49,13 +54,14 @@ Page({
       key: 'reciteInfo',
       data: {
         type: 'trie',
-        trie: vocabulary_trie,
+        trie: vocabularyTrie,
         currentIndex: index,
       },
-    });
-
-    wx.navigateTo({
-      url: '../recite/recite',
+      success: function () {
+        wx.navigateTo({
+          url: '../recite/recite',
+        });
+      }
     });
   },
 
@@ -65,23 +71,27 @@ Page({
       case 0:
         this.deleteItem(pos);
         this.setData({
-          vocabulary_words: vocabulary_words,
+          words: vocabularyWords,
         });
         break;
     }
   },
 
   deleteItem: function (index) {
-    var _id = vocabulary_words[index];
-    vocabulary_words.splice(index,1);
-    vocabulary_trie.deleteData(_id);
+    var _id = vocabularyWords[index];
+    vocabularyWords.splice(index,1);
+    vocabularyTrie.deleteData(_id);
   },
 
   search: function (value) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve([{ text: '搜索结果', value: 1 }, { text: '搜索结果2', value: 2 }])
-      }, 200)
+      if (vocabularyTrie.search(value)) {
+        var index = vocabularyWords.indexOf(value);
+        wx.pageScrollTo({
+          scrollTop: 56+index*87,
+          duration: 300,
+        });
+      }
     })
   },
   selectResult: function (e) {
