@@ -9,26 +9,29 @@ Page({
     inputShowed: false,
     inputVal: "",
     mHidden: true,
-    his_list: []
+    his_list: [],
+    iconType: []
   },
   onLoad: function () {
+  },
+  onShow: function() {
     history_list = utils_his.getHistoryListFromStorage();
     history_list.reverse();
     history_done_list = utils_his.getHistoryListDoneFromStorage();
-    var done_list_index = [];
+    var iconlist = [];
     for (var element of history_done_list) {
       for (var i = 0; i < history_list.length; i++) {
         if (element === history_list[i]) {
-          done_list_index.push(i);
+          iconlist[i] = 'success';
+          break;
         }
+        iconlist[i] = 'cancel';
       }
     }
-    console.log(done_list_index);
-  },
-  onShow: function() {
-    
+
     this.setData({
       his_list: history_list,
+      iconType:iconlist,
       search: this.search.bind(this),
       icon: base64.icon20,
       slideButtons: [{

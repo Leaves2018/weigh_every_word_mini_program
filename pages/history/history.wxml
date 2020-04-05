@@ -3,8 +3,9 @@
   <block wx:for="{{his_list}}" wx:key="*this">
   <view class="history-slidecells">
     <mp-slideview data-position = "{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="buttonnavigate" bindbuttontap="slideButtonTap">
-      <view class="history-slidecell">
+      <view class="history-slidecell" style="color:{{fontcolor}};">
         {{index + 1}}. {{item}}
+        <icon type="{{iconType[index]}}" size="40"/>
       </view>
     </mp-slideview>
   </view>
