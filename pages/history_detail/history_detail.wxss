@@ -13,7 +13,14 @@ page {
   display: flex;
   flex-direction: row;
 }
-
+.unknown_edit{
+  display: flex;
+  flex-direction: row;
+}
+.vocabulary_edit{
+  display: flex;
+  flex-direction: row;
+}
 .btn{
   margin-left: 0rpx;
 }

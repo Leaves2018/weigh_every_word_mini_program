@@ -15,7 +15,10 @@
     <text>{{his_body}}</text>
   </view>
   <view class="divLine"></view>
-  <text>未处理词</text>
+      <view class="unknown_edit">
+      <text>未处理词</text>
+      <button class='btn' type="default" bindtap="unknown_recite">开始背诵</button>
+      </view>
   <block wx:for="{{his_unknown}}" wx:key="*this">
     <i-grid>
         <i-grid-item data-position="{{index}}.0" bindtap="showDetail_unknown">{{item[0]}}</i-grid-item>
@@ -25,7 +28,10 @@
   </block>
 
   <view class="divLine"></view>
-  <text>生词</text>
+      <view class="vocabulary_edit">
+      <text>生词</text>
+      <button class='btn' type="default" bindtap="vocabulary_recite">开始背诵</button>
+      </view>
   <block wx:for="{{his_vocabulary}}" wx:key="*this">
     <i-grid>
         <i-grid-item data-position="{{index}}.0" bindtap="showDetail_vocabulary">{{item[0]}}</i-grid-item>
@@ -37,12 +43,10 @@
   <modal title="{{dialogTitle}}" cancel-text="忘了" confirm-text="记得"
           hidden="{{unknown_dialogShow}}" bindconfirm="unknown_modalconfirm" bindcancel="unknown_modalcancel">
         {{dialogContent}}
-    <navigator url="/pages/word_detail/word_detail" hover-class="navigator-hover">查看单词详情</navigator>
   </modal>
   <modal title="{{dialogTitle}}" cancel-text="忘了" confirm-text="记得"
           hidden="{{vocabulary_dialogShow}}" bindconfirm="vocabulary_modalconfirm" bindcancel="vocabulary_modalcancel">
         {{dialogContent}}
-    <navigator url="/pages/word_detail/word_detail" hover-class="navigator-hover">查看单词详情</navigator>
   </modal>
   </view>
 </view>

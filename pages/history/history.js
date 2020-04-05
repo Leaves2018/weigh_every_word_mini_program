@@ -15,15 +15,15 @@ Page({
     history_list = utils_his.getHistoryListFromStorage();
     history_list.reverse();
     history_done_list = utils_his.getHistoryListDoneFromStorage();
-    // var done_list_index = [];
-    // for (var element of history_done_list) {
-    //   for (var i = 0; i < history_list.length; i++) {
-    //     if (element === history_list[i]) {
-    //       done_list_index.push(i);
-    //     }
-    //   }
-    // }
-    // console.log(done_list_index);
+    var done_list_index = [];
+    for (var element of history_done_list) {
+      for (var i = 0; i < history_list.length; i++) {
+        if (element === history_list[i]) {
+          done_list_index.push(i);
+        }
+      }
+    }
+    console.log(done_list_index);
   },
   onShow: function() {
     

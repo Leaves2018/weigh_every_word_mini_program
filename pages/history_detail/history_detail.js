@@ -94,9 +94,39 @@ Page({
     util_word.deleteVocabulary(remember_vocabulary);
   },
 
-  onHide: function() {
+  unknown_recite: function () {
+    var unknown_trie_recite = util_trie.getTrieFromStringArray(unknown);
+    wx.setStorage({
+      key: 'reciteInfo',
+      data: {
+        type: 'trie',
+        trie: unknown_trie_recite,
+        currentIndex: 0,
+      },
+      success: function () {
+        wx.navigateTo({
+          url: '/pages/recite/recite',
+        });
+      }
+    })
   },
 
+  vocabulary_recite: function () {
+    var vocabulary_trie_recite = util_trie.getTrieFromStringArray(vocabulary);
+    wx.setStorage({
+      key: 'reciteInfo',
+      data: {
+        type: 'trie',
+        trie: vocabulary_trie_recite,
+        currentIndex: 0,
+      },
+      success: function () {
+        wx.navigateTo({
+          url: '/pages/recite/recite',
+        });
+      }
+    })
+  },
   loginForm: function (data) {
     //console.log(data.detail.value.headline)
     history_example.headline = data.detail.value.headline;
