@@ -92,6 +92,7 @@ Page({
     utils_his.setHistoryInStorage(history_example.headline, history_result);
     util_word.appendVocabulary(vocabulary);
     util_word.deleteVocabulary(remember_vocabulary);
+    util_word.appendFamiliar(remember_vocabulary);
   },
 
   unknown_recite: function () {
@@ -184,6 +185,7 @@ Page({
   },
 
   unknown_modalconfirm: function () {
+    remember_vocabulary.push(unknown[index]);
     unknown.splice(index, 1);
     history_example.unknown.splice(index, 1);
     var unknown_result = [];
