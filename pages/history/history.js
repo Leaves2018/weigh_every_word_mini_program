@@ -25,7 +25,7 @@ Page({
           iconlist[i] = 'success';
           break;
         }
-        iconlist[i] = 'cancel';
+        iconlist[i] = 'info';
       }
     }
 
