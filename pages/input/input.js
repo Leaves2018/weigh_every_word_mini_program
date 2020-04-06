@@ -1,4 +1,4 @@
-//search.js
+//deal_passage.js
 const utils_word = require('../../utils/word.js');
 const utils_his = require('../../utils/history.js');
 
@@ -31,6 +31,7 @@ Page({
     mHidden: true,
     nHidden: true,
     s: '',
+    inputext: ''
   },
 
   onLoad: function() {
@@ -72,6 +73,23 @@ Page({
           for (var element of informations) {
             passage += element.text;
           }
+          wx.showModal({
+            title: 'success',
+            content: passage,
+            showCancel: true,//是否显示取消按钮
+            cancelText: "取消",//默认是“取消”
+            cancelColor: 'black',//取消文字的颜色
+            confirmText: "处理",//默认是“确定”
+            confirmColor: 'green',//确定文字的颜色
+            success: function (res) {
+              if (res.cancel) {
+                //点击取消,默认隐藏弹框
+              } else {
+                //点击确定
+                this.deal_passage();
+              }
+            },
+          })
         } catch (err) {
           console.error('invokeService fail', err)
           wx.showModal({
@@ -85,7 +103,7 @@ Page({
     })
   },
   //处理文本
-  search: function (e) {
+  deal_passage: function () {
     if(passage === ""){
       passage = this.data.s;
     }
