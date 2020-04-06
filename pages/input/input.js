@@ -31,7 +31,6 @@ Page({
     mHidden: true,
     nHidden: true,
     s: '',
-    inputext: ''
   },
 
   onLoad: function() {
