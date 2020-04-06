@@ -31,15 +31,10 @@ Page({
     mHidden: true,
     nHidden: true,
     s: '',
-    s1: ''
   },
 
   onLoad: function() {
-    wx.getClipboardData({
-      success(res) {
-        //console.log(res.data)
-      }
-    })
+
   },
   bindButtonTap: function () {
     this.setData({
@@ -51,12 +46,52 @@ Page({
       s: e.detail.value
     })
   },
+  //添加图片进行OCR识别
+  addpicture: function () {
+    wx.chooseImage({
+      count: 1,
+      success: async function (res) {
+        try {
+          const invokeRes = await wx.serviceMarket.invokeService({
+            service: 'wx79ac3de8be320b71',
+            api: 'OcrAllInOne',
+            data: {
+              // 用 CDN 方法标记要上传并转换成 HTTP URL 的文件
+              img_url: new wx.serviceMarket.CDN({
+                type: 'filePath',
+                filePath: res.tempFilePaths[0],
+              }),
+              data_type: 3,
+              ocr_type: 8
+            },
+          })
 
+          console.log('invokeService success', invokeRes)
+          passage = "";
+          var informations = invokeRes.data.ocr_comm_res.items;
+          for (var element of informations) {
+            passage += element.text;
+          }
+        } catch (err) {
+          console.error('invokeService fail', err)
+          wx.showModal({
+            title: 'fail',
+            content: err,
+          })
+        }
+      },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+  //处理文本
   search: function (e) {
-    if (this.data.s === "") {
+    if(passage === ""){
+      passage = this.data.s;
+    }
+    if (passage === "") {
       return;
     }
-    passage = this.data.s;
     sentences = passage.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
     sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
     passage = passage.toLowerCase();//文本转小写

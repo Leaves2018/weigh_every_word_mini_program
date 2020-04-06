@@ -7,6 +7,10 @@
 
     <button class='btn' type="default" bindtap="search"> 处理 </button>
 
+    <view bindtap="addpicture">
+      <image class="addpictures" src="/images/tabbar_icon_input_default.png"></image>
+    </view>
+
     <modal title="提示" cancel-text="稍后再背" confirm-text="开始背诵"
           hidden="{{mHidden}}" bindconfirm="modalconfirm" bindcancel="modalcancel">
         筛选完毕，是否开始背诵？

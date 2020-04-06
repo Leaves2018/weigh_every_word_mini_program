@@ -31,3 +31,11 @@ page {
   position: fixed;
   background: #f0f0ee;
 }
+
+.addpictures {
+  position: fixed;
+  width: 80rpx;
+  height: 80rpx;
+  bottom:60rpx;
+  right: 40rpx;
+}
