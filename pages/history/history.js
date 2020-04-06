@@ -85,6 +85,7 @@ Page({
     history_done_list.reverse();
     utils_his.setHistoryListDoneInStorage(history_done_list);
     history_list.reverse();
+    history_done_list.reverse();
     this.setData({
       his_list: history_list,
       iconType: history_done_list,
