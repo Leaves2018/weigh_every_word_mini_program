@@ -45,6 +45,7 @@ Page({
           let passage = "";
           var informations = invokeRes.data.ocr_comm_res.items;
           for (var element of informations) {
+            passage += " ";
             passage += element.text;
           }
           let his_detail = utils_deal.deal_passage(passage);
