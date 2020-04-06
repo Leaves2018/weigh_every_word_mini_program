@@ -118,6 +118,9 @@ Page({
     history_list.push(sentences[0]);
     history_list = [...new Set(history_list)];
     utils_his.setHistoryListInStorage(history_list);
+    var history_done_list = utils_his.getHistoryListDoneFromStorage();
+    history_done_list.push('info');
+    utils_his.setHistoryListDoneInStorage(history_done_list);
 
     vocabulary = [];
     vocabulary_words = [];

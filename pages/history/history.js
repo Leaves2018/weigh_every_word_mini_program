@@ -18,20 +18,10 @@ Page({
     history_list = utils_his.getHistoryListFromStorage();
     history_list.reverse();
     history_done_list = utils_his.getHistoryListDoneFromStorage();
-    var iconlist = [];
-    for (var element of history_done_list) {
-      for (var i = 0; i < history_list.length; i++) {
-        if (element === history_list[i]) {
-          iconlist[i] = 'success';
-          break;
-        }
-        iconlist[i] = 'info';
-      }
-    }
-
+    history_done_list.reverse();
     this.setData({
       his_list: history_list,
-      iconType:iconlist,
+      iconType: history_done_list,
       search: this.search.bind(this),
       icon: base64.icon20,
       slideButtons: [{
@@ -71,14 +61,16 @@ Page({
     }
   },
 
+  //
   modalconfirm: function () {
     //console.log(number);
-    var history_list = utils_his.getHistoryListFromStorage();
+    let history_list = utils_his.getHistoryListFromStorage();
     history_list.reverse();
     //console.log(history_list);
     let del_his = history_list[number];
     history_list.splice(number,1);
     //console.log(history_list);
+    history_list.reverse();
     utils_his.setHistoryListInStorage(history_list);
     wx.removeStorage({
       key: del_his,
@@ -86,8 +78,15 @@ Page({
         //console.log(res);
       },
     })
+    let history_done_list = utils_his.getHistoryListDoneFromStorage();
+    history_done_list.reverse();
+    history_done_list.splice(number, 1);
+    history_done_list.reverse();
+    utils_his.setHistoryListDoneInStorage(history_done_list);
+    history_list.reverse();
     this.setData({
       his_list: history_list,
+      iconType: history_done_list,
       mHidden: true,
     });
   },
