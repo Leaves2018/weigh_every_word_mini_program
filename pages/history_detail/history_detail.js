@@ -62,7 +62,7 @@ Page({
       his_date: history_example.date,
     });
   },
-
+  //将修改存至本地
   onUnload: function() {
     wx.removeStorage({
       key: before_headline,
@@ -94,6 +94,7 @@ Page({
     util_word.appendFamiliar(remember_vocabulary);
   },
 
+  //未知词背诵
   unknown_recite: function () {
     var unknown_trie_recite = util_trie.getTrieFromStringArray(unknown);
     wx.setStorage({
@@ -111,6 +112,7 @@ Page({
     })
   },
 
+  //生词背诵
   vocabulary_recite: function () {
     var vocabulary_trie_recite = util_trie.getTrieFromStringArray(vocabulary);
     wx.setStorage({
@@ -127,6 +129,7 @@ Page({
       }
     })
   },
+  //修改标题
   loginForm: function (data) {
     //console.log(data.detail.value.headline)
     history_example.headline = data.detail.value.headline;
@@ -134,7 +137,7 @@ Page({
       his_headline:history_example.headline,
     })
   },
-
+  //展示未知词详情
   showDetail_unknown: function (e) {
     let a = e.currentTarget.dataset.position.split(".");
     //console.log(e.currentTarget.dataset.position.split("."));
@@ -158,7 +161,7 @@ Page({
       })
     });
   },
-  
+  //展示生词详情
   showDetail_vocabulary: function (e) {
     let a = e.currentTarget.dataset.position.split(".");
     //console.log(e.currentTarget.dataset.position.split("."));
@@ -182,7 +185,7 @@ Page({
       })
     });
   },
-
+  //未知词记得操作
   unknown_modalconfirm: function () {
     remember_vocabulary.push(unknown[index]);
     unknown.splice(index, 1);
@@ -196,7 +199,7 @@ Page({
       unknown_dialogShow: true,
     });
   },
-
+  //未知词忘了操作
   unknown_modalcancel: function () {
     let addvoc = unknown[index];
     unknown.splice(index, 1);
@@ -218,7 +221,7 @@ Page({
       unknown_dialogShow: true,
     });
   },
-
+  //生词记得操作
   vocabulary_modalconfirm: function () {
     remember_vocabulary.push(vocabulary[index]);
     vocabulary.splice(index, 1);
@@ -232,7 +235,7 @@ Page({
       vocabulary_dialogShow: true,
     });
   },
-
+  //生词忘了操作
   vocabulary_modalcancel: function () {
     this.setData({
       vocabulary_dialogShow: true,

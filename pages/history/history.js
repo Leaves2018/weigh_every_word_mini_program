@@ -31,6 +31,7 @@ Page({
       }],
     });
   },
+  //进行背诵和删除历史记录
   slideButtonTap(e) {
     number = e.currentTarget.dataset.position;
     //console.log(number);
@@ -61,7 +62,7 @@ Page({
     }
   },
 
-  //
+  //确认删除
   modalconfirm: function () {
     //console.log(number);
     let history_list = utils_his.getHistoryListFromStorage();
@@ -90,11 +91,13 @@ Page({
       mHidden: true,
     });
   },
+  //取消删除
   modalcancel: function () {
     this.setData({
       mHidden: true,
     });
   },
+  //查看文章详情
   buttonnavigate: function (e) {
     number = e.currentTarget.dataset.position;
     //console.log(number);
