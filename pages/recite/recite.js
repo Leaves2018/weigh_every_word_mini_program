@@ -8,6 +8,8 @@ var wordList = [];            // 解析得到的单词列表
 
 var vocabularyWordList = [];  // 记录用户修改得到的生熟词
 var familiarWordList = [];
+var cnt = 0;
+var len = 0;
 
 var minOffset = 30;
 var minTime = 60;
@@ -119,6 +121,8 @@ Page({
       duration: 50,
       timingFunction: 'ease',
     });
+    cnt = 0;
+    len = 0;
   },
 
   /**
@@ -126,6 +130,7 @@ Page({
    */
   parseTrieInfo: function (trie) {
     wordList = trie.getAllData();
+    len = wordList.length;
   },
 
   /**
@@ -139,6 +144,7 @@ Page({
       wordList.push(word.name);
       history.hisSenLocMap.set(word.name, word.sentence);
     });
+    len = wordList.length;
   },
 
   /**
@@ -185,7 +191,7 @@ Page({
         word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
       }
       this.setData({
-        progressOverall: Math.round(currentIndex / wordList.length * 100),
+        progressOverall: Math.round(cnt / len * 100),
         word: word,
       });
     });
@@ -231,6 +237,7 @@ Page({
       var yOffset = endY - startY;
       // 判断左右滑动还是上下滑动
       if (Math.abs(xOffset) >= Math.abs(yOffset) && Math.abs(xOffset) >= minOffset) {
+        cnt += 1;
         // 判断向左滑动还是向右滑动
         if (xOffset < 0) {
           this.swipeLeft();
@@ -285,33 +292,52 @@ Page({
    * 向上滑动处理方法
    */
   swipeUp: function () {
-    // 动画处理
-    animation.translateY(-windowHeight).step(); // 向上移出窗口
-    animation.translateX(-windowWidth).step();
-    animation.translateY(windowHeight).step();
-    animation.translateX(0).step(); // 移动到窗口下方
-    this.setData({
-      animationData: animation.export(),
-    });
-    // 数据处理
-    currentIndex -= 1;
-    setTimeout(this.loadIndexWord, 300);
+    // // 动画处理
+    // animation.translateY(-windowHeight).step(); // 向上移出窗口
+    // animation.translateX(-windowWidth).step();
+    // animation.translateY(windowHeight).step();
+    // animation.translateX(0).step(); // 移动到窗口下方
+    // this.setData({
+    //   animationData: animation.export(),
+    // });
+    // // 数据处理
+    // currentIndex -= 1;
+    // setTimeout(this.loadIndexWord, 300);
   },
   /**
    * 向下滑动处理方法
    */
   swipeDown: function () {
-    // 动画处理
-    animation.translateY(windowHeight).step(); // 向上移出窗口
-    animation.translateX(-windowWidth).step();
-    animation.translateY(-windowHeight).step();
-    animation.translateX(0).step(); // 移动到窗口下方
-    this.setData({
-      animationData: animation.export(),
-    });
-    // 数据处理
-    currentIndex += 1;
-    setTimeout(this.loadIndexWord, 300);
+    // // 动画处理
+    // animation.translateY(windowHeight).step(); // 向上移出窗口
+    // animation.translateX(-windowWidth).step();
+    // animation.translateY(-windowHeight).step();
+    // animation.translateX(0).step(); // 移动到窗口下方
+    // this.setData({
+    //   animationData: animation.export(),
+    // });
+    // // 数据处理
+    // currentIndex += 1;
+    // setTimeout(this.loadIndexWord, 300);
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   * 下拉则清空原有数据直接拉取新数据
+   */
+  onPullDownRefresh: function () {
+    wx.removeStorage({
+      key: wordList[currentIndex],
+      success: function(res) {
+        utilWord.getWord(wordList[currentIndex]).then(word => {
+          console.log(word);
+          console.log("refresh successifully.");
+          this.setData({
+            word: word,
+          });
+        });
+      },
+    })
   },
 
   /**
