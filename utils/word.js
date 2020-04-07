@@ -1,5 +1,23 @@
 const util_trie = require('./trie.js');
 
+class Word {
+  constructor (word) {
+    this._id = word._id;
+    this._openid = typeof(word._openid) === "string" ? word._openid : "";
+    if (typeof(word.chinese) === "string") {
+      word.chinese = [word.chinese];
+    }
+    this.chinese = Array.isArray(word.chinese) ? word.chinese : [];
+    this.context = typeof (word.context) === "string" ? word.context : "暂无";
+    if (typeof (word.english) === "string") {
+      word.english = [word.english];
+    }
+    this.english = Array.isArray(word.english) ? word.english : [];
+    this.level = typeof (word.level) === "string" ? word.level : "暂无";
+    this.phonetic = typeof (word.phonetic) === "string" ? word.phonetic : "暂无";
+  }
+}
+
 // 查询传入的单词，返回单词对象
 const db = wx.cloud.database();
 const dictionary = db.collection('dictionary');
@@ -28,12 +46,28 @@ const getWord = async (id) => {
         level: "暂无",
         phonetic: "暂无",
         context: "暂无",
-        chinese: "暂无",
-        english: "暂无",
+        chinese: [],
+        english: [],
       }
     })
   }
   return word;
+}
+
+/**
+ * 将单词对象存储到本地
+ */
+const setWord = (word) => {
+  if (typeof(word._id) !== "string") {
+    console.warn(_id + "is not a string");
+  } else {
+    // 通过Word构造函数处理word某些值不为string（如undefined）的情况
+    word = new Word(word);
+    wx.setStorage({
+      key: word._id,
+      data: word,
+    });
+  }
 }
 
 const getFamiliar = () => {
@@ -101,6 +135,7 @@ const deleteFamiliar = (familiar_words) => {
 
 module.exports = {
   getWord: getWord,
+  setWord: setWord,
   getFamiliar: getFamiliar,
   setFamiliar: setFamiliar,
   appendFamiliar: appendFamiliar,
