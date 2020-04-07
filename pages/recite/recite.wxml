@@ -3,11 +3,11 @@
   <view class="word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
     <view class="word__detail">
       <!-- <view class="word__tag">标签：{{word_tag}}</view> -->
-      <view class="word__level">{{word_level}}</view>
-      <view class="word__id">{{word_id}}</view>
-      <view class="word__phonetic">{{word_phonetic}}</view>
-      <view class="word__chinese">{{word_chinese}}</view>
-      <view class="word__context">{{word_context}}</view>
+      <view class="word__level">{{word.level}}</view>
+      <view class="word__id">{{word._id}}</view>
+      <view class="word__phonetic">{{word.phonetic}}</view>
+      <view class="word__chinese">{{word.chinese}}</view>
+      <view class="word__context">{{word.context}}</view>
       <!-- <view class="word__english">英文解释：{{word_english}}</view> -->
       <scroll-view class="word__english" scroll-y="true" >{{word_english}}</scroll-view>
     </view>

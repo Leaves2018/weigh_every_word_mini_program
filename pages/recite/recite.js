@@ -26,7 +26,7 @@ wx.getSystemInfo({
 
 var animation = wx.createAnimation({
   duration: 50,
-  timingFunction: 'ease',
+  timingFunction: 'linear',
 })
 
 Page({
@@ -186,17 +186,12 @@ Page({
       }
       this.setData({
         progressOverall: Math.round(currentIndex / wordList.length * 100),
-        word_level: word.level,
-        word_id: word._id,
-        word_phonetic: word.phonetic,
-        word_chinese: word.chinese,
-        word_context: word.context,
-        word_english: word.english,
+        word: word,
       });
     });
 
     // 动画处理
-    animation.translateY(0).step({duration: 500});
+    animation.translateY(0).step({duration: 300});
     this.setData({
       animationData: animation.export(),
     });
