@@ -4,6 +4,7 @@ const utils_his = require('../../utils/history.js');
 const utils_deal = require('../../utils/deal.js');
 
 const app = getApp()
+var headline;
 
 Page({
   data: {
@@ -76,11 +77,11 @@ Page({
     })
   },
   //处理文本
-  deal_passage: function () {
+  deal_article: function () {
     if (this.data.s === "") {
       return;
     }
-    utils_deal.deal_passage(this.data.s);
+    headline = utils_deal.deal_passage(this.data.s);
     
     this.setData({
       mHidden: false,
@@ -101,7 +102,7 @@ Page({
       key: 'reciteInfo',
       data: {
         type: 'history',
-        headline: sentences[0],
+        headline: headline,
       },
       success: function () {
         wx.navigateTo({
