@@ -13,8 +13,15 @@ Page({
     s: '',
   },
 
-  onLoad: function() {
+
+  onShow: function () {
+    wx.getClipboardData({
+      success(res) {
+        //console.log(res.data)
+      }
+    })
   },
+
   bindFormSubmit: function (e) {
     this.setData({
       s: e.detail.value
@@ -70,9 +77,14 @@ Page({
   },
   //处理文本
   deal_passage: function () {
+    if (this.data.s === "") {
+      return;
+    }
     utils_deal.deal_passage(this.data.s);
+    
     this.setData({
-      mHidden: false
+      mHidden: false,
+      s:'',
     });
   },
 
