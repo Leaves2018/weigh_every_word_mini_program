@@ -39,14 +39,22 @@ const getWord = async (id) => {
         data: word,
       })
     }).catch(reason => {
-      console.warn(reason);
+      wx.request({
+        url: 'https://api.tianapi.com/txapi/enwords/index?key=cd30c0f60a4a72610eb97d94343d5f50&word=' + id,
+        success: function (res) {
+          word.chinese = res.data.newslist[0].content;
+        },
+        fail: function (err) {
+          word.chinese = "暂无";
+        }
+      });
+      // console.warn(reason);
       console.warn("Fail to get word from cloud database dictionary.")
       word = {
         _id: id,
         level: "暂无",
         phonetic: "暂无",
         context: "暂无",
-        chinese: [],
         english: [],
       }
     })
