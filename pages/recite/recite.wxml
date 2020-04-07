@@ -8,8 +8,8 @@
       <view class="word__phonetic">{{word.phonetic}}</view>
       <view class="word__chinese">{{word.chinese}}</view>
       <view class="word__context">{{word.context}}</view>
-      <!-- <view class="word__english">英文解释：{{word_english}}</view> -->
-      <scroll-view class="word__english" scroll-y="true" >{{word_english}}</scroll-view>
+      <!-- <view class="word__english">英文解释：{{word.english}}</view> -->
+      <scroll-view class="word__english" scroll-y="true" >{{word.english}}</scroll-view>
     </view>
   </view>
 </block>
