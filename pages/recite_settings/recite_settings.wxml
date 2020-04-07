@@ -5,6 +5,17 @@
     <view class="body-view">
       <slider bindchange="sliderchange" value="5" max="60" show-value/>
     </view>
+    <view class="divLine"></view>
+    <view>
+      <text>清除缓存</text>
+    <view class="divLine"></view>
+    <button class='btn' type="default" bindtap="clear_storage"> 清除缓存 </button>
+    </view>
   </view>
+
+  <modal title="提示" cancel-text="取消" confirm-text="确认"
+          hidden="{{mHidden}}" bindconfirm="modalconfirm" bindcancel="modalcancel">
+        是否删除所有本地缓存？
+    </modal>
   
 </view>
