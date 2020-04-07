@@ -42,10 +42,14 @@ const getWord = async (id) => {
       wx.request({
         url: 'https://api.tianapi.com/txapi/enwords/index?key=cd30c0f60a4a72610eb97d94343d5f50&word=' + id,
         success: function (res) {
-          word.chinese = res.data.newslist[0].content;
+          if (res.data.code == 200) {
+            word.chinese = res.data.newslist[0].content;
+          } else {
+            word.chinese = res.data.msg;
+          }
         },
         fail: function (err) {
-          word.chinese = "暂无";
+          console.log(err);
         }
       });
       // console.warn(reason);
