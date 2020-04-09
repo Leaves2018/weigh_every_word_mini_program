@@ -14,6 +14,19 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+/**
+ * 数组相减的方法 - 使用es新特性
+ * @param {Array} a
+ * @param {Array} b
+ */
+const arrSub = (a, b) => {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return a.filter(i => !b.includes(i))
+  }
+  throw new Error('arrSub(): Wrong Param Type')
+}
+
 module.exports = {
   formatTime: formatTime,
+  arrSub: arrSub,
 }
