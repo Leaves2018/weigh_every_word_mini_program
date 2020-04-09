@@ -42,7 +42,7 @@ Page({
         //console.log(history_list);
         let his_recite = history_list[number];
         wx.setStorage({
-          key: 'reciteInfo',
+          key: 'recite_info',
           data: {
             type: 'history',
             headline: his_recite,

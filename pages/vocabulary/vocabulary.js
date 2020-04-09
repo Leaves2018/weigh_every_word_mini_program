@@ -51,7 +51,7 @@ Page({
     let index = e.currentTarget.dataset.position;
 
     wx.setStorage({
-      key: 'reciteInfo',
+      key: 'recite_info',
       data: {
         type: 'trie',
         trie: vocabularyTrie,

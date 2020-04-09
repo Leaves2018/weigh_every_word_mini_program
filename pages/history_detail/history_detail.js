@@ -98,7 +98,7 @@ Page({
   unknown_recite: function () {
     var unknown_trie_recite = util_trie.getTrieFromStringArray(unknown);
     wx.setStorage({
-      key: 'reciteInfo',
+      key: 'recite_info',
       data: {
         type: 'trie',
         trie: unknown_trie_recite,
@@ -116,7 +116,7 @@ Page({
   vocabulary_recite: function () {
     var vocabulary_trie_recite = util_trie.getTrieFromStringArray(vocabulary);
     wx.setStorage({
-      key: 'reciteInfo',
+      key: 'recite_info',
       data: {
         type: 'trie',
         trie: vocabulary_trie_recite,

@@ -99,7 +99,7 @@ Page({
       duration: 1500
     })
     wx.setStorage({
-      key: 'reciteInfo',
+      key: 'recite_info',
       data: {
         type: 'history',
         headline: headline,
