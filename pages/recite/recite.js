@@ -51,9 +51,9 @@ Page({
   onLoad: function () {
     // console.log("Page recite is onLoad");
     try {
-      var reciteInfo = wx.getStorageSync('reciteInfo');
+      var reciteInfo = wx.getStorageSync('recite_info');
       if (reciteInfo === "") {
-        throw "reciteInfo is undefined in storage.";
+        throw "recite_info is undefined in storage.";
       } else {
         switch (reciteInfo.type) {
           case "trie":
@@ -69,9 +69,9 @@ Page({
     } catch (e) {
       console.warn(e);
     } finally {
-      // reciteInfo即用即废止，所存信息是一次性的
+      // recite_info即用即废止，所存信息是一次性的
       wx.setStorage({
-        key: 'reciteInfo',
+        key: 'recite_info',
         data: -1,
       });
       this.startReciting();
@@ -345,18 +345,36 @@ Page({
    * 并将结果保存到key为recite_info的本地缓存，供调用recite页面的页面进行数据处理
    */
   saveChanges: function () {
-    utilWord.appendFamiliar(familiarWordList);
-    utilWord.deleteFamiliar(familiarWordList);
-    utilWord.appendVocabulary(vocabularyWordList);
-    utilWord.deleteVocabulary(vocabularyWordList);
-    wx.setStorage({
-      key: 'reciteInfo',
-      data: {
-        type: 'result',
-        vocabulary: vocabularyWordList,
-        familiar: familiarWordList,
-      },
-    })
+    if (history.isHistory) {
+      wx.setStorage({
+        key: 'recite_info',
+        data: vocabularyWordList.length + wordList.length === 0,
+      });
+      history.vocabulary = vocabularyWordList.map(_id => {
+        return {
+          name: _id,
+          sentence: history.hisSenLocMap.get(_id),
+        }
+      });
+      history.unknown = wordList.map(_id => {
+        return {
+          name: _id,
+          sentence: history.hisSenLocMap.get(_id),
+        }
+      }); // 取消了上下滑动查看前后，但仍有可能中途退出导致未处理完
+      wx.setStorage({
+        key: history.headline,
+        data: history,
+      });
+    }
+    if (familiarWordList.length !== 0) {
+      utilWord.appendFamiliar(familiarWordList);
+      utilWord.deleteFamiliar(familiarWordList);
+    }
+    if (vocabularyWordList.length !== 0) {
+      utilWord.appendVocabulary(vocabularyWordList);
+      utilWord.deleteVocabulary(vocabularyWordList);
+    }
   },
 
   /**
@@ -376,9 +394,16 @@ Page({
    * 跳转上一级页面（历史记录）
   */
   goBack: function () {
-    wx.navigateBack({
-      delta: 1,
-    })
+    if (history.isHistory) {
+      // 如果读取数据来自历史，背诵完后返回历史记录列表页面
+      wx.switchTab({
+        url: '../history/history',
+      });
+    } else {
+      wx.navigateBack({
+        delta: 1,
+      });
+    }
   },
 
 
