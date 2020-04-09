@@ -1,3 +1,4 @@
+const util = require('../../utils/util.js');
 const utilHis = require('../../utils/history.js');
 const utilTrie = require('../../utils/trie.js');
 const utilWord = require('../../utils/word.js');
@@ -354,18 +355,20 @@ Page({
           done: vocabularyWordList.length + wordList.length === 0,
         },
       });
-      history.vocabulary = vocabularyWordList.map(_id => {
+      history.unknown = util.arrSub(wordList.map(_id => {
         return {
           name: _id,
           sentence: history.hisSenLocMap.get(_id),
         }
+      }), history.vocabulary);  // unknown去掉原来的生词
+      history.vocabulary = history.vocabulary.concat(vocabularyWordList.map(_id => {
+        return {
+          name: _id,
+          sentence: history.hisSenLocMap.get(_id),
+        }
+      })).filter(function (element, index, self) {  // 去重
+        return self.indexOf(element) === index;
       });
-      history.unknown = wordList.map(_id => {
-        return {
-          name: _id,
-          sentence: history.hisSenLocMap.get(_id),
-        }
-      }); // 取消了上下滑动查看前后，但仍有可能中途退出导致未处理完
       wx.setStorage({
         key: history.headline,
         data: history,
