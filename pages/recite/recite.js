@@ -348,7 +348,11 @@ Page({
     if (history.isHistory) {
       wx.setStorage({
         key: 'recite_info',
-        data: vocabularyWordList.length + wordList.length === 0,
+        data: {
+          type: "done",
+          headline: history.headline,
+          done: vocabularyWordList.length + wordList.length === 0,
+        },
       });
       history.vocabulary = vocabularyWordList.map(_id => {
         return {
