@@ -133,16 +133,16 @@ Page({
         fail: console.error
       })
     }
-    if (lexicon[0]) {
+    if (!lexicon[0]) {
       utils_word.deleteFamiliar(primary_word);
     }
-    if (lexicon[1]) {
+    if (!lexicon[1]) {
       utils_word.deleteFamiliar(junior_word);
     }
-    if (lexicon[2]) {
+    if (!lexicon[2]) {
       utils_word.deleteFamiliar(high_word);
     }
-    if (lexicon[3]) {
+    if (!lexicon[3]) {
       utils_word.deleteFamiliar(cet_word);
     }
     primary_word = [];
