@@ -2,13 +2,14 @@
   
   <view class='title'>
     <input name="title" placeholder-class="placeholder" placeholder="选择熟词范围" />
+    <button class='btn' type="default" bindtap="checkbox_ensure"> 确认修改 </button>
   </view>
 
   <view class="divLine"></view>
 
   <checkbox-group bindchange="checkboxChange">
     <label class="checkbox" wx:for="{{items}}">
-      <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+      <checkbox value="{{item.name}}" checked="{{familiar_lexicon[index]}}"/>{{item.value}}
     </label>
   </checkbox-group>
   

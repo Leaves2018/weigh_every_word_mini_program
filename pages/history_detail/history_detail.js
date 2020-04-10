@@ -100,9 +100,8 @@ Page({
     wx.setStorage({
       key: 'recite_info',
       data: {
-        type: 'trie',
-        trie: unknown_trie_recite,
-        currentIndex: 0,
+        type: 'history',
+        headline: headline,
       },
       success: function () {
         wx.navigateTo({
@@ -118,9 +117,8 @@ Page({
     wx.setStorage({
       key: 'recite_info',
       data: {
-        type: 'trie',
-        trie: vocabulary_trie_recite,
-        currentIndex: 0,
+        type: 'history',
+        headline: headline,
       },
       success: function () {
         wx.navigateTo({
