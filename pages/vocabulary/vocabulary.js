@@ -2,6 +2,7 @@ var base64 = require("../../images/base64")
 const utilTrie = require('../../utils/trie.js');
 const utilWord = require('../../utils/word.js');
 
+var familiarWords = [];
 var vocabularyTrie = null;
 var vocabularyWords = [];
 Page({
@@ -19,7 +20,7 @@ Page({
         type: 'warn',
         text: '警示',
         extClass: 'test',
-        src: '/images/icon_del.svg', // icon的路径
+        src: '/images/icon_dui.svg', // icon的路径
       }],
     });
   },
@@ -45,6 +46,7 @@ Page({
       key: 'vocabularyWordsLength',
       data: vocabularyWords.length,
     });
+    utilWord.appendFamiliar(familiarWords);
   },
 
   tapSlideView: function (e) {
@@ -81,6 +83,7 @@ Page({
     var _id = vocabularyWords[index];
     vocabularyWords.splice(index,1);
     vocabularyTrie.deleteData(_id);
+    familiarWords.push(_id);
   },
 
   search: function (value) {
