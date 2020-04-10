@@ -15,6 +15,28 @@ Page({
   onLoad: function () {
   },
   onShow: function() {
+    var this_headline;
+    var this_done;
+    let test = wx.getStorage({
+      key: 'recite_Info',
+      success: function(res) {
+        this_headline = res.data.headline;
+        this_done = res.data.done;
+        var temp;
+        let history_list_temp = utils_his.getHistoryListFromStorage();
+        for (var i = 0; i < history_list_temp.length; i++) {
+          if (history_list_temp[i] == this_headline) {
+            temp = i;
+          }
+        }
+        if (this_done) {
+          let history_done_list = utils_his.getHistoryListDoneFromStorage();
+          history_done_list.splice(temp, 1, 'success');
+          utils_his.setHistoryListDoneInStorage(history_done_list);
+        }
+      },
+    })
+    
     history_list = utils_his.getHistoryListFromStorage();
     history_list.reverse();
     history_done_list = utils_his.getHistoryListDoneFromStorage();

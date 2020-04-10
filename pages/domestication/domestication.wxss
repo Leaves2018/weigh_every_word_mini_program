@@ -14,3 +14,8 @@ page {
   flex-direction: column;
   margin-left: 40rpx;
 }
+
+.title{
+  display: flex;
+  flex-direction: row;
+}
