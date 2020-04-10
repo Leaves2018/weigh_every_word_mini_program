@@ -9,6 +9,7 @@ var vocabularyWords = [];
 var initials = [];
 Page({
   data: { 
+    numOfWords: 0,
     inputShowed: false,
     inputVal: "",
     dialogShow: false,
@@ -25,7 +26,9 @@ Page({
       initials.push(child.key.toUpperCase());
       var tempTrie = new utilTrie.Trie();
       tempTrie.root.children[0] = child;
-      familiarWords.push(tempTrie.getAllData());
+      var tempData = tempTrie.getAllData();
+      this.data.numOfWords += tempData.length;
+      familiarWords.push(tempData);
     }
     this.setData({
       search: this.search.bind(this),
@@ -39,7 +42,7 @@ Page({
     // 存储熟词本中单词数量
     wx.setStorage({
       key: 'familiarWordsLength',
-      data: familiarWords.length,
+      data: this.data.numOfWords,
     });
     // 手动清空
     familiarTrie = null;
