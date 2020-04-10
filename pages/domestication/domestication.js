@@ -48,6 +48,10 @@ Page({
           wx.request({
             url: res.tempFilePath,
             success: function (res) {
+              wx.showModal({
+                title: '下载情况',
+                content: '下载小学词库成功',
+              })
               var temp = res.data.split('\n');
               for (var element of temp) {
                 var word = JSON.parse(element);
@@ -72,6 +76,10 @@ Page({
           wx.request({
             url: res.tempFilePath,
             success: function (res) {
+              wx.showModal({
+                title: '下载情况',
+                content: '下载初中词库成功',
+              })
               var temp = res.data.split('\n');
               for (var element of temp) {
                 var word = JSON.parse(element);
@@ -96,6 +104,10 @@ Page({
           wx.request({
             url: res.tempFilePath,
             success: function (res) {
+              wx.showModal({
+                title: '下载情况',
+                content: '下载高中词库成功',
+              })
               var temp = res.data.split('\n');
               for (var element of temp) {
                 var word = JSON.parse(element);
@@ -120,6 +132,10 @@ Page({
           wx.request({
             url: res.tempFilePath,
             success: function (res) {
+              wx.showModal({
+                title: '下载情况',
+                content: '下载四六级词库成功',
+              })
               var temp = res.data.split('\n');
               for (var element of temp) {
                 var word = JSON.parse(element);
