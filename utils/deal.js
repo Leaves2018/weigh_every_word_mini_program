@@ -1,4 +1,4 @@
-const utils_word = require('./word.js');
+const utils_word = require('./word2.js');
 const utils_his = require('./history.js');
 
 const deal_passage = (passage) => {

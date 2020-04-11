@@ -1,6 +1,4 @@
 //deal_passage.js
-const utils_word = require('../../utils/word.js');
-const utils_his = require('../../utils/history.js');
 const utils_deal = require('../../utils/deal.js');
 
 const app = getApp()

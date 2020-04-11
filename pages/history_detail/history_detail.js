@@ -1,7 +1,7 @@
 //search.js
 const utils_his = require('../../utils/history.js');
 var base64 = require("../../images/base64");
-const util_word = require('../../utils/word.js');
+const util_word = require('../../utils/word2.js');
 const util_trie = require('../../utils/trie.js');
 function history(headline, body, vocabulary, unknown, date) {
   this.headline = headline;
@@ -154,7 +154,7 @@ Page({
     let metaword = util_word.getWord(word).then(result => {
       this.setData({
         dialogTitle: word,
-        dialogContent: result.chinese,
+        dialogContent: result.translation,
         unknown_dialogShow: false
       })
     });
@@ -178,7 +178,7 @@ Page({
     let metaword = util_word.getWord(word).then(result => {
       this.setData({
         dialogTitle: word,
-        dialogContent: result.chinese,
+        dialogContent: result.translation,
         vocabulary_dialogShow: false
       })
     });
