@@ -96,12 +96,11 @@ Page({
 
   //未知词背诵
   unknown_recite: function () {
-    var unknown_trie_recite = util_trie.getTrieFromStringArray(unknown);
     wx.setStorage({
       key: 'recite_info',
       data: {
         type: 'history',
-        headline: headline,
+        headline: history_example.headline,
       },
       success: function () {
         wx.navigateTo({
@@ -113,12 +112,11 @@ Page({
 
   //生词背诵
   vocabulary_recite: function () {
-    var vocabulary_trie_recite = util_trie.getTrieFromStringArray(vocabulary);
     wx.setStorage({
       key: 'recite_info',
       data: {
         type: 'history',
-        headline: headline,
+        headline: history_example.headline,
       },
       success: function () {
         wx.navigateTo({

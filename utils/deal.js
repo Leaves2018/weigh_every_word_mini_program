@@ -27,7 +27,8 @@ const deal_passage = (passage) => {
   sentences = passage.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
   sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
   passage = passage.toLowerCase();//文本转小写
-  words = passage.split(/[\r\n|\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\：|\“|\”|\——|\"|\'|\,|\<|\.|\>|\/|\?|\‘|\’|\u4e00-\u9fa5|\^0-9]/g); //获取单词
+  let mmm = passage.replace(/[^a-zA-Z]/g, ' ');
+  words = mmm.split(" "); //获取单词
   words = [...new Set(words)];//单词去重
   words = words.filter(function (x) { return x && x.trim(); });//单词去空
   words = words.filter(function (x) { return x.length > 1; });
