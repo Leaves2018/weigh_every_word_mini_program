@@ -1,4 +1,4 @@
-const utilWord = require('../../utils/word.js');
+const utilWord = require('../../utils/word2.js');
 const utilTrie = require('../../utils/trie.js');
 var base64 = require("../../images/base64");
 var familiarTrie = null;
@@ -73,7 +73,7 @@ Page({
     utilWord.getWord(_id).then(word => {
       this.setData({
         dialogTitle: word._id,
-        dialogContent: word.chinese,
+        dialogContent: word.translation,
         dialogShow: true
       })
     });
