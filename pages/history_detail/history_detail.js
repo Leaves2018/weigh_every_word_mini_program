@@ -35,8 +35,6 @@ Page({
     history_example = utils_his.getHistoryFromStorage(history_detail);
     vocabulary = [];
     unknown = [];
-    unknown_result = [];
-    vocabulary_result = [];
     for (var v_word of history_example.vocabulary) {
       vocabulary.push(v_word.name);
     }
@@ -45,20 +43,12 @@ Page({
       unknown.push(v_word.name);
     }
     //console.log(unknown);
-    var unknown_result = [];
-    var vocabulary_result = [];
-    for (var i = 0; i < unknown.length; i += 3) {
-      unknown_result.push(unknown.slice(i, i + 3));
-    }
-    for (var i = 0; i < vocabulary.length; i += 3) {
-      vocabulary_result.push(vocabulary.slice(i, i + 3));
-    }
     before_headline = history_example.headline;
     this.setData({
       his_headline: history_example.headline,
       his_body: history_example.body,
-      his_vocabulary: vocabulary_result,
-      his_unknown: unknown_result,
+      his_vocabulary: vocabulary,
+      his_unknown: unknown,
       his_date: history_example.date,
     });
   },
@@ -135,11 +125,7 @@ Page({
   },
   //展示未知词详情
   showDetail_unknown: function (e) {
-    let a = e.currentTarget.dataset.position.split(".");
-    //console.log(e.currentTarget.dataset.position.split("."));
-    let x = parseInt(a[0]);
-    let y = parseInt(a[1]);
-    index = 3 * x + y;
+    index = e.currentTarget.dataset.position;
     let unknown_trie = util_trie.getTrieFromStringArray(unknown);
     wx.setStorage({
       key: 'word_detail_list',
@@ -159,11 +145,7 @@ Page({
   },
   //展示生词详情
   showDetail_vocabulary: function (e) {
-    let a = e.currentTarget.dataset.position.split(".");
-    //console.log(e.currentTarget.dataset.position.split("."));
-    let x = parseInt(a[0]);
-    let y = parseInt(a[1]);
-    index = 3 * x + y;
+    index = e.currentTarget.dataset.position;
     let vocabulary_trie = util_trie.getTrieFromStringArray(vocabulary);
     wx.setStorage({
       key: 'word_detail_list',
@@ -186,12 +168,8 @@ Page({
     remember_vocabulary.push(unknown[index]);
     unknown.splice(index, 1);
     history_example.unknown.splice(index, 1);
-    var unknown_result = [];
-    for (var i = 0; i < unknown.length; i += 3) {
-      unknown_result.push(unknown.slice(i, i + 3));
-    }
     this.setData({
-      his_unknown: unknown_result,
+      his_unknown: unknown,
       unknown_dialogShow: true,
     });
   },
@@ -203,17 +181,9 @@ Page({
     let addword = history_example.unknown[index];
     history_example.unknown.splice(index,1);
     history_example.vocabulary.push(addword);
-    var unknown_result = [];
-    var vocabulary_result = [];
-    for (var i = 0; i < unknown.length; i += 3) {
-      unknown_result.push(unknown.slice(i, i + 3));
-    }
-    for (var i = 0; i < vocabulary.length; i += 3) {
-      vocabulary_result.push(vocabulary.slice(i, i + 3));
-    }
     this.setData({
-      his_vocabulary: vocabulary_result,
-      his_unknown: unknown_result,
+      his_vocabulary: vocabulary,
+      his_unknown: unknown,
       unknown_dialogShow: true,
     });
   },
@@ -222,12 +192,8 @@ Page({
     remember_vocabulary.push(vocabulary[index]);
     vocabulary.splice(index, 1);
     history_example.vocabulary.splice(index, 1);
-    var vocabulary_result = [];
-    for (var i = 0; i < vocabulary.length; i += 3) {
-      vocabulary_result.push(vocabulary.slice(i, i + 3));
-    }
     this.setData({
-      his_vocabulary: vocabulary_result,
+      his_vocabulary: vocabulary,
       vocabulary_dialogShow: true,
     });
   },

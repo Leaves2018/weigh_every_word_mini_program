@@ -15,30 +15,22 @@
     <text>{{his_body}}</text>
   </view>
   <view class="divLine"></view>
-      <view class="unknown_edit">
-      <text>未处理词</text>
-      <button class='btn' type="default" bindtap="unknown_recite">开始背诵</button>
-      </view>
-  <block wx:for="{{his_unknown}}" wx:key="*this">
-    <i-grid>
-        <i-grid-item data-position="{{index}}.0" bindtap="showDetail_unknown">{{item[0]}}</i-grid-item>
-        <i-grid-item data-position="{{index}}.1" bindtap="showDetail_unknown">{{item[1]}}</i-grid-item>
-        <i-grid-item data-position="{{index}}.2" bindtap="showDetail_unknown">{{item[2]}}</i-grid-item>
-    </i-grid>
-  </block>
+  <view class="unknown_edit">
+  <text>未处理词</text>
+  <button class='btn' type="default" bindtap="unknown_recite">开始背诵</button>
+  </view>
+  <view id="wordscontainer">
+    <view class="item" data-position="{{index}}" wx:for="{{his_unknown}}" wx:key="*this" bindtap="showDetail_unknown">{{item}}</view>
+  </view>
 
   <view class="divLine"></view>
-      <view class="vocabulary_edit">
-      <text>生词</text>
-      <button class='btn' type="default" bindtap="vocabulary_recite">开始背诵</button>
-      </view>
-  <block wx:for="{{his_vocabulary}}" wx:key="*this">
-    <i-grid>
-        <i-grid-item data-position="{{index}}.0" bindtap="showDetail_vocabulary">{{item[0]}}</i-grid-item>
-        <i-grid-item data-position="{{index}}.1" bindtap="showDetail_vocabulary">{{item[1]}}</i-grid-item>
-        <i-grid-item data-position="{{index}}.2" bindtap="showDetail_vocabulary">{{item[2]}}</i-grid-item>
-    </i-grid>
-  </block>
+  <view class="vocabulary_edit">
+  <text>生词</text>
+  <button class='btn' type="default" bindtap="vocabulary_recite">开始背诵</button>
+  </view>
+  <view id="wordscontainer">
+    <view class="item" data-position="{{index}}" wx:for="{{his_vocabulary}}" wx:key="*this" bindtap="showDetail_vocabulary">{{item}}</view>
+  </view>
 
   <modal title="{{dialogTitle}}" cancel-text="忘了" confirm-text="记得"
           hidden="{{unknown_dialogShow}}" bindconfirm="unknown_modalconfirm" bindcancel="unknown_modalcancel">
