@@ -1,15 +1,13 @@
 <block wx:if="{{startReciting}}">
   <progress percent="{{progressOverall}}" show-info border-radius="5"/>
+  <scroll-view class="word__context" scroll-y="true">{{word.context}}</scroll-view>
   <view class="word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
     <view class="word__detail">
-      <!-- <view class="word__tag">标签：{{word_tag}}</view> -->
-      <view class="word__level">{{word.level}}</view>
+      <view class="word__level">{{word.tag}}</view>
       <view class="word__id">{{word._id}}</view>
       <view class="word__phonetic">{{word.phonetic}}</view>
-      <view class="word__chinese">{{word.chinese}}</view>
-      <view class="word__context">{{word.context}}</view>
-      <!-- <view class="word__english">英文解释：{{word.english}}</view> -->
-      <scroll-view class="word__english" scroll-y="true" >{{word.english}}</scroll-view>
+      <view class="word__">{{word.translation}}</view>
+      <scroll-view class="word__definition" scroll-y="true" >{{word.definition}}</scroll-view>
     </view>
   </view>
 </block>

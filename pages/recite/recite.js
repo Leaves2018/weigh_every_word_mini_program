@@ -1,7 +1,7 @@
 const util = require('../../utils/util.js');
 const utilHis = require('../../utils/history.js');
 const utilTrie = require('../../utils/trie.js');
-const utilWord = require('../../utils/word.js');
+const utilWord = require('../../utils/word2.js');
 
 var currentIndex = 0;         // 当前显示单词位于总体位置的下标
 var history = {};             // 当输入参数为历史记录时使用

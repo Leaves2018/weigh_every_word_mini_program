@@ -16,9 +16,10 @@ page {
 button {margin: 10px;}
 
 .word {
+  border: double;
   background-color: gainsboro;
   width: 100%;
-  height: 90%;
+  height: 70%;
   text-align: center;
 }
 
@@ -28,10 +29,12 @@ button {margin: 10px;}
 }
 
 .word__context {
+  border-style: solid;
   text-align: left;
-  height: 300rpx;
+  height: 20%;
 }
-.word__english {
+.word__definition {
+  border-style: dashed;
   text-align: left;
   height: 300rpx;
 }
