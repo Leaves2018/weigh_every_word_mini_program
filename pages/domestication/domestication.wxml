@@ -12,5 +12,12 @@
       <checkbox value="{{item.name}}" checked="{{familiar_lexicon[index]}}"/>{{item.value}}
     </label>
   </checkbox-group>
+
+  <modal title="提示" no-cancel = "true" confirm-text="确认"
+          hidden="{{nHidden}}" bindconfirm="modalconfirm1">
+        正在下载，请稍后...
+        <progress percent="{{percent}}" show-info active='{{isDown}}' stroke-width="14" />
+  </modal>
+  
   
 </view>

@@ -1,22 +1,27 @@
 //search.js
 const app = getApp()
-const utils_word = require('../../utils/word.js');
-var namearray = ['primary','junior','high','CET'];
-var primary_word = [];
-var junior_word = [];
-var high_word = [];
-var cet_word = [];
+const utils_word = require('../../utils/word2.js');
+var namearray = ['dictionary_zk', 'dictionary_gk', 'dictionary_cet4', 'dictionary_cet6', 'dictionary_ky', 'dictionary_toefl','dictionary_ielts','dictionary_gre'];
 var names = [];
+var fileflag;
+var i;
 
 Page({
   data: {
     items: [
-      { name: 'primary', value: '小学词汇'},
-      { name: 'junior', value: '初中词汇'},
-      { name: 'high', value: '高中词汇' },
-      { name: 'CET', value: '四六级词汇'},
+      { name: 'dictionary_zk', value: '初中词汇'},
+      { name: 'dictionary_gk', value: '高中词汇'},
+      { name: 'dictionary_cet4', value: '四级词汇' },
+      { name: 'dictionary_cet6', value: '六级词汇'},
+      { name: 'dictionary_ky', value: '考研词汇' },
+      { name: 'dictionary_toefl', value: '托福词汇' },
+      { name: 'dictionary_ielts', value: '雅思词汇' },
+      { name: 'dictionary_gre', value: 'GRE词汇' },
     ],
-    familiar_lexicon: [false, false, false, false]
+    familiar_lexicon: [false, false, false, false, false, false, false, false],
+    isDown:false,
+    percent:0,
+    nHidden:true,
   },
   checkboxChange: function (e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value);
@@ -24,147 +29,34 @@ Page({
   },
 
   checkbox_ensure: function () {
-    var that = this;
+    var numbers = 0.0;
     let lexicon = [];
     for (var element of namearray) {
       if (names.indexOf(element) != -1) {
         lexicon.push(true);
+        numbers += 1;
         continue;
       }
       lexicon.push(false);
     }
-    let fileflag = wx.getStorageSync('fileflag');
+    fileflag = wx.getStorageSync('fileflag');
     if (typeof (fileflag) === "string") {
-      fileflag = [false, false, false, false];
+      fileflag = [false, false, false, false, false, false, false, false];
     }
-    //下载小学单词
-    if (!fileflag[0]&&lexicon[0]) {
-      fileflag[0] = true;
-      wx.cloud.downloadFile({
-        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/primary.json', // 文件 ID
-        success: res => {
-          // 返回临时文件路径
-          console.log(res.tempFilePath)
-          wx.request({
-            url: res.tempFilePath,
-            success: function (res) {
-              wx.showModal({
-                title: '下载情况',
-                content: '下载小学词库成功',
-              })
-              var temp = res.data.split('\n');
-              for (var element of temp) {
-                var word = JSON.parse(element);
-                utils_word.setWord(word);
-                primary_word.push(word._id);
-              }
-              utils_word.appendFamiliar(primary_word);
-            }
-          })
-        },
-        fail: console.error
-      })
+
+    this.setData({
+      nHidden: false,
+      isDown: true,
+      percent: 99,
+    });
+
+    for (i = 0; i < fileflag.length; i++) {
+      this.checkbox_download(fileflag[i],lexicon[i],this.data.items[i].name)
     }
-    //下载初中单词
-    if (!fileflag[1]&&lexicon[1]) {
-      fileflag[1] = true;
-      wx.cloud.downloadFile({
-        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/junior.json', // 文件 ID
-        success: res => {
-          // 返回临时文件路径
-          console.log(res.tempFilePath)
-          wx.request({
-            url: res.tempFilePath,
-            success: function (res) {
-              wx.showModal({
-                title: '下载情况',
-                content: '下载初中词库成功',
-              })
-              var temp = res.data.split('\n');
-              for (var element of temp) {
-                var word = JSON.parse(element);
-                utils_word.setWord(word);
-                junior_word.push(word._id);
-              }
-              utils_word.appendFamiliar(junior_word);
-            }
-          })
-        },
-        fail: console.error
-      })
-    }
-    //下载高中单词
-    if (!fileflag[2]&&lexicon[2]) {
-      fileflag[2] = true;
-      wx.cloud.downloadFile({
-        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/senior.json', // 文件 ID
-        success: res => {
-          // 返回临时文件路径
-          console.log(res.tempFilePath)
-          wx.request({
-            url: res.tempFilePath,
-            success: function (res) {
-              wx.showModal({
-                title: '下载情况',
-                content: '下载高中词库成功',
-              })
-              var temp = res.data.split('\n');
-              for (var element of temp) {
-                var word = JSON.parse(element);
-                utils_word.setWord(word);
-                high_word.push(word._id);
-              }
-              utils_word.appendFamiliar(high_word);
-            }
-          })
-        },
-        fail: console.error
-      })
-    }
-    //下载四六级单词
-    if (!fileflag[3]&&lexicon[3]) {
-      fileflag[3] = true; 
-      wx.cloud.downloadFile({
-        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/CET.json', // 文件 ID
-        success: res => {
-          // 返回临时文件路径
-          console.log(res.tempFilePath)
-          wx.request({
-            url: res.tempFilePath,
-            success: function (res) {
-              wx.showModal({
-                title: '下载情况',
-                content: '下载四六级词库成功',
-              })
-              var temp = res.data.split('\n');
-              for (var element of temp) {
-                var word = JSON.parse(element);
-                utils_word.setWord(word);
-                cet_word.push(word._id);
-              }
-              utils_word.appendFamiliar(cet_word);
-            }
-          })
-        },
-        fail: console.error
-      })
-    }
-    if (!lexicon[0]) {
-      utils_word.deleteFamiliar(primary_word);
-    }
-    if (!lexicon[1]) {
-      utils_word.deleteFamiliar(junior_word);
-    }
-    if (!lexicon[2]) {
-      utils_word.deleteFamiliar(high_word);
-    }
-    if (!lexicon[3]) {
-      utils_word.deleteFamiliar(cet_word);
-    }
-    primary_word = [];
-    junior_word = [];
-    high_word = [];
-    cet_word = [];
+    this.setData({
+      percent: 100,
+    });
+
     wx.setStorage({
       key: "familiar_lexicon",
       data: lexicon
@@ -182,14 +74,43 @@ Page({
   onShow: function () {
     let lexicon = wx.getStorageSync('familiar_lexicon');
     if (typeof (lexicon) === "string") {
-      lexicon = [false, false, false, false];
+      lexicon = [false, false, false, false, false, false, false, false];
     }
   
     this.setData({
       familiar_lexicon: lexicon,
     });
-
-    
   },
-  
+  modalconfirm1: function () {
+    this.setData({
+      nHidden: true
+    });
+  },
+  checkbox_download: function(alreadyload,choose,add) {
+    var word_familiar_list = [];
+    if (!alreadyload && choose) {
+      fileflag[i] = true; 
+      wx.cloud.downloadFile({
+        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/'+add+'.json', // 文件 ID
+        success: res => {
+          console.log(res.tempFilePath);
+          // 返回临时文件路径
+          wx.request({
+            url: res.tempFilePath,
+            success: function (res) {
+              for (var element of res.data) {
+                //utils_word.setWord(element);
+                word_familiar_list.push(element._id);
+              }
+              utils_word.appendFamiliar(word_familiar_list);
+            }
+          })
+        },
+        fail: console.error
+      })
+    }
+    if (!choose) {
+      utils_word.deleteFamiliar(word_familiar_list);
+    }
+  },
 })
