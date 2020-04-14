@@ -2,25 +2,29 @@ const cloud = require('wx-server-sdk')
 cloud.init({
   env: "xingxi-p57mz",
 })
-const db = cloud.database()
-const MAX_LIMIT = 100
-exports.main = async (event, context) => {
-  // 先取出集合记录总数
-  const countResult = await db.collection('familiar').count()
-  const total = countResult.total
-  // 计算需分几次取
-  const batchTimes = Math.ceil(total / 100)
-  // 承载所有读操作的 promise 的数组
-  const tasks = []
-  for (let i = 0; i < batchTimes; i++) {
-    const promise = db.collection('familiar').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
-    tasks.push(promise)
+exports.main = (event, context) => {
+  // 这里获取到的 openId、 appId 和 unionId 是可信的，注意 unionId 仅在满足 unionId 获取条件时返回
+  let { OPENID, APPID, UNIONID } = cloud.getWXContext()
+
+  return {
+    OPENID,
+    APPID,
+    UNIONID,
   }
-  // 等待所有
-  return (await Promise.all(tasks)).reduce((acc, cur) => {
-    return {
-      data: acc.data.concat(cur.data),
-      errMsg: acc.errMsg,
-    }
-  })
+}
+// 云函数入口文件
+const cloud = require('wx-server-sdk')
+
+cloud.init()
+
+// 云函数入口函数
+exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
+
+  return {
+    event,
+    openid: wxContext.OPENID,
+    appid: wxContext.APPID,
+    unionid: wxContext.UNIONID,
+  }
 }

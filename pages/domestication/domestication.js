@@ -1,22 +1,24 @@
 //search.js
 const app = getApp()
 const utils_word = require('../../utils/word2.js');
-var namearray = ['dictionary_zk', 'dictionary_gk', 'dictionary_cet4', 'dictionary_cet6', 'dictionary_ky', 'dictionary_toefl','dictionary_ielts','dictionary_gre'];
+const papa = require('../../utils/papaparse.min.js'); 
+var namearray = ['zk', 'gk', 'cet4', 'cet6', 'ky', 'toefl','ielts','gre'];
 var names = [];
 var fileflag;
 var i;
+var famFilePath = wx.env.USER_DATA_PATH;
 
 Page({
   data: {
     items: [
-      { name: 'dictionary_zk', value: '初中词汇'},
-      { name: 'dictionary_gk', value: '高中词汇'},
-      { name: 'dictionary_cet4', value: '四级词汇' },
-      { name: 'dictionary_cet6', value: '六级词汇'},
-      { name: 'dictionary_ky', value: '考研词汇' },
-      { name: 'dictionary_toefl', value: '托福词汇' },
-      { name: 'dictionary_ielts', value: '雅思词汇' },
-      { name: 'dictionary_gre', value: 'GRE词汇' },
+      { name: 'zk', value: '初中词汇'},
+      { name: 'gk', value: '高中词汇'},
+      { name: 'cet4', value: '四级词汇' },
+      { name: 'cet6', value: '六级词汇'},
+      { name: 'ky', value: '考研词汇' },
+      { name: 'toefl', value: '托福词汇' },
+      { name: 'ielts', value: '雅思词汇' },
+      { name: 'gre', value: 'GRE词汇' },
     ],
     familiar_lexicon: [false, false, false, false, false, false, false, false],
     isDown:false,
@@ -76,7 +78,31 @@ Page({
     if (typeof (lexicon) === "string") {
       lexicon = [false, false, false, false, false, false, false, false];
     }
-  
+    
+    var fam_trie = utils_word.getFamiliar(); // 从本地获取熟词库
+    var fam_trie_temp = fam_trie.getAllData();
+    fam_trie_temp.splice(0,0,"_id");
+    var fam_trie_data = fam_trie_temp.join("\n");
+    const fileSystemManager = wx.getFileSystemManager();
+    fileSystemManager.writeFile({
+      filePath:famFilePath +"/"+ app.globalData.openId + "_familiar.csv",
+      data: fam_trie_data,
+      success:res=>{
+        console.log("success");
+        wx.cloud.uploadFile({
+          filePath: famFilePath + "/" + app.globalData.openId + "_familiar.csv",
+          cloudPath: "backup/familiar/" + app.globalData.openId + '_familiar.csv', // 文件路径
+        }).then(res => {
+          // get resource ID
+          console.log(res.fileID)
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+      fail:res=>{
+        console.log(res);
+      }
+    });
     this.setData({
       familiar_lexicon: lexicon,
     });
@@ -91,17 +117,14 @@ Page({
     if (!alreadyload && choose) {
       fileflag[i] = true; 
       wx.cloud.downloadFile({
-        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/'+add+'.json', // 文件 ID
+        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/lexicon/'+add+'.csv', // 文件 ID
         success: res => {
           console.log(res.tempFilePath);
           // 返回临时文件路径
           wx.request({
             url: res.tempFilePath,
             success: function (res) {
-              for (var element of res.data) {
-                //utils_word.setWord(element);
-                word_familiar_list.push(element._id);
-              }
+              word_familiar_list = res.data.split("\n").slice(1);
               utils_word.appendFamiliar(word_familiar_list);
             }
           })
