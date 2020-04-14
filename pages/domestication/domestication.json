@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "mp-checkbox-group": "../../components/checkbox-group/checkbox-group",
+    "mp-checkbox": "../../components/checkbox/checkbox"
+  },
   "navigationBarTitleText": "驯化算法"
 }

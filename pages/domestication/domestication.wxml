@@ -7,11 +7,11 @@
 
   <view class="divLine"></view>
 
-  <checkbox-group bindchange="checkboxChange">
+  <mp-checkbox-group bindchange="checkboxChange">
     <label class="checkbox" wx:for="{{items}}">
-      <checkbox value="{{item.name}}" checked="{{familiar_lexicon[index]}}"/>{{item.value}}
+      <mp-checkbox value="{{item.name}}" label="{{item.value}}" checked="{{familiar_lexicon[index]}}"/>
     </label>
-  </checkbox-group>
+  </mp-checkbox-group>
 
   <modal title="提示" no-cancel = "true" confirm-text="确认"
           hidden="{{nHidden}}" bindconfirm="modalconfirm1">
