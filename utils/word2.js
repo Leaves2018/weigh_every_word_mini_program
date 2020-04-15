@@ -115,11 +115,11 @@ const deleteVocabulary = (vocabulary_words) => {
   if (vocabulary_words.length === 0) {
     return;
   }
-  var familiar_trie = getFamiliar();
+  var vocabulary_trie = getVocabulary();
   vocabulary_words.map(word => {
-    familiar_trie.deleteData(word);
+    vocabulary_trie.deleteData(word);
   })
-  setFamiliar(familiar_trie);
+  setVocabulary(vocabulary_trie);
 }
 
 const getVocabulary = () => {
@@ -145,11 +145,11 @@ const deleteFamiliar = (familiar_words) => {
   if (familiar_words.length === 0) {
     return;
   }
-  var vocabulary_trie = getVocabulary();
+  var familiar_trie = getFamiliar();
   familiar_words.map(word => {
-    vocabulary_trie.deleteData(word);
+    familiar_trie.deleteData(word);
   })
-  setVocabulary(vocabulary_trie);
+  setFamiliar(familiar_trie);
 }
 
 module.exports = {

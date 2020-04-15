@@ -15,7 +15,7 @@
 
   <modal title="提示" no-cancel = "true" confirm-text="确认"
           hidden="{{nHidden}}" bindconfirm="modalconfirm1">
-        正在下载，请稍后...
+        正在修改，请稍后...
         <progress percent="{{percent}}" show-info active='{{isDown}}' stroke-width="14" />
   </modal>
   
