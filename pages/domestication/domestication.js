@@ -136,7 +136,7 @@ Page({
           success: function (res) {
             word_familiar_list = res.data.split("\n").slice(1);
             if (!choose) {
-              utils_word.deleteFamiliar(word_familiar_list);
+              utils_word.deleteVocabulary(word_familiar_list);
             }else{
               utils_word.appendFamiliar(word_familiar_list);
             }

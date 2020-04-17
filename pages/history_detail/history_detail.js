@@ -80,7 +80,7 @@ Page({
     var history_result = new history(history_example.headline, history_example.body, history_example.vocabulary, history_example.unknown, history_example.date);
     utils_his.setHistoryInStorage(history_example.headline, history_result);
     util_word.appendVocabulary(vocabulary);
-    util_word.deleteVocabulary(remember_vocabulary);
+    util_word.deleteFamiliar(remember_vocabulary);
     util_word.appendFamiliar(remember_vocabulary);
   },
 

@@ -93,12 +93,12 @@ const getFamiliar = () => {
   return util_trie.getTrieFromStorage('familiar_list');
 }
 
-// familiar可以为Trie类型或者[string]类型（后者会被自动解析成trie）
+// familiar可以为Trie类型或者[string]类型（后者会被自动解析成trie） 
 const setFamiliar = (familiar) => {
   util_trie.setTrieInStorage('familiar_list', familiar);
 }
 
-// INPUT  字符串列表类型，每个属性是一个单词
+// INPUT  字符串列表类型，每个属性是一个单词 
 const appendFamiliar = (familiar_words) => {
   if (familiar_words.length === 0) {
     return;
@@ -110,16 +110,16 @@ const appendFamiliar = (familiar_words) => {
   setFamiliar(familiar_trie);
 }
 
-// INPUT  字符串列表类型，每个属性是一个单词
+// INPUT  字符串列表类型，每个属性是一个单词 
 const deleteVocabulary = (vocabulary_words) => {
   if (vocabulary_words.length === 0) {
     return;
   }
-  var vocabulary_trie = getVocabulary();
+  var familiar_trie = getFamiliar();
   vocabulary_words.map(word => {
-    vocabulary_trie.deleteData(word);
+    familiar_trie.deleteData(word);
   })
-  setVocabulary(vocabulary_trie);
+  setFamiliar(familiar_trie);
 }
 
 const getVocabulary = () => {
@@ -145,11 +145,11 @@ const deleteFamiliar = (familiar_words) => {
   if (familiar_words.length === 0) {
     return;
   }
-  var familiar_trie = getFamiliar();
+  var vocabulary_trie = getVocabulary();
   familiar_words.map(word => {
-    familiar_trie.deleteData(word);
+    vocabulary_trie.deleteData(word);
   })
-  setFamiliar(familiar_trie);
+  setVocabulary(vocabulary_trie);
 }
 
 module.exports = {
@@ -163,7 +163,4 @@ module.exports = {
   setVocabulary: setVocabulary,
   appendVocabulary: appendVocabulary,
   deleteVocabulary: deleteVocabulary,
-}
-
-
-
+} 
