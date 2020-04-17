@@ -41,13 +41,13 @@ Page({
     // var fam_trie_data = fam_trie_temp.join("\n");
     // const fileSystemManager = wx.getFileSystemManager();
     // fileSystemManager.writeFile({
-    //   filePath:famFilePath +"/"+ app.globalData.openId + "_familiar.csv",
+    //   filePath:famFilePath +"/"+ app.globalData.openid + "_familiar.csv",
     //   data: fam_trie_data,
     //   success:res=>{
     //     console.log("success");
     //     wx.cloud.uploadFile({
-    //       filePath: famFilePath + "/" + app.globalData.openId + "_familiar.csv",
-    //       cloudPath: "backup/familiar/" + app.globalData.openId + '_familiar.csv', // 文件路径
+    //       filePath: famFilePath + "/" + app.globalData.openid + "_familiar.csv",
+    //       cloudPath: "backup/familiar/" + app.globalData.openid + '_familiar.csv', // 文件路径
     //     }).then(res => {
     //       // get resource ID
     //       console.log(res.fileID)

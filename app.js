@@ -2,7 +2,7 @@
 App({
   globalData: {
     userInfo: null,
-    openId: null,
+    openid: null,
   },
   onLaunch: function () {
     // 展示本地存储能力
@@ -63,7 +63,7 @@ App({
     wx.cloud.callFunction({
       name: 'getOpenId',
       complete: res => {
-        that.globalData.openId = res.result.openid;
+        that.globalData.openid = res.result.openid;
       }
     })
   },
