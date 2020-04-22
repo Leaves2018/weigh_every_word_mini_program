@@ -56,7 +56,6 @@ App({
     //   data: test_vocabulary_words,
     // })
   },
-  
   // 获取用户openid
   getOpenid() {
     let that = this;
@@ -67,7 +66,7 @@ App({
       }
     })
   },
-
+  towxml: require('/towxml/index'),
 })
 
 

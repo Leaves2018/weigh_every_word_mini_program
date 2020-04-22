@@ -1,4 +1,5 @@
 // pages/tutorial/tutorial.js
+const app = getApp();
 var initData = 'this is first line\nthis is second line'
 var extraLine = [];
 Page({
@@ -7,14 +8,58 @@ Page({
    * 页面的初始数据
    */
   data: {
-    text: initData
+    text: initData,
+    isLoading: true,
+    article: {},
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let result = app.towxml(`## 特色
 
+- 支持echarts图表（3.0+）✨
+- 支持LaTex数学公式（3.0+）✨
+- 支持yuml流程图（3.0+）✨
+- 支持按需构建（3.0+）✨
+- 支持代码语法高亮
+- 支持emoji表情:wink:
+- 支持上标、下标、下划线、删除线、表格、视频、图片（几乎所有html元素）……
+- 支持typographer字符替换
+- 支持多主题切换
+- 支持Markdown TodoList
+- 支持事件绑定（这样允许自行扩展功能哟，例如：点击页面中的某个元素，更新当前页面内容等...）
+- 极致的中文排版优化
+- 支持前后解析数据
+
+---
+
+
+## 什么是 Markdown
+
+**Markdown** 是一种方便记忆、书写的纯文本标记语言，用户可以使用这些标记符号以最小的输入代价生成极富表现力的文档：譬如您正在阅读的这份文档。它使用简单的符号标记不同的标题，分割不同的段落，**粗体** 或者 *斜体* 某些文字。
+
+**更多详见** [http://www.markdown.cn/](http://www.markdown.cn/)
+
+
+## Markdown TodoList
+
+- [ ] 一起去旅行
+- [ ] 跟同学聚会
+- [x] 晚上十点足球比赛
+- [x] 测试用例撰写`, 'markdown', {
+      theme: 'light',
+      events: {
+        tap: (e) => {
+          console.log('tap', e);
+        }
+      }
+    });
+    this.setData({
+      article: result,
+      isLoading: false,
+    });
   },
 
   /**
