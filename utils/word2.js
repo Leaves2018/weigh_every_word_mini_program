@@ -67,6 +67,7 @@ const getWord = async (id) => {
         exchange: "",
         detail: "",
         audio: "",
+        translation: "",
       }
     })
   }
