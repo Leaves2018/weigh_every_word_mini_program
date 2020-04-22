@@ -191,6 +191,10 @@ Page({
       if (history.isHistory) {
         word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
       }
+      // 需要手动分割再重连才能实现换行效果，原因未知
+      word.translation = word.translation.split(/\\n/);
+      word.definition = word.definition.split(/\\n/);
+
       this.setData({
         progressOverall: Math.round(cnt / len * 100),
         word: word,
