@@ -1,9 +1,17 @@
 //search.js
 const app = getApp()
+const utils_lc = require('../../utils/local_cloud.js');
 
 Page({
   data: {
     mHidden: true,
+  },
+  local_to_cloud: function () {
+    utils_lc.local_to_cloud();
+  },
+
+  cloud_to_local: function () {
+    utils_lc.cloud_to_local();
   },
 
   sliderchange: function (e) {

@@ -24,7 +24,7 @@ const deal_passage = (passage) => {
     this.date = date;
   }
   
-  sentences = passage.split(/[\.|\?|\!|\,|\;|\`]/g); //获取例句
+  sentences = passage.split(/[\.|\?|\!]/g); //获取例句
   sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
   passage = passage.toLowerCase();//文本转小写
   let mmm = passage.replace(/[^a-zA-Z]/g, ' ');

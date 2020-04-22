@@ -11,6 +11,16 @@
     <view class="divLine"></view>
     <button class='btn' type="default" bindtap="clear_storage"> 清除缓存 </button>
     </view>
+    <view class="divLine"></view>
+    <view>
+      <text>同步</text>
+    <view class="divLine"></view>
+    <view class="synchronous">
+      <button class='btn0' type="default" bindtap="local_to_cloud"> 同步本地到云端 </button>
+      <button class='btn0' type="default" bindtap="cloud_to_local"> 同步云端到本地 </button>
+    </view>
+
+    </view>
   </view>
 
   <modal title="提示" cancel-text="取消" confirm-text="确认"

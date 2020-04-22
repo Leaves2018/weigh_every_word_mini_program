@@ -26,42 +26,19 @@ Page({
     nHidden:true,
   },
 
-  onLoad: function () {
-  
-  },
-
   onShow: function () {
     lexicon_primary = wx.getStorageSync('familiar_lexicon');
     if (typeof (lexicon_primary) === "string") {
       lexicon_primary = [false, false, false, false, false, false, false, false];
     }
-    // var fam_trie = utils_word.getFamiliar(); // 从本地获取熟词库
-    // var fam_trie_temp = fam_trie.getAllData();
-    // fam_trie_temp.splice(0,0,"_id");
-    // var fam_trie_data = fam_trie_temp.join("\n");
-    // const fileSystemManager = wx.getFileSystemManager();
-    // fileSystemManager.writeFile({
-    //   filePath:famFilePath +"/"+ app.globalData.openid + "_familiar.csv",
-    //   data: fam_trie_data,
-    //   success:res=>{
-    //     console.log("success");
-    //     wx.cloud.uploadFile({
-    //       filePath: famFilePath + "/" + app.globalData.openid + "_familiar.csv",
-    //       cloudPath: "backup/familiar/" + app.globalData.openid + '_familiar.csv', // 文件路径
-    //     }).then(res => {
-    //       // get resource ID
-    //       console.log(res.fileID)
-    //     }).catch(error => {
-    //       console.log(error)
-    //     })
-    //   },
-    //   fail:res=>{
-    //     console.log(res);
-    //   }
-    // });
+
     this.setData({
       familiar_lexicon: lexicon_primary,
     });
+  },
+
+  onUnload: function () {
+    
   },
 
   checkboxChange: function (e) {
@@ -118,6 +95,8 @@ Page({
       percent: 100,
     });
 
+
+
     wx.setStorage({
       key: "familiar_lexicon",
       data: lexicon
@@ -136,7 +115,7 @@ Page({
           success: function (res) {
             word_familiar_list = res.data.split("\n").slice(1);
             if (!choose) {
-              utils_word.deleteVocabulary(word_familiar_list);
+              utils_word.deleteFamiliarFromFamiliarTrie(word_familiar_list);
             }else{
               utils_word.appendFamiliar(word_familiar_list);
             }

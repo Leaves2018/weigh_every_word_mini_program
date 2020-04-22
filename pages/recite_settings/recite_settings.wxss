@@ -18,9 +18,11 @@ page {
 
 .btn {
   width: 100%;
-  position: fixed;
   display: flex;
   justify-content: center; 
+}
+
+.synchronous {
+  display: flex;
   align-items: center;
-  background: #0afc01;
 }

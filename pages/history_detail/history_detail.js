@@ -13,7 +13,8 @@ function history(headline, body, vocabulary, unknown, date) {
 var number;
 var index;
 var vocabulary = [];
-var remember_vocabulary = [];
+var unknown_remember_vocabulary = [];
+var voc_remember_vocabulary = [];
 var unknown = [];
 var history_example;
 var before_headline;
@@ -80,8 +81,8 @@ Page({
     var history_result = new history(history_example.headline, history_example.body, history_example.vocabulary, history_example.unknown, history_example.date);
     utils_his.setHistoryInStorage(history_example.headline, history_result);
     util_word.appendVocabulary(vocabulary);
-    util_word.deleteFamiliar(remember_vocabulary);
-    util_word.appendFamiliar(remember_vocabulary);
+    util_word.deleteVocabularyFromVocabularyTrie(voc_remember_vocabulary);
+    util_word.appendFamiliar(unknown_remember_vocabulary);
   },
 
   //未知词背诵
@@ -165,7 +166,7 @@ Page({
   },
   //未知词记得操作
   unknown_modalconfirm: function () {
-    remember_vocabulary.push(unknown[index]);
+    unknown_remember_vocabulary.push(unknown[index]);
     unknown.splice(index, 1);
     history_example.unknown.splice(index, 1);
     this.setData({
@@ -189,7 +190,8 @@ Page({
   },
   //生词记得操作
   vocabulary_modalconfirm: function () {
-    remember_vocabulary.push(vocabulary[index]);
+    voc_remember_vocabulary.push(vocabulary[index]);
+    unknown_remember_vocabulary.push(vocabulary[index]);
     vocabulary.splice(index, 1);
     history_example.vocabulary.splice(index, 1);
     this.setData({
