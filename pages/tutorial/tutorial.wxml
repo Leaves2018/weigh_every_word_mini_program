@@ -3,6 +3,13 @@
 <view id="container" animation="{{animationData}}">
   <view class="item" wx:for="123456789123456789">{{item}}</view>
 </view>
+<view class="btn-area">
+  <view class="body-view">
+    <text>{{text}}</text>
+    <button bindtap="add">add line</button>
+    <button bindtap="remove">remove line</button>
+  </view>
+</view>
 <button bindtap="rotateAndScale">旋转同时放大</button>
 <button bindtap="rotateThenScale">先旋转后放大</button>
 <button bindtap="rotateThenScaleBack">先旋转后放大-回退</button>

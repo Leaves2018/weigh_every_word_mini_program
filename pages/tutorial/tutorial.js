@@ -1,11 +1,13 @@
 // pages/tutorial/tutorial.js
+var initData = 'this is first line\nthis is second line'
+var extraLine = [];
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    text: initData
   },
 
   /**
@@ -163,5 +165,21 @@ Page({
     this.setData({
       animationData: this.animation.export()
     })
+  },
+  add: function (e) {
+    extraLine.push('other line')
+    var temp = initData + '\n' + extraLine.join('\n');
+    console.log(temp);
+    this.setData({
+      text: temp,
+    })
+  },
+  remove: function (e) {
+    if (extraLine.length > 0) {
+      extraLine.pop()
+      this.setData({
+        text: initData + '\n' + extraLine.join('\n')
+      })
+    }
   },
 })
