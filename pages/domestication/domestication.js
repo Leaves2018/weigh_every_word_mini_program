@@ -7,6 +7,7 @@ var names = [];
 var i;
 var famFilePath = wx.env.USER_DATA_PATH;
 var lexicon_primary;
+const fileSystemManager = wx.getFileSystemManager();
 
 Page({
   data: {
@@ -42,7 +43,6 @@ Page({
   },
 
   checkboxChange: function (e) {
-    console.log('checkbox发生change事件，携带value值为：', e.detail.value);
     names = e.detail.value;
   },
 
@@ -109,18 +109,21 @@ Page({
       fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/lexicon/'+add+'.csv', // 文件 ID
       success: res => {
         console.log(res.tempFilePath);
-        // 返回临时文件路径
-        wx.request({
-          url: res.tempFilePath,
-          success: function (res) {
+        fileSystemManager.readFile({
+          filePath: res.tempFilePath,
+          encoding: 'utf8',
+          success: res => {
             word_familiar_list = res.data.split("\n").slice(1);
             if (!choose) {
               utils_word.deleteFamiliarFromFamiliarTrie(word_familiar_list);
             }else{
               utils_word.appendFamiliar(word_familiar_list);
             }
+          },
+          fail: err => {
+            console.log('readFile fail', err)
           }
-        })
+        });
       },
       fail: console.error
     })

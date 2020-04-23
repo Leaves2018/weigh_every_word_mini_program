@@ -1,5 +1,6 @@
 const app = getApp();
 const utils_word = require('./word2.js');
+const utils_his = require('./history.js');
 var filePaths = wx.env.USER_DATA_PATH;
 
 const local_to_cloud = () => {
@@ -52,6 +53,31 @@ const local_to_cloud = () => {
   });
 
   var his_list = [];
+  var his_list = utils_his.getHistoryListFromStorage();
+  var his_done_list = utils_his.getHistoryListFromStorage();
+
+  var fam_trie_temp = fam_trie.getAllData();
+  fam_trie_temp.splice(0, 0, "_id");
+  var fam_trie_data = fam_trie_temp.join("\n");
+  fileSystemManager.writeFile({
+    filePath: filePaths + "/" + app.globalData.openid + "_familiar.csv",
+    data: fam_trie_data,
+    success: res => {
+      console.log("success");
+      wx.cloud.uploadFile({
+        filePath: filePaths + "/" + app.globalData.openid + "_familiar.csv",
+        cloudPath: "backup/familiar/" + app.globalData.openid + '_familiar.csv', // 文件路径
+      }).then(res => {
+        // get resource ID
+        console.log(res.fileID)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    fail: res => {
+      console.log(res);
+    }
+  });
 }
 
 const cloud_to_local = (passage) => {
