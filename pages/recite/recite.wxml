@@ -1,8 +1,10 @@
-<block wx:if="{{startReciting}}">
-  <view class="page__head">
+<block wx:if="{{startReciting}}" class="page">
+  <!-- <view class="page__head"> -->
     <progress percent="{{progressOverall}}" show-info border-radius="5"/>
-  <scroll-view class="word__context" scroll-y="true">{{word.context}}</scroll-view>
-  </view>
+    <scroll-view class="word__context" scroll-y="true">
+      <towxml nodes="{{wordContextMD}}"/>
+    </scroll-view>
+  <!-- </view> -->
   <view class="page__word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
     <view class="word__detail">
       <view class="word__level">{{word.tag}}</view>
@@ -16,6 +18,7 @@
       </scroll-view>
     </view>
   </view>
+  <button>修正单词解释</button>
 </block>
 
 <block wx:else>
