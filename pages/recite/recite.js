@@ -29,7 +29,7 @@ wx.getSystemInfo({
 
 var animation = wx.createAnimation({
   duration: 50,
-  timingFunction: 'linear',
+  timingFunction: 'ease-in-out',
 })
 
 Page({
@@ -267,8 +267,8 @@ Page({
   swipeLeft: function () {
     // 动画处理
     animation.translateX(-windowWidth).step();  //  向左移出窗口
-    animation.translateY(-windowHeight).step();
-    animation.translateX(0).step(); // 移动到窗口正上方
+    animation.translateY(windowHeight).step();
+    animation.translateX(0).step(); // 移动到窗口正下方
     this.setData({
       animationData: animation.export(),
     });
@@ -283,8 +283,8 @@ Page({
   swipeRight: function () {
     // 动画处理
     animation.translateX(windowWidth).step(); // 向右移出窗口
-    animation.translateY(-windowHeight).step();
-    animation.translateX(0).step(); // 移动到窗口正上方
+    animation.translateY(windowHeight).step();
+    animation.translateX(0).step(); // 移动到窗口正下方
     this.setData({
       animationData: animation.export(),
     });

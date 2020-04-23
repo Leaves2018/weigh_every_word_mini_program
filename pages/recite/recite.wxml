@@ -1,9 +1,9 @@
 <block wx:if="{{startReciting}}">
-  <view>
+  <view class="page__head">
     <progress percent="{{progressOverall}}" show-info border-radius="5"/>
   <scroll-view class="word__context" scroll-y="true">{{word.context}}</scroll-view>
   </view>
-  <view class="word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
+  <view class="page__word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">
     <view class="word__detail">
       <view class="word__level">{{word.tag}}</view>
       <view class="word__id">{{word._id}}</view>
