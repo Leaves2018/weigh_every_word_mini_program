@@ -3,21 +3,28 @@ const utilHis = require('../../utils/history.js');
 const utilTrie = require('../../utils/trie.js');
 const utilWord = require('../../utils/word2.js');
 
+const app = getApp();
+
+// 用于解析历史记录/单词
 var currentIndex = 0;         // 当前显示单词位于总体位置的下标
 var history = {};             // 当输入参数为历史记录时使用
 var wordList = [];            // 解析得到的单词列表
 
 var vocabularyWordList = [];  // 记录用户修改得到的生熟词
 var familiarWordList = [];
+
+// 用于进度条计算
 var cnt = 0;
 var len = 0;
 
+// 用于实现滑动手势操作
 var minOffset = 30;
 var minTime = 60;
 var startX = 0;
 var startY = 0;
 var startTime = 0;
 
+// 获取屏幕宽度和高度，用于动画效果
 var windowWidth = 0;
 var windowHeight = 0;
 wx.getSystemInfo({
@@ -29,7 +36,7 @@ wx.getSystemInfo({
 
 var animation = wx.createAnimation({
   duration: 50,
-  timingFunction: 'linear',
+  timingFunction: 'ease-in-out',
 })
 
 Page({
@@ -38,12 +45,13 @@ Page({
     progressOverall: 0,
     progressThis: 100,
     thisDuration: 30,
-    defaultSize: 'default',
-    primarySize: 'default',
-    warnSize: 'default',
-    disabled: false,
-    plain: true,
-    loading: false
+    wordContextMD: '',
+    // defaultSize: 'default',
+    // primarySize: 'default',
+    // warnSize: 'default',
+    // disabled: false,
+    // plain: true,
+    // loading: false
   },
 
   /**
@@ -195,9 +203,18 @@ Page({
       word.translation = word.translation.split(/\\n/);
       word.definition = word.definition.split(/\\n/);
 
+      // 在context中标出该单词
+      let idx = word.context.indexOf(word._id);
+      let len = word._id.len;
+      let strBefore = word.context.substring(0, idx);
+      let strAfter = word.context.substring(idx + len);
+
+      let wordContextMD = app.towxml(`${strBefore} **${word._id}** ${strAfter}`, 'markdown');
+      
       this.setData({
         progressOverall: Math.round(cnt / len * 100),
         word: word,
+        wordContextMD: wordContextMD,
       });
     });
 
@@ -267,8 +284,8 @@ Page({
   swipeLeft: function () {
     // 动画处理
     animation.translateX(-windowWidth).step();  //  向左移出窗口
-    animation.translateY(-windowHeight).step();
-    animation.translateX(0).step(); // 移动到窗口正上方
+    animation.translateY(windowHeight).step();
+    animation.translateX(0).step(); // 移动到窗口正下方
     this.setData({
       animationData: animation.export(),
     });
@@ -283,8 +300,8 @@ Page({
   swipeRight: function () {
     // 动画处理
     animation.translateX(windowWidth).step(); // 向右移出窗口
-    animation.translateY(-windowHeight).step();
-    animation.translateX(0).step(); // 移动到窗口正上方
+    animation.translateY(windowHeight).step();
+    animation.translateX(0).step(); // 移动到窗口正下方
     this.setData({
       animationData: animation.export(),
     });

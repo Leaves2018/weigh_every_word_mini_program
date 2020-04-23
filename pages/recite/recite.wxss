@@ -6,19 +6,19 @@ page {
   height: 100%;
 }
 
-.button-hover {
-  background-color: red;
-}
-/** 添加自定义button点击态样式类**/
-.other-button-hover {
-  background-color: blue;
-}
-button {margin: 10px;}
+/* .page__head {
+  height: 300rpx;
+} */
 
-.word {
+.word__context {
+  height: 500rpx;
+  border-style: solid;
+  text-align: left;
+}
+
+.page__word {
   border: double;
   background-color: gainsboro;
-  width: 100%;
   text-align: center;
 }
 
@@ -27,19 +27,15 @@ button {margin: 10px;}
   font-weight: bold;
 }
 
-.word__context {
-  border-style: solid;
-  text-align: left;
-  height: 20%;
-}
 .word__translation {
   border-style: double;
   text-align: left;
-  height: 20%;
+  height: 300rpx;
 }
+
 .word__definition {
   border-style: double;
   text-align: left;
-  height: 20%;
+  height: 300rpx;
 }
 
