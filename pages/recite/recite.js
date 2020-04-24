@@ -379,8 +379,12 @@ Page({
   goBack: function () {
     if (history.isHistory) {
       // 如果读取数据来自历史，背诵完后返回历史记录列表页面
-      wx.switchTab({
-        url: '../history/history',
+      wx.setStorage({
+        key: 'history_detail',
+        data: history.headline,
+      })
+      wx.redirectTo({
+        url: '../history_detail/history_detail',
       });
     } else {
       wx.navigateBack({
