@@ -72,9 +72,9 @@ Page({
       if ((lexicon[i] !== lexicon_second[i]) && !lexicon[i]) {
         index_change_delete.push(i);
       }
-      if (lexicon[i]) {
-        index_change_append.push(i);
-      }
+      // if (lexicon[i]) {
+      //   index_change_append.push(i);
+      // }
     }
     index_change_append = [...new Set(index_change_append)];//单词去重
 

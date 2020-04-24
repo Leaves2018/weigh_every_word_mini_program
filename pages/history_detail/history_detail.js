@@ -94,7 +94,7 @@ Page({
         headline: history_example.headline,
       },
       success: function () {
-        wx.navigateTo({
+        wx.redirectTo({
           url: '/pages/recite/recite',
         });
       }
@@ -110,7 +110,7 @@ Page({
         headline: history_example.headline,
       },
       success: function () {
-        wx.navigateTo({
+        wx.redirectTo({
           url: '/pages/recite/recite',
         });
       }

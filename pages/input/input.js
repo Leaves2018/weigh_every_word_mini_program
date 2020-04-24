@@ -80,7 +80,10 @@ Page({
       return;
     }
     headline = utils_deal.deal_passage(this.data.s);
-    
+    wx.setStorage({
+      key: 'history_detail',
+      data: headline,
+    })
     this.setData({
       mHidden: false,
       s:'',
