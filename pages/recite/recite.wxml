@@ -2,7 +2,7 @@
   <!-- <view class="page__head"> -->
     <progress percent="{{progressOverall}}" show-info border-radius="5"/>
     <scroll-view class="word__context" scroll-y="true">
-      <towxml nodes="{{wordContextMD}}"/>
+      <towxml nodes="{{wordContextWXML}}"/>
     </scroll-view>
   <!-- </view> -->
   <view class="page__word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" bindtouchmove="touchMove">

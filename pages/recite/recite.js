@@ -46,7 +46,6 @@ Page({
     progressOverall: 0,
     progressThis: 100,
     thisDuration: 30,
-    wordContextMD: '',
     // defaultSize: 'default',
     // primarySize: 'default',
     // warnSize: 'default',
@@ -172,6 +171,7 @@ Page({
    */
   loadIndexWord: function () {
     var that = this;
+    /** 
     if (currentIndex < 0) {
       currentIndex = 0;
       wx.showModal({
@@ -195,28 +195,47 @@ Page({
         }
       });
     }
+    */
+    if (currentIndex >= wordList.length) {
+      if (history.isHistory) {
+        currentIndex = wordList.length - 1;
+        wx.showModal({
+          title: '提示',
+          content: '后面没有啦，是否结束并保存？',
+          success(res) {
+            if (res.confirm) {
+              that.reciteDone();
+            }
+          }
+        });
+      } else {
+        currentIndex = currentIndex % wordList.length;
+      }
+    }
     // 数据处理
     utilWord.getWord(wordList[currentIndex]).then(word => {
       if (history.isHistory) {
         word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
+        word.context = utilTomd.markText(word.context, word._id, '**');
+        // 处理历史记录过程中存储context（已标记版本）
+        wx.setStorage({
+          key: `${word._id}_context`,
+          data: word.context,
+        })
+      } else {
+        // 处理trie过程中读取context
+        word.context = wx.getStorageSync(`${word._id}_context`);
       }
       // 需要手动分割再重连才能实现换行效果，原因未知
       word.translation = word.translation.split(/\\n/);
       word.definition = word.definition.split(/\\n/);
 
-      // 在context中标出该单词
-      // let idx = word.context.indexOf(word._id);
-      // let len = word._id.len;
-      // let strBefore = word.context.substring(0, idx);
-      // let strAfter = word.context.substring(idx + len);
-
-      // let wordContextMD = app.towxml(`${strBefore} **${word._id}** ${strAfter}`, 'markdown');
-      let wordContextMD = app.towxml(utilTomd.markText(word.context, word._id, '**'), 'markdown');
+      let wordContextWXML = app.towxml(word.context, 'markdown');
       
       this.setData({
         progressOverall: Math.round(cnt / len * 100),
         word: word,
-        wordContextMD: wordContextMD,
+        wordContextWXML: wordContextWXML,
       });
     });
 
