@@ -11,7 +11,8 @@
     "pages/history/history",
     "pages/domestication/domestication",
     "pages/word_detail/word_detail",
-    "pages/tutorial/tutorial"
+    "pages/tutorial/tutorial",
+    "pages/about/about"
   ],
   "window": {
     "backgroundTextStyle": "light",
