@@ -19,10 +19,14 @@ const markText = (text, content, markup="**", g=true) => {
 
 // 在指定文章text中用指定标记markup包裹指定内容contents的每一个元素
 const markArticle = (article, contents, markup="**") => {
-  contents.map(content => markText(article, content, markup, true));
+  contents.map(content => {
+    article = markText(article, content, markup, true);
+  });
+  return article;
 }
 
 module.exports = {
   markText: markText,
+  markArticle: markArticle,
 }
 
