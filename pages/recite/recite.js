@@ -2,6 +2,7 @@ const util = require('../../utils/util.js');
 const utilHis = require('../../utils/history.js');
 const utilTrie = require('../../utils/trie.js');
 const utilWord = require('../../utils/word2.js');
+const utilTomd = require('../../utils/tomd.js');
 
 const app = getApp();
 
@@ -204,12 +205,13 @@ Page({
       word.definition = word.definition.split(/\\n/);
 
       // 在context中标出该单词
-      let idx = word.context.indexOf(word._id);
-      let len = word._id.len;
-      let strBefore = word.context.substring(0, idx);
-      let strAfter = word.context.substring(idx + len);
+      // let idx = word.context.indexOf(word._id);
+      // let len = word._id.len;
+      // let strBefore = word.context.substring(0, idx);
+      // let strAfter = word.context.substring(idx + len);
 
-      let wordContextMD = app.towxml(`${strBefore} **${word._id}** ${strAfter}`, 'markdown');
+      // let wordContextMD = app.towxml(`${strBefore} **${word._id}** ${strAfter}`, 'markdown');
+      let wordContextMD = app.towxml(utilTomd.markText(word.context, word._id, '**'), 'markdown');
       
       this.setData({
         progressOverall: Math.round(cnt / len * 100),
