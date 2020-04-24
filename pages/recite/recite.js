@@ -75,7 +75,11 @@ Page({
         key: 'recite_info',
         data: -1,
       });
-      this.startReciting();
+      if (wordList.length === 0) {
+        this.reciteDone();
+      } else {
+        this.startReciting();
+      }
     }
   },
 
