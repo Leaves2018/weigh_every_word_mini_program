@@ -1,12 +1,15 @@
 <!--pages/vocabulary/vocabulary.wxml-->
+<!-- <button id="test_button" bindtap="tapTestButton">测试按钮</button> -->
+<view class="page__head">
+  <mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
+</view>
 
-<mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
-<block wx:for="{{words}}" wx:key="*this">
+<view class="page__body">
   <view class="weui-slidecells">
-    <mp-slideview data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons">
-      <view class="weui-slidecell">
+    <mp-slideview wx:for="{{words}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons" style="margin-bottom: {{(index === words.length - 1) ? '64rpx' : '0rpx'}}">
+      <view class="weui-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
         {{index+1}}. {{item}}
       </view>
     </mp-slideview>
   </view>
-</block>
+</view>
