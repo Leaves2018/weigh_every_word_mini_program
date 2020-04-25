@@ -12,7 +12,7 @@
   <text>正文</text>
   <view class="divLine"></view>
   <view class="body-view">
-    <text>{{his_body}}</text>
+    <towxml nodes="{{his_body}}"/>
   </view>
   <view class="divLine"></view>
   <view class="unknown_edit">

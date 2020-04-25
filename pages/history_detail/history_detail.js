@@ -1,8 +1,10 @@
 //search.js
 const utils_his = require('../../utils/history.js');
+const utils_tomd = require('../../utils/tomd.js');
 var base64 = require("../../images/base64");
 const util_word = require('../../utils/word2.js');
 const util_trie = require('../../utils/trie.js');
+const app = getApp();
 function history(headline, body, vocabulary, unknown, date) {
   this.headline = headline;
   this.body = body;
@@ -45,9 +47,14 @@ Page({
     }
     //console.log(unknown);
     before_headline = history_example.headline;
+    let article_mes = history_example.body.join('.');  
+    var his_body_temp = utils_tomd.markArticle(article_mes, vocabulary, '**');
+    //var his_body_res = utils_tomd.markArticle(his_body_temp, unknown, '==');
+    console.log(his_body_temp);
+    var his_body_result = app.towxml(his_body_temp, 'markdown');
     this.setData({
       his_headline: history_example.headline,
-      his_body: history_example.body,
+      his_body: his_body_result,
       his_vocabulary: vocabulary,
       his_unknown: unknown,
       his_date: history_example.date,
