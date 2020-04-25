@@ -141,8 +141,13 @@ Page({
   search: function (value) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        let his_trie = utils_trie.getTrieFromStringArray(history_list);
-        resolve(his_trie.findPrefix(value).map(ans => {
+        var hl_temp = history_list.filter(function (x) {
+          if (x.indexOf(value)!==-1) {
+            return true;
+          };
+        });
+        console.log(hl_temp);
+        resolve(hl_temp.map(ans => {
           return { text: ans };
         }));
       }, 200);
