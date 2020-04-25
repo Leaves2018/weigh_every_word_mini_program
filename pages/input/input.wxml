@@ -7,7 +7,7 @@
 
     <button class='btn' type="default" bindtap="deal_article"> 处理 </button>
 
-    <view bindtap="addpicture">
+    <view class='imagesize' bindtap="addpicture">
       <image class="addpictures" src="/images/tabbar_icon_input_default.png"></image>
     </view>
 

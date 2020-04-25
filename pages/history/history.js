@@ -1,5 +1,6 @@
 //search.js
 const utils_his = require('../../utils/history.js');
+const utils_trie = require('../../utils/trie.js');
 var base64 = require("../../images/base64");
 var number;
 var history_list;
@@ -140,12 +141,45 @@ Page({
   search: function (value) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve([{ text: '搜索结果', value: 1 }, { text: '搜索结果2', value: 2 }])
-      }, 200)
+        let his_trie = utils_trie.getTrieFromStringArray(history_list);
+        resolve(his_trie.findPrefix(value).map(ans => {
+          return { text: ans };
+        }));
+      }, 200);
     })
   },
+  searchBlur: function (e) {
+    console.log("In searchBlur()," + e);
+    this.setData({
+      searchState: false,
+    });
+
+  },
   selectResult: function (e) {
-    //console.log('select result', e.detail);
+    console.log('select result: ', e.detail.item.text);
+    var indexHighlight = history_list.indexOf(e.detail.item.text);
+    this.setData({
+      indexHighlight: indexHighlight,
+    })
+    const query = wx.createSelectorQuery();
+    query.selectAll('.history-slidecell').boundingClientRect();
+    query.exec(res => {
+      wx.pageScrollTo({
+        scrollTop: res[0][indexHighlight].top,
+        duration: 300,
+      });
+    })
+  },
+  tapTestButton: function (e) {
+    var query = wx.createSelectorQuery();
+    console.log("In tapTestButton(),")
+    console.log(e);
+    query.selectAll('.weui-slidecell').boundingClientRect()
+    query.selectViewport().scrollOffset()
+    query.exec(function (res) {
+      console.log(res[0])       // #the-id节点的上边界坐标
+      console.log(res[1].scrollTop) // 显示区域的竖直滚动位置
+    })
   }
 
 });
