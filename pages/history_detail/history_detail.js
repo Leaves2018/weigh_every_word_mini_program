@@ -49,9 +49,8 @@ Page({
     before_headline = history_example.headline;
     let article_mes = history_example.body.join('.');  
     var his_body_temp = utils_tomd.markArticle(article_mes, vocabulary, '**');
-    //var his_body_res = utils_tomd.markArticle(his_body_temp, unknown, '==');
-    console.log(his_body_temp);
-    var his_body_result = app.towxml(his_body_temp, 'markdown');
+    var his_body_res = utils_tomd.markArticle(his_body_temp, unknown, '==');
+    var his_body_result = app.towxml(his_body_res, 'markdown');
     this.setData({
       his_headline: history_example.headline,
       his_body: his_body_result,
