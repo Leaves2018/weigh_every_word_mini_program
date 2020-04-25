@@ -129,6 +129,10 @@ Component({
         cancel: {
             type: Boolean,
             value: true
+        },
+        searchState: {
+          type: Boolean,
+          value: false,
         }
     },
     data: {
