@@ -88,30 +88,34 @@ Page({
 
   search: function (value) {
     return new Promise((resolve, reject) => {
-      console.log(value);
-      if (vocabularyTrie.search(value)) {
-        console.log("search success");
-        var indexHighlight = vocabularyWords.indexOf(value);
-        this.setData({
-          indexHighlight: indexHighlight,
-        })
-        
-        const query = wx.createSelectorQuery();
-        query.selectAll('.weui-slidecell').boundingClientRect();
-        query.exec(res => {
-          console.log("In search(),")
-          console.log(res);
-          wx.pageScrollTo({
-            scrollTop: res[0][indexHighlight].top,
-            duration: 300,
-          });
-        })
-
-      }
+      setTimeout(() => {
+        resolve(vocabularyTrie.findPrefix(value).map(ans => {
+          return { text: ans };
+        }));
+      }, 200);
     })
   },
+  searchBlur: function (e) {
+    console.log("In searchBlur()," + e);
+    this.setData({
+      searchState: false,
+    });
+
+  },
   selectResult: function (e) {
-    console.log('select result', e.detail);
+    console.log('select result: ', e.detail.item.text);
+    var indexHighlight = vocabularyWords.indexOf(e.detail.item.text);
+    this.setData({
+      indexHighlight: indexHighlight,
+    })
+    const query = wx.createSelectorQuery();
+    query.selectAll('.weui-slidecell').boundingClientRect();
+    query.exec(res => {
+      wx.pageScrollTo({
+        scrollTop: res[0][indexHighlight].top,
+        duration: 300,
+      });
+    })
   },
   tapTestButton: function (e) {
     var query = wx.createSelectorQuery();
@@ -120,7 +124,6 @@ Page({
     query.selectAll('.weui-slidecell').boundingClientRect()
     query.selectViewport().scrollOffset()
     query.exec(function (res) {
-      console.log(res)
       console.log(res[0])       // #the-id节点的上边界坐标
       console.log(res[1].scrollTop) // 显示区域的竖直滚动位置
     })
