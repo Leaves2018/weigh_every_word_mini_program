@@ -1,58 +1,7 @@
 class Trie {
-  // 封装字符串数组建树方法（setTrieInStorage的）
   constructor(root = new TrieNode(null)) {
     this.root = root;
     this.allData = [];
-    /** 第一次尝试失败 
-    if (isTrie(root)) {
-      this.root = root;
-      this.data = [];
-    } else if (Array.isArray(root)) {
-      try {
-        var node = new Trie(null);
-        root.map(_id => {
-          node.insertData(_id);
-        });
-        this.root = node;
-        this.data = root;
-      } catch (e) {
-        console.warn(e);
-        this.root = new TrieNode(null);
-      } finally {
-        this.allData = [];
-      }
-    }
-    */
-    
-    /** 第二次尝试失败：似乎传递参数后，Array类型丢失（如何更方便地调试？）
-    if (Array.isArray(root)) {
-      // 如果输入参数是数组类型，尝试建一棵新字典树并插入
-      try {
-        var node = new Trie(null);
-        root.map(_id => {
-          node.insertData(_id);
-        });
-        this.root = node.root;
-        this.data = root;
-      } catch (e) {
-        console.warn(e);
-        this.root = new TrieNode(null);
-      } 
-    } else {
-      // 否则假定输入为TrieNode类型
-      try {
-        this.root = root;
-        if (!isTrie(this)) {
-          throw "It is not a trie.";
-        } 
-      } catch (e) {
-        console.warn(e);
-        this.root = new TrieNode(null);
-      }
-    }
-    this.allData = [];
-    */
-    
   }
 
   insert(stringData, node) {
@@ -124,6 +73,36 @@ class Trie {
         return false;
       }
     }
+  }
+
+  findPrefix (prefixStr) {
+    if (prefixStr === "") return [];
+    let prefix = prefixStr;
+    let curNode = this.root;
+    let firstChar = prefixStr[0];
+    while (true) {
+      if (!curNode) return [];
+      // filter的效率应该已经足够高，但是否会比二分查找等方法要好？🤔️
+      curNode = curNode.children.filter(value => value.key === firstChar)[0];
+      prefixStr = prefixStr.substring(1);
+      if (prefixStr === "") break;
+      firstChar = prefixStr[0];
+    }
+    return curNode ? this.dfs(curNode, prefix) : [];
+  }
+
+  dfs (node, curStr="", ans=[]) {
+    let flag = false;
+    for (const next of node.children) {
+      if (next) {
+        flag = true;
+        this.dfs(next, curStr + next.key, ans);
+      }
+    }
+    if (!flag) {
+      ans.push(curStr);
+    }
+    return ans;
   }
 
   // 删除字符串
