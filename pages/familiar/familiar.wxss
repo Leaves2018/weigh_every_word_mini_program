@@ -1,21 +1,28 @@
 /* pages/familiar/familiar.wxss */
 page{background-color:#F7F7F7;}
-.weui-slidecell{
-margin:8px;
-  background-color:#FFFFFF;
-  border-radius:8px;
-  padding:24px;
-  line-height:1.4;
-  font-size:17px;
-  color:rgba(0,0,0,.9);
+
+.page__head {
+  z-index: 100;
+  position:fixed;
+  top:0;
+  width: 750rpx;
 }
 
-#wordscontainer{
+.page__body {
+  z-index: -1;
+  margin-top: 100rpx;
+}
+
+.initial {
+  text-align: center;
+  font-size: 24pt;
+}
+
+.words-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 50px;
   justify-content: center; /** 水平居中 */
-
 }
 
 .item {

@@ -23,7 +23,7 @@ Page({
     // 每次取树的一个子节点创建新树，利用新树的getAllData()方法获取首字母相同的单词数组
     // 考虑封装到Trie类结构中，或者修改Trie的定义
     for (let child of familiarTrie.root.children) {
-      initials.push(child.key.toUpperCase());
+      initials.push(child.key);
       var tempTrie = new utilTrie.Trie();
       tempTrie.root.children[0] = child;
       var tempData = tempTrie.getAllData();
@@ -55,17 +55,38 @@ Page({
   search: function (value) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve([{ text: value, value: value }])
+        resolve(familiarTrie.findPrefix(value).map(ans => {
+          return { text: ans };
+        }));
       }, 200);
-      if (familiarTrie.search(value)) {
-        resolve([{ text: value, value: 1 }]);
-      } else {
-        reject(value+" is not found.");
-      }
-    })
+    });
+  },
+  searchBlur: function (e) {
+    console.log("In searchBlur()," + e);
+    this.setData({
+      searchState: false,
+    });
   },
   selectResult: function (e) {
-    console.log('select result', e.detail);
+    console.log('select result: ', e.detail.item.text);
+    let tempword = e.detail.item.text;
+    currentInitialIndex = initials.indexOf(tempword[0]);
+    currentWordIndex = familiarWords[currentInitialIndex].indexOf(tempword);
+    this.setData({
+      initialHighlight: currentInitialIndex,
+      indexHighlight: currentWordIndex,
+    })
+    
+    const query = wx.createSelectorQuery();
+    query.selectAll('.initial').boundingClientRect();
+    query.selectAll('.item').boundingClientRect();
+    query.exec(res => {
+      console.log(res);
+      wx.pageScrollTo({
+        scrollTop: res[0][currentInitialIndex].top + res[1][0].height * Math.floor(currentWordIndex / 3),
+        duration: 300,
+      })
+    })
   },
   showDetail: function (e) {
     [currentInitialIndex, currentWordIndex] = e.currentTarget.dataset.position.split('.');
