@@ -30,7 +30,7 @@ page {
 
 
 .imagesize{
-  bottom: 20rpx;
+  bottom: 50rpx;
   position: fixed;
 }
 .btnarea{
@@ -40,7 +40,7 @@ page {
 }
 
 .textarea0{
-  height: 600rpx;
+  height: 500rpx;
 }
 
 .imagesize addpictures { 
