@@ -3,6 +3,7 @@ const utils_deal = require('../../utils/deal.js');
 
 const app = getApp()
 var headline;
+var clipboardData = '';
 
 Page({
   data: {
@@ -10,13 +11,28 @@ Page({
     mHidden: true,
     nHidden: true,
     s: '',
+    clipboardData:'',
   },
 
 
   onShow: function () {
+    var that = this;
     wx.getClipboardData({
       success(res) {
-        //console.log(res.data)
+        if (clipboardData === res.data){
+          return;
+        }else{
+          clipboardData = res.data;
+          wx.showModal({
+            title: '是否录入当前剪贴板信息？',
+            content: res.data,
+            success: ans => {
+              that.setData({
+                s: res.data,
+              })
+            }
+          })
+        }
       }
     })
   },

@@ -14,7 +14,7 @@ page {
   box-sizing: border-box;
 }
 
-.btn {
+.section btn {
   width: 100%;
   position: fixed;
   bottom: 20rpx;
@@ -32,10 +32,14 @@ page {
   background: #f0f0ee;
 }
 
-.addpictures { 
-  margin-top: 400rpx;
-  width: 480rpx;
-  display:flex;                   
-  justify-content: center;     
-  position: fixed; 
+
+.imagesize{
+  margin-top: 600rpx;
+  position: fixed;
+}
+
+.imagesize addpictures { 
+  display:flex;
+  justify-content: center;
+  position: fixed;
 }
