@@ -32,10 +32,14 @@ page {
   background: #f0f0ee;
 }
 
-.addpictures { 
+
+.imagesize{
   margin-top: 400rpx;
-  width: 480rpx;
-  display:flex;                   
-  justify-content: center;     
-  position: fixed; 
+  position: fixed;
+}
+
+.imagesize addpictures { 
+  display:flex;
+  justify-content: center;
+  position: fixed;
 }

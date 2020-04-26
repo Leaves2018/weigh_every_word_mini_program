@@ -6,7 +6,11 @@
     </view>
 
     <button class='btn' type="default" bindtap="deal_article"> 处理 </button>
-    <image class="addpictures" src="/images/icon_input_camera.png"></image>
+
+    <view class='imagesize' bindtap="addpicture">
+      <image class="addpictures" mode="scaleToFill" src="/images/icon_input_camera.png"></image>
+    </view>
+
     <modal title="提示" cancel-text="稍后再背" confirm-text="开始背诵"
           hidden="{{mHidden}}" bindconfirm="modalconfirm" bindcancel="modalcancel">
         筛选完毕，是否开始背诵？
