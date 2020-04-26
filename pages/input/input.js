@@ -116,9 +116,7 @@ Page({
       complete: function (res) { },
     })
   },
-  confirmDeal: function (e) {
-    this.deal_article();
-  },
+
   //处理文本
   deal_article: function () {
     if (this.data.s === "") {
