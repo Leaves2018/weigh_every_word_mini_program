@@ -7,7 +7,7 @@
     </view>
 
     <view class='imagesize' bindtap="addpicture">
-      <image class="addpictures" mode="scaleToFill" src="/images/icon_input_camera.png"></image>
+      <image class="addpictures" mode="aspectFit" src="/images/icon_input_camera.png"></image>
     </view>
 
     <modal title="提示" cancel-text="稍后再背" confirm-text="开始背诵"
