@@ -2,7 +2,7 @@
 <view class="container">
   <view class="page-body">
     <view class="section">
-      <textarea value="{{s}}" bindinput="bindFormSubmit" maxlength = "-1" bindconfirm="confirmDeal" placeholder="请输入要筛选的文本" />
+      <textarea class="textarea0" value="{{s}}" bindinput="bindFormSubmit" maxlength = "-1" bindconfirm="confirmDeal" placeholder="请输入要筛选的文本" />
       <button class='btn' type="default" bindtap="deal_article"> 处理 </button>
     </view>
 
