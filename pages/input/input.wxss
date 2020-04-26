@@ -17,8 +17,6 @@ page {
 .section btn {
   position: fixed;
   justify-content: center; 
-  align-items: center;
-  background: #0afc01;
 }
 
 .section {

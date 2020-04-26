@@ -1,7 +1,5 @@
 //deal_passage.js
 const utils_deal = require('../../utils/deal.js');
-
-const app = getApp()
 var headline;
 var clipboardData = '';
 

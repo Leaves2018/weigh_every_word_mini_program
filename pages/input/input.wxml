@@ -4,8 +4,8 @@
     <view class="section">
       <textarea class="textarea0" value="{{s}}" bindinput="bindFormSubmit" maxlength = "-1" style="height:{{textarea_height}}" show-confirm-bar="false" placeholder="请输入要筛选的文本" />
       <view class='btnarea'>
-        <button class='btn' type="default" bindtap="deal_clear"> 清空 </button>
-        <button class='btn' type="default" bindtap="deal_article"> 处理 </button>
+        <button class='btn' style="width:40vw" type="default" bindtap="deal_clear"> 清空 </button>
+        <button class='btn' style="width:40vw" type="default" bindtap="deal_article"> 处理 </button>
       </view>
     </view>
     <image class="addpictures" bindtap="addpicture" src="/images/icon_input_camera.png"></image>
