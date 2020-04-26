@@ -30,12 +30,10 @@ page {
 .word__translation {
   border-style: double;
   text-align: left;
-  height: 300rpx;
 }
 
 .word__definition {
   border-style: double;
   text-align: left;
-  height: 300rpx;
 }
 

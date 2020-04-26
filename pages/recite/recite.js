@@ -27,12 +27,6 @@ var startTime = 0;
 // 获取屏幕宽度和高度，用于动画效果
 var windowWidth = 0;
 var windowHeight = 0;
-wx.getSystemInfo({
-  success: function(res) {
-    windowWidth = res.windowWidth;
-    windowHeight = res.windowHeight;
-  },
-});
 
 var animation = wx.createAnimation({
   duration: 50,
@@ -51,6 +45,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
+    wx.getSystemInfo({
+      success: function (res) {
+        windowWidth = res.windowWidth;
+        windowHeight = res.windowHeight;
+      },
+    });
     try {
       var reciteInfo = wx.getStorageSync('recite_info');
       if (reciteInfo === "") {
@@ -94,7 +94,16 @@ Page({
    * 生命周期函数--监听页面第一次渲染完成
    */
   onReady: function () {
-
+    const query = wx.createSelectorQuery();
+    query.select('#progress-overall').boundingClientRect();
+    query.exec(res => {
+      console.log(res);
+      let remainingHeight = windowHeight - res[0].bottom;
+      this.setData({
+        contextHeight: Math.floor(remainingHeight * 0.3) + "px",
+        wordHeight: Math.floor(remainingHeight * 0.7) + "px",
+      })
+    })
   },
 
   /**
