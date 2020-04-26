@@ -27,7 +27,7 @@ Page({
         let height = clientHeight * ratio;
         // 设置高度
         that.setData({
-          textarea_height: (height - 350) + "rpx",
+          textarea_height: (height - 400) + "rpx",
         });
       }
     });
