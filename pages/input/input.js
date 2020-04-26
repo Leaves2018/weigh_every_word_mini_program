@@ -46,8 +46,8 @@ Page({
           wx.showModal({
             title: '是否录入当前剪贴板信息？',
             content: res.data,
-            success: function (res) {
-              if (res.cancel) {
+            success: function (res1) {
+              if (res1.cancel) {
                 //点击取消,默认隐藏弹框
               } else {
                 //点击确定
