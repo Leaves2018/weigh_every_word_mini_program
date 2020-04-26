@@ -100,8 +100,8 @@ Page({
       console.log(res);
       let remainingHeight = windowHeight - res[0].bottom;
       this.setData({
-        contextHeight: Math.floor(remainingHeight * 0.3) + "px",
-        wordHeight: Math.floor(remainingHeight * 0.7) + "px",
+        contextHeight: Math.floor(remainingHeight * 0.382) + "px",
+        wordHeight: Math.floor(remainingHeight * 0.618) + "px",
       })
     })
   },
