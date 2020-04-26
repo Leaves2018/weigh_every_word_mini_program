@@ -15,11 +15,7 @@ page {
 }
 
 .section btn {
-  width: 100%;
   position: fixed;
-  bottom: 20rpx;
-  margin-left:auto;
-  margin-right:auto;
   display: flex;
   justify-content: center; 
   align-items: center;
@@ -37,9 +33,14 @@ page {
   bottom: 20rpx;
   position: fixed;
 }
+.btnarea{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
 .textarea0{
-  height: 650rpx;
+  height: 600rpx;
 }
 
 .imagesize addpictures { 

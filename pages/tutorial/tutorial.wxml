@@ -1,4 +1,4 @@
-<!--pages/tutorial/tutorial.wxml-->
+<!-- pages/tutorial/tutorial.wxml
 <text>pages/tutorial/tutorial.wxml</text>
 <view id="container" animation="{{animationData}}">
   <view class="item" wx:for="123456789123456789">{{item}}</view>
@@ -19,4 +19,4 @@
 
 <view class="container">
   <towxml nodes="{{article}}"/>
-</view>
+</view> -->
