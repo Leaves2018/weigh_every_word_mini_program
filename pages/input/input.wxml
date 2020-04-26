@@ -2,16 +2,13 @@
 <view class="container">
   <view class="page-body">
     <view class="section">
-      <textarea class="textarea0" value="{{s}}" bindinput="bindFormSubmit" maxlength = "-1" show-confirm-bar="false" placeholder="请输入要筛选的文本" />
+      <textarea class="textarea0" value="{{s}}" bindinput="bindFormSubmit" maxlength = "-1" style="height:{{textarea_height}}" show-confirm-bar="false" placeholder="请输入要筛选的文本" />
       <view class='btnarea'>
-        <button class='btn' type="default" bindtap="deal_clear"> 清空 </button>
-        <button class='btn' type="default" bindtap="deal_article"> 处理 </button>
+        <button class='btn' style="width:40vw" type="default" bindtap="deal_clear"> 清空 </button>
+        <button class='btn' style="width:40vw" type="default" bindtap="deal_article"> 处理 </button>
       </view>
     </view>
-
-    <view class='imagesize' bindtap="addpicture">
-      <image class="addpictures" mode="aspectFit" src="/images/icon_input_camera.png"></image>
-    </view>
+    <image class="addpictures" bindtap="addpicture" src="/images/icon_input_camera.png"></image>
 
     <modal title="提示" cancel-text="稍后再背" confirm-text="开始背诵"
           hidden="{{mHidden}}" bindconfirm="modalconfirm" bindcancel="modalcancel">
@@ -20,7 +17,7 @@
 
     <modal title="提示" no-cancel = "true" confirm-text="知道了"
           hidden="{{nHidden}}" bindconfirm="modalconfirm1">
-        您可在“我/历史记录“查看本次筛选结果并继续背诵。
+        您可在“历史“查看本次筛选结果并继续背诵。
     </modal>
 
   </view>

@@ -1,23 +1,21 @@
 <block wx:if="{{startReciting}}" class="page">
   <!-- <view class="page__head"> -->
-    <progress percent="{{progressOverall}}" show-info border-radius="5"/>
-    <scroll-view class="word__context" scroll-y="true">
+    <progress id="progress-overall" percent="{{progressOverall}}" show-info border-radius="5"/>
+    <scroll-view class="word__context" scroll-y="true" style="height: {{contextHeight}}">
       <towxml nodes="{{wordContextWXML}}"/>
     </scroll-view>
   <!-- </view> -->
-  <view class="page__word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel">
-    <view class="word__detail">
-      <view class="word__level">{{word.tag}}</view>
-      <view class="word__id">{{word._id}}</view>
-      <view class="word__phonetic">[{{word.phonetic}}]</view>
-      <scroll-view class="word__translation" scroll-y="true">
-        <text wx:for="{{word.translation}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
-      </scroll-view>
-      <scroll-view class="word__definition" scroll-y="true" >
-        <text wx:for="{{word.definition}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
-      </scroll-view>
+  <scroll-view class="page__word" scroll-y="true" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" style="height: {{wordHeight}}">
+    <view class="word__level">「{{word.tag}}」</view>
+    <view class="word__id">{{word._id}}</view>
+    <view class="word__phonetic">[{{word.phonetic}}]</view>
+    <view class="word__translation">
+      <text wx:for="{{word.translation}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
     </view>
-  </view>
+    <view class="word__definition">
+      <text wx:for="{{word.definition}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
+    </view>
+  </scroll-view>
   <!-- <button>修正单词解释</button> -->
 </block>
 

@@ -90,7 +90,7 @@ Page({
     query.exec(res => {
       console.log(res);
       wx.pageScrollTo({
-        scrollTop: res[0][currentInitialIndex].top + res[1][0].height * Math.floor(currentWordIndex / 3),
+        scrollTop: res[0][currentInitialIndex].top + res[1][0].height * Math.floor(currentWordIndex / 3) - 100,
         duration: 300,
       })
     })

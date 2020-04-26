@@ -1,7 +1,5 @@
 //deal_passage.js
 const utils_deal = require('../../utils/deal.js');
-
-const app = getApp()
 var headline;
 var clipboardData = '';
 
@@ -14,26 +12,26 @@ Page({
     clipboardData:'',
   },
 
-  // onReady: function() {
-  //   let that = this;
-  //   // 获取系统信息
-  //   wx.getSystemInfo({
-  //     success: function (res) {
-  //       // 获取可使用窗口宽度
-  //       let clientHeight = res.windowHeight;
-  //       // 获取可使用窗口高度
-  //       let clientWidth = res.windowWidth;
-  //       // 算出比例
-  //       let ratio = 750 / clientWidth;
-  //       // 算出高度(单位rpx)
-  //       let height = clientHeight * ratio;
-  //       // 设置高度
-  //       that.setData({
-  //         textarea_height: height,
-  //       });
-  //     }
-  //   });
-  // },
+  onLoad: function() {
+    let that = this;
+    // 获取系统信息
+    wx.getSystemInfo({
+      success: function (res) {
+        // 获取可使用窗口宽度
+        let clientHeight = res.windowHeight;
+        // 获取可使用窗口高度
+        let clientWidth = res.windowWidth;
+        // 算出比例
+        let ratio = 750 / clientWidth;
+        // 算出高度(单位rpx)
+        let height = clientHeight * ratio;
+        // 设置高度
+        that.setData({
+          textarea_height: (height - 400) + "rpx",
+        });
+      }
+    });
+  },
 
   onShow: function () {
     var that = this;

@@ -26,6 +26,11 @@
   <modal title="提示" cancel-text="取消" confirm-text="确认"
           hidden="{{mHidden}}" bindconfirm="modalconfirm" bindcancel="modalcancel">
         是否删除所有本地缓存？
-    </modal>
+  </modal>
+  <modal title="提示" no-cancel = "true" confirm-text="确认"
+          hidden="{{nHidden}}" bindconfirm="modalconfirm1">
+        正在同步，请稍后...
+        <progress percent="{{percent}}" show-info active='{{isDown}}' stroke-width="14" />
+  </modal>
   
 </view>
