@@ -17,7 +17,7 @@
 
     <modal title="提示" no-cancel = "true" confirm-text="知道了"
           hidden="{{nHidden}}" bindconfirm="modalconfirm1">
-        您可在“我/历史记录“查看本次筛选结果并继续背诵。
+        您可在“历史“查看本次筛选结果并继续背诵。
     </modal>
 
   </view>
