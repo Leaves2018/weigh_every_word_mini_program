@@ -34,8 +34,12 @@ page {
 
 
 .imagesize{
-  margin-top: 600rpx;
+  bottom: 20rpx;
   position: fixed;
+}
+
+.textarea0{
+  height: 650rpx;
 }
 
 .imagesize addpictures { 
