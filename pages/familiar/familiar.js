@@ -61,6 +61,13 @@ Page({
       }, 200);
     });
   },
+
+  searchFocus: function (e) {
+    wx.pageScrollTo({
+      scrollTop: 0,
+    })
+  },
+  
   searchBlur: function (e) {
     console.log("In searchBlur()," + e);
     this.setData({

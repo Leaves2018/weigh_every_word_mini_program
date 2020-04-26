@@ -1,7 +1,7 @@
 <!--pages/vocabulary/vocabulary.wxml-->
 <view class="page__head">
   <!-- <button id="test_button" bindtap="tapTestButton">测试按钮</button> -->
-  <mp-searchbar bindselectresult="selectResult" search="{{search}}" bindblur="searchBlur" searchState="{{searchState}}"></mp-searchbar>
+  <mp-searchbar bindselectresult="selectResult" search="{{search}}" bindfocus="searchFocus" bindblur="searchBlur" searchState="{{searchState}}"></mp-searchbar>
 </view>
 
 <view class="page__body">

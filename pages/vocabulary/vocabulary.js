@@ -95,6 +95,13 @@ Page({
       }, 200);
     })
   },
+
+  searchFocus: function (e) {
+    wx.pageScrollTo({
+      scrollTop: 0,
+    })
+  },
+
   searchBlur: function (e) {
     console.log("In searchBlur()," + e);
     this.setData({
@@ -112,7 +119,7 @@ Page({
     query.selectAll('.weui-slidecell').boundingClientRect();
     query.exec(res => {
       wx.pageScrollTo({
-        scrollTop: res[0][indexHighlight].top,
+        scrollTop: res[0][indexHighlight].top - 100,
         duration: 300,
       });
     })
