@@ -18,7 +18,7 @@
       </scroll-view>
     </view>
   </view>
-  <button>修正单词解释</button>
+  <!-- <button>修正单词解释</button> -->
 </block>
 
 <block wx:else>
