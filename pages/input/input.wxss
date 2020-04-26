@@ -32,17 +32,10 @@ page {
   background: #f0f0ee;
 }
 
-
-.imagesize{
+.addpictures { 
   margin-top: 400rpx;
+  width: 480rpx;
   display:flex;                   
   justify-content: center;     
   position: fixed; 
-}
-
-.imagesize addpictures { 
-  width:200rpx;
-  border-style:solid;
-  border-radius: 50%;
-  border-color:black;
 }
