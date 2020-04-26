@@ -36,8 +36,8 @@
     </mp-cells>
 
     <mp-cells title="背诵">
-      <mp-cell link url="/pages/recite_settings/recite_settings" value="背诵选项"></mp-cell>
-      <mp-cell link url="/pages/domestication/domestication" value="驯化算法"></mp-cell>
+      <mp-cell link url="/pages/recite_settings/recite_settings" value="设置"></mp-cell>
+      <mp-cell link url="/pages/domestication/domestication" value="熟词本初始化"></mp-cell>
     </mp-cells>
 
     <mp-cells title="其他">
