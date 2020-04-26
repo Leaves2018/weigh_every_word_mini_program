@@ -3,10 +3,9 @@
   <view class="page-body">
     <view class="section">
       <textarea value="{{s}}" bindinput="bindFormSubmit" maxlength = "-1" placeholder="请输入要筛选的文本" />
+      <button class='btn' type="default" bindtap="deal_article"> 处理 </button>
     </view>
-
-    <button class='btn' type="default" bindtap="deal_article"> 处理 </button>
-
+    
     <view class='imagesize' bindtap="addpicture">
       <image class="addpictures" mode="scaleToFill" src="/images/icon_input_camera.png"></image>
     </view>

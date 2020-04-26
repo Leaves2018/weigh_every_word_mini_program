@@ -14,7 +14,7 @@ page {
   box-sizing: border-box;
 }
 
-.btn {
+.section btn {
   width: 100%;
   position: fixed;
   bottom: 20rpx;
@@ -34,7 +34,7 @@ page {
 
 
 .imagesize{
-  margin-top: 400rpx;
+  margin-top: 600rpx;
   position: fixed;
 }
 

@@ -16,7 +16,7 @@ Page({
   onShow: function () {
     wx.getClipboardData({
       success(res) {
-        //console.log(res.data)
+        
       }
     })
   },
