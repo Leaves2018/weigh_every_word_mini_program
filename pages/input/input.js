@@ -26,11 +26,16 @@ Page({
           wx.showModal({
             title: '是否录入当前剪贴板信息？',
             content: res.data,
-            success: ans => {
-              that.setData({
-                s: res.data,
-              })
-            }
+            success: function (res) {
+              if (res.cancel) {
+                //点击取消,默认隐藏弹框
+              } else {
+                //点击确定
+                that.setData({
+                  s: res.data,
+                })
+              }
+            },
           })
         }
       }
@@ -42,6 +47,7 @@ Page({
       s: e.detail.value
     })
   },
+
   //添加图片进行OCR识别
   addpicture: function () {
     var that = this;
@@ -89,6 +95,9 @@ Page({
       fail: function (res) { },
       complete: function (res) { },
     })
+  },
+  confirmDeal: function (e) {
+    this.deal_article();
   },
   //处理文本
   deal_article: function () {
