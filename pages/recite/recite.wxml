@@ -7,7 +7,7 @@
   <!-- </view> -->
   <view class="page__word" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel">
     <view class="word__detail">
-      <view class="word__level">{{word.tag}}</view>
+      <view class="word__level">「{{word.tag}}」</view>
       <view class="word__id">{{word._id}}</view>
       <view class="word__phonetic">[{{word.phonetic}}]</view>
       <scroll-view class="word__translation" scroll-y="true">
