@@ -90,6 +90,21 @@ const setWord = (word) => {
   }
 }
 
+const getExchange = (word) => {
+  try {
+    word = new Word2(word); // 类型检测：如果不是Word类型则返回空
+    var res = {};
+    for (let element of word.exchange.split('/')) {
+      let temp = element.split(':');
+      res[temp[0]] = temp[1];
+    }
+  } catch (e) {
+    console.warn(e);
+    res = {};
+  }
+  return res;
+}
+
 const getFamiliar = () => {
   return util_trie.getTrieFromStorage('familiar_list');
 }
