@@ -13,7 +13,7 @@ var wordList = [];            // 解析得到的单词列表
 
 var vocabularyWordList = [];  // 记录用户修改得到的生熟词
 var familiarWordList = [];
-
+var thisWord = {};
 // 用于进度条计算
 var len = 0;
 
@@ -133,6 +133,8 @@ Page({
 
     vocabularyWordList = [];  // 记录用户修改得到的生熟词
     familiarWordList = [];
+
+    thisWord = {};
     animation = wx.createAnimation({
       duration: 50,
       timingFunction: 'ease',
@@ -178,6 +180,8 @@ Page({
   loadIndexWord: function () {
     // 数据处理
     utilWord.getWord(wordList[currentIndex]).then(word => {
+      thisWord = word = new utilWord.Word(word);
+      // 获取context属性
       if (history.isHistory) {
         word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
         word.context = utilTomd.markText(word.context, word._id, '**');
@@ -190,16 +194,18 @@ Page({
         // 处理trie过程中读取context
         word.context = wx.getStorageSync(`${word._id}_context`);
       }
-      // 需要手动分割再重连才能实现换行效果，原因未知
-      word.translation = word.translation.split(/\\n/);
-      word.definition = word.definition.split(/\\n/);
 
       let wordContextWXML = app.towxml(word.context, 'markdown');
       
+      // word.translation = word.translation.split(/\\n/);
+      // word.definition = word.definition.split(/\\n/);
+
       this.setData({
         progressOverall: Math.round(currentIndex / len * 100),
         word: word,
+        wordTag: Object.values(word.getTag()).join('/'),
         wordContextWXML: wordContextWXML,
+        hasOriginalWord: word.getExchange()["0"],
       });
     });
 
@@ -303,26 +309,6 @@ Page({
     this.isOutOfBounds();
   },
 
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   * 下拉则清空原有数据直接拉取新数据
-   */
-  onPullDownRefresh: function () {
-    wx.removeStorage({
-      key: wordList[currentIndex],
-      success: function(res) {
-        utilWord.getWord(wordList[currentIndex]).then(word => {
-          console.log(word);
-          console.log("refresh successifully.");
-          this.setData({
-            word: word,
-          });
-        });
-      },
-    })
-  },
-
   /**
    * 将用户修改保存到用户本地的生熟词本
    * 并将结果保存到key为recite_info的本地缓存，供调用recite页面的页面进行数据处理
@@ -404,5 +390,26 @@ Page({
         delta: 1,
       });
     }
+  },
+
+  tapShowOriginalWord: function () {
+    if (!this.data.showOriginalWordButton) {
+      utilWord.getWord(thisWord.getExchange()["0"]).then(res => {
+        this.setData({
+          word: new utilWord.Word(res),
+        })
+      })   
+    } else {
+      this.setData({
+        word: thisWord,
+      })
+    }
+    this.setData({
+      showOriginalWordButton: !this.data.showOriginalWordButton,
+    })
+  },
+
+  tapModifyButton: function () {
+    console.log("tapModifyButton()")
   },
 });
