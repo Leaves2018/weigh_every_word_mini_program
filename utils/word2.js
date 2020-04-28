@@ -1,20 +1,85 @@
 const util_trie = require('./trie.js');
 
 class Word2 {
-  constructor(word) {
+  constructor(word, auto=true) {
     this._id = word._id;
-    this.phonetic = word.phonetic;
-    this.definition = word.definition;
-    this.translation = word.translation;
-    this.pos = word.pos;
-    this.collins = word.collins;
-    this.oxford = word.oxford;
-    this.tag = word.tag;
-    this.bnc = word.bnc;
-    this.frq = word.frq;
-    this.exchange = word.exchange;
-    this.detail = word.detail;
-    this.audio = word.audio;
+    this.phonetic = word.phonetic || "";
+    this.definition = word.definition || "";
+    this.translation = word.translation || "";
+    this.pos = word.pos || "";
+    this.collins = word.collins || 0;
+    this.oxford = word.oxford || 0;
+    this.tag = word.tag || "";
+    this.bnc = word.bnc || "";
+    this.frq = word.frq || "";
+    this.exchange = word.exchange || "";
+    this.detail = word.detail || "";
+    this.audio = word.audio || "";
+
+    // 调用自动类型转换
+    if (auto) {
+      this.autoConversion();
+    }
+  }
+
+  autoConversion = () => {
+    this.getDefinition();
+    this.getTranslation();
+    this.getTag();
+    this.getExchange();
+  }
+
+  getDefinition = () => {
+    if (typeof(this.definition) === 'string') {
+      this.definition = this.definition.split(/\\n/);
+    }
+    return this.definition.filter(s => s && s.trim());
+  }
+
+  getTranslation = () => {
+    if (typeof(this.translation) === 'string') {
+      this.translation = this.translation.split(/\\n/);
+    }
+    return this.translation.filter(s => s && s.trim());
+  }
+
+  getTag = () => {
+    var res = {};
+    if (typeof(this.tag) === 'string') {
+      try {
+        var m = new Map([
+          ['zk', '中考'], ['gk', '高考'], ['cet4', '四级'], ['cet6', '六级'],
+          ['ky', '考研'], ['toefl', '托福'], ['ielts', '雅思'], ['gre', 'GRE']]);
+        for (let element of this.tag.split(/\s+/)) {
+          res[element] = m.get(element);
+        }
+        this.tag = res;
+      } catch (e) {
+        console.warn(e);
+        res = {};
+      }
+    } else if (typeof(this.tag) === 'object') {
+      res = this.tag;
+    }
+    return res;
+  }
+
+  getExchange = () => {
+    var res = {};
+    if (typeof(this.exchange === 'string')) {
+      try {
+        for (let element of this.exchange.split('/')) {
+          let temp = element.split(':');
+          res[temp[0]] = temp[1];
+        }
+      } catch (e) {
+        console.warn(e);
+        res = {};
+      }
+    } else if (typeof(this.exchange === 'object')) {
+      res = this.exchange;
+    }
+    return res;
   }
 }
 
@@ -33,42 +98,15 @@ const getWord = async (id) => {
   } catch (e) {
     console.log(e);
     await dictionary.doc(id).get().then(res => {
-      word = res.data;
+      word = new Word2(res.data);
       wx.setStorage({
         key: id,
         data: word,
       })
     }).catch(reason => {
-      wx.request({
-        url: 'https://api.tianapi.com/txapi/enwords/index?key=cd30c0f60a4a72610eb97d94343d5f50&word=' + id,
-        success: function (res) {
-          if (res.data.code == 200) {
-            word.translation = res.data.newslist[0].content;
-          } else {
-            word.translation = res.data.msg;
-          }
-        },
-        fail: function (err) {
-          console.log(err);
-        }
-      });
       // console.warn(reason);
       console.warn("Fail to get word from cloud database lexicon.")
-      word = {
-        _id: id,
-        phonetic: "",
-        definition: "",
-        pos: "",
-        collins: "",
-        oxford: "",
-        tag: "",
-        bnc: "",
-        frq: "",
-        exchange: "",
-        detail: "",
-        audio: "",
-        translation: "",
-      }
+      word = new Word2({_id: id});
     })
   }
   return word;
@@ -88,21 +126,6 @@ const setWord = (word) => {
       data: word,
     });
   }
-}
-
-const getExchange = (word) => {
-  try {
-    word = new Word2(word); // 类型检测：如果不是Word类型则返回空
-    var res = {};
-    for (let element of word.exchange.split('/')) {
-      let temp = element.split(':');
-      res[temp[0]] = temp[1];
-    }
-  } catch (e) {
-    console.warn(e);
-    res = {};
-  }
-  return res;
 }
 
 const getFamiliar = () => {
@@ -191,6 +214,7 @@ const deleteFamiliarFromFamiliarTrie = (familiar_words) => {
 }
 
 module.exports = {
+  Word: Word2,
   getWord: getWord,
   setWord: setWord,
   getFamiliar: getFamiliar,
