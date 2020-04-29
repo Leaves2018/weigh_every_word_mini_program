@@ -6,8 +6,8 @@
     </scroll-view>
   <!-- </view> -->
   <scroll-view class="page__word" scroll-y="true" animation="{{animationData}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel" style="height: {{wordHeight}}">
-    <view class="word__level">「{{word.tag}}」</view>
-    <view class="word__id">{{word._id}}</view>
+    <view class="word__tag">「{{wordTag}}」</view>
+    <view class="word__id" bindtap="tapShowOriginalWord">{{word._id}}</view>
     <view class="word__phonetic">[{{word.phonetic}}]</view>
     <view class="word__translation">
       <text wx:for="{{word.translation}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
@@ -16,7 +16,8 @@
       <text wx:for="{{word.definition}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
     </view>
   </scroll-view>
-  <!-- <button>修正单词解释</button> -->
+  <!-- <button wx:if="{{hasOriginalWord}}" bindtap="tapShowOriginalWord">查看单词原形</button> -->
+  <image id="modify-button" src='/images/xiugai.svg' bindtap="tapModifyButton"/>
 </block>
 
 <block wx:else>

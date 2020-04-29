@@ -1,4 +1,10 @@
 {
+  "plugins": {
+    "WechatSI": {
+      "version": "0.3.3",
+      "provider": "wx069ba97219f66d99"
+    }
+  },
   "pages": [
     "pages/input/input",
     "pages/deal_input/deal_input",

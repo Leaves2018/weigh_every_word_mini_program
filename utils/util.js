@@ -26,7 +26,28 @@ const arrSub = (a, b) => {
   throw new Error('arrSub(): Wrong Param Type')
 }
 
+// 自定义分割方法：保留分隔符号
+// text 待分割文本
+// re   分割符     
+const splitWithPunc = (text, re) => {
+  re = new RegExp(re, 'g'); // 全局匹配
+  var res = [];
+  while (true) {
+    let lastIndex = re.lastIndex;
+    let temp = re.exec(text);
+    if (!temp) {
+      res.push(text.substring(lastIndex).trim());
+      break;
+    }
+    res.push(text.substring(lastIndex, temp.index + 1).trim());
+  }
+  return res.filter(s => {
+    return s && s.trim();
+  });
+}
+
 module.exports = {
   formatTime: formatTime,
   arrSub: arrSub,
+  splitWithPunc: splitWithPunc,
 }
