@@ -28,7 +28,7 @@ const markText = (text, content, markup="**") => {
     //   res.push(`${markup}${temptext}${markup}`);
     // }
   }
-  return res.join('');
+  return res.join('').trim();
 }
 
 // 在指定文章text中用指定标记markup包裹指定内容contents的每一个元素
