@@ -81,6 +81,41 @@ class Word2 {
     }
     return res;
   }
+
+  getAudio = () => {
+    var timestamp = Math.floor(Date.parse(new Date()) / 1000);
+    // 如果没有获取过音频或者超时，则返回失败
+    if (typeof (this.audio) === 'string' || timestamp > this.audio.expired_time) {
+      return undefined;
+    } else {
+      console.log("In getAudio()," + this.audio.filename)
+      // 返回音频地址
+      return this.audio.filename;
+    }
+  }
+
+  // getAudio = async () => {
+  //   var timestamp = Math.floor(Date.parse(new Date()) / 1000);
+  //   // 如果没有获取过音频或者超时，则重新获取
+  //   if (typeof(this.audio) === 'string' || timestamp > this.audio.expired_time) {
+  //     var plugin = requirePlugin("WechatSI"); 
+  //     await plugin.textToSpeech({
+  //       lang: "en_US",
+  //       tts: true,
+  //       content: this._id,
+  //       success: function (res) {
+  //         console.log("succ tts", res.filename)
+  //         this.audio = res;
+  //       },
+  //       fail: function (res) {
+  //         console.log("fail tts", res)
+  //       }
+  //     })
+  //   }
+  //   console.log("In getAudio()," + this.audio.filename)
+  //   // 返回音频地址
+  //   return this.audio.filename;
+  // }
 }
 
 // 查询传入的单词，返回单词对象

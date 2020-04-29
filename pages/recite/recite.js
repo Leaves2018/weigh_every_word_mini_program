@@ -7,11 +7,11 @@ const utilTomd = require('../../utils/tomd.js');
 const app = getApp();
 
 // 用于解析历史记录/单词
-var currentIndex = 0;         // 当前显示单词位于总体位置的下标
-var history = {};             // 当输入参数为历史记录时使用
-var wordList = [];            // 解析得到的单词列表
+var currentIndex = 0; // 当前显示单词位于总体位置的下标
+var history = {}; // 当输入参数为历史记录时使用
+var wordList = []; // 解析得到的单词列表
 
-var vocabularyWordList = [];  // 记录用户修改得到的生熟词
+var vocabularyWordList = []; // 记录用户修改得到的生熟词
 var familiarWordList = [];
 var thisWord = {};
 // 用于进度条计算
@@ -44,9 +44,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function() {
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         windowWidth = res.windowWidth;
         windowHeight = res.windowHeight;
       },
@@ -66,7 +66,7 @@ Page({
             currentIndex = 0;
             break;
         }
-      } 
+      }
     } catch (e) {
       console.warn(e);
     } finally {
@@ -93,7 +93,7 @@ Page({
   /**
    * 生命周期函数--监听页面第一次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
     const query = wx.createSelectorQuery();
     query.select('#progress-overall').boundingClientRect();
     query.exec(res => {
@@ -109,14 +109,14 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面被销毁
    */
-  onUnload: function () {
+  onUnload: function() {
     this.saveChanges();
     console.log('history.vocabulary is ')
     console.log(history.vocabulary);
@@ -126,12 +126,12 @@ Page({
   /**
    * 清理使用参数
    */
-  clearOtherData: function () {
-    currentIndex = 0;         // 当前显示单词位于总体位置的下标
-    history = {};             // 当输入参数为历史记录时使用
-    wordList = [];            // 解析得到的单词列表
+  clearOtherData: function() {
+    currentIndex = 0; // 当前显示单词位于总体位置的下标
+    history = {}; // 当输入参数为历史记录时使用
+    wordList = []; // 解析得到的单词列表
 
-    vocabularyWordList = [];  // 记录用户修改得到的生熟词
+    vocabularyWordList = []; // 记录用户修改得到的生熟词
     familiarWordList = [];
 
     thisWord = {};
@@ -145,7 +145,7 @@ Page({
   /**
    * 解析字典树
    */
-  parseTrieInfo: function (trie) {
+  parseTrieInfo: function(trie) {
     wordList = trie.getAllData();
     len = wordList.length;
   },
@@ -153,7 +153,7 @@ Page({
   /**
    * 解析历史记录
    */
-  parseHistoryInfo: function (headline) {
+  parseHistoryInfo: function(headline) {
     history = utilHis.getHistoryFromStorage(headline);
     history.isHistory = true;
     history.hisSenLocMap = new Map();
@@ -167,7 +167,7 @@ Page({
   /**
    * 开始背诵流程
    */
-  startReciting: function () {
+  startReciting: function() {
     this.setData({
       startReciting: true,
     });
@@ -177,10 +177,46 @@ Page({
   /**
    * 加载wordList[currentIndex]指定的单词
    */
-  loadIndexWord: function () {
+  loadIndexWord: function() {
     // 数据处理
     utilWord.getWord(wordList[currentIndex]).then(word => {
       thisWord = word = new utilWord.Word(word);
+
+      let tempAudioPath = thisWord.getAudio();
+      if (!tempAudioPath) {
+        var plugin = requirePlugin("WechatSI");
+        plugin.textToSpeech({
+          lang: "en_US",
+          tts: true,
+          content: thisWord._id,
+          success: function (res) {
+            console.log("succ tts", res.filename)
+            thisWord.audio = res;
+            const innerAudioContext = wx.createInnerAudioContext();
+            innerAudioContext.autoplay = true;
+            innerAudioContext.src = res.filename;
+            innerAudioContext.onPlay(() => {
+              console.log("开始播放")
+            })
+            innerAudioContext.onError((res) => {
+              console.log(res.errMsg)
+              console.log(res.errCode)
+            })
+          }
+        })
+      } else {
+        const innerAudioContext = wx.createInnerAudioContext();
+        innerAudioContext.autoplay = true;
+        innerAudioContext.src = tempAudioPath;
+        innerAudioContext.onPlay(() => {
+          console.log("开始播放")
+        })
+        innerAudioContext.onError((res) => {
+          console.log(res.errMsg)
+          console.log(res.errCode)
+        })
+      }
+
       // 获取context属性
       if (history.isHistory) {
         word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
@@ -195,10 +231,7 @@ Page({
         word.context = wx.getStorageSync(`${word._id}_context`);
       }
 
-      let wordContextWXML = app.towxml(`${word.context}`, 'markdown');
-      
-      // word.translation = word.translation.split(/\\n/);
-      // word.definition = word.definition.split(/\\n/);
+      let wordContextWXML = app.towxml(word.context, 'markdown');
 
       this.setData({
         progressOverall: Math.round(currentIndex / len * 100),
@@ -210,20 +243,22 @@ Page({
     });
 
     // 动画处理
-    animation.translateY(0).step({duration: 300});
+    animation.translateY(0).step({
+      duration: 300
+    });
     this.setData({
       animationData: animation.export(),
     });
   },
 
-  touchStart: function (e) {
+  touchStart: function(e) {
     // console.log("touchStart", e);
     startX = e.touches[0].pageX;
     startY = e.touches[0].pageY;
     startTime = new Date().getTime();
   },
 
-  touchCancel: function (e) {
+  touchCancel: function(e) {
     startX = 0;
     startY = 0;
     startTime = 0;
@@ -232,7 +267,7 @@ Page({
   /**
    * 触摸结束事件：主要的判断流程
    */
-  touchEnd: function (e) {
+  touchEnd: function(e) {
     // console.log("touchEnd", e);
     var endX = e.changedTouches[0].pageX;
     var endY = e.changedTouches[0].pageY;
@@ -265,7 +300,7 @@ Page({
     }
   },
 
-  isOutOfBounds: function () {
+  isOutOfBounds: function() {
     currentIndex += 1;
     // 越界逻辑判断在此进行
     if (currentIndex >= wordList.length) {
@@ -280,23 +315,23 @@ Page({
   /**
    * 向左滑动处理方法
    */
-  swipeLeft: function () {
+  swipeLeft: function() {
     // 动画处理
-    animation.translateX(-windowWidth).step();  //  向左移出窗口
+    animation.translateX(-windowWidth).step(); //  向左移出窗口
     animation.translateY(windowHeight).step();
     animation.translateX(0).step(); // 移动到窗口正下方
     this.setData({
       animationData: animation.export(),
     });
     // 数据处理
-    familiarWordList.push(wordList[currentIndex]);  // 左滑记作熟词
+    familiarWordList.push(wordList[currentIndex]); // 左滑记作熟词
     this.isOutOfBounds();
   },
 
   /**
    * 向右滑动处理方法
    */
-  swipeRight: function () {
+  swipeRight: function() {
     // 动画处理
     animation.translateX(windowWidth).step(); // 向右移出窗口
     animation.translateY(windowHeight).step();
@@ -313,7 +348,7 @@ Page({
    * 将用户修改保存到用户本地的生熟词本
    * 并将结果保存到key为recite_info的本地缓存，供调用recite页面的页面进行数据处理
    */
-  saveChanges: function () {
+  saveChanges: function() {
     if (history.isHistory) {
       wx.setStorage({
         key: 'recite_info',
@@ -326,7 +361,7 @@ Page({
       // 处理unknown单词：本次未处理单词-生词-熟词
       let remainingWordList = util.arrSub(wordList, vocabularyWordList.concat(familiarWordList));
       let unknownWordList = util.arrSub(remainingWordList, history.vocabulary.map(value => value.name));
-      
+
       history.unknown = unknownWordList.map(_id => {
         return {
           name: _id,
@@ -374,8 +409,8 @@ Page({
 
   /**
    * 跳转上一级页面（历史记录）
-  */
-  goBack: function () {
+   */
+  goBack: function() {
     if (history.isHistory) {
       // 如果读取数据来自历史，背诵完后返回历史记录列表页面
       wx.setStorage({
@@ -392,13 +427,13 @@ Page({
     }
   },
 
-  tapShowOriginalWord: function () {
+  tapShowOriginalWord: function() {
     if (!this.data.showOriginalWordButton) {
       utilWord.getWord(thisWord.getExchange()["0"]).then(res => {
         this.setData({
           word: new utilWord.Word(res),
         })
-      })   
+      })
     } else {
       this.setData({
         word: thisWord,
@@ -409,7 +444,7 @@ Page({
     })
   },
 
-  tapModifyButton: function () {
+  tapModifyButton: function() {
     console.log("tapModifyButton()")
   },
 });
