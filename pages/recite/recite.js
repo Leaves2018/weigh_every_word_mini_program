@@ -184,7 +184,7 @@ Page({
       // 获取context属性
       if (history.isHistory) {
         word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
-        word.context = utilTomd.markText(word.context, word._id, '**');
+        word.context = utilTomd.markTextWithExchange(word.context, word, '**');
         // 处理历史记录过程中存储context（已标记版本）
         wx.setStorage({
           key: `${word._id}_context`,
@@ -195,7 +195,7 @@ Page({
         word.context = wx.getStorageSync(`${word._id}_context`);
       }
 
-      let wordContextWXML = app.towxml(word.context, 'markdown');
+      let wordContextWXML = app.towxml(`${word.context}`, 'markdown');
       
       // word.translation = word.translation.split(/\\n/);
       // word.definition = word.definition.split(/\\n/);
