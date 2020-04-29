@@ -29,7 +29,7 @@ const arrSub = (a, b) => {
 // 自定义分割方法：保留分隔符号
 // text 待分割文本
 // re   分割符     
-var splitWithPunc = (text, re) => {
+const splitWithPunc = (text, re) => {
   re = new RegExp(re, 'g'); // 全局匹配
   var res = [];
   while (true) {
@@ -49,4 +49,5 @@ var splitWithPunc = (text, re) => {
 module.exports = {
   formatTime: formatTime,
   arrSub: arrSub,
+  splitWithPunc: splitWithPunc,
 }
