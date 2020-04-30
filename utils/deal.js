@@ -17,20 +17,21 @@ const deal_passage = (passage) => {
     this.name = name;
     this.sentence = sentence;
   }
-  function history(headline, body, vocabulary, unknown, date) {
+  function history(headline, body, vocabulary, unknown, firstWords, date) {
     this.headline = headline;
     this.body = body;
     this.vocabulary = vocabulary;
     this.unknown = unknown;
+    this.firstWords = firstWords;
     this.date = date;
   }
   let re0 = /[A-Z][a-z]*/g;
   var res0;
-  var first_words = [];
+  var firstWords = [];
   while ((res0 = re0.exec(passage)) !== null) {
-    first_words.push(res0[0]);
+    firstWords.push(res0[0]);
   }
-  first_words = [...new Set(first_words)];//单词去重
+  firstWords = [...new Set(firstWords)];//单词去重
   var re1 = /[\.|\?|\!]/;
   sentences = utils_util.splitWithPunc(passage, re1);
   sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
@@ -56,7 +57,7 @@ const deal_passage = (passage) => {
   }
   for (var t_word of voc_temp) {
     if ((voc_trie.search(t_word)) === false) {
-      if (first_words.indexOf(t_word)!==-1){
+      if (firstWords.indexOf(t_word)!==-1){
         let t_word_temp = t_word.toLowerCase();
         if (stop_words.indexOf(t_word_temp) === -1) {//过滤停止词
           if ((fam_trie.search(v_word)) === false) {
@@ -104,7 +105,7 @@ const deal_passage = (passage) => {
   }else {
     headline_res = sentences[0];
   }
-  var history_example = new history(headline_res, sentences, voc_result, unknown_result, mydate);
+  var history_example = new history(headline_res, sentences, voc_result, unknown_result, firstWords, mydate);
   utils_his.setHistoryInStorage(headline_res, history_example);
   var history_list = utils_his.getHistoryListFromStorage();
   history_list.push(headline_res);

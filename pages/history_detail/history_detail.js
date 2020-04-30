@@ -51,7 +51,6 @@ Page({
     var his_body_temp = utils_tomd.markArticle(article_mes, vocabulary, '**');
     var his_body_res = utils_tomd.markArticle(his_body_temp, unknown, '==');
     var his_body_result = app.towxml(his_body_res, 'markdown');
-    console.log(his_body_result);
     this.setData({
       his_headline: history_example.headline,
       his_body: his_body_result,
