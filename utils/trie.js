@@ -43,6 +43,10 @@ class Trie {
 
   // 查询字符串
   search(queryData) {
+    return this.searchHelper(queryData) || this.searchHelper(queryData.toLowerCase());
+  }
+
+  searchHelper(queryData) {
     if (queryData == '' || this.root.children.length == 0) {
       return false;
     }
