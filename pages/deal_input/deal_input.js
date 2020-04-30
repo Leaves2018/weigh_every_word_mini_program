@@ -1,7 +1,8 @@
 //deal_passage.js
 const utils_deal = require('../../utils/deal.js');
 var headline;
-var clipboardData = '';
+const app = getApp();
+const fileSystemManager = wx.getFileSystemManager();
 
 Page({
   data: {
@@ -9,7 +10,6 @@ Page({
     mHidden: true,
     nHidden: true,
     s: '',
-    clipboardData: '',
   },
 
   onLoad: function () {
@@ -27,10 +27,39 @@ Page({
         let height = clientHeight * ratio;
         // 设置高度
         that.setData({
-          textarea_height:height-100 + "rpx",
+          textarea_height:height-150 + "rpx",
         });
       }
     });
+    wx.cloud.downloadFile({
+      fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/daily-push/' + app.globalData.todayArticle, // 文件 ID
+      success: res => {
+        console.log(res.tempFilePath);
+        fileSystemManager.readFile({
+          filePath: res.tempFilePath,
+          encoding: 'utf8',
+          success: res => {
+            that.setData({
+              s: res.data,
+            })
+            let headline = utils_deal.deal_passage(res.data);
+            wx.setStorage({
+              key: 'history_detail',
+              data: headline,
+            })
+            wx.navigateTo({
+              url: '/pages/history_detail/history_detail',
+            })
+          },
+          fail: err => {
+            console.log('readFile fail', err)
+          }
+        });
+      },
+      fail: err => {
+        console.log('readFile fail', err)
+      }
+    })
 
   },
 
@@ -38,29 +67,7 @@ Page({
     var that = this;
     let passage_temp = wx.getStorageSync('input_passage_information');
     if (passage_temp === "") {
-      wx.getClipboardData({
-        success(res) {
-          if (clipboardData === res.data) {
-            return;
-          } else {
-            clipboardData = res.data;
-            wx.showModal({
-              title: '是否录入当前剪贴板信息？',
-              content: res.data,
-              success: function (res1) {
-                if (res1.cancel) {
-                  //点击取消,默认隐藏弹框
-                } else {
-                  //点击确定
-                  that.setData({
-                    s: res.data,
-                  })
-                }
-              },
-            })
-          }
-        }
-      })
+      return;
     }else {
       wx.setStorage({
         key: 'input_passage_information',
@@ -69,7 +76,6 @@ Page({
       that.setData({
         s: passage_temp,
       })
-
     }
   },
 
@@ -133,6 +139,9 @@ Page({
   modalconfirm1: function () {
     this.setData({
       nHidden: true
+    });
+    wx.navigateBack({
+      url: '/pages/input/input',
     });
   }
 })

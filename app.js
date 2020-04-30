@@ -3,8 +3,11 @@ App({
   globalData: {
     userInfo: null,
     openid: null,
+    todayArticle:'',
   },
   onLaunch: function () {
+    var launch_message = wx.getLaunchOptionsSync();
+    this.globalData.todayArticle = launch_message.query.filename;
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

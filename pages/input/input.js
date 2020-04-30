@@ -1,6 +1,40 @@
 //input.js
+
+var clipboardData = '';
 Page({
   data: {},
+  onLoad: function () {
+    
+  },
+  onShow: function () {
+    wx.getClipboardData({
+      success(res) {
+        if (clipboardData === res.data) {
+          return;
+        } else {
+          clipboardData = res.data;
+          wx.showModal({
+            title: '是否录入当前剪贴板信息？',
+            content: res.data,
+            success: function (res1) {
+              if (res1.cancel) {
+                //点击取消,默认隐藏弹框
+              } else {
+                //点击确定
+                wx.setStorage({
+                  key: 'input_passage_information',
+                  data: res.data,
+                })
+                wx.navigateTo({
+                  url: '/pages/deal_input/deal_input',
+                })
+              }
+            },
+          })
+        }
+      }
+    })
+  },
   navigate_deal: function () {
     wx.hideKeyboard(),
       wx.navigateTo({

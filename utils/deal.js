@@ -1,5 +1,6 @@
 const utils_word = require('./word2.js');
 const utils_his = require('./history.js');
+const utils_util = require('./util.js');
 
 const deal_passage = (passage) => {
   if (passage === "") {
@@ -23,10 +24,16 @@ const deal_passage = (passage) => {
     this.unknown = unknown;
     this.date = date;
   }
-  
-  sentences = passage.split(/[\.|\?|\!]/g); //获取例句
+  let re0 = /[A-Z][a-z]*/g;
+  var res0;
+  var first_words = [];
+  while ((res0 = re0.exec(passage)) !== null) {
+    first_words.push(res0[0]);
+  }
+  first_words = [...new Set(first_words)];//单词去重
+  var re1 = /[\.|\?|\!]/;
+  sentences = utils_util.splitWithPunc(passage, re1);
   sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
-  passage = passage.toLowerCase();//文本转小写
   let mmm = passage.replace(/[^a-zA-Z]/g, ' ');
   words = mmm.split(" "); //获取单词
   words = [...new Set(words)];//单词去重
@@ -49,7 +56,20 @@ const deal_passage = (passage) => {
   }
   for (var t_word of voc_temp) {
     if ((voc_trie.search(t_word)) === false) {
-      unknown_words.push(t_word) // 筛选出未知词
+      if (first_words.indexOf(t_word)!==-1){
+        let t_word_temp = t_word.toLowerCase();
+        if (stop_words.indexOf(t_word_temp) === -1) {//过滤停止词
+          if ((fam_trie.search(v_word)) === false) {
+            if ((voc_trie.search(t_word)) === false) {
+              unknown_words.push(t_word);
+            }else{
+              voc_really.push(t_word);
+            }
+          }
+        }
+      }else {
+        unknown_words.push(t_word);
+      }
     } else {
       voc_really.push(t_word);
     }
@@ -57,8 +77,7 @@ const deal_passage = (passage) => {
   var voc_result = [];
   for (var element of voc_really) {
     for (var i = 0; i < sentences.length; i++) {
-      let lows = sentences[i].toLowerCase();
-      if (lows.indexOf(element) != -1) {
+      if (sentences[i].indexOf(element) != -1) {
         var word_example = new word(element, i);
         voc_result.push(word_example); // 初步形成文章的生词列表
         break;
@@ -69,8 +88,7 @@ const deal_passage = (passage) => {
   var unknown_result = [];
   for (var element of unknown_words) {
     for (var i = 0; i < sentences.length; i++) {
-      let lows = sentences[i].toLowerCase();
-      if (lows.indexOf(element) != -1) {
+      if (sentences[i].indexOf(element) != -1) {
         var word_example = new word(element, i);
         unknown_result.push(word_example); // 初步形成文章的“未知词”列表
         break;
