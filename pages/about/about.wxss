@@ -1,1 +1,8 @@
 /* pages/about/about.wxss */
+#modify-button { 
+  position: fixed;
+  width: 100rpx;
+  height: 100rpx;
+  right: 50rpx;
+  bottom: 50rpx;
+}

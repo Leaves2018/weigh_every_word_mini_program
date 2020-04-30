@@ -4,3 +4,4 @@
 
 <switch wx:for="{{numberArray}}" wx:key="*this" style="display: block;"> {{item}} </switch>
 <button bindtap="addNumberToFront"> Add to the front </button>
+<image id="modify-button" src='/images/xiugai.svg'/>

@@ -134,7 +134,8 @@ Page({
 
     this.animation = animation
     // 旋转同时放大
-    this.animation.rotate(45).scale(2, 2).step()
+    // this.animation.rotate(45).scale(2, 2).step()
+    this.animation.height(0).step();
     this.setData({
       animationData: this.animation.export()
     })
@@ -147,8 +148,9 @@ Page({
 
     this.animation = animation
     // 先旋转后放大
-    this.animation.rotate(45).step()
-    this.animation.scale(2, 2).step()
+    // this.animation.rotate(45).step()
+    // this.animation.scale(2, 2).step()
+    this.animation.height(100).step();
     this.setData({
       animationData: this.animation.export()
     })
@@ -161,8 +163,9 @@ Page({
 
     this.animation = animation
     // 先旋转后放大-回退
-    this.animation.scale(1, 1).step()
-    this.animation.rotate(0).step()
+    // this.animation.scale(1, 1).step()
+    // this.animation.rotate(0).step()
+    this.animation.top(0).step()
     this.setData({
       animationData: this.animation.export()
     })
@@ -175,8 +178,9 @@ Page({
 
     this.animation = animation
     // 先旋转同时放大，然后平移
-    this.animation.rotate(45).scale(2, 2).step()
-    this.animation.translate(100, 100).step({ duration: 1000 })
+    // this.animation.rotate(45).scale(2, 2).step()
+    // this.animation.translate(100, 100).step({ duration: 1000 })
+    this.animation.top(500).step();
     this.setData({
       animationData: this.animation,
     })
@@ -209,6 +213,20 @@ Page({
     this.animation.translateY(0).step()
     this.setData({
       animationData: this.animation.export()
+    })
+  },
+  tapRotateX: function () {
+    var animation = wx.createAnimation({
+      duration: 300,
+      timingFunction: 'ease',
+    })
+
+    this.animation = animation
+    this.animation.rotateX(180).opacity(0).step();
+    this.animation.opacity(1).rotateX(0).step();
+    // this.animation.rotateX(0).step();
+    this.setData({
+      animationData: this.animation.export(),
     })
   },
   add: function (e) {
