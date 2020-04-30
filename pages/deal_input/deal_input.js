@@ -38,29 +38,7 @@ Page({
     var that = this;
     let passage_temp = wx.getStorageSync('input_passage_information');
     if (passage_temp === "") {
-      wx.getClipboardData({
-        success(res) {
-          if (clipboardData === res.data) {
-            return;
-          } else {
-            clipboardData = res.data;
-            wx.showModal({
-              title: '是否录入当前剪贴板信息？',
-              content: res.data,
-              success: function (res1) {
-                if (res1.cancel) {
-                  //点击取消,默认隐藏弹框
-                } else {
-                  //点击确定
-                  that.setData({
-                    s: res.data,
-                  })
-                }
-              },
-            })
-          }
-        }
-      })
+      return;
     }else {
       wx.setStorage({
         key: 'input_passage_information',
@@ -69,7 +47,6 @@ Page({
       that.setData({
         s: passage_temp,
       })
-
     }
   },
 
