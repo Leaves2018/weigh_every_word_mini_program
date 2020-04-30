@@ -1,7 +1,18 @@
 const util_trie = require('./trie.js');
 
+// 音频播放相关
+const innerAudioContext = wx.createInnerAudioContext();
+innerAudioContext.autoplay = false;
+innerAudioContext.onPlay(() => {
+  console.log("开始播放")
+})
+innerAudioContext.onError((res) => {
+  console.log(res.errMsg)
+  console.log(res.errCode)
+})
+
 class Word2 {
-  constructor(word, auto=true) {
+  constructor(word, auto=false) {
     this._id = word._id;
     this.phonetic = word.phonetic || "";
     this.definition = word.definition || "";
@@ -93,28 +104,67 @@ class Word2 {
       return this.audio.filename;
     }
   }
+  playAudio() {
+    let tempAudioPath = this.getAudio();
+    if (!tempAudioPath) {
+      var plugin = requirePlugin("WechatSI");
+      var that = this;
+      plugin.textToSpeech({
+        lang: "en_US",
+        tts: true,
+        content: that._id,
+        success: function (res) {
+          console.log("succ tts", res.filename)
+          that.audio = res;
+          setWord(that);  //  保存音频临时链接等信息
+          innerAudioContext.src = res.filename;
+        }
+      })
+    } else {
+      console.log("使用临时链接成功")
+      innerAudioContext.src = tempAudioPath;
+    }
+    innerAudioContext.play();
+  }
 
-  // getAudio = async () => {
-  //   var timestamp = Math.floor(Date.parse(new Date()) / 1000);
-  //   // 如果没有获取过音频或者超时，则重新获取
-  //   if (typeof(this.audio) === 'string' || timestamp > this.audio.expired_time) {
-  //     var plugin = requirePlugin("WechatSI"); 
-  //     await plugin.textToSpeech({
+  // playAudio() {
+  //   let tempAudioPath = this.getAudio();
+  //   if (!tempAudioPath) {
+  //     var plugin = requirePlugin("WechatSI");
+  //     var that = this;
+  //     plugin.textToSpeech({
   //       lang: "en_US",
   //       tts: true,
-  //       content: this._id,
+  //       content: that._id,
   //       success: function (res) {
   //         console.log("succ tts", res.filename)
-  //         this.audio = res;
-  //       },
-  //       fail: function (res) {
-  //         console.log("fail tts", res)
+  //         that.audio = res;
+  //         setWord(that);
+  //         const innerAudioContext = wx.createInnerAudioContext();
+  //         innerAudioContext.autoplay = true;
+  //         innerAudioContext.src = res.filename;
+  //         innerAudioContext.onPlay(() => {
+  //           console.log("开始播放")
+  //         })
+  //         innerAudioContext.onError((res) => {
+  //           console.log(res.errMsg)
+  //           console.log(res.errCode)
+  //         })
   //       }
   //     })
+  //   } else {
+  //     console.log("使用临时链接成功")
+  //     const innerAudioContext = wx.createInnerAudioContext();
+  //     innerAudioContext.autoplay = true;
+  //     innerAudioContext.src = tempAudioPath;
+  //     innerAudioContext.onPlay(() => {
+  //       console.log("开始播放")
+  //     })
+  //     innerAudioContext.onError((res) => {
+  //       console.log(res.errMsg)
+  //       console.log(res.errCode)
+  //     })
   //   }
-  //   console.log("In getAudio()," + this.audio.filename)
-  //   // 返回音频地址
-  //   return this.audio.filename;
   // }
 }
 
@@ -133,13 +183,10 @@ const getWord = async (id) => {
   } catch (e) {
     console.log(e);
     await dictionary.doc(id).get().then(res => {
-      word = new Word2(res.data);
-      wx.setStorage({
-        key: id,
-        data: word,
-      })
+      word = new Word2(res.data, true);
+      setWord(word);
     }).catch(reason => {
-      // console.warn(reason);
+      console.warn(reason);
       console.warn("Fail to get word from cloud database lexicon.")
       word = new Word2({_id: id});
     })
