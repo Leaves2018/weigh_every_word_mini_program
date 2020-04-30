@@ -1,7 +1,6 @@
 //deal_passage.js
 const utils_deal = require('../../utils/deal.js');
 var headline;
-const app = getApp();
 const fileSystemManager = wx.getFileSystemManager();
 
 Page({
@@ -31,19 +30,24 @@ Page({
         });
       }
     });
-    if (app.globalData.todayArticle !== '' && app.globalData.todayArticle !== undefined) {
+    let todayArticle = wx.getStorageSync('todayArticleAddress');
+    if (todayArticle) {
       wx.cloud.downloadFile({
-        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/daily-push/' + app.globalData.todayArticle, // 文件 ID
+        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/daily-push/' + todayArticle, // 文件 ID
         success: res => {
           console.log(res.tempFilePath);
           fileSystemManager.readFile({
             filePath: res.tempFilePath,
             encoding: 'utf8',
-            success: res => {
+            success: res1 => {
               that.setData({
-                s: res.data,
+                s: res1.data,
               })
-              let headline = utils_deal.deal_passage(res.data);
+              let headline = utils_deal.deal_passage(res1.data);
+              wx.setStorage({
+                key: 'todayArticleAddress',
+                data: '',
+              });
               wx.setStorage({
                 key: 'history_detail',
                 data: headline,
@@ -58,7 +62,7 @@ Page({
           });
         },
         fail: err => {
-          console.log('readFile fail', err)
+          console.log('downFile fail', err)
         }
       })
     }

@@ -7,7 +7,11 @@ App({
   },
   onLaunch: function () {
     var launch_message = wx.getLaunchOptionsSync();
-    this.globalData.todayArticle = launch_message.query.filename;
+    let todayArticle = launch_message.query.filename;
+    wx.setStorage({
+      key: 'todayArticleAddress',
+      data: todayArticle,
+    });
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
