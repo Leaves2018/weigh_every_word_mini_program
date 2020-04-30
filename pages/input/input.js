@@ -47,6 +47,11 @@ Page({
     wx.chooseImage({
       count: 1,
       success: async function (res) {
+        wx.showToast({
+          title: '加载中...',
+          icon: 'loading',
+          duration: 3000
+        })
         try {
           const invokeRes = await wx.serviceMarket.invokeService({
             service: 'wx79ac3de8be320b71',
@@ -61,7 +66,6 @@ Page({
               ocr_type: 8
             },
           })
-
           console.log('invokeService success', invokeRes)
           let passage = "";
           var informations = invokeRes.data.ocr_comm_res.items;

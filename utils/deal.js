@@ -98,16 +98,22 @@ const deal_passage = (passage) => {
 
   // history存入本地
   var mydate = new Date();
-  var history_example = new history(sentences[0], sentences, voc_result, unknown_result, mydate);
-  utils_his.setHistoryInStorage(sentences[0], history_example);
+  let headline_res = '';
+  if (sentences[0].length > 140){
+    headline_res = passage.substr(0,140);
+  }else {
+    headline_res = sentences[0];
+  }
+  var history_example = new history(headline_res, sentences, voc_result, unknown_result, mydate);
+  utils_his.setHistoryInStorage(headline_res, history_example);
   var history_list = utils_his.getHistoryListFromStorage();
-  history_list.push(sentences[0]);
+  history_list.push(headline_res);
   history_list = [...new Set(history_list)];
   utils_his.setHistoryListInStorage(history_list);
   var history_done_list = utils_his.getHistoryListDoneFromStorage();
   history_done_list.push('info');
   utils_his.setHistoryListDoneInStorage(history_done_list);
-  return sentences[0];
+  return headline_res;
 }
 
 module.exports = {
