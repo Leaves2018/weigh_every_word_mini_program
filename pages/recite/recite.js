@@ -174,70 +174,26 @@ Page({
     this.loadIndexWord();
   },
 
-  /**
-   * 加载wordList[currentIndex]指定的单词
-   */
-  loadIndexWord: function() {
+
+  loadIndexWord: function () {
     // 数据处理
     utilWord.getWord(wordList[currentIndex]).then(word => {
       thisWord = word = new utilWord.Word(word);
+      thisWord.playAudio();
+      console.log(thisWord);
 
-      let tempAudioPath = thisWord.getAudio();
-      if (!tempAudioPath) {
-        var plugin = requirePlugin("WechatSI");
-        plugin.textToSpeech({
-          lang: "en_US",
-          tts: true,
-          content: thisWord._id,
-          success: function (res) {
-            console.log("succ tts", res.filename)
-            thisWord.audio = res;
-            const innerAudioContext = wx.createInnerAudioContext();
-            innerAudioContext.autoplay = true;
-            innerAudioContext.src = res.filename;
-            innerAudioContext.onPlay(() => {
-              console.log("开始播放")
-            })
-            innerAudioContext.onError((res) => {
-              console.log(res.errMsg)
-              console.log(res.errCode)
-            })
-          }
-        })
-      } else {
-        const innerAudioContext = wx.createInnerAudioContext();
-        innerAudioContext.autoplay = true;
-        innerAudioContext.src = tempAudioPath;
-        innerAudioContext.onPlay(() => {
-          console.log("开始播放")
-        })
-        innerAudioContext.onError((res) => {
-          console.log(res.errMsg)
-          console.log(res.errCode)
-        })
-      }
-
-      // 获取context属性
+      // 如果是历史记录，则覆盖原有的detail属性（覆盖是为了减少存储空间，但仍然有大量重复存储；待改进）
       if (history.isHistory) {
-        word.context = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
-        word.context = utilTomd.markTextWithExchange(word.context, word, '**');
-        // 处理历史记录过程中存储context（已标记版本）
-        wx.setStorage({
-          key: `${word._id}_context`,
-          data: word.context,
-        })
-      } else {
-        // 处理trie过程中读取context
-        word.context = wx.getStorageSync(`${word._id}_context`);
+        word.detail = history.body[history.hisSenLocMap.get(wordList[currentIndex])];
+        word.detail = utilTomd.markTextWithExchange(word.detail, word, '**');
+        utilWord.setWord(word);
       }
-
-      let wordContextWXML = app.towxml(word.context, 'markdown');
 
       this.setData({
         progressOverall: Math.round(currentIndex / len * 100),
         word: word,
         wordTag: Object.values(word.getTag()).join('/'),
-        wordContextWXML: wordContextWXML,
+        wordContextWXML: app.towxml(word.detail, 'markdown'),
         hasOriginalWord: word.getExchange()["0"],
       });
     });
@@ -428,20 +384,30 @@ Page({
   },
 
   tapShowOriginalWord: function() {
-    if (!this.data.showOriginalWordButton) {
-      utilWord.getWord(thisWord.getExchange()["0"]).then(res => {
-        this.setData({
-          word: new utilWord.Word(res),
-        })
-      })
+    let tempExchange = thisWord.getExchange()["0"]; 
+    if (!tempExchange) {
+      // 如果没有lemma，直接播放一遍音频即可
+      thisWord.playAudio();
     } else {
+      // 否则进行lemma和单词本身的切换逻辑
+      if (!this.data.showOriginalWordButton) {
+        utilWord.getWord(tempExchange).then(res => {
+          let word = new utilWord.Word(res);
+          word.playAudio()
+          this.setData({
+            word: word,
+          })
+        })
+      } else {
+        thisWord.playAudio();
+        this.setData({
+          word: thisWord,
+        })
+      }
       this.setData({
-        word: thisWord,
+        showOriginalWordButton: !this.data.showOriginalWordButton,
       })
     }
-    this.setData({
-      showOriginalWordButton: !this.data.showOriginalWordButton,
-    })
   },
 
   tapModifyButton: function() {
