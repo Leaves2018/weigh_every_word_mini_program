@@ -1,7 +1,11 @@
 //input.js
+
 var clipboardData = '';
 Page({
   data: {},
+  onLoad: function () {
+    
+  },
   onShow: function () {
     wx.getClipboardData({
       success(res) {
