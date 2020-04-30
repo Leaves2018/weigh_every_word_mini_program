@@ -32,7 +32,7 @@ const deal_passage = (passage) => {
     firstWords.push(res0[0]);
   }
   firstWords = [...new Set(firstWords)];//单词去重
-  var re1 = /[\.|\?|\!]/;
+  var re1 = /[\.|\?|\!\？\！\。]/;
   sentences = utils_util.splitWithPunc(passage, re1);
   sentences = sentences.filter(function (x) { return x && x.trim(); }); //例句去空
   let mmm = passage.replace(/[^a-zA-Z]/g, ' ');

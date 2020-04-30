@@ -3,7 +3,7 @@
     <form bindsubmit='loginForm'>
       <view class="title_edit">
       <text>标题</text>
-      <button formType="submit" class='btn' type="default">确认修改</button>
+      <button formType="submit" class='btn' type="default">修改</button>
       </view>
       <view class="divLine"></view>
       <input class="weui-input" name='headline' value='{{his_headline}}'/>
