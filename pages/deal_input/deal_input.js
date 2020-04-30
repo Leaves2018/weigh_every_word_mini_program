@@ -31,36 +31,37 @@ Page({
         });
       }
     });
-    wx.cloud.downloadFile({
-      fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/daily-push/' + app.globalData.todayArticle, // 文件 ID
-      success: res => {
-        console.log(res.tempFilePath);
-        fileSystemManager.readFile({
-          filePath: res.tempFilePath,
-          encoding: 'utf8',
-          success: res => {
-            that.setData({
-              s: res.data,
-            })
-            let headline = utils_deal.deal_passage(res.data);
-            wx.setStorage({
-              key: 'history_detail',
-              data: headline,
-            })
-            wx.navigateTo({
-              url: '/pages/history_detail/history_detail',
-            })
-          },
-          fail: err => {
-            console.log('readFile fail', err)
-          }
-        });
-      },
-      fail: err => {
-        console.log('readFile fail', err)
-      }
-    })
-
+    if (app.globalData.todayArticle !== '' && app.globalData.todayArticle !== undefined) {
+      wx.cloud.downloadFile({
+        fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/daily-push/' + app.globalData.todayArticle, // 文件 ID
+        success: res => {
+          console.log(res.tempFilePath);
+          fileSystemManager.readFile({
+            filePath: res.tempFilePath,
+            encoding: 'utf8',
+            success: res => {
+              that.setData({
+                s: res.data,
+              })
+              let headline = utils_deal.deal_passage(res.data);
+              wx.setStorage({
+                key: 'history_detail',
+                data: headline,
+              })
+              wx.navigateTo({
+                url: '/pages/history_detail/history_detail',
+              })
+            },
+            fail: err => {
+              console.log('readFile fail', err)
+            }
+          });
+        },
+        fail: err => {
+          console.log('readFile fail', err)
+        }
+      })
+    }
   },
 
   onShow: function () {
