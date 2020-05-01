@@ -65,34 +65,31 @@ Page({
           console.log('tap', e);
           let word_temp = e.currentTarget.dataset.data.child[0].text;
           if (e.currentTarget.dataset.data._e.tag==="mark"){
-            util_word.getWord(word_temp).then(word => {
-              deal_word = word_temp;
-              this.setData({
-                dialogTitle: word._id,
-                dialogContent: word._id,
-                vocabulary_dialogShow: true
-              })
-            });
+            deal_word = word_temp;
+            console.log("vocabulary_dialogShow");
+            this.setData({
+              dialogTitle: deal_word,
+              dialogContent: deal_word,
+              vocabulary_dialogShow: true
+            })
           } 
           if (e.currentTarget.dataset.data._e.tag === "ins") {
-            util_word.getWord(word_temp).then(word => {
-              deal_word = word_temp;
-              this.setData({
-                dialogTitle: word._id,
-                dialogContent: word._id,
-                unknown_dialogShow: true
-              })
-            });
+            deal_word = word_temp;
+            console.log("unknown_dialogShow");
+            this.setData({
+              dialogTitle: deal_word,
+              dialogContent: deal_word,
+              unknown_dialogShow: true
+            })
           }
           if (e.currentTarget.dataset.data._e.tag === "em") {
-            util_word.getWord(word_temp).then(word => {
-              deal_word = word_temp;
-              this.setData({
-                dialogTitle: word._id,
-                dialogContent: word._id,
-                familiar_dialogShow: true
-              })
-            });
+            deal_word = word_temp;
+            console.log("familiar_dialogShow");
+            this.setData({
+              dialogTitle: deal_word,
+              dialogContent: deal_word,
+              familiar_dialogShow: true
+            })
           }
         }
       }
