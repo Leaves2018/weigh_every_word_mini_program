@@ -12,8 +12,7 @@ function history(headline, body, vocabulary, unknown, date) {
   this.unknown = unknown;
   this.date = date;
 }
-var number;
-var index;
+var deal_word;
 var vocabulary = [];
 var unknown_remember_vocabulary = [];
 var voc_remember_vocabulary = [];
@@ -27,11 +26,13 @@ Page({
     his_vocabulary:[],
     his_unknown:[],
     his_date:"",
-    unknown_dialogShow: true,
-    vocabulary_dialogShow: true,
+    unknown_dialogShow: false,
+    vocabulary_dialogShow: false,
+    familiar_dialogShow: false,
     dialogTitle: "",
     dialogContent: "",
-    buttons: [{ text: "忘了" }, { text: "记得" }]
+    buttons0: [{ text: "忘了" }, { text: "记得" }],
+    buttons1: [{ text: "知道了" }],
   },
   onLoad: function () {
     var history_detail = wx.getStorageSync('history_detail');
@@ -47,10 +48,54 @@ Page({
     }
     //console.log(unknown);
     before_headline = history_example.headline;
-    let article_mes = history_example.body.join(' ');  
-    var his_body_temp = utils_tomd.markArticle(article_mes, vocabulary, '**');
-    var his_body_res = utils_tomd.markArticle(his_body_temp, unknown, '==');
-    var his_body_result = app.towxml(his_body_res, 'markdown');
+    let article_mes = history_example.body.join(' ');
+    let article_temp0 = article_mes.toLowerCase();
+    let article_temp = article_temp0.replace(/[^a-zA-Z]/g, ' ');
+    let article_words = article_temp.split(" "); //获取单词
+    article_words = [...new Set(article_words)];//单词去重
+    article_words = article_words.filter(function (x) { return x && x.trim(); });//单词去空
+    var his_body_temp0 = utils_tomd.markArticle(article_mes, article_words, '*');
+    var his_body_temp = utils_tomd.markArticle(his_body_temp0, vocabulary, '==');
+    var his_body_res = utils_tomd.markArticle(his_body_temp, unknown, '++');
+    var his_body_result = app.towxml(his_body_res, 'markdown', {
+      theme: 'light',
+      events: {
+        tap: (e) => {
+          console.log('tap', e);
+          let word_temp = e.currentTarget.dataset.data.child[0].text;
+          if (e.currentTarget.dataset.data._e.tag==="mark"){
+            util_word.getWord(word_temp).then(word => {
+              deal_word = word_temp;
+              this.setData({
+                dialogTitle: word._id,
+                dialogContent: word.translation,
+                vocabulary_dialogShow: true
+              })
+            });
+          } 
+          if (e.currentTarget.dataset.data._e.tag === "ins") {
+            util_word.getWord(word_temp).then(word => {
+              deal_word = word_temp;
+              this.setData({
+                dialogTitle: word._id,
+                dialogContent: word.translation,
+                unknown_dialogShow: true
+              })
+            });
+          }
+          if (e.currentTarget.dataset.data._e.tag === "em") {
+            util_word.getWord(word_temp).then(word => {
+              deal_word = word_temp;
+              this.setData({
+                dialogTitle: word._id,
+                dialogContent: word.translation,
+                familiar_dialogShow: true
+              })
+            });
+          }
+        }
+      }
+    });
     this.setData({
       his_headline: history_example.headline,
       his_body: his_body_result,
@@ -91,24 +136,14 @@ Page({
     util_word.appendFamiliar(unknown_remember_vocabulary);
   },
 
-  //未知词背诵
-  unknown_recite: function () {
-    wx.setStorage({
-      key: 'recite_info',
-      data: {
-        type: 'history',
-        headline: history_example.headline,
-      },
-      success: function () {
-        wx.redirectTo({
-          url: '/pages/recite/recite',
-        });
-      }
-    })
+  article_modify: function () {
+    wx.redirectTo({
+      url: '/pages/history_detail_modify/history_detail_modify',
+    });
   },
 
-  //生词背诵
-  vocabulary_recite: function () {
+  //背诵
+  recite: function () {
     wx.setStorage({
       key: 'recite_info',
       data: {
@@ -122,93 +157,66 @@ Page({
       }
     })
   },
-  //修改标题
-  loginForm: function (data) {
-    //console.log(data.detail.value.headline)
-    history_example.headline = data.detail.value.headline;
+  
+  unknown_tapDialogButton: function (e) {
+    var temp_index;
+    for (var i = 0; i < unknown.length; i++) {
+      if (unknown[i] == deal_word) {
+        temp_index = i;
+      }
+    }
+    switch (e.detail.index) {
+      //忘了
+      case 0:
+        let addvoc = unknown[temp_index];
+        unknown.splice(temp_index, 1);
+        vocabulary.push(addvoc);
+        let addword = history_example.unknown[temp_index];
+        history_example.unknown.splice(temp_index, 1);
+        history_example.vocabulary.push(addword);
+        break;
+      //记得
+      case 1:
+        unknown_remember_vocabulary.push(unknown[temp_index]);
+        unknown.splice(temp_index, 1);
+        history_example.unknown.splice(temp_index, 1);
+        break;
+    }
     this.setData({
-      his_headline:history_example.headline,
-    })
-  },
-  //展示未知词详情
-  showDetail_unknown: function (e) {
-    index = e.currentTarget.dataset.position;
-    let unknown_trie = util_trie.getTrieFromStringArray(unknown);
-    wx.setStorage({
-      key: 'word_detail_list',
-      data: {
-        trie: unknown_trie,
-        currentIndex: index,
-      },
-    });
-    let word = unknown[index];
-    let metaword = util_word.getWord(word).then(result => {
-      this.setData({
-        dialogTitle: word,
-        dialogContent: result.translation,
-        unknown_dialogShow: false
-      })
-    });
-  },
-  //展示生词详情
-  showDetail_vocabulary: function (e) {
-    index = e.currentTarget.dataset.position;
-    let vocabulary_trie = util_trie.getTrieFromStringArray(vocabulary);
-    wx.setStorage({
-      key: 'word_detail_list',
-      data: {
-        trie: vocabulary_trie,
-        currentIndex: index,
-      },
-    });
-    let word = vocabulary[index];
-    let metaword = util_word.getWord(word).then(result => {
-      this.setData({
-        dialogTitle: word,
-        dialogContent: result.translation,
-        vocabulary_dialogShow: false
-      })
-    });
-  },
-  //未知词记得操作
-  unknown_modalconfirm: function () {
-    unknown_remember_vocabulary.push(unknown[index]);
-    unknown.splice(index, 1);
-    history_example.unknown.splice(index, 1);
-    this.setData({
-      his_unknown: unknown,
-      unknown_dialogShow: true,
-    });
-  },
-  //未知词忘了操作
-  unknown_modalcancel: function () {
-    let addvoc = unknown[index];
-    unknown.splice(index, 1);
-    vocabulary.push(addvoc);
-    let addword = history_example.unknown[index];
-    history_example.unknown.splice(index,1);
-    history_example.vocabulary.push(addword);
-    this.setData({
+      unknown_dialogShow: false,
       his_vocabulary: vocabulary,
       his_unknown: unknown,
-      unknown_dialogShow: true,
     });
   },
-  //生词记得操作
-  vocabulary_modalconfirm: function () {
-    voc_remember_vocabulary.push(vocabulary[index]);
-    unknown_remember_vocabulary.push(vocabulary[index]);
-    vocabulary.splice(index, 1);
-    history_example.vocabulary.splice(index, 1);
+  
+  vocabulary_tapDialogButton: function (e) {
+    var temp_index;
+    for (var i = 0; i < vocabulary.length; i++) {
+      if (vocabulary[i] == deal_word) {
+        temp_index = i;
+      }
+    }
+    switch (e.detail.index) {
+      //忘了
+      case 0:
+        break;
+      //记得
+      case 1:
+        voc_remember_vocabulary.push(vocabulary[temp_index]);
+        unknown_remember_vocabulary.push(vocabulary[temp_index]);
+        vocabulary.splice(temp_index, 1);
+        history_example.vocabulary.splice(temp_index, 1);
+        break;
+    }
     this.setData({
+      vocabulary_dialogShow: false,
       his_vocabulary: vocabulary,
-      vocabulary_dialogShow: true,
     });
   },
-  //生词忘了操作
-  vocabulary_modalcancel: function () {
+
+  familiar_tapDialogButton: function (e) {
     this.setData({
-      vocabulary_dialogShow: true,
+      familiar_dialogShow: false,
     });
   },
 });

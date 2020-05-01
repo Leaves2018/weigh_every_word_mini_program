@@ -1,0 +1,15 @@
+<view class="page">
+  <view class="body">
+    <view class="title_edit">
+    <text>标题</text>
+    <button class='btn' style="width:40vw" type="default" bindtap="modify_save">保存修改</button>
+    </view>
+    <view class="body_view">
+      <textarea class="textarea" value="{{his_headline}}" style="height:200rpx" bindinput="headline_bindFormSubmit" show-confirm-bar="false" />
+    </view>
+    <text>正文</text>
+    <view class="body_view">
+      <textarea class="textarea" value="{{his_body}}" style="height:{{textarea_height}}" maxlength = "-1" bindinput="body_bindFormSubmit" show-confirm-bar="false" />
+    </view>
+  </view>
+</view>
