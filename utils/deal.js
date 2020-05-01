@@ -216,10 +216,6 @@ const deal_passageWithHeadline = (already_headline,passage) => {
   var mydate = new Date();
   var history_example = new history(already_headline, sentences, voc_result, unknown_result, firstWords, mydate);
   utils_his.setHistoryInStorage(already_headline, history_example);
-  var history_list = utils_his.getHistoryListFromStorage();
-  history_list.push(already_headline);
-  history_list = [...new Set(history_list)];
-  utils_his.setHistoryListInStorage(history_list);
   return already_headline;
 }
 

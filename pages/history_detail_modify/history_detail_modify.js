@@ -74,18 +74,23 @@ Page({
           history_list.splice(temp, 1, that.data.his_headline);
           utils_his.setHistoryListInStorage(history_list);
 
-          let headline = utils_deal.deal_passageWithHeadline(that.data.his_headline, that.data.his_body);
-
-          let history_example_temp = utils_his.getHistoryFromStorage(headline);
-          if (history_example_temp.vocabulary.length === 0 && history_example_temp.unknown.length === 0) {
-            let history_done_list = utils_his.getHistoryListDoneFromStorage();
-            history_done_list.splice(temp, 1, 'success');
-            utils_his.setHistoryListDoneInStorage(history_done_list);
+          var headline;
+          if (before_body === that.data.his_body) {
+            var history_exa = new history(that.data.his_headline, before_body, history_example.vocabulary, history_example.unknown, history_example.firstWords, history_example.date);
+            utils_his.setHistoryInStorage(that.data.his_headline, history_exa);
+          }else {
+            headline = utils_deal.deal_passageWithHeadline(that.data.his_headline, that.data.his_body);
+            let history_example_temp = utils_his.getHistoryFromStorage(headline);
+            if (history_example_temp.vocabulary.length === 0 && history_example_temp.unknown.length === 0) {
+              let history_done_list = utils_his.getHistoryListDoneFromStorage();
+              history_done_list.splice(temp, 1, 'success');
+              utils_his.setHistoryListDoneInStorage(history_done_list);
+            }
           }
-          
+
           wx.setStorage({
             key: 'history_detail',
-            data: headline,
+            data: that.data.his_headline,
           })
           wx.redirectTo({
             url: '/pages/history_detail/history_detail',
