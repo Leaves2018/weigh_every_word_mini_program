@@ -54,6 +54,7 @@ Page({
     let article_words = article_temp.split(" "); //获取单词
     article_words = [...new Set(article_words)];//单词去重
     article_words = article_words.filter(function (x) { return x && x.trim(); });//单词去空
+    article_words = article_words.filter(function (x) { return x.length > 2; });
     var his_body_temp0 = utils_tomd.markArticle(article_mes, article_words, '*');
     var his_body_temp = utils_tomd.markArticle(his_body_temp0, vocabulary, '==');
     var his_body_res = utils_tomd.markArticle(his_body_temp, unknown, '++');
@@ -68,7 +69,7 @@ Page({
               deal_word = word_temp;
               this.setData({
                 dialogTitle: word._id,
-                dialogContent: word.translation,
+                dialogContent: word._id,
                 vocabulary_dialogShow: true
               })
             });
@@ -78,7 +79,7 @@ Page({
               deal_word = word_temp;
               this.setData({
                 dialogTitle: word._id,
-                dialogContent: word.translation,
+                dialogContent: word._id,
                 unknown_dialogShow: true
               })
             });
@@ -88,7 +89,7 @@ Page({
               deal_word = word_temp;
               this.setData({
                 dialogTitle: word._id,
-                dialogContent: word.translation,
+                dialogContent: word._id,
                 familiar_dialogShow: true
               })
             });
@@ -219,6 +220,9 @@ Page({
       familiar_dialogShow: false,
     });
   },
+  buttontap(e) {
+    console.log(e.detail)
+  }
 });
 
 

@@ -6,7 +6,9 @@
     "i-grid-item": "../../dist/grid-item/index",
     "i-grid-icon": "../../dist/grid-icon/index",
     "i-grid-label": "../../dist/grid-label/index",
-    "towxml": "/towxml/towxml"
+    "towxml": "/towxml/towxml",
+    "word-card": "../../components/word-card/word-card",
+    "mp-halfScreenDialog": "../../components/half-screen-dialog/half-screen-dialog"
   },
   "navigationBarTitleText": "文章详情"
 }

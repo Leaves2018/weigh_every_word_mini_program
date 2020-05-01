@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "word-card": "../components/word-card/word-card"
+  }
 }

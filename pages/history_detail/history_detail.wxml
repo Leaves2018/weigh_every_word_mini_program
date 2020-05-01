@@ -16,13 +16,16 @@
       <towxml nodes="{{his_body}}"/>
     </view>
     <mp-dialog title="{{dialogTitle}}" show="{{unknown_dialogShow}}" bindbuttontap="unknown_tapDialogButton" buttons="{{buttons0}}">
-      <view>{{dialogContent}}</view>
+      <word-card word="{{dialogContent}}"></word-card>
     </mp-dialog>
     <mp-dialog title="{{dialogTitle}}" show="{{vocabulary_dialogShow}}" bindbuttontap="vocabulary_tapDialogButton" buttons="{{buttons0}}">
-      <view>{{dialogContent}}</view>
+      <word-card word="{{dialogContent}}"></word-card>
     </mp-dialog>
     <mp-dialog title="{{dialogTitle}}" show="{{familiar_dialogShow}}" bindbuttontap="familiar_tapDialogButton" buttons="{{buttons1}}">
-      <view>{{dialogContent}}</view>
+      <word-card word="{{dialogContent}}"></word-card>
     </mp-dialog>
+    <!-- <mp-halfScreenDialog bindbuttontap="buttontap" show="{{unknown_dialogShow}}" maskClosable="{{false}}" buttons="{{buttons0}}">
+      <word-card word="{{dialogContent}}"></word-card>
+    </mp-halfScreenDialog> -->
   </view>
 </view>

@@ -14,6 +14,7 @@ function history(headline, body, vocabulary, unknown, date) {
 }
 var history_example;
 var before_headline;
+var before_body;
 Page({
   data: {
     his_headline: "",
@@ -37,6 +38,7 @@ Page({
     var history_detail = wx.getStorageSync('history_detail');
     history_example = utils_his.getHistoryFromStorage(history_detail);
     before_headline = history_example.headline;
+    before_body = history_example.body;
     this.setData({
       his_headline: history_example.headline,
       his_body: history_example.body.join(' '),
