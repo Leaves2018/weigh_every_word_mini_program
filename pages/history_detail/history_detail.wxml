@@ -2,24 +2,27 @@
   <view class="body-view">
     <view class="title_edit">
       <text>标题</text>
-      <button formType="submit" class='btn' type="default">修改</button>
+      <button class='btn' style="width:40vw" type="default" bindtap="article_modify">修改</button>
     </view>
     <view class="divLine"></view>
     <text>{{his_headline}}</text>
-  <view class="divLine"></view>
-  <text>正文</text>
-  <view class="divLine"></view>
-  <view class="body-view">
-    <towxml nodes="{{his_body}}"/>
-  </view>
-  <mp-dialog title="{{dialogTitle}}" show="{{unknown_dialogShow}}" bindbuttontap="unknown_tapDialogButton" buttons="{{buttons0}}">
-  <view>{{dialogContent}}</view>
-</mp-dialog>
-<mp-dialog title="{{dialogTitle}}" show="{{vocabulary_dialogShow}}" bindbuttontap="vocabulary_tapDialogButton" buttons="{{buttons0}}">
-  <view>{{dialogContent}}</view>
-</mp-dialog>
-<mp-dialog title="{{dialogTitle}}" show="{{familiar_dialogShow}}" bindbuttontap="familiar_tapDialogButton" buttons="{{buttons1}}">
-  <view>{{dialogContent}}</view>
-</mp-dialog>
+    <view class="divLine"></view>
+    <view class="title_edit">
+      <text>正文</text>
+      <button class='btn' style="width:40vw" type="default" bindtap="recite"> 背诵 </button>
+    </view>
+    <view class="divLine"></view>
+    <view class="body-view">
+      <towxml nodes="{{his_body}}"/>
+    </view>
+    <mp-dialog title="{{dialogTitle}}" show="{{unknown_dialogShow}}" bindbuttontap="unknown_tapDialogButton" buttons="{{buttons0}}">
+      <view>{{dialogContent}}</view>
+    </mp-dialog>
+    <mp-dialog title="{{dialogTitle}}" show="{{vocabulary_dialogShow}}" bindbuttontap="vocabulary_tapDialogButton" buttons="{{buttons0}}">
+      <view>{{dialogContent}}</view>
+    </mp-dialog>
+    <mp-dialog title="{{dialogTitle}}" show="{{familiar_dialogShow}}" bindbuttontap="familiar_tapDialogButton" buttons="{{buttons1}}">
+      <view>{{dialogContent}}</view>
+    </mp-dialog>
   </view>
 </view>

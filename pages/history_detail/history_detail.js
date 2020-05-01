@@ -136,8 +136,14 @@ Page({
     util_word.appendFamiliar(unknown_remember_vocabulary);
   },
 
-  //未知词背诵
-  words_recite: function () {
+  article_modify: function () {
+    wx.redirectTo({
+      url: '/pages/history_detail_modify/history_detail_modify',
+    });
+  },
+
+  //背诵
+  recite: function () {
     wx.setStorage({
       key: 'recite_info',
       data: {
