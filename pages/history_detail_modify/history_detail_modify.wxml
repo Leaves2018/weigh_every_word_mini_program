@@ -1,0 +1,44 @@
+<view class="page">
+  <view class="body-view">
+    <form bindsubmit='loginForm'>
+      <view class="title_edit">
+      <text>标题</text>
+      <button formType="submit" class='btn' type="default">修改</button>
+      </view>
+      <view class="divLine"></view>
+      <input class="weui-input" name='headline' value='{{his_headline}}'/>
+    </form>
+  <view class="divLine"></view>
+  <text>正文</text>
+  <view class="divLine"></view>
+  <view class="body-view">
+    <towxml nodes="{{his_body}}"/>
+  </view>
+  <view class="divLine"></view>
+  <view class="unknown_edit">
+  <text>未处理词</text>
+  <button class='btn' type="default" bindtap="unknown_recite">开始背诵</button>
+  </view>
+  <view id="wordscontainer">
+    <view class="item" data-position="{{index}}" wx:for="{{his_unknown}}" wx:key="*this" bindtap="showDetail_unknown">{{item}}</view>
+  </view>
+
+  <view class="divLine"></view>
+  <view class="vocabulary_edit">
+  <text>生词</text>
+  <button class='btn' type="default" bindtap="vocabulary_recite">开始背诵</button>
+  </view>
+  <view id="wordscontainer">
+    <view class="item" data-position="{{index}}" wx:for="{{his_vocabulary}}" wx:key="*this" bindtap="showDetail_vocabulary">{{item}}</view>
+  </view>
+
+  <modal title="{{dialogTitle}}" cancel-text="忘了" confirm-text="记得"
+          hidden="{{unknown_dialogShow}}" bindconfirm="unknown_modalconfirm" bindcancel="unknown_modalcancel">
+        {{dialogContent}}
+  </modal>
+  <modal title="{{dialogTitle}}" cancel-text="忘了" confirm-text="记得"
+          hidden="{{vocabulary_dialogShow}}" bindconfirm="vocabulary_modalconfirm" bindcancel="vocabulary_modalcancel">
+        {{dialogContent}}
+  </modal>
+  </view>
+</view>

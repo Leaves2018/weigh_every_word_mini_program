@@ -22,7 +22,7 @@ page {
   flex-direction: row;
 }
 .btn{
-  right: 5rpx;
+  margin-left: 0rpx;
 }
 
 #wordscontainer{
