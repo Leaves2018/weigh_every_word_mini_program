@@ -3,40 +3,18 @@ page {
   padding: 0rpx;
 }
 
-.divLine{
- background: #E0E3DA;
- width: 100%;
- height: 5rpx;
+.textarea {
+  border: 3rpx solid rgb(0, 0, 0);
+  background: #f0f0ee;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .title_edit{
   display: flex;
   flex-direction: row;
 }
-.unknown_edit{
-  display: flex;
-  flex-direction: row;
-}
-.vocabulary_edit{
-  display: flex;
-  flex-direction: row;
-}
+
 .btn{
-  margin-left: 0rpx;
-}
-
-#wordscontainer{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 50px;
-  justify-content: center; /** 水平居中 */
-
-}
-
-.item {
-  /* font-size: 4em; */
-  border: 1px solid #e5e4e9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  right: 50rpx;
 }
