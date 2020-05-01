@@ -5,9 +5,11 @@ const utilWord = require('../../utils/word2.js');
 var familiarWords = [];
 var vocabularyTrie = null;
 var vocabularyWords = [];
+var currentIndex = 0;
 Page({
   data: {
     showWordList: true,
+    reciteDone: false,
     vocabularyWords: [],
   },
   
@@ -27,9 +29,13 @@ Page({
   onShow: function () {
     vocabularyTrie = utilWord.getVocabulary();
     vocabularyWords = vocabularyTrie.getAllData();
-    this.setData({
-      words: vocabularyWords,
-    });
+    if (vocabularyWords.length === 0) {
+      this.reciteDone();
+    } else {
+      this.setData({
+        words: vocabularyWords,
+      });
+    }
   },
 
   onReady: function () {
@@ -48,13 +54,23 @@ Page({
     utilWord.appendFamiliar(familiarWords);
   },
 
-  tapSlideView: function (e) {
-    let index = e.currentTarget.dataset.position;
+  loadWord: function (thisWord) {
     this.setData({
-      thisWord: vocabularyWords[index],
-      progressOverall: Math.round(index / vocabularyWords.length * 100),
+      thisWord: thisWord,
+      progressOverall: Math.round(currentIndex / vocabularyWords.length * 100),
+    })
+  },
+
+  startReciteProcess: function () {
+    this.setData({
       showWordList: false,
     })
+    this.loadWord(vocabularyWords[currentIndex]);
+  },
+
+  tapSlideView: function (e) {
+    currentIndex = e.currentTarget.dataset.position;
+    this.startReciteProcess();
   },
 
   tapSlideViewButtons: function (e) {
@@ -74,6 +90,9 @@ Page({
     vocabularyWords.splice(index,1);
     vocabularyTrie.deleteData(_id);
     familiarWords.push(_id);
+    if (vocabularyWords.length === 0) {
+      this.reciteDone();
+    }
   },
 
   search: function (value) {
@@ -123,5 +142,38 @@ Page({
       showWordList: true,
     })
     this.pageScrollToWord(this.data.thisWord);
-  }
+  },
+
+  reciteDone: function () {
+    this.setData({
+      showWordList: true,
+      reciteDone: true,
+    })
+  },
+
+  isOutOfBounds: function () {
+    if (vocabularyWords.length === 0) {
+      this.reciteDone();
+    } else {
+      currentIndex = currentIndex % vocabularyWords.length;
+      this.loadWord(vocabularyWords[currentIndex]);
+    }
+  },
+
+  swipeLeft: function (e) {
+    console.log("SwipeLeft")
+    console.log(e)
+    let tempWord = vocabularyWords.splice(currentIndex, 1)[0];
+    vocabularyTrie.deleteData(tempWord);
+    familiarWords.push(tempWord);
+    this.isOutOfBounds();
+  },
+
+  swipeRight: function (e) {
+    console.log("SwipeRight")
+    console.log(e)
+    // 还是生词，什么都不做；考虑记录频次
+    currentIndex += 1;
+    this.isOutOfBounds();
+  },
 });

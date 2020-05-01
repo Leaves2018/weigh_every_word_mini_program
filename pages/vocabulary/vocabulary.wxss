@@ -1,5 +1,5 @@
 /* pages/vocabulary/vocabulary.wxss */
-page{background-color:#F7F7F7;}
+page{background-color:#F7F7F7;height: 100%;}
 
 .page__head {
   z-index: 100;
@@ -23,8 +23,24 @@ page{background-color:#F7F7F7;}
   color:rgba(0,0,0,.9);
 }
 
+.word__card {
+  height: 100%;
+}
+
 #goback-button {
   width: 750rpx;
   position: fixed;
   bottom: 0;
+}
+
+.recite__done {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.recite__done .recite-done-image {
+  width: 400rpx;
+  height: 400rpx;
 }
