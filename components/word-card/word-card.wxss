@@ -1,1 +1,33 @@
 /* components/word-card/word-card.wxss */
+
+.wrapper {
+  text-align: center;
+  border: double;
+}
+.wordcard__detail {
+  border-style: solid;
+  text-align: left;
+}
+
+.wordcard__id {
+  font-size: 24pt;
+  font-weight: bold;
+}
+
+.wordcard__translation {
+  border-style: double;
+  text-align: left;
+}
+
+.wordcard__definition {
+  border-style: double;
+  text-align: left;
+}
+
+.modify-button { 
+  position: fixed;
+  width: 50rpx;
+  height: 50rpx;
+  right: 25rpx;
+  top: 25rpx;
+}

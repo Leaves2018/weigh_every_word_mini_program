@@ -1,4 +1,7 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "towxml": "/towxml/towxml"
+  },
+  "pureDataPattern": "^_"
 }

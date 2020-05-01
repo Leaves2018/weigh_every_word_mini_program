@@ -1,2 +1,14 @@
-<!--components/word-card/word-card.wxml-->
-<text>components/word-card/word-card.wxml</text>
+<view class="wrapper">
+    <view class="wordcard__tag">「{{wordcardTag}}」</view>
+    <view class="wordcard__id" bindtap="tapShowOriginal">{{wordcard._id}}</view>
+    <view class="wordcard__phonetic">[{{wordcard.phonetic}}]</view>
+    <towxml wx:if="{{showdetail && wordDetailWXML}}" nodes="{{wordDetailWXML}}"/>
+    <view class="wordcard__translation">
+      <text wx:for="{{wordcard.translation}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
+    </view>
+    <view class="wordcard__definition">
+      <text wx:for="{{wordcard.definition}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
+    </view>
+  <image class="modify-button" src='/images/xiugai.svg' bindtap="tapModifyButton"/>
+  <slot></slot>
+</view>
