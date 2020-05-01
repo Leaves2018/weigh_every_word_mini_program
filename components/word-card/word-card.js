@@ -1,12 +1,24 @@
 // components/word-card/word-card.js
 const utilWord = require('../../utils/word2.js')
 const app = getApp();
+
+// 用于实现滑动手势操作
+var minOffset = 30;
+var minTime = 60;
+var startX = 0;
+var startY = 0;
+var startTime = 0;
+
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
     word: {
+      type: String,
+      value: "",
+    },
+    detail: {
       type: String,
       value: "",
     },
@@ -32,10 +44,10 @@ Component({
    */
   lifetimes: {
     attached: function () {
-
+      console.log('word-card attached')
     },
     detached: function () {
-
+      console.log('word-card detached')
     }
   },
 
@@ -52,12 +64,63 @@ Component({
         })
       } else {
         this.data.wordcard.playAudio();
+        console.log("tapShowOriginal audio")
       }
     },
 
     tapModifyButton: function () {
       console.log("In component word-card, tapModifyButton() is called.")
-    }
+    },
+
+    touchStart: function (e) {
+      startX = e.touches[0].pageX;
+      startY = e.touches[0].pageY;
+      startTime = new Date().getTime();
+    },
+
+    touchCancel: function (e) {
+      startX = 0;
+      startY = 0;
+      startTime = 0;
+    },
+
+    /**
+     * 触摸结束事件：主要的判断流程
+     */
+    touchEnd: function (e) {
+      var endX = e.changedTouches[0].pageX;
+      var endY = e.changedTouches[0].pageY;
+      var touchTime = new Date().getTime() - startTime;
+
+      // 开始判断
+      // 1. 时间是否达到阈值
+      if (touchTime >= minTime) {
+        // 2. 偏移量是否达到阈值
+        var xOffset = endX - startX;
+        var yOffset = endY - startY;
+        var myEventDetail = {xOffset: xOffset, yOffset: yOffset, touchTime: touchTime};
+        // 判断左右滑动还是上下滑动
+        if (Math.abs(xOffset) >= Math.abs(yOffset) && Math.abs(xOffset) >= minOffset) {
+          // 判断向左滑动还是向右滑动
+          if (xOffset < 0) {
+            this.triggerEvent("swipeleft", myEventDetail);
+          } else {
+            this.triggerEvent("swiperight", myEventDetail);            
+          }
+        } else if (Math.abs(xOffset) < Math.abs(yOffset) && Math.abs(yOffset) >= minOffset) {
+          // 判断向上滑动还是向下滑动
+          if (yOffset < 0) {
+            this.triggerEvent("swipeup", myEventDetail);
+            console.log("SwipeUp")
+          } else {
+            console.log("SwipeDown")
+            this.triggerEvent("swipedown", myEventDetail);
+          }
+        }
+      } else {
+        console.log("滑动时间过短", touchTime);
+      }
+    },
   },
   
   /**
@@ -71,11 +134,22 @@ Component({
       }
       utilWord.getWord(word).then(res => {
         res = new utilWord.Word(res)
+        // 如果有向单词卡片传递detail，则受托将其保存
+        // if (detail) {
+        //   res.detail = this.data.detail;
+        //   utilWord.setWord(res);
+        // }
+        if (this.data.showdetail) {
+          this.setData({
+            wordcardDetailWXML: app.towxml(res.detail, 'markdown'),
+          })
+        }
         this.setData({
           _original: res,
           wordcard: res,
         })
         res.playAudio();
+        console.log("'word' audio")
         let lemma = res.getExchange()["0"];
         if (lemma) {
           utilWord.getWord(lemma).then(res2 => {
@@ -92,16 +166,14 @@ Component({
       })
     },
     'show': function (show) {
+      if (!show) {
+        return;
+      }
       this.setData({
         wordcard: show,
         wordcardTag: Object.values(show.tag).join('/'),
       })
       this.data.show.playAudio();
-      if (this.data.showdetail) {
-        this.setData({
-          wordcardDetailWXML: app.towxml(show.detail, 'markdown'),
-        })
-      }
     },
   },
 })
