@@ -13,5 +13,6 @@
 
 
 <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
-  <view>{{dialogContent}}</view>
+  <!-- <view>{{dialogContent}}</view> -->
+  <word-card word="{{thisWord}}"></word-card>
 </mp-dialog>

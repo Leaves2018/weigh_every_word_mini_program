@@ -101,7 +101,8 @@ Page({
     utilWord.getWord(_id).then(word => {
       this.setData({
         dialogTitle: word._id,
-        dialogContent: word.translation,
+        // dialogContent: word.translation,
+        thisWord: word._id,
         dialogShow: true
       })
     });

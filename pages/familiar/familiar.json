@@ -2,11 +2,7 @@
   "usingComponents": {
     "mp-searchbar": "../../components/searchbar/searchbar",
     "mp-dialog": "../../components/dialog/dialog",
-    "i-drawer": "../../dist/drawer/index",
-    "i-grid": "../../dist/grid/index",
-    "i-grid-item": "../../dist/grid-item/index",
-    "i-grid-icon": "../../dist/grid-icon/index",
-    "i-grid-label": "../../dist/grid-label/index"
+    "word-card": "../../components/word-card/word-card"
   },
   "navigationBarTitleText": "熟词本"
 }
