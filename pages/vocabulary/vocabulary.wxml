@@ -1,15 +1,22 @@
 <!--pages/vocabulary/vocabulary.wxml-->
-<view class="page__head">
-  <!-- <button id="test_button" bindtap="tapTestButton">测试按钮</button> -->
-  <mp-searchbar bindselectresult="selectResult" search="{{search}}" bindfocus="searchFocus" bindblur="searchBlur" searchState="{{searchState}}"></mp-searchbar>
-</view>
-
-<view class="page__body">
-  <view class="weui-slidecells">
-    <mp-slideview wx:for="{{words}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons" style="margin-bottom: {{(index === words.length - 1) ? '64rpx' : '0rpx'}}">
-      <view class="weui-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
-        {{index+1}}. {{item}}
-      </view>
-    </mp-slideview>
+<block wx:if="{{showWordList}}" class="word__list">
+  <view class="page__head">
+    <mp-searchbar bindselectresult="selectResult" search="{{search}}" bindfocus="searchFocus" bindblur="searchBlur" searchState="{{searchState}}"></mp-searchbar>
   </view>
-</view>
+  <view class="page__body">
+    <view class="weui-slidecells">
+      <mp-slideview wx:for="{{words}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons" style="margin-bottom: {{(index === words.length - 1) ? '64rpx' : '0rpx'}}">
+        <view class="weui-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
+          {{index+1}}. {{item}}
+        </view>
+      </mp-slideview>
+    </view>
+  </view>
+</block>
+
+<block wx:else class="recite__process">
+  <progress id="progress-overall" percent="{{progressOverall}}" show-info border-radius="5"/>
+  <word-card word="{{thisWord}}" showdetail="true"></word-card>
+  <button id="goback-button" bindtap="goBackToWordList">返回生词本列表</button>
+</block>
+

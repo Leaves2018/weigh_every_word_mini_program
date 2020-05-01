@@ -22,3 +22,9 @@ page{background-color:#F7F7F7;}
   font-size:17px;
   color:rgba(0,0,0,.9);
 }
+
+#goback-button {
+  width: 750rpx;
+  position: fixed;
+  bottom: 0;
+}

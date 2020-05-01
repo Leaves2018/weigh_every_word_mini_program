@@ -7,8 +7,7 @@ var vocabularyTrie = null;
 var vocabularyWords = [];
 Page({
   data: {
-    showWordDetail: false,
-    inputVal: "",
+    showWordList: true,
     vocabularyWords: [],
   },
   
@@ -51,20 +50,11 @@ Page({
 
   tapSlideView: function (e) {
     let index = e.currentTarget.dataset.position;
-
-    wx.setStorage({
-      key: 'recite_info',
-      data: {
-        type: 'trie',
-        trie: vocabularyTrie,
-        currentIndex: index,
-      },
-      success: function () {
-        wx.navigateTo({
-          url: '../recite/recite',
-        });
-      }
-    });
+    this.setData({
+      thisWord: vocabularyWords[index],
+      progressOverall: Math.round(index / vocabularyWords.length * 100),
+      showWordList: false,
+    })
   },
 
   tapSlideViewButtons: function (e) {
@@ -111,7 +101,11 @@ Page({
   },
   selectResult: function (e) {
     console.log('select result: ', e.detail.item.text);
-    var indexHighlight = vocabularyWords.indexOf(e.detail.item.text);
+    this.pageScrollToWord(e.detail.item.text);
+  },
+
+  pageScrollToWord: function (text) {
+    var indexHighlight = vocabularyWords.indexOf(text);
     this.setData({
       indexHighlight: indexHighlight,
     })
@@ -124,15 +118,10 @@ Page({
       });
     })
   },
-  tapTestButton: function (e) {
-    var query = wx.createSelectorQuery();
-    console.log("In tapTestButton(),")
-    console.log(e);
-    query.selectAll('.weui-slidecell').boundingClientRect()
-    query.selectViewport().scrollOffset()
-    query.exec(function (res) {
-      console.log(res[0])       // #the-id节点的上边界坐标
-      console.log(res[1].scrollTop) // 显示区域的竖直滚动位置
+  goBackToWordList: function (e) {
+    this.setData({
+      showWordList: true,
     })
+    this.pageScrollToWord(this.data.thisWord);
   }
 });
