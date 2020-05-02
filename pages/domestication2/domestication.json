@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mp-checkbox-group": "../../components/checkbox-group/checkbox-group",
+    "mp-checkbox": "../../components/checkbox/checkbox"
+  },
+  "pureDataPattern": "^_",
+  "navigationBarTitleText": "熟词本初始化"
+}
