@@ -17,6 +17,7 @@
     "pages/recite_settings/recite_settings",
     "pages/history/history",
     "pages/domestication/domestication",
+    "pages/domestication2/domestication",
     "pages/word_detail/word_detail",
     "pages/tutorial/tutorial",
     "pages/about/about"
