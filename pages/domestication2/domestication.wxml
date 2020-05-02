@@ -1,12 +1,4 @@
 <view class="page">
-  
-  <view class='title'>
-    <text>选择熟词范围</text>
-  </view>
-
-  <view class="divLine"></view>
-  <progress class="progress" percent="{{progressPercent}}" border-radius="5" active="{{progressActive}}" duration="{{progressDuration}}" bindactiveend="{{hideProgress}}" animation="{{progressAnimation}}"/>
-
   <mp-checkbox-group bindchange="checkboxChange">
     <label class="checkbox" wx:for="{{items}}">
       <mp-checkbox value="{{item.name}}" label="{{item.value}}" checked="{{familiar_lexicon[item.name]}}"/>

@@ -62,9 +62,6 @@ Component({
     },
     // 进度条控制
     _numOfTasks: 0,
-    _showProgress: false,
-    progressPercent: 0,
-    progressDuration: 10,
     // 非视图数据
     _namearray: ['zk', 'gk', 'cet4', 'cet6', 'ky', 'toefl', 'ielts', 'gre'],
     _lexiconChecked: undefined, // 默认值为undefined，以避免初始化时被observer监控到
@@ -189,15 +186,6 @@ Component({
         }
       });
     },
-
-    /**
-     * 进度条消失动画
-     */
-    hideProgress: function () {
-      this.setData({
-        showProgress: false,
-      })
-    },
   },
 
   /**
@@ -220,32 +208,13 @@ Component({
       })
     },
     '_numOfTasks': function(numOfTasks) {
-      console.log(`numOfTasks: ${numOfTasks}`)
       if (numOfTasks > 0) {
-        this.setData({
-          progressActive: true,
-          showProgress: true,
-          progressDuration: 30 * numOfTasks,
-          progressPercent: numOfTasks > 0 ? Math.round(this.data.progressPercent / numOfTasks * 100) : 100,
-        })
+        wx.showLoading({
+          title: '加载中',
+        });
       } else {
-        this.setData({
-          progressActive: false,
-          showProgress: false,
-          progressDuration: 30 * numOfTasks,
-          progressPercent: numOfTasks > 0 ? Math.round(this.data.progressPercent / numOfTasks * 100) : 100,
-        })
+        wx.hideLoading();
       }
     },
-    '_showProgress': function(showProgress) {
-      var animation = wx.createAnimation({
-        duration: 300,
-        timingFunction: 'ease-in-out',
-      })
-      animation.opacity(showProgress ? 1 : 0).export();
-      this.setData({
-        animationData: animation.export(),
-      });
-    }
   }
 })
