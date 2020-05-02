@@ -1,7 +1,7 @@
 <view class="page">
   
   <view class='title'>
-    <input name="title" placeholder-class="placeholder" placeholder="选择熟词范围" />
+    <text>选择熟词范围</text>
     <button class='btn' type="default" bindtap="checkbox_ensure"> 确认修改 </button>
   </view>
 
@@ -14,7 +14,7 @@
   </mp-checkbox-group>
 
   <modal title="提示" no-cancel = "true" confirm-text="确认"
-          hidden="{{nHidden}}" bindconfirm="modalconfirm1">
+          hidden="{{nHidden}}" bindconfirm="modalconfirm">
         正在修改，请稍后...
         <progress percent="{{percent}}" show-info active='{{isDown}}' stroke-width="14" />
   </modal>

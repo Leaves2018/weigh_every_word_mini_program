@@ -3,6 +3,11 @@ page {
   padding: 0rpx;
 }
 
+.title{
+  display: flex;
+  flex-direction: row;
+}
+
 .divLine{
  background: #E0E3DA;
  width: 100%;
@@ -13,9 +18,4 @@ page {
   display: flex;
   flex-direction: column;
   margin-left: 40rpx;
-}
-
-.title{
-  display: flex;
-  flex-direction: row;
 }

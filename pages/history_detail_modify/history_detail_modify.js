@@ -38,7 +38,7 @@ Page({
     var history_detail = wx.getStorageSync('history_detail');
     history_example = utils_his.getHistoryFromStorage(history_detail);
     before_headline = history_example.headline;
-    before_body = history_example.body;
+    before_body = history_example.body.join(' ');
     this.setData({
       his_headline: history_example.headline,
       his_body: history_example.body.join(' '),

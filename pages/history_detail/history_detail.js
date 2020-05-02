@@ -4,6 +4,7 @@ const utils_tomd = require('../../utils/tomd.js');
 var base64 = require("../../images/base64");
 const util_word = require('../../utils/word2.js');
 const util_trie = require('../../utils/trie.js');
+const utils_deal = require('../../utils/deal.js');
 const app = getApp();
 function history(headline, body, vocabulary, unknown, date) {
   this.headline = headline;
