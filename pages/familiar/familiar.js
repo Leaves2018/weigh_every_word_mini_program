@@ -98,14 +98,11 @@ Page({
   showDetail: function (e) {
     [currentInitialIndex, currentWordIndex] = e.currentTarget.dataset.position.split('.');
     let _id = this.data.words[currentInitialIndex][currentWordIndex];
-    utilWord.getWord(_id).then(word => {
-      this.setData({
-        dialogTitle: word._id,
-        // dialogContent: word.translation,
-        thisWord: word._id,
-        dialogShow: true
-      })
-    });
+    this.setData({
+      dialogTitle: _id,
+      thisWord: _id,
+      dialogShow: true
+    })
   },
   tapDialogButton: function (e) {
     switch (e.detail.index) {
