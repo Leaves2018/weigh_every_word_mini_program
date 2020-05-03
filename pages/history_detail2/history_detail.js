@@ -42,6 +42,7 @@ Component({
     _vocabulary:[],
     _unknown_remember_vocabulary:[],
     _voc_remember_vocabulary:[],
+    _familiar_forget:[],
     _unknown:[],
     _history_example:'',
   },
@@ -117,6 +118,8 @@ Component({
       utilsWord.appendVocabulary(this.data._vocabulary);
       utilsWord.deleteVocabularyFromVocabularyTrie(this.data._voc_remember_vocabulary);
       utilsWord.appendFamiliar(this.data._unknown_remember_vocabulary);
+      console.log(this.data._familiar_forget);
+      utilsWord.deleteFamiliarFromFamiliarTrie(this.data._familiar_forget);
     },
 
     article_modify: function () {
@@ -180,7 +183,7 @@ Component({
         switch (e.detail.index) {
           //忘了
           case 0:
-            utilsWord.deleteFamiliar(this.data._deal_word);
+            this.data._familiar_forget.push(this.data._deal_word);
             this.data._vocabulary.push(this.data._deal_word);
             this.data._history_example.vocabulary.push(this.data._deal_word);
             break;
@@ -188,6 +191,7 @@ Component({
           case 1:
             break;
         }
+        console.log(this.data._familiar_forget);
       }
       this.setData({
         dialogShow: false,
