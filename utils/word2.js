@@ -71,12 +71,13 @@ class Word2 {
 
   getExchange = () => {
     var res = {};
-    if (typeof(this.exchange === 'string')) {
+    if (typeof(this.exchange) === 'string') {
       try {
         for (let element of this.exchange.split('/')) {
           let temp = element.split(':');
           res[temp[0]] = temp[1];
         }
+        this.exchange = res;
       } catch (e) {
         console.warn(e);
         res = {};
