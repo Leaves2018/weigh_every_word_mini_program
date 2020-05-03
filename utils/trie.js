@@ -2,6 +2,7 @@ class Trie {
   constructor(root = new TrieNode(null)) {
     this.root = root;
     this.allData = [];
+    this.number = 0;
   }
 
   insert(stringData, node) {
@@ -38,6 +39,7 @@ class Trie {
   }
 
   insertData(stringData) {
+    this.number += 1;
     this.insert(stringData, this.root);
   }
 
@@ -111,6 +113,7 @@ class Trie {
 
   // 删除字符串
   deleteData(stringData) {
+    this.number -= 1;
     if (this.search(stringData)) { // 判断是否存在该单词（字符串）
       for (let i in this.root.children) {
         if (this.delNext(this.root, i, stringData, stringData)) {
