@@ -1,7 +1,12 @@
-<switch wx:for="{{objectArray}}" wx:key="unique" style="display: block;"> {{item.id}} </switch>
-<button bindtap="switch"> Switch </button>
-<button bindtap="addToFront"> Add to the front </button>
-
-<switch wx:for="{{numberArray}}" wx:key="*this" style="display: block;"> {{item}} </switch>
-<button bindtap="addNumberToFront"> Add to the front </button>
-<image id="modify-button" src='/images/xiugai.svg'/>
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">Loading</view>
+        <view class="page__desc">加载中</view>
+    </view>
+    <view class="page__bd">
+        <mp-loading type="circle"></mp-loading>
+        <!-- <mp-loading type="circle" tips="{{tips}}"></mp-loading> -->
+        <mp-loading duration="{{900}}" ext-class="demo0" type="dot-gray" show="{{show}}" animated="{{animated}}"></mp-loading>
+        <mp-loading type="dot-white" ext-class="demo1"></mp-loading>
+    </view>
+</view>
