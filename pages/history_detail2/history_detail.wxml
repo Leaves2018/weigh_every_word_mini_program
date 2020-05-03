@@ -1,0 +1,26 @@
+<!--pages/history_detail2/history_detail.wxml-->
+<view class="page">
+  <view class="body-view">
+    <view class="title_edit">
+      <text>标题</text>
+      <button class='btn' style="width:40vw" type="default" bindtap="article_modify">修改</button>
+    </view>
+    <view class="divLine"></view>
+    <text>{{his_headline}}</text>
+    <view class="divLine"></view>
+    <view class="title_edit">
+      <text>正文</text>
+      <button class='btn' style="width:40vw" type="default" bindtap="recite"> 背诵 </button>
+    </view>
+    <view class="divLine"></view>
+    <view class="body-view">
+      <towxml nodes="{{his_body}}"/>
+    </view>
+    <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
+      <word-card word="{{dialogContent}}"></word-card>
+    </mp-dialog>
+    <!-- <mp-halfScreenDialog bindbuttontap="buttontap" show="{{unknown_dialogShow}}" maskClosable="{{false}}" buttons="{{buttons0}}">
+      <word-card word="{{dialogContent}}"></word-card>
+    </mp-halfScreenDialog> -->
+  </view>
+</view>
