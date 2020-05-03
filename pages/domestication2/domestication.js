@@ -84,6 +84,7 @@ Component({
     onLoad: function() {
       let lexiconCheckedInStorage = wx.getStorageSync('familiar_lexicon');
       if (typeof(lexiconCheckedInStorage) !== "string") {
+        // 取缓存中值为true的项，记录为初始时的lastChecked，方便对比
         let lexiconLastChecked = []
         for (let element in lexiconCheckedInStorage) {
           if (lexiconCheckedInStorage.element) {
