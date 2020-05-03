@@ -134,7 +134,7 @@ Page({
       data: his_detail,
     })
     wx.navigateTo({
-      url: '/pages/history_detail/history_detail',
+      url: '/pages/history_detail2/history_detail',
     })
   },
 

@@ -53,7 +53,7 @@ Page({
                 data: headline,
               })
               wx.navigateTo({
-                url: '/pages/history_detail/history_detail',
+                url: '/pages/history_detail2/history_detail',
               })
             },
             fail: err => {
