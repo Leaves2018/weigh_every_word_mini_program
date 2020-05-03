@@ -55,37 +55,49 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    /**
+     * 点击方法：显示单词在原文本中的形式
+     */
     tapShowOriginal: function () {
+      // 首先判断单词是否有lemma：如果有，则进入切换逻辑
       if (this.data._lemma) {
+        // 利用标志变量_showOriginal切换lemma和original
         this.setData({
           show: this.data._showOriginal ? this.data._original : this.data._lemma,
           _showOriginal: !this.data._showOriginal,
         })
-      } else {
+      } else {  // 如果没有lemma，直接播放一遍音频
         this.data.wordcard.playAudio();
         console.log("tapShowOriginal audio")
       }
     },
-
+    /**
+     * 点击方法：单词修改方法
+     */
     tapModifyButton: function () {
       console.log("In component word-card, tapModifyButton() is called.")
+      wx.navigateTo({
+        url: '../../pages/tutorial/tutorial',
+      })
     },
-
+    /**
+     * 触摸控制：触摸开始
+     */
     touchStart: function (e) {
       startX = e.touches[0].pageX;
       startY = e.touches[0].pageY;
       startTime = new Date().getTime();
     },
-
+    /**
+     * 触摸控制：触摸取消
+     */
     touchCancel: function (e) {
       startX = 0;
       startY = 0;
       startTime = 0;
     },
-
     /**
-     * 触摸结束事件：主要的判断流程
+     * 触摸控制：触摸结束事件（主要的判断流程）
      */
     touchEnd: function (e) {
       var endX = e.changedTouches[0].pageX;
