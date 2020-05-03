@@ -4,7 +4,7 @@
 </view>
 <view class="btn-area">
   <view class="body-view">
-    <text>{{text}}</text>
+    <text selectable="true">{{text}}</text>
     <button bindtap="add">add line</button>
     <button bindtap="remove">remove line</button>
   </view>
@@ -16,6 +16,9 @@
 <button bindtap="translateLeft">向左平移出屏幕并绕到屏幕上方</button>
 <button bindtap="translateBack">向下移动到可视区域</button>
 <button bindtap="tapRotateX">绕X轴旋转90度</button>
+
+<word-card word="helicopters" showdetail="true"></word-card>
+
 
 <view class="container">
   <towxml nodes="{{article}}"/>
