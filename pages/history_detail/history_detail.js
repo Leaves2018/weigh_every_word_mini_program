@@ -14,6 +14,7 @@ function history(headline, body, vocabulary, unknown, date) {
   this.date = date;
 }
 var deal_word;
+var word_tag;
 var vocabulary = [];
 var unknown_remember_vocabulary = [];
 var voc_remember_vocabulary = [];
@@ -27,27 +28,20 @@ Page({
     his_vocabulary:[],
     his_unknown:[],
     his_date:"",
-    unknown_dialogShow: false,
-    vocabulary_dialogShow: false,
-    familiar_dialogShow: false,
+    dialogShow: false,
     dialogTitle: "",
     dialogContent: "",
-    buttons0: [{ text: "忘了" }, { text: "记得" }],
-    buttons1: [{ text: "知道了" }],
+    buttons: [{ text: "忘了" }, { text: "记得" }],
   },
   onLoad: function () {
     var history_detail = wx.getStorageSync('history_detail');
-    history_example = utils_his.getHistoryFromStorage(history_detail);
+    let history_example0 = utils_his.getHistoryFromStorage(history_detail);
+    let headlineTemp = utils_deal.deal_passageWithHeadline(history_example0.headline, history_example0.body.join(' '));
+    history_example = utils_his.getHistoryFromStorage(headlineTemp);
     vocabulary = [];
     unknown = [];
-    for (var v_word of history_example.vocabulary) {
-      vocabulary.push(v_word.name);
-    }
-    //console.log(vocabulary);
-    for (var v_word of history_example.unknown) {
-      unknown.push(v_word.name);
-    }
-    //console.log(unknown);
+    vocabulary = history_example.vocabulary.map(element => element.name);
+    unknown = history_example.unknown.map(element => element.name);
     before_headline = history_example.headline;
     let article_mes = history_example.body.join(' ');
     let article_temp0 = article_mes.toLowerCase();
@@ -56,7 +50,7 @@ Page({
     article_words = [...new Set(article_words)];//单词去重
     article_words = article_words.filter(function (x) { return x && x.trim(); });//单词去空
     article_words = article_words.filter(function (x) { return x.length > 2; });
-    var his_body_temp0 = utils_tomd.markArticle(article_mes, article_words, '*');
+    var his_body_temp0 = utils_tomd.markArticle(article_mes, article_words, '*');//TODO等待雨飞的函数
     var his_body_temp = utils_tomd.markArticle(his_body_temp0, vocabulary, '==');
     var his_body_res = utils_tomd.markArticle(his_body_temp, unknown, '++');
     var his_body_result = app.towxml(his_body_res, 'markdown', {
@@ -65,33 +59,13 @@ Page({
         tap: (e) => {
           console.log('tap', e);
           let word_temp = e.currentTarget.dataset.data.child[0].text;
-          if (e.currentTarget.dataset.data._e.tag==="mark"){
-            deal_word = word_temp;
-            console.log("vocabulary_dialogShow");
-            this.setData({
-              dialogTitle: deal_word,
-              dialogContent: deal_word,
-              vocabulary_dialogShow: true
-            })
-          } 
-          if (e.currentTarget.dataset.data._e.tag === "ins") {
-            deal_word = word_temp;
-            console.log("unknown_dialogShow");
-            this.setData({
-              dialogTitle: deal_word,
-              dialogContent: deal_word,
-              unknown_dialogShow: true
-            })
-          }
-          if (e.currentTarget.dataset.data._e.tag === "em") {
-            deal_word = word_temp;
-            console.log("familiar_dialogShow");
-            this.setData({
-              dialogTitle: deal_word,
-              dialogContent: deal_word,
-              familiar_dialogShow: true
-            })
-          }
+          word_tag = e.currentTarget.dataset.data._e.tag;
+          deal_word = word_temp;
+          this.setData({
+            dialogTitle: deal_word,
+            dialogContent: deal_word,
+            dialogShow: true
+          })
         }
       }
     });
@@ -157,70 +131,64 @@ Page({
     })
   },
   
-  unknown_tapDialogButton: function (e) {
-    var temp_index;
-    for (var i = 0; i < unknown.length; i++) {
-      if (unknown[i] == deal_word) {
-        temp_index = i;
+  tapDialogButton: function (e) {
+    if (word_tag === "mark") {
+      var temp_index = vocabulary.indexOf(deal_word);
+      switch (e.detail.index) {
+        //忘了
+        case 0:
+          break;
+        //记得
+        case 1:
+          voc_remember_vocabulary.push(deal_word);
+          unknown_remember_vocabulary.push(vocabulary[temp_index]);
+          vocabulary.splice(temp_index, 1);
+          history_example.vocabulary.splice(temp_index, 1);
+          break;
       }
     }
-    switch (e.detail.index) {
-      //忘了
-      case 0:
-        let addvoc = unknown[temp_index];
-        unknown.splice(temp_index, 1);
-        vocabulary.push(addvoc);
-        let addword = history_example.unknown[temp_index];
-        history_example.unknown.splice(temp_index, 1);
-        history_example.vocabulary.push(addword);
-        break;
-      //记得
-      case 1:
-        unknown_remember_vocabulary.push(unknown[temp_index]);
-        unknown.splice(temp_index, 1);
-        history_example.unknown.splice(temp_index, 1);
-        break;
+    if (word_tag === "ins") {
+      var temp_index = unknown.indexOf(deal_word);
+      switch (e.detail.index) {
+        //忘了
+        case 0:
+          unknown.splice(temp_index, 1);
+          vocabulary.push(deal_word);
+          let addword = history_example.unknown[temp_index];
+          history_example.unknown.splice(temp_index, 1);
+          history_example.vocabulary.push(addword);
+          break;
+        //记得
+        case 1:
+          unknown_remember_vocabulary.push(unknown[temp_index]);
+          unknown.splice(temp_index, 1);
+          history_example.unknown.splice(temp_index, 1);
+          break;
+      }
+    }
+    if (word_tag === "em") {
+      switch (e.detail.index) {
+        //忘了
+        case 0:
+          util_word.deleteFamiliar(deal_word);
+          vocabulary.push(deal_word);
+          history_example.vocabulary.push(deal_word);
+          break;
+        //记得
+        case 1:
+          break;
+      }
     }
     this.setData({
-      unknown_dialogShow: false,
+      dialogShow: false,
       his_vocabulary: vocabulary,
       his_unknown: unknown,
     });
   },
   
-  vocabulary_tapDialogButton: function (e) {
-    var temp_index;
-    for (var i = 0; i < vocabulary.length; i++) {
-      if (vocabulary[i] == deal_word) {
-        temp_index = i;
-      }
-    }
-    switch (e.detail.index) {
-      //忘了
-      case 0:
-        break;
-      //记得
-      case 1:
-        voc_remember_vocabulary.push(vocabulary[temp_index]);
-        unknown_remember_vocabulary.push(vocabulary[temp_index]);
-        vocabulary.splice(temp_index, 1);
-        history_example.vocabulary.splice(temp_index, 1);
-        break;
-    }
-    this.setData({
-      vocabulary_dialogShow: false,
-      his_vocabulary: vocabulary,
-    });
-  },
-
-  familiar_tapDialogButton: function (e) {
-    this.setData({
-      familiar_dialogShow: false,
-    });
-  },
-  buttontap(e) {
-    console.log(e.detail)
-  }
+  // buttontap(e) {
+  //   console.log(e.detail)
+  // }
 });
 
 

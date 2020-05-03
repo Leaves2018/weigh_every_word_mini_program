@@ -45,8 +45,9 @@ Page({
   addpicture: function () {
     var that = this;
     wx.chooseImage({
-      count: 1,
+      count: 9,
       success: async function (res) {
+        console.log(res.tempFilePaths);
         wx.showToast({
           title: '加载中...',
           icon: 'loading',

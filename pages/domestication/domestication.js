@@ -83,6 +83,7 @@ Page({
 
     var index_change_append = [];//增加的单词库
     var index_change_delete = [];//删除的单词库
+    lexiconCheckedInStorage = wx.getStorageSync('familiar_lexicon');
     for (i = 0; i < lexicon.length; i++) {
       if ((lexicon[i] !== lexiconCheckedInStorage[i]) && !lexicon[i]) {
         index_change_delete.push(i);
@@ -98,56 +99,75 @@ Page({
     });
 
     for (let item of index_change_delete) {
-      this.checkbox_download(lexicon[item], this.data.items[item].name);//删除要删除的
+      let filename = this.file_name_get(this.data.items[item].name)
+      this.deal_file_delete(filename);//删除要删除的
     }
     for (let item of index_change_append) {
-      this.checkbox_download(lexicon[item], this.data.items[item].name);//添加新的，从而避免重复词被删除
+      let filename = this.file_name_get(this.data.items[item].name)
+      this.deal_file_add(filename);//添加新的，从而避免重复词被删除
     }
 
     this.setData({
       percent: 100,
     });
-
   },
 
-  checkbox_download: function(choose, add) {
+  file_name_get: function(fileName) {
     var that = this;
+    var dealFilePath;
     fileSystemManager.access({
-      path: famFilePath + "/usr/" + app.globalData.openid + add + '.csv', // 文件 ID
+      path: famFilePath + "/" + fileName + '.csv', // 文件 ID
       success: res => {
-        that.deal_file(choose,this.path);
+        dealFilePath = famFilePath + "/" + fileName + '.csv';
+        console.log(dealFilePath);
+        return dealFilePath;
       },
       fail: res => {
         wx.cloud.downloadFile({
-          fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/lexicon/' + add + '.csv', // 文件 ID
+          fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/lexicon/' + fileName + '.csv', // 文件 ID
           success: res1 => {
-            console.log(res1.tempFilePath);
             fileSystemManager.copyFile({
               srcPath: res1.tempFilePath,
-              destPath: famFilePath + "/usr/" + app.globalData.openid + add + '.csv', // 文件 ID
+              destPath: famFilePath + "/" + fileName + '.csv', // 文件 ID
               success: res2 => {
-                that.deal_file(choose, this.destPath);
+                dealFilePath = famFilePath + "/" + fileName + '.csv';
+                console.log(dealFilePath);
+                return dealFilePath;
               },
+              fail: console.err
             })
-            that.deal_file(choose, path);
           },
           fail: console.error
         })
       },
     })
+    return dealFilePath;
   },
-  deal_file:(choose,tempFilePath) => {
+  
+  deal_file_add:(tempFilePath) => {
+    console.log(tempFilePath);
     var word_familiar_list = [];
     fileSystemManager.readFile({
       filePath: tempFilePath,
       encoding: 'utf8',
       success: res => {
         word_familiar_list = res.data.split("\n").slice(1);
-        if (choose) {
-          utils_word.appendFamiliar(word_familiar_list);
-        } else {
-          utils_word.deleteFamiliarFromFamiliarTrie(word_familiar_list);
-        }
+        utils_word.appendFamiliar(word_familiar_list);
+      },
+      fail: err => {
+        console.log('readFile fail', err)
+      }
+    });
+  },
+  deal_file_delete: (tempFilePath) => {
+    console.log(tempFilePath);
+    var word_familiar_list = [];
+    fileSystemManager.readFile({
+      filePath: tempFilePath,
+      encoding: 'utf8',
+      success: res => {
+        word_familiar_list = res.data.split("\n").slice(1);
+        utils_word.deleteFamiliarFromFamiliarTrie(word_familiar_list);
       },
       fail: err => {
         console.log('readFile fail', err)
