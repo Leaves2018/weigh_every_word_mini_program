@@ -29,7 +29,7 @@ const arrSub = (a, b) => {
 // 自定义分割方法：保留分隔符号
 // text 待分割文本
 // re   分割符     
-const splitWithPunc = (text, re) => {
+const splitWithPunc = (text, re=/[\.\!\?]/) => {
   re = new RegExp(re, 'g'); // 全局匹配
   var res = [];
   while (true) {
@@ -39,15 +39,28 @@ const splitWithPunc = (text, re) => {
       res.push(text.substring(lastIndex).trim());
       break;
     }
-    res.push(text.substring(lastIndex, temp.index + 1).trim());
+    res.push(text.substring(lastIndex, temp.index + 1).trim()); // 仅考虑了单词后占1个字符的符号
   }
   return res.filter(s => {
     return s && s.trim();
   });
 }
 
+/**
+ * 文章分割方法
+ * level为1时分段->一维数组
+ * level为2时分分再分句->二维数组
+ */
+const splitArticle = (article, level=2, paragraphSeparator=/\n/, sentenceSeparator=/[\.\!\?][\"\']?/) => {
+  let paragraphs = article.split(paragraphSeparator).filter(s => s && s.trim());
+  if (level === 1) return paragraphs;
+  let sentences =  paragraphs.map(paragraph => splitWithPunc(paragraph, sentenceSeparator))
+  if (level === 2) return sentences;
+}
+
 module.exports = {
   formatTime: formatTime,
   arrSub: arrSub,
   splitWithPunc: splitWithPunc,
+  splitArticle: splitArticle,
 }
