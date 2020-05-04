@@ -13,9 +13,6 @@ App({
       data: todayArticle,
     });
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
     wx.cloud.init({
       env: "xingxi-p57mz",
       traceUser: true
@@ -47,21 +44,11 @@ App({
         }
       }
     })
-
-    wx.cloud.init({
-      env: "xingxi-p57mz",
-      traceUser: true
-    })
-
-    // wx.setStorage({
-    //   key: 'test_familiar',
-    //   data: test_familiar_words,
-    // })
-
-    // wx.setStorage({
-    //   key: 'test_vocabulary',
-    //   data: test_vocabulary_words,
-    // })
+    const utilWord = require('./utils/word2.js');
+    this.familiarTrie = utilWord.getFamiliar();
+    this.vocabularyTrie = utilWord.getVocabulary();
+    const utilHistory = require('./utils/history.js');
+    this.hisotryList = utilHistory.getHistoryListFromStorage();
   },
   // 获取用户openid
   getOpenid() {
