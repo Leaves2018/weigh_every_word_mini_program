@@ -37,16 +37,16 @@
     "backgroundColor": "#f7f7fa",
     "list": [
       {
-        "pagePath": "pages/input/input",
-        "text": "录入",
-        "iconPath": "images/tabbar_icon_input_default.png",
-        "selectedIconPath": "images/tabbar_icon_input_active.png"
-      },
-      {
         "pagePath": "pages/history/history",
         "text": "历史",
         "iconPath": "images/tabbar_icon_recite_default.png",
         "selectedIconPath": "images/tabbar_icon_recite_active.png"
+      },
+      {
+        "pagePath": "pages/input/input",
+        "text": "录入",
+        "iconPath": "images/tabbar_icon_input_default.png",
+        "selectedIconPath": "images/tabbar_icon_input_active.png"
       },
       {
         "pagePath": "pages/me/me",
