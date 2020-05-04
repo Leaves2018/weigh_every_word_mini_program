@@ -17,7 +17,6 @@ App({
       env: "xingxi-p57mz",
       traceUser: true
     })
-    this.getOpenid();
     // 登录
     wx.login({
       success: res => {
@@ -44,6 +43,8 @@ App({
         }
       }
     })
+    this.getOpenid();
+    this.getWindowSize();
     const utilWord = require('./utils/word2.js');
     this.familiarTrie = utilWord.getFamiliar();
     console.log("FBI,open the door")
@@ -65,6 +66,16 @@ App({
       complete: res => {
         that.globalData.openid = res.result.openid;
       }
+    })
+  },
+  getWindowSize() {
+    let that = this;
+    wx.getSystemInfo({
+      success: function(res) {
+        that.globalData.windowHeight = res.windowHeight;
+        that.globalData.windowWidth = res.windowWidth;
+        that.globalData.pixelRatio = res.pixelRatio;
+      },
     })
   },
   towxml: require('/towxml/index'),
