@@ -19,20 +19,19 @@ class HistoryList {
   delete(history) {
     this.items.delete(history.uuid);
   }
+  save(){
+    wx.setStorage({
+      key: 'history_list',
+      data: this,
+    })
+  }
 }
 class HistoryListItem {
   constructor(history) {
     this.headline = history.headline;
     this.date = history.date;
-    this.done = true;
-    this.plus = 0;
-    for (var key in history.words) {
-      if(history.words[key].tag === 'fa'){
-        this.plus += 1;
-      }else{
-        this.done = false;
-      }
-    }
+    this.done = history.done;
+    this.plus = history.plus;
   }
 }
 class History {
@@ -40,8 +39,16 @@ class History {
     if (passage === "") {
       return;
     }
-    var re = /[\.|\?|\!\。\？\！][\"\']?/;
-    this.passageFragments = utils_util.splitArticle(passage, re);
+    this.date = new Date();
+    this.uuid = this.uuid();
+
+    this.passageFragments = utils_util.splitArticle(passage);
+
+    if (typeof (headline) === "string" && headline.trim()) {
+      this.headline = headline;
+    } else {
+      this.headline = (this.passageFragments[0][0].length > 140) ? passage.substr(0, 140) : this.passageFragments[0][0];
+    }
 
     var words = passage.replace(/[^a-zA-Z\-]/g, ' ').split(" ");
     words = [...new Set(words)];//单词去重
@@ -109,22 +116,21 @@ class History {
     //     }
     //   }
     // }
-
-    // history存入本地
-
-    if (typeof (headline) === "string" && headline.trim()){
-      this.headline = headline;
-    }else {
-      this.headline = (passageFragments[0][0].length > 140) ? passage.substr(0, 140) : passageFragments[0][0];
-    }
-    this.date = new Date();
-    this.uuid = this.history.uuid();
     this.history.save();
   }
 
-  save = () => {
+  save = (refreshPlus=false) => {
     wx.setStorageSync(this.uuid,this);
     app.hisotryList.append(this);
+    if (refreshPlus){
+      this.plus = 0;
+      for (let key in this.words.keys()) {
+        if (this.words[key].tag === 'fa') {
+          this.plus += 1;
+        } 
+      }
+      this.done = (this.plus === this.words.size);
+    }
   }
   uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -150,20 +156,14 @@ const getHistoryListFromStorage = () => {
   }
 }
 
-const setHistoryListInStorage = (history_list) => {
-  wx.setStorage({
-    key: 'history_list',
-    data: history_list,
-  })
-}
 
 // 如果本地存储找不到以headline为key的记录，会返回空字符串
-const getHistoryFromStorage = headline => {
+const getHistoryFromStorage = uuid => {
   var history = null;
   try {
-    var history = wx.getStorageSync(headline);
+    var history = wx.getStorageSync(uuid);
     if (typeof (history) === "string") {
-      throw "History '{$headline}' is not existed.";
+      throw `History '${uuid}' is not existed.`;
     }
   } catch (e) {
     console.warn(e);
@@ -172,41 +172,9 @@ const getHistoryFromStorage = headline => {
   }
 }
 
-const setHistoryInStorage = (headline, history) => {
-  wx.setStorage({
-    key: headline,
-    data: history,
-  })
-}
-
-// const getHistoryListDoneFromStorage = () => {
-//   var history_done_list = [];
-//   try {
-//     history_done_list = wx.getStorageSync('history_done_list');
-//     if (typeof (history_done_list) === "string") {
-//       throw "'history_done_list' is not existed. A new history_done_list will be created.";
-//     }
-//   } catch (e) {
-//     console.warn(e);
-//     history_done_list = [];
-//     setHistoryListDoneInStorage(history_done_list);
-//   } finally {
-//     return history_done_list;
-//   }
-// }
-
-// const setHistoryListDoneInStorage = (history_done_list) => {
-//   wx.setStorage({
-//     key: 'history_done_list',
-//     data: history_done_list,
-//   })
-// }
 
 module.exports = {
+  History: History,
   getHistoryFromStorage: getHistoryFromStorage,
-  setHistoryInStorage: setHistoryInStorage,
   getHistoryListFromStorage: getHistoryListFromStorage,
-  setHistoryListInStorage: setHistoryListInStorage,
-  // getHistoryListDoneFromStorage: getHistoryListDoneFromStorage,
-  // setHistoryListDoneInStorage: setHistoryListDoneInStorage,
 }

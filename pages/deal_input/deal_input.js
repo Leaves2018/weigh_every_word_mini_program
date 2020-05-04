@@ -1,5 +1,5 @@
 //deal_passage.js
-const utils_deal = require('../../utils/deal.js');
+const utilHistory = require('../../utils/history.js');
 var headline;
 const fileSystemManager = wx.getFileSystemManager();
 
@@ -43,17 +43,19 @@ Page({
               that.setData({
                 s: res1.data,
               })
-              let headline = utils_deal.deal_passage(res1.data);
+              let history = new utilHistory.History(res1.data);
               wx.setStorage({
                 key: 'todayArticleAddress',
                 data: '',
               });
               wx.setStorage({
                 key: 'history_detail',
-                data: headline,
-              })
-              wx.navigateTo({
-                url: '/pages/history_detail2/history_detail',
+                data: history.uuid,
+                success: (res)=>{
+                  wx.navigateTo({
+                    url: '/pages/history_detail2/history_detail',
+                  })
+                }
               })
             },
             fail: err => {
