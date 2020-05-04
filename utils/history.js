@@ -9,14 +9,15 @@ class Word {
   }
 }
 class HistoryList {
-  constructor(items = new Map()) { 
+  constructor(items = {}) { 
     this.items = items;
   }
   append(history) {
-    this.items.set(history.uuid, new HistoryListItem(history));
+    this.items[history.uuid] = new HistoryListItem(history);
   }
+  // 删除方法没有这么简单！还需要从缓存里删除。且delete与JavaScript自带关键字重名，最好换一个
   delete(history) {
-    this.items.delete(history.uuid);
+    delete this.items[history.uuid];
   }
   save(){
     wx.setStorage({
@@ -40,6 +41,8 @@ class History {
     }
     this.date = new Date();
     this.uuid = this.uuid();
+    this.done = false;
+    this.plus = 0;
 
     this.passageFragments = utils_util.splitArticle(passage);
 
@@ -60,24 +63,41 @@ class History {
     var voc_really = words.filter(x => getApp().vocabularyTrie.search(x));//生词
     var unknown_words = utils_util.arrSub(voc_temp, voc_really);//未知词
     
-    this.words = new Map();
+    this.words = {};
 
+    // console.time("Ryan版本")
+    // for (let i = 0; i < this.passageFragments.length; i++) {
+    //   for (let j = 0; j < this.passageFragments[i].length; j++) {
+    //     let sentence = this.passageFragments[i][j];
+    //     let re = /[a-zA-Z\-]+/g;
+    //     let temp = null;
+    //     while (temp = re.exec(sentence)) {
+    //       if (voc_really.indexOf(temp[0])) {
+    //         this.words[temp[0]] = new Word('vo', `${i}.${j}`);
+    //       } else if (unknown_words.indexOf(temp[0])) {
+    //         this.words[temp[0]] = new Word('un', `${i}.${j}`);
+    //       }
+    //     }
+    //   }
+    // }
+    // console.timeEnd("Ryan版本")
+
+    console.time("Notos版本")
     for (var i = 0; i < this.passageFragments.length; i++) {
       for (var j = 0; j < this.passageFragments[i].length; j++) {
         for (var element of voc_really) {
           if (this.passageFragments[i][j].indexOf(element) !== -1) {
-            this.words.set(element, new Word('vo', i + '.' + j));
-            break;
+            this.words[element] = new Word('vo', i + '.' + j);
           }
         }
         for (var element of unknown_words) {
           if (this.passageFragments[i][j].indexOf(element) !== -1) {
-            this.words.set(element, new Word('vo', i + '.' + j));
-            break;
+            this.words[element] = new Word('vo', i + '.' + j);
           }
         }
       }
     }
+    console.timeEnd("Notos版本")
 
     // for (let i = 0; i < this.passageFragments.length; i++) {
     //   for (let j = 0; j < this.passageFragments[i].length; j++) {
@@ -123,7 +143,7 @@ class History {
     getApp().hisotryList.append(this);
     if (refreshPlus){
       this.plus = 0;
-      for (let key in this.words.keys()) {
+      for (let key in Object.keys(this.words)) {
         if (this.words[key].tag === 'fa') {
           this.plus += 1;
         } 
