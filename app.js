@@ -47,6 +47,8 @@ App({
     const utilWord = require('./utils/word2.js');
     this.familiarTrie = utilWord.getFamiliar();
     this.vocabularyTrie = utilWord.getVocabulary();
+    const utilHistory = require('./utils/history.js');
+    this.hisotryList = utilHistory.getHistoryListFromStorage();
   },
   // 获取用户openid
   getOpenid() {
