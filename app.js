@@ -46,9 +46,16 @@ App({
     })
     const utilWord = require('./utils/word2.js');
     this.familiarTrie = utilWord.getFamiliar();
+    console.log("FBI,open the door")
     this.vocabularyTrie = utilWord.getVocabulary();
     const utilHistory = require('./utils/history.js');
     this.hisotryList = utilHistory.getHistoryListFromStorage();
+  },
+  onHide: function() {
+    const utilWord = require('./utils/word2.js');
+    utilWord.setFamiliar();
+    utilWord.setVocabulary();
+    this.hisotryList.save();
   },
   // 获取用户openid
   getOpenid() {

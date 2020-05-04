@@ -10,5 +10,6 @@
     "word-card": "../../components/word-card/word-card",
     "mp-halfScreenDialog": "../../components/half-screen-dialog/half-screen-dialog"
   },
-  "navigationBarTitleText": "文章详情"
+  "navigationBarTitleText": "文章详情",
+  "pureDataPattern": "^_"
 }

@@ -4,6 +4,7 @@ const utilsTomd = require('../../utils/tomd.js');
 const utilsWord = require('../../utils/word2.js');
 const utilsTrie = require('../../utils/trie.js');
 const utilsDeal = require('../../utils/deal.js');
+const util = require('../../utils/util.js');
 const app = getApp();
 function history(headline, body, vocabulary, unknown, date) {
   this.headline = headline;
@@ -45,6 +46,7 @@ Component({
     _familiar_forget:[],
     _unknown:[],
     _history_example:'',
+    _towxmlArray: [],
   },
 
   /**
@@ -74,25 +76,34 @@ Component({
       var his_body_temp0 = utilsTomd.markArticle(article_mes, article_words, '*'); //TODO等待雨飞的函数
       var his_body_temp = utilsTomd.markArticle(his_body_temp0, this.data._vocabulary, '==');
       var his_body_res = utilsTomd.markArticle(his_body_temp, this.data._unknown, '++');
-      var his_body_result = app.towxml(his_body_res, 'markdown', {
-        theme: 'light',
-        events: {
-          tap: (e) => {
-            console.log('tap', e);
-            let word_temp = e.currentTarget.dataset.data.child[0].text;
-            this.data._word_tag = e.currentTarget.dataset.data._e.tag;
-            this.data._deal_word = word_temp;
-            this.setData({
-              dialogTitle: this.data._deal_word,
-              dialogContent: this.data._deal_word,
-              dialogShow: true
-            })
-          }
+      var his_body_result = util.splitArticle(his_body_res);
+      this.data._towxmlArray = [];
+      for (var para of his_body_result){
+        var towxmlArrayTemp = [];
+        for (var sent of para){
+          let towxmlTemp = app.towxml(sent, 'markdown', {
+            theme: 'light',
+            events: {
+              tap: (e) => {
+                console.log('tap', e);
+                let word_temp = e.currentTarget.dataset.data.child[0].text;
+                this.data._word_tag = e.currentTarget.dataset.data._e.tag;
+                this.data._deal_word = word_temp;
+                this.setData({
+                  dialogTitle: this.data._deal_word,
+                  dialogContent: this.data._deal_word,
+                  dialogShow: true
+                })
+              }
+            }
+          });
+          towxmlArrayTemp.push({sentense:towxmlTemp});
         }
-      });
+        this.data._towxmlArray.push({paragraph:towxmlArrayTemp});
+      }
       this.setData({
         his_headline: this.data._history_example.headline,
-        his_body: his_body_result,
+        his_body: this.data._towxmlArray,
         his_vocabulary: this.data._vocabulary,
         his_unknown: this.data._unknown,
         his_date: this.data._history_example.date,
@@ -118,7 +129,6 @@ Component({
       utilsWord.appendVocabulary(this.data._vocabulary);
       utilsWord.deleteVocabularyFromVocabularyTrie(this.data._voc_remember_vocabulary);
       utilsWord.appendFamiliar(this.data._unknown_remember_vocabulary);
-      console.log(this.data._familiar_forget);
       utilsWord.deleteFamiliarFromFamiliarTrie(this.data._familiar_forget);
     },
 
@@ -191,7 +201,6 @@ Component({
           case 1:
             break;
         }
-        console.log(this.data._familiar_forget);
       }
       this.setData({
         dialogShow: false,
