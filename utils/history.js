@@ -1,7 +1,6 @@
 const utils_word = require('./word2.js');
 const utils_his = require('./history.js');
 const utils_util = require('./util.js');
-const app = getApp();
 const stop_words = ["I’m", "I’ve", 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"];
 class Word {
   constructor(tag='un', location='0.0'){
@@ -55,24 +54,24 @@ class History {
     words = words.filter(function (x) { return x && x.trim()&&x.length > 1; });//单词去空
     words = utils_util.arrSub(words,stop_words);//去除停止词
 
-    var voc_temp = words.filter(x => !app.familiarTrie.search(x));
+    var voc_temp = words.filter(x => !getApp().familiarTrie.search(x));
 
     //分开生词和未知词
-    var voc_really = words.filter(x => app.vocabularyTrie.search(x));//生词
+    var voc_really = words.filter(x => getApp().vocabularyTrie.search(x));//生词
     var unknown_words = utils_util.arrSub(voc_temp, voc_really);//未知词
     
     this.words = new Map();
 
-    for (var i = 0; i < passageFragments.length; i++) {
-      for (var j = 0; j < passageFragments[i].length; j++) {
+    for (var i = 0; i < this.passageFragments.length; i++) {
+      for (var j = 0; j < this.passageFragments[i].length; j++) {
         for (var element of voc_really) {
-          if (passageFragments[i][j].indexOf(element) !== -1) {
+          if (this.passageFragments[i][j].indexOf(element) !== -1) {
             this.words.set(element, new Word('vo', i + '.' + j));
             break;
           }
         }
         for (var element of unknown_words) {
-          if (passageFragments[i][j].indexOf(element) !== -1) {
+          if (this.passageFragments[i][j].indexOf(element) !== -1) {
             this.words.set(element, new Word('vo', i + '.' + j));
             break;
           }
@@ -80,9 +79,9 @@ class History {
       }
     }
 
-    // for (let i = 0; i < passageFragments.length; i++) {
-    //   for (let j = 0; j < passageFragments[i].length; j++) {
-    //     let sentence = passageFragments[i][j];
+    // for (let i = 0; i < this.passageFragments.length; i++) {
+    //   for (let j = 0; j < this.passageFragments[i].length; j++) {
+    //     let sentence = this.passageFragments[i][j];
     //     let re = /[a-zA-Z\-]+/g;
     //     let temp = null;
     //     while (temp = re.exec(sentence)) {
@@ -96,9 +95,9 @@ class History {
     // }
 
     // for (var element of voc_really) {
-    //   for (var i = 0; i < passageFragments.length; i++) {
-    //     for (var j = 0; j < passageFragments[i].length; j++) {
-    //       if (passageFragments[i][j].indexOf(element) !== -1) {
+    //   for (var i = 0; i < this.passageFragments.length; i++) {
+    //     for (var j = 0; j < this.passageFragments[i].length; j++) {
+    //       if (this.passageFragments[i][j].indexOf(element) !== -1) {
     //         this.words.set(element,new Word('vo', i+'.'+j));
     //         break;
     //       }
@@ -107,21 +106,21 @@ class History {
     // }
 
     // for (var element of unknown_words) {
-    //   for (var i = 0; i < passageFragments.length; i++) {
-    //     for (var j = 0; j < passageFragments[i].length; j++) {
-    //       if (passageFragments[i][j].indexOf(element) !== -1) {
+    //   for (var i = 0; i < this.passageFragments.length; i++) {
+    //     for (var j = 0; j < this.passageFragments[i].length; j++) {
+    //       if (this.passageFragments[i][j].indexOf(element) !== -1) {
     //         this.words.set(element, new Word('un', i + '.' + j));
     //         break;
     //       }
     //     }
     //   }
     // }
-    this.history.save();
+    this.save();
   }
 
   save = (refreshPlus=false) => {
     wx.setStorageSync(this.uuid,this);
-    app.hisotryList.append(this);
+    getApp().hisotryList.append(this);
     if (refreshPlus){
       this.plus = 0;
       for (let key in this.words.keys()) {
