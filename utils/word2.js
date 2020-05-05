@@ -1,5 +1,4 @@
-const util_trie = require('./trie.js');
-
+const utilTrie = require('./trie.js');
 /**
  * Word的类定义
  * 可用于检测输入是否为单词对象
@@ -179,12 +178,16 @@ const setWord = (word) => {
 }
 
 const getFamiliar = () => {
-  return util_trie.getTrieFromStorage('familiar_list');
+  return utilTrie.getTrieFromStorage('familiar_list');
 }
 
 // familiar可以为Trie类型或者[string]类型（后者会被自动解析成trie） 
-const setFamiliar = (familiar) => {
-  util_trie.setTrieInStorage('familiar_list', familiar);
+// const setFamiliar = (familiar) => {
+//   utilTrie.setTrieInStorage('familiar_list', familiar);
+// }
+
+const saveFamiliar = () => {
+  utilTrie.setTrieInStorage('familiar_list', getApp().familiarTrie);
 }
 
 // INPUT  字符串列表类型，每个属性是一个单词 
@@ -212,11 +215,15 @@ const deleteVocabulary = (vocabulary_words) => {
 }
 
 const getVocabulary = () => {
-  return util_trie.getTrieFromStorage('vocabulary_list');
+  return utilTrie.getTrieFromStorage('vocabulary_list');
 }
 
-const setVocabulary = (vocabulary) => {
-  util_trie.setTrieInStorage('vocabulary_list', vocabulary);
+// const setVocabulary = (vocabulary) => {
+//   utilTrie.setTrieInStorage('vocabulary_list', vocabulary);
+// }
+
+const saveVocabulary = () => {
+  utilTrie.setTrieInStorage('vocabulary_list', getApp().vocabularyTrie);
 }
 
 const appendVocabulary = (vocabulary_words) => {
@@ -268,11 +275,13 @@ module.exports = {
   getWord: getWord,
   setWord: setWord,
   getFamiliar: getFamiliar,
-  setFamiliar: setFamiliar,
+  // setFamiliar: setFamiliar,
+  saveFamiliar: saveFamiliar,
   appendFamiliar: appendFamiliar,
   deleteFamiliar: deleteFamiliar,
   getVocabulary: getVocabulary,
-  setVocabulary: setVocabulary,
+  // setVocabulary: setVocabulary,
+  saveVocabulary: saveVocabulary,
   appendVocabulary: appendVocabulary,
   deleteVocabulary: deleteVocabulary,
   deleteVocabularyFromVocabularyTrie: deleteVocabularyFromVocabularyTrie,

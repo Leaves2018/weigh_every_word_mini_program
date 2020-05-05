@@ -7,13 +7,12 @@ const utilsDeal = require('../../utils/deal.js');
 const util = require('../../utils/util.js');
 const app = getApp();
 
-function history(headline, body, vocabulary, unknown, date) {
-  this.headline = headline;
-  this.body = body;
-  this.vocabulary = vocabulary;
-  this.unknown = unknown;
-  this.date = date;
+const markdownTagToSymbol = {
+  'mark': '==',
+  'em': '*',
+  'ins': '++',
 }
+
 Component({
   /**
    * 组件的属性列表
@@ -22,18 +21,13 @@ Component({
     historyuuid: {
       type: String,
       value: ''
-    }
+    },
   },
 
   /**
    * 组件的初始数据
    */
   data: {
-    his_headline: "",
-    his_body: [],
-    his_vocabulary: [],
-    his_unknown: [],
-    his_date: "",
     dialogShow: false,
     dialogTitle: "",
     dialogContent: "",
@@ -42,24 +36,17 @@ Component({
     }, {
       text: "记得"
     }],
+    history: null,
+    towxmlArray: [],
     _deal_word: '',
     _word_tag: '',
-    _vocabulary: [],
-    _unknown_remember_vocabulary: [],
-    _voc_remember_vocabulary: [],
-    _familiar_forget: [],
-    _unknown: [],
-    _history_example: '',
-    _towxmlArray: [],
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    onLoad: function() {
-
-    },
+    onLoad: function() {},
     //将修改存至本地
     onUnload: function() {
       this.data.history.save();
@@ -81,100 +68,92 @@ Component({
         },
         success: function() {
           wx.redirectTo({
-            url: '/pages/recite/recite',
+            url: '/pages/recite2/recite',
           });
         }
       })
     },
 
-    tapDialogButton: function(e) {
-      let word = this.data.history.words[this.data._deal_word];
-      if (this.data._word_tag === "mark") {
-        switch (e.detail.index) {
-          //忘了
-          case 0:
-            break;
-          //记得
-          case 1:
-            this.data.history.words[this.data._deal_word].tag = 'fa';
-            let xiel = word.location.split('.');
-            this.data.history.passageFragments[xiel[0]][xiel[1]].replace(`==${this.data._deal_word}==`, this.data._deal_word);
-            this.data._towxmlArray[xiel[0]][xiel[1]] = app.towxml(this.data.history.passageFragments[xiel[0]][xiel[1]], 'markdown', {
-              theme: 'light',
-              events: {
-                tap: (e) => {
-                  console.log('tap', e);
-                  this.data._word_tag = e.currentTarget.dataset.data._e.tag;
-                  this.data._deal_word = e.currentTarget.dataset.data.child[0].text;
-                  this.setData({
-                    dialogTitle: this.data._deal_word,
-                    dialogContent: this.data._deal_word,
-                    dialogShow: true
-                  })
-                }
-              }
-            });
-            break;
+    /**
+     * 封装towxml，提供默认参数
+     */
+    markdownTowxml: function(text) {
+      return app.towxml(text, 'markdown', {
+        theme: 'light',
+        events: {
+          tap: (e) => {
+            console.log('tap', e);
+            this.setData({
+              _word_tag: e.currentTarget.dataset.data._e.tag,
+              _deal_word: e.currentTarget.dataset.data.child[0].text,
+            })
+          }
         }
-      }
-      if (this.data._word_tag === "ins") {
-        let word = this.data.history.words[this.data._deal_word];
-        switch (e.detail.index) {
-          //忘了
-          case 0:
-            this.data.history.words[this.data._deal_word].tag = 'vo';
-            let xiel = word.location.split('.');
-            this.data.history.passageFragments[xiel[0]][xiel[1]].replace(`++${this.data._deal_word}++`, `==${this.data._deal_word}==`);
-            this.data._towxmlArray[xiel[0]][xiel[1]] = app.towxml(this.data.history.passageFragments[xiel[0]][xiel[1]], 'markdown', {
-              theme: 'light',
-              events: {
-                tap: (e) => {
-                  console.log('tap', e);
-                  this.data._word_tag = e.currentTarget.dataset.data._e.tag;
-                  this.data._deal_word = e.currentTarget.dataset.data.child[0].text;
-                  this.setData({
-                    dialogTitle: this.data._deal_word,
-                    dialogContent: this.data._deal_word,
-                    dialogShow: true
-                  })
-                }
-              }
-            });
-            break;
-            break;
-            //记得
-          case 1:
-            this.data._unknown_remember_vocabulary.push(this.data._unknown[temp_index]);
-            this.data._unknown.splice(temp_index, 1);
-            this.data._history_example.unknown.splice(temp_index, 1);
-            break;
-        }
-      }
-      if (this.data._word_tag === "em") {
-        switch (e.detail.index) {
-          //忘了
-          case 0:
-            this.data._familiar_forget.push(this.data._deal_word);
-            this.data._vocabulary.push(this.data._deal_word);
-            this.data._history_example.vocabulary.push(this.data._deal_word);
-            break;
-            //记得
-          case 1:
-            break;
-        }
-      }
+      })
+    },
+
+    /**
+     * 调整属性与局部渲染文本
+     */
+    setTo: function(sourceMark, targetMark, key, word) {
+      console.log(`将${key}由${sourceMark}改为${targetMark}`)
+      let [para, sent] = word.location.split('.').map(x => Number(x));
+      let history = this.data.history;
+      let tempwxml = history.passageFragments[para][sent].replace(`${sourceMark}${key}${sourceMark}`, `${targetMark}${key}${targetMark}`);
+      let towxmlArray = this.data.towxmlArray;
+      towxmlArray[para][sent] = tempwxml;
       this.setData({
         dialogShow: false,
         history: history,
-        his_body: this.data._towxmlArray,
+        towxmlArray: towxmlArray,
       });
+    },
+
+    /**
+     * 响应对话框按钮的点击方法
+     */
+    tapDialogButton: function(e) {
+      let key = this.data._deal_word;
+      let word = this.data.history.words[key];
+      switch (e.detail.index) {
+        case 0:
+          if (word.tag === 'vo') {
+            break;
+          }
+          app.vocabularyTrie.insertData(key);
+          app.familiarTrie.deleteData(key);
+          word.tag = 'vo';
+          var targetTag = markdownTagToSymbol['mark'];
+          break;
+        case 1:
+          if (word.tag === 'fa') {
+            break;
+          } else {
+            this.data.history.plus += 1;
+          }
+          app.familiarTrie.insertData(key);
+          app.vocabularyTrie.deleteData(key);
+          word.tag = 'fa';
+          var targetTag = ''; // 熟词无需标记（但还需要*的斜体标记，以获得词）
+          break;
+        default:
+          app.familiarTrie.deleteData(key);
+          app.vocabularyTrie.deleteData(key);
+          word.tag = 'un';
+          var targetTag = markdownTagToSymbol['ins']
+      }
+      this.setTo(markdownTagToSymbol[this.data._word_tag], targetTag, key, word);
     },
   },
 
   observers: {
+    /**
+     * 接收到uuid时，从缓存中获取该条历史记录
+     */
     'historyuuid': function(historyuuid) {
+      console.log(`historyuuid: ${historyuuid}`);
       var history = new utilsHis.History(wx.getStorageSync(historyuuid));
-      var article_mes = util.joinPassage(history.passageFragments);
+      var passage = util.joinPassage(history.passageFragments);
       var vocabulary = [];
       var unknown = [];
       for (let word in history.words) {
@@ -187,41 +166,29 @@ Component({
             break;
         }
       }
-      var his_body_temp0 = utilsTomd.markTextAll(article_mes, '*');
-      var his_body_temp = utilsTomd.markPassage(his_body_temp0, vocabulary, '==');
-      var his_body_res = utilsTomd.markPassage(his_body_temp, unknown, '++');
-      var his_body_result = util.splitPassage(his_body_res);
-      this.data._towxmlArray = [];
-      for (var para of his_body_result) {
-        var towxmlArrayTemp = [];
-        for (var sent of para) {
-          let towxmlTemp = app.towxml(sent, 'markdown', {
-            theme: 'light',
-            events: {
-              tap: (e) => {
-                console.log('tap', e);
-                this.data._word_tag = e.currentTarget.dataset.data._e.tag;
-                this.data._deal_word = e.currentTarget.dataset.data.child[0].text;
-                this.setData({
-                  dialogTitle: this.data._deal_word,
-                  dialogContent: this.data._deal_word,
-                  dialogShow: true
-                })
-              }
-            }
-          });
-          towxmlArrayTemp.push({
-            sentense: towxmlTemp
-          });
-        }
-        this.data._towxmlArray.push({
-          paragraph: towxmlArrayTemp
-        });
-      }
+
+      passage = utilsTomd.markTextAll(passage, markdownTagToSymbol['em']); // 标记所有文本为斜体
+      passage = utilsTomd.markPassage(passage, vocabulary, markdownTagToSymbol['mark']); // 标记生词为黄色高亮
+      passage = utilsTomd.markPassage(passage, unknown, markdownTagToSymbol['ins']); // 标记未知词为下划线
+      passage = util.splitPassage(passage); // 标记完后拆分文章为段句二维数组结构
+
+      let that = this;
+      let towxmlArray = passage.map(para => para.map(sent => that.markdownTowxml(sent))); // 按句转wxml
+
       this.setData({
         history: history,
-        his_body: this.data._towxmlArray,
+        towxmlArray: towxmlArray,
       });
+    },
+    /**
+     * _deal_word被改变时（即点击了某个单词），显示对话框
+     */
+    '_deal_word': function(deal_word) {
+      this.setData({
+        dialogTitle: this.data._deal_word,
+        dialogContent: this.data._deal_word,
+        dialogShow: true
+      })
     }
   }
 })

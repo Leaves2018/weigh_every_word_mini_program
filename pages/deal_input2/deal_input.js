@@ -90,7 +90,12 @@ Component({
     'filename':function(filename){
       console.log(filename);
       let todayArticle = wx.getStorageSync('today_article_address');
-      if (filename!==(todayArticle||'')) {
+      // 如果已经录入或者为空，返回主页（input）
+      if (filename === todayArticle || '') {
+        wx.switchTab({
+          url: '/pages/input/input',
+        })
+      } else {
         wx.cloud.downloadFile({
           fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/daily-push/' + filename, // 文件 ID
           success: res => {

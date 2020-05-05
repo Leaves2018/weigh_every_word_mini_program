@@ -37,7 +37,8 @@ Page({
     });
   },
   onUnload: function () {
-    utilWord.setFamiliar(familiarTrie);
+    // utilWord.setFamiliar(familiarTrie);
+    utilWord.saveFamiliar();
     utilWord.appendVocabulary(vocabularyWords);
     // 存储熟词本中单词数量
     wx.setStorage({

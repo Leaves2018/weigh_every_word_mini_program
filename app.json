@@ -11,12 +11,14 @@
     "pages/deal_input2/deal_input",
     "pages/me/me",
     "pages/recite/recite",
+    "pages/recite2/recite",
     "pages/index/index",
     "pages/logs/logs",
     "pages/vocabulary/vocabulary",
     "pages/familiar/familiar",
     "pages/recite_settings/recite_settings",
     "pages/history/history",
+    "pages/history2/history",
     "pages/domestication/domestication",
     "pages/domestication2/domestication",
     "pages/word_detail/word_detail",
@@ -38,7 +40,7 @@
     "backgroundColor": "#f7f7fa",
     "list": [
       {
-        "pagePath": "pages/history/history",
+        "pagePath": "pages/history2/history",
         "text": "历史",
         "iconPath": "images/tabbar_icon_recite_default.png",
         "selectedIconPath": "images/tabbar_icon_recite_active.png"

@@ -14,7 +14,7 @@ class Trie {
     for (let i in children) {
       if (children[i].key == stringData[0]) {
         haveData = children[i];
-        break;  // 是否可以加break？找到就可以退出，不继续找
+        break; // 是否可以加break？找到就可以退出，不继续找
       }
     }
     if (haveData) {
@@ -81,7 +81,7 @@ class Trie {
     }
   }
 
-  findPrefix (prefixStr) {
+  findPrefix(prefixStr) {
     if (prefixStr === "") return [];
     let prefix = prefixStr;
     let curNode = this.root;
@@ -97,7 +97,7 @@ class Trie {
     return curNode ? this.dfs(curNode, prefix) : [];
   }
 
-  dfs (node, curStr="", ans=[]) {
+  dfs(node, curStr = "", ans = []) {
     let flag = false;
     for (const next of node.children) {
       if (next) {
@@ -173,9 +173,16 @@ class Trie {
     }
   }
 
-  getAllData() {
-    for (let i in this.root.children) {
-      this.getAllDataHelper(this.root.children[i], [this.root.children[i].key]);
+  /**
+   *  将字典树转为字符串数组形式
+   * refresh为true时，将强制刷新；否则显示上一次转换结果
+   */
+  getAllData(refresh = false) {
+    if (refresh || this.allData.length === 0) {
+      for (let i in this.root.children) {
+        this.getAllDataHelper(this.root.children[i], [this.root.children[i].key]);
+      }
+      this.number = this.allData.length;
     }
     return this.allData;
   }
@@ -200,7 +207,7 @@ class TrieNode {
   }
 }
 
-function getTrieFromStringArray (words) {
+function getTrieFromStringArray(words) {
   var trie = new Trie();
   try {
     words.map(_id => {
@@ -277,10 +284,38 @@ const setTrieInStorage = (key, data) => {
   })
 }
 
+// 字典树性能测试
+/**
+ * var familiarTrie = getTrieFromStorage('familiar_list');
+
+console.time("生成测试用例时间：")
+var testData = [];
+for (let i = 0; i < 50; i++) {
+  testData.push(familiarTrie.getAllData()[parseInt(Math.random()*familiarTrie.getAllData().length)]);
+}
+console.timeEnd("生成测试用例时间：")
+
+var familiarTrieAllData = familiarTrie.getAllData();
+console.time("数组测试时间：")
+var arrayRes = [];
+for (let element of testData) {
+  arrayRes.push(familiarTrieAllData.indexOf(element));
+}
+console.timeEnd("数组测试时间：")
+
+
+console.time("字典树测试时间：")
+var trieRes = [];
+for (let element of testData) {
+  trieRes.push(familiarTrie.search(element));
+}
+console.timeEnd("字典树测试时间：")
+ */
+
+
 module.exports = {
   Trie: Trie,
   getTrieFromStorage: getTrieFromStorage,
   setTrieInStorage: setTrieInStorage,
   getTrieFromStringArray: getTrieFromStringArray,
 }
-

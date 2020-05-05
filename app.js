@@ -44,13 +44,14 @@ App({
     console.log("FBI,open the door")
     this.vocabularyTrie = utilWord.getVocabulary();
     const utilHistory = require('./utils/history.js');
-    this.hisotryList = utilHistory.getHistoryListFromStorage();
+    this.historyList = utilHistory.getHistoryListFromStorage();
   },
   onHide: function() {
+    console.log("App onHide() called")
     const utilWord = require('./utils/word2.js');
-    utilWord.setFamiliar();
-    utilWord.setVocabulary();
-    this.hisotryList.save();
+    utilWord.saveFamiliar();
+    utilWord.saveVocabulary();
+    this.historyList.save();
   },
   // 获取用户openid
   getOpenid() {

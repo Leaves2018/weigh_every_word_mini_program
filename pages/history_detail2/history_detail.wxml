@@ -14,11 +14,11 @@
     </view>
     <view class="divLine"></view>
     <view class="body-view">
-      <block data-position = "{{indexi}}" wx:for="{{his_body}}" wx:key="indexi">
-        <block data-position = "{{indexj}}" wx:for="{{item.paragraph}}" wx:for-item="sen" wx:for-index="indexj" wx:key="indexj">
-          <towxml nodes="{{sen.sentense}}"/>
-        </block>
+    <block wx:for="{{towxmlArray}}" wx:for-item="idxi" wx:for-item="para" wx:key="*this">
+      <block wx:for="{{para}}" wx:for-item="idxj" wx:for-item="sent" wx:key="*this">
+        <towxml nodes="{{sent}}"/>
       </block>
+    </block>
     </view>
     <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
       <word-card word="{{dialogContent}}"></word-card>

@@ -3,8 +3,8 @@ const utilWord = require('../../utils/word2.js')
 const app = getApp();
 
 // 用于实现滑动手势操作
-var minOffset = 30;
-var minTime = 60;
+const minOffset = 30;
+const minTime = 60;
 var startX = 0;
 var startY = 0;
 var startTime = 0;

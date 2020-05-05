@@ -9,6 +9,6 @@
     <view class="wordcard__definition">
       <text wx:for="{{wordcard.definition}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
     </view>
-  <image class="modify-button" src='/images/xiugai.svg' bindtap="tapModifyButton"/>
+  <!-- <image class="modify-button" src='/images/xiugai.svg' bindtap="tapModifyButton"/> -->
   <slot></slot>
 </view>

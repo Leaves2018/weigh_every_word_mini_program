@@ -10,7 +10,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    filename: {
+      type: String,
+      value: "",
+    }
   },
 
   /**
@@ -193,6 +196,9 @@ Component({
    * 数据监听器
    */
   observers: {
+    'filename': function (filename) {
+      console.log(`In domestication page, filename is ${filename}`);
+    },
     '_lexiconChecked': function(lexiconChecked) {
       console.log('_lexiconChecked observer is called')
       // 不会有“=”的情况（“=”时不会触发监听事件）

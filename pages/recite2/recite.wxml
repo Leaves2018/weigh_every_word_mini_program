@@ -1,0 +1,22 @@
+<block wx:if="{{startReciting}}" class="page">
+  <progress id="progress-overall" percent="{{progressOverall}}" show-info border-radius="5"/>
+  <scroll-view class="word-detail" scroll-y="true" style="height: {{detailHeight}}">
+    <towxml nodes="{{wordDetailWXML}}"/>
+  </scroll-view>
+  <scroll-view class="word-card" scroll-y="true" style="height: {{wordCardHeight}}" > 
+    <word-card word="{{thisWord}}" detail="{{thisDetail}}" showdetail="{{false}}" animation="{{animationData}}" bindswipeleft="swipeLeft" bindswiperight="swipeRight"/>
+  </scroll-view>
+</block>
+
+<block wx:else>
+  <view class="page">
+      <mp-msg type="{{msg_type}}" title="{{msg_title}}">
+          <view slot="extend">
+              <view wx:for="{{msg_extend}}" wx:key="*this">{{item}}</view>
+          </view>
+          <view slot="handle">
+              <button class="weui-btn" type="primary" bindtap="goBack">返回</button>
+          </view>
+      </mp-msg>
+  </view>
+</block>
