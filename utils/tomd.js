@@ -35,12 +35,12 @@ const markText2 = (text, content, markup="**") => {
 
 }
 
-// 在指定文章text中用指定标记markup包裹指定内容contents的每一个元素
-const markArticle = (article, contents, markup="**") => {
+// 在指定文章passage中用指定标记markup包裹指定内容contents的每一个元素
+const markPassage = (passage, contents, markup="**") => {
   contents.map(content => {
-    article = markText(article, content, markup, true);
+    passage = markText(passage, content, markup, true);
   });
-  return article;
+  return passage;
 }
 
 // 在指定文本text中用指定标记markup包裹指定单词word及其变形
@@ -67,7 +67,7 @@ const markTextAll = (text, markup="*") => {
 
 module.exports = {
   markText: markText,
-  markArticle: markArticle,
+  markPassage: markPassage,
   markTextWithExchange: markTextWithExchange,
   markTextAll: markTextAll,
 }
