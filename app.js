@@ -37,14 +37,13 @@ App({
         }
       }
     })
-    this.getOpenid();
-    this.getWindowSize();
-    const utilWord = require('./utils/word2.js');
-    this.familiarTrie = utilWord.getFamiliar();
-    console.log("FBI,open the door")
-    this.vocabularyTrie = utilWord.getVocabulary();
     const utilHistory = require('./utils/history.js');
     this.historyList = utilHistory.getHistoryListFromStorage();
+    const utilWord = require('./utils/word2.js');
+    this.familiarTrie = utilWord.getFamiliar();
+    this.vocabularyTrie = utilWord.getVocabulary();
+    this.getOpenid();
+    this.getWindowSize();
   },
   onHide: function() {
     console.log("App onHide() called")

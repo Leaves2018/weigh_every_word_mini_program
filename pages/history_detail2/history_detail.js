@@ -46,27 +46,27 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    onLoad: function() {},
+    onLoad: function () { },
     //将修改存至本地
-    onUnload: function() {
+    onUnload: function () {
       this.data.history.save();
     },
 
-    article_modify: function() {
+    article_modify: function () {
       wx.redirectTo({
         url: '/pages/history_detail_modify/history_detail_modify',
       });
     },
 
     //背诵
-    recite: function() {
+    recite: function () {
       wx.setStorage({
         key: 'recite_info',
         data: {
           type: 'history',
           headline: this.data._history_example.headline,
         },
-        success: function() {
+        success: function () {
           wx.redirectTo({
             url: '/pages/recite2/recite',
           });
@@ -77,7 +77,7 @@ Component({
     /**
      * 封装towxml，提供默认参数
      */
-    markdownTowxml: function(text) {
+    markdownTowxml: function (text) {
       return app.towxml(text, 'markdown', {
         theme: 'light',
         events: {
@@ -95,7 +95,7 @@ Component({
     /**
      * 调整属性与局部渲染文本
      */
-    setTo: function(sourceMark, targetMark, key, word) {
+    setTo: function (sourceMark, targetMark, key, word) {
       console.log(`将${key}由${sourceMark}改为${targetMark}`)
       let [para, sent] = word.location.split('.').map(x => Number(x));
       let history = this.data.history;
@@ -112,7 +112,7 @@ Component({
     /**
      * 响应对话框按钮的点击方法
      */
-    tapDialogButton: function(e) {
+    tapDialogButton: function (e) {
       let key = this.data._deal_word;
       let word = this.data.history.words[key];
       switch (e.detail.index) {
@@ -150,7 +150,7 @@ Component({
     /**
      * 接收到uuid时，从缓存中获取该条历史记录
      */
-    'historyuuid': function(historyuuid) {
+    'historyuuid': function (historyuuid) {
       console.log(`historyuuid: ${historyuuid}`);
       var history = new utilsHis.History(wx.getStorageSync(historyuuid));
       var passage = util.joinPassage(history.passageFragments);
@@ -183,7 +183,7 @@ Component({
     /**
      * _deal_word被改变时（即点击了某个单词），显示对话框
      */
-    '_deal_word': function(deal_word) {
+    '_deal_word': function (deal_word) {
       this.setData({
         dialogTitle: this.data._deal_word,
         dialogContent: this.data._deal_word,
