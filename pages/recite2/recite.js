@@ -162,8 +162,15 @@ Component({
           animation.translateY(0).step({
             duration: 300
           });
-          let thisWord = that.data._wordList[that.data._currentIndex];
-          let [para, sent] = history.words[thisWord].location.split('.').map(x => Number(x));
+          while (true) {
+            var thisWord = that.data._wordList[that.data._currentIndex];
+            var word = history.words[thisWord];
+            if (word.tag !== 'fa') {
+              break;
+            }
+            that.data._currentIndex += 1; // 没有使用setData，不会触发observer
+          }
+          let [para, sent] = word.location.split('.').map(x => Number(x));
           let wordDetailWXML = app.towxml(utilTomd.markText(history.passageFragments[para][sent], thisWord), 'markdown');
           this.setData({
             animationData: animation.export(),
