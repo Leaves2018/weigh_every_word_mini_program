@@ -6,7 +6,7 @@
       <button class='btn' style="width:40vw" type="default" bindtap="article_modify">修改</button>
     </view>
     <view class="divLine"></view>
-    <text>{{his_headline}}</text>
+    <text>{{history.headline}}</text>
     <view class="divLine"></view>
     <view class="title_edit">
       <text>正文</text>

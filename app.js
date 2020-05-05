@@ -6,12 +6,6 @@ App({
     todayArticle:'',
   },
   onLaunch: function () {
-    var launch_message = wx.getLaunchOptionsSync();
-    let todayArticle = launch_message.query.filename;
-    wx.setStorage({
-      key: 'todayArticleAddress',
-      data: todayArticle,
-    });
     // 展示本地存储能力
     wx.cloud.init({
       env: "xingxi-p57mz",

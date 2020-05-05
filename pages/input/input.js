@@ -24,9 +24,11 @@ Page({
                 wx.setStorage({
                   key: 'input_passage_information',
                   data: res.data,
-                })
-                wx.navigateTo({
-                  url: '/pages/deal_input/deal_input',
+                  success:(res)=>{
+                    wx.navigateTo({
+                      url: '/pages/deal_input2/deal_input',
+                    })
+                  }
                 })
               }
             },
@@ -38,7 +40,7 @@ Page({
   navigate_deal: function () {
     wx.hideKeyboard(),
       wx.navigateTo({
-        url: '/pages/deal_input/deal_input',
+        url: '/pages/deal_input2/deal_input',
       })
   },
   //添加图片进行OCR识别
@@ -80,7 +82,7 @@ Page({
             data: passage_res,
           })
           wx.navigateTo({
-            url: '/pages/deal_input/deal_input',
+            url: '/pages/deal_input2/deal_input',
           })
         } catch (err) {
           console.error('invokeService fail', err)

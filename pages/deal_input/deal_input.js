@@ -5,9 +5,6 @@ const fileSystemManager = wx.getFileSystemManager();
 
 Page({
   data: {
-    height: 30,
-    mHidden: true,
-    nHidden: true,
     s: '',
   },
 
@@ -43,20 +40,7 @@ Page({
               that.setData({
                 s: res1.data,
               })
-              let history = new utilHistory.History(res1.data);
-              wx.setStorage({
-                key: 'todayArticleAddress',
-                data: '',
-              });
-              wx.setStorage({
-                key: 'history_detail',
-                data: history.uuid,
-                success: (res)=>{
-                  wx.navigateTo({
-                    url: '/pages/history_detail2/history_detail',
-                  })
-                }
-              })
+              that.deal_article(res1.data);
             },
             fail: err => {
               console.log('readFile fail', err)
@@ -97,58 +81,64 @@ Page({
     if (this.data.s === "") {
       return;
     }
-    headline = utils_deal.deal_passage(this.data.s);
+    let history = new utilHistory.History(res1.data);
+    wx.setStorage({
+      key: 'todayArticleAddress',
+      data: '',
+    });
     wx.setStorage({
       key: 'history_detail',
-      data: headline,
+      data: history.uuid,
+      success: (res) => {
+        wx.navigateTo({
+          url: '/pages/history_detail2/history_detail',
+        })
+      }
     })
-    this.setData({
-      mHidden: false,
-      s: '',
-    });
   },
+
   deal_clear: function (e) {
     this.setData({
       s: '',
     })
   },
 
-  modalconfirm: function () {
-    this.setData({
-      mHidden: true
-    });
-    wx.showToast({
-      title: '加载中...',
-      icon: 'loading',
-      duration: 1500
-    })
-    wx.setStorage({
-      key: 'recite_info',
-      data: {
-        type: 'history',
-        headline: headline,
-      },
-      success: function () {
-        wx.navigateTo({
-          url: '/pages/recite/recite',
-        });
-      }
-    })
-  },
+//   modalconfirm: function () {
+//     this.setData({
+//       mHidden: true
+//     });
+//     wx.showToast({
+//       title: '加载中...',
+//       icon: 'loading',
+//       duration: 1500
+//     })
+//     wx.setStorage({
+//       key: 'recite_info',
+//       data: {
+//         type: 'history',
+//         headline: headline,
+//       },
+//       success: function () {
+//         wx.navigateTo({
+//           url: '/pages/recite/recite',
+//         });
+//       }
+//     })
+//   },
 
-  modalcancel: function () {
-    this.setData({
-      mHidden: true,
-      nHidden: false
-    });
-  },
+//   modalcancel: function () {
+//     this.setData({
+//       mHidden: true,
+//       nHidden: false
+//     });
+//   },
 
-  modalconfirm1: function () {
-    this.setData({
-      nHidden: true
-    });
-    wx.navigateBack({
-      url: '/pages/input/input',
-    });
-  }
-})
+//   modalconfirm1: function () {
+//     this.setData({
+//       nHidden: true
+//     });
+//     wx.navigateBack({
+//       url: '/pages/input/input',
+//     });
+//   }
+ })
