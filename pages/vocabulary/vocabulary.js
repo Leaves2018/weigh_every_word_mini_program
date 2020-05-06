@@ -45,7 +45,7 @@ Page({
   },
 
   onUnload: function () {
-    utilWord.setVocabulary(vocabularyTrie);
+    utilWord.saveVocabulary();
     // 缓存生词本数量
     wx.setStorage({
       key: 'vocabularyWordsLength',
