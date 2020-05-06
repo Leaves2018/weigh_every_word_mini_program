@@ -60,18 +60,9 @@ Component({
 
     //背诵
     recite: function () {
-      wx.setStorage({
-        key: 'recite_info',
-        data: {
-          type: 'history',
-          headline: this.data._history_example.headline,
-        },
-        success: function () {
-          wx.redirectTo({
-            url: '/pages/recite2/recite',
-          });
-        }
-      })
+      wx.redirectTo({
+        url: `/pages/recite2/recite?historyuuid=${this.data.history.uuid}`,
+      });
     },
 
     /**

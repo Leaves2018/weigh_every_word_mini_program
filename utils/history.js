@@ -90,14 +90,18 @@ class History {
       var unknown_words = utils_util.arrSub(voc_temp, voc_really); //未知词
 
       this.words = {};
-      for (var i = 0; i < this.passageFragments.length; i++) {
-        for (var j = 0; j < this.passageFragments[i].length; j++) {
-          for (var element of voc_really) {
+      for (var element of voc_really) {
+        for (var i = 0; i < this.passageFragments.length; i++) {
+          for (var j = 0; j < this.passageFragments[i].length; j++) {
             if (this.passageFragments[i][j].indexOf(element) !== -1) {
               this.words[element] = new Word('vo', i + '.' + j);
             }
           }
-          for (var element of unknown_words) {
+        }
+      }
+      for (var element of unknown_words) {
+        for (var i = 0; i < this.passageFragments.length; i++) {
+          for (var j = 0; j < this.passageFragments[i].length; j++) {
             if (this.passageFragments[i][j].indexOf(element) !== -1) {
               this.words[element] = new Word('vo', i + '.' + j);
             }
