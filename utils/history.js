@@ -11,11 +11,16 @@ class Word {
 }
 class HistoryList {
   constructor(items = {}) {
-    this.items = items;
+    if(items.items!==undefined){
+      this.items = items.items;
+    }else {
+      this.items = items;
+    }
     this.save();
   }
   appendHistory(history) {
     this.items[history.uuid] = new HistoryListItem(history);
+    this.save();
   }
   deleteHistory(history) {
     delete this.items[history.uuid];
@@ -23,6 +28,7 @@ class HistoryList {
       key: history.uuid,
       success: function(res) {},
     })
+    this.save();
   }
   save() {
     wx.setStorage({
@@ -114,7 +120,13 @@ class History {
 
   save = (refreshPlus = false) => {
     wx.setStorageSync(this.uuid, this);
-    getApp().historyList.appendHistory(this);
+    let historyList = wx.getStorageSync('history_list');
+    if (typeof (historyList) === "string") {
+      historyList = new HistoryList();
+    }else {
+      historyList = new HistoryList(historyList);
+    }
+    historyList.appendHistory(this);
     if (refreshPlus) {
       this.plus = 0;
       for (let key in Object.keys(this.words)) {

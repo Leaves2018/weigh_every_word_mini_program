@@ -37,7 +37,7 @@ Component({
       });
     },
     onShow: function() {
-      let historyList = app.historyList.items;
+      let historyList = utilHis.getHistoryListFromStorage().items;
       // 为搜索获取headlines
       let headlines = [];
       for (let element in historyList) {
@@ -53,6 +53,8 @@ Component({
      * 进行背诵和删除历史记录
      */
     tapSlideButton(e) {
+      let historyList = utilHis.getHistoryListFromStorage();
+      historyList = new HistoryList(historyList);
       let historyuuid = e.currentTarget.dataset.historyuuid;
       console.log("In slideButtonTap(), historyuuid=" + historyuuid);
       switch (e.detail.index) {
@@ -67,9 +69,9 @@ Component({
             content: '你确定要删除此历史记录吗？（已确认的生词不会被删除）',
             success: function(res) {
               if (res.confirm) {
-                app.historyList.deleteHistory(historyuuid);
+                historyList.deleteHistory(historyuuid);
                 this.setData({
-                  historyList: app.historyList.items,
+                  historyList: historyList.items,
                 })
               }
             }

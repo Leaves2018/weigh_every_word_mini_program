@@ -37,8 +37,6 @@ App({
         }
       }
     })
-    const utilHistory = require('./utils/history.js');
-    this.historyList = utilHistory.getHistoryListFromStorage();
     const utilWord = require('./utils/word2.js');
     this.familiarTrie = utilWord.getFamiliar();
     this.vocabularyTrie = utilWord.getVocabulary();
@@ -50,7 +48,6 @@ App({
     const utilWord = require('./utils/word2.js');
     utilWord.saveFamiliar();
     utilWord.saveVocabulary();
-    this.historyList.save();
   },
   // 获取用户openid
   getOpenid() {
