@@ -1,4 +1,5 @@
 const utilTrie = require('./trie.js');
+const app = getApp();
 /**
  * Word的类定义
  * 可用于检测输入是否为单词对象
@@ -177,50 +178,70 @@ const setWord = (word) => {
   }
 }
 
+
+
+/**
+ * 从本地缓存中获取熟词树
+ * 如果缓存中没有，则会得到getTrieFromStorage()创建的一棵新树
+ */
 const getFamiliar = () => {
-  return utilTrie.getTrieFromStorage('familiar_list');
+    var familiarTrie = utilTrie.getTrieFromStorage('familiar_list');
 }
 
-// familiar可以为Trie类型或者[string]类型（后者会被自动解析成trie） 
-// const setFamiliar = (familiar) => {
-//   utilTrie.setTrieInStorage('familiar_list', familiar);
-// }
+/**
+ * 保存熟词树至缓存
+ * 风险：如果传入参数familiar出错，可能导致数据丢失
+ */
+const setFamiliar = (familiar) => {
+  utilTrie.setTrieInStorage('familiar_list', familiar);
+}
 
 const saveFamiliar = () => {
-  utilTrie.setTrieInStorage('familiar_list', getApp().familiarTrie);
+  utilTrie.setTrieInStorage('familiar_list', getApp().vocabularyTrie);
 }
 
-// INPUT  字符串列表类型，每个属性是一个单词 
-const appendFamiliar = (familiar_words) => {
-  if (familiar_words.length === 0) {
-    return;
+/**
+ * 将字符串数组类型变量挨个导入familiarTrie中，并保存至本地缓存
+ */
+const appendFamiliar = (familiarWords) => {
+  if (familiarWords.length > 0) {
+    var familiarTrie = getFamiliar();
+    familiarWords.forEach(value => {
+      familiarTrie.insertData(value);
+    })
+    setFamiliar(familiarTrie);
   }
-  var familiar_trie = getFamiliar();
-  familiar_words.map(word => {
-    familiar_trie.insertData(word);
-  })
-  setFamiliar(familiar_trie);
 }
 
-// INPUT  字符串列表类型，每个属性是一个单词 
-const deleteVocabulary = (vocabulary_words) => {
-  if (vocabulary_words.length === 0) {
-    return;
+/**
+ * 从熟词本中删去生词
+ * 命名delete后是“删什么”而不是“从哪删”
+ * 输入应为字符串数组类型
+ */
+const deleteVocabulary = (vocabularyWords) => {
+  if (vocabularyWords.length > 0) {
+    var familiarTrie = getFamiliar();
+    vocabularyWords.forEach(value => {
+      familiarTrie.deleteData(value);
+    })
+    setFamiliar(familiarTrie);
   }
-  var familiar_trie = getFamiliar();
-  vocabulary_words.map(word => {
-    familiar_trie.deleteData(word);
-  })
-  setFamiliar(familiar_trie);
 }
 
+/**
+ * 从本地缓存获取生词树
+ */
 const getVocabulary = () => {
   return utilTrie.getTrieFromStorage('vocabulary_list');
 }
 
-// const setVocabulary = (vocabulary) => {
-//   utilTrie.setTrieInStorage('vocabulary_list', vocabulary);
-// }
+/**
+ * 保存生词树至本地缓存
+ * 风险：如果传入参数vocabulary出错，可能导致数据丢失
+ */
+const setVocabulary = (vocabulary) => {
+  utilTrie.setTrieInStorage('vocabulary_list', vocabulary);
+}
 
 const saveVocabulary = () => {
   utilTrie.setTrieInStorage('vocabulary_list', getApp().vocabularyTrie);
