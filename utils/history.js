@@ -121,12 +121,7 @@ class History {
   save = (refreshPlus = false) => {
     if (refreshPlus) {
       this.plus = 0;
-<<<<<<< Updated upstream
-      let lengthofwords = 0;
       for (let key in this.words) {
-=======
-      for (let key in Object.keys(this.words)) {
->>>>>>> Stashed changes
         if (this.words[key].tag === 'fa') {
           this.plus += 1;
         }

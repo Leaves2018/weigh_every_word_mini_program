@@ -43,12 +43,7 @@ Component({
     onLoad: function () { },
     //将修改存至本地
     onUnload: function () {
-<<<<<<< Updated upstream
-      let history = new utilsHis.History(this.data.history);
-      history.save(true);
-=======
       this.history.save();
->>>>>>> Stashed changes
     },
 
     redirectToModify: function () {
