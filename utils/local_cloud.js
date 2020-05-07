@@ -78,40 +78,40 @@ const local_to_cloud = () => {
 }
 
 const cloud_to_local = (passage) => {
-  // wx.cloud.downloadFile({
-  //   fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/backup/familiar/' + app.globalData.openid + '_familiar.csv', // 文件 ID
-  //   success: res => {
-  //     fileSystemManager.readFile({
-  //       filePath: res.tempFilePath,
-  //       encoding: 'utf8',
-  //       success: res => {
-  //         let word_familiar_list = res.data.split("\n");
-  //         utils_word.appendFamiliar(word_familiar_list);
-  //       },
-  //       fail: err => {
-  //         console.log('readFile fail', err)
-  //       }
-  //     });
-  //   },
-  //   fail: console.error
-  // });
-  // wx.cloud.downloadFile({
-  //   fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/backup/vocabulary/' + app.globalData.openid + '_vocabulary.csv', // 文件 ID
-  //   success: res => {
-  //     fileSystemManager.readFile({
-  //       filePath: res.tempFilePath,
-  //       encoding: 'utf8',
-  //       success: res => {
-  //         let word_vocabulary_list = res.data.split("\n");
-  //         utils_word.appendVocabulary(word_vocabulary_list);
-  //       },
-  //       fail: err => {
-  //         console.log('readFile fail', err)
-  //       }
-  //     });
-  //   },
-  //   fail: console.error
-  // });
+  wx.cloud.downloadFile({
+    fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/backup/familiar/' + app.globalData.openid + '_familiar.csv', // 文件 ID
+    success: res => {
+      fileSystemManager.readFile({
+        filePath: res.tempFilePath,
+        encoding: 'utf8',
+        success: res => {
+          let word_familiar_list = res.data.split("\n");
+          utils_word.appendFamiliar(word_familiar_list);
+        },
+        fail: err => {
+          console.log('readFile fail', err)
+        }
+      });
+    },
+    fail: console.error
+  });
+  wx.cloud.downloadFile({
+    fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/backup/vocabulary/' + app.globalData.openid + '_vocabulary.csv', // 文件 ID
+    success: res => {
+      fileSystemManager.readFile({
+        filePath: res.tempFilePath,
+        encoding: 'utf8',
+        success: res => {
+          let word_vocabulary_list = res.data.split("\n");
+          utils_word.appendVocabulary(word_vocabulary_list);
+        },
+        fail: err => {
+          console.log('readFile fail', err)
+        }
+      });
+    },
+    fail: console.error
+  });
   wx.cloud.downloadFile({
     fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/backup/history/' + app.globalData.openid + '_history_detail_list.json', // 文件 ID
     success: res => {

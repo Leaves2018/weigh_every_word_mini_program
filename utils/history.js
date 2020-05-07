@@ -120,12 +120,7 @@ class History {
 
   save = (refreshPlus = false) => {
     wx.setStorageSync(this.uuid, this);
-    let historyList = wx.getStorageSync('history_list');
-    if (typeof (historyList) === "string") {
-      historyList = new HistoryList();
-    }else {
-      historyList = new HistoryList(historyList);
-    }
+    let historyList = getHistoryListFromStorage();
     historyList.appendHistory(this);
     if (refreshPlus) {
       this.plus = 0;
@@ -153,6 +148,7 @@ const getHistoryListFromStorage = () => {
     if (typeof(history_list) === "string") {
       throw "'history_list' is not existed. A new history_list will be created.";
     }
+    history_list = new HistoryList(history_list);
   } catch (e) {
     console.warn(e);
     history_list = new HistoryList();

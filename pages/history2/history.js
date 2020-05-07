@@ -53,8 +53,8 @@ Component({
      * 进行背诵和删除历史记录
      */
     tapSlideButton(e) {
+      var that = this;
       let historyList = utilHis.getHistoryListFromStorage();
-      historyList = new HistoryList(historyList);
       let historyuuid = e.currentTarget.dataset.historyuuid;
       console.log("In slideButtonTap(), historyuuid=" + historyuuid);
       switch (e.detail.index) {
@@ -70,7 +70,7 @@ Component({
             success: function(res) {
               if (res.confirm) {
                 historyList.deleteHistory(historyuuid);
-                this.setData({
+                that.setData({
                   historyList: historyList.items,
                 })
               }
