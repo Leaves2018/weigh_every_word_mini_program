@@ -50,7 +50,7 @@ Component({
     //将修改存至本地
     onUnload: function () {
       let history = new utilsHis.History(this.data.history);
-      history.save();
+      history.save(true);
     },
 
     article_modify: function () {
