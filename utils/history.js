@@ -22,10 +22,10 @@ class HistoryList {
     this.items[history.uuid] = new HistoryListItem(history);
     this.save();
   }
-  deleteHistory(history) {
-    delete this.items[history.uuid];
+  deleteHistory(historyuuid) {
+    delete this.items[historyuuid];
     wx.removeStorage({
-      key: history.uuid,
+      key: historyuuid,
       success: function(res) {},
     })
     this.save();
@@ -124,12 +124,14 @@ class History {
     historyList.appendHistory(this);
     if (refreshPlus) {
       this.plus = 0;
+      let lengthofwords = 0;
       for (let key in Object.keys(this.words)) {
         if (this.words[key].tag === 'fa') {
           this.plus += 1;
         }
+        lengthofwords += 1;
       }
-      this.done = (this.plus === this.words.size);
+      this.done = (this.plus === lengthofwords);
     }
   }
   uuid() {

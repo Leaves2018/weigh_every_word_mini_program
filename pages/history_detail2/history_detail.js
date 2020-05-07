@@ -49,7 +49,8 @@ Component({
     onLoad: function () { },
     //将修改存至本地
     onUnload: function () {
-      this.data.history.save();
+      let history = new utilsHis.History(this.data.history);
+      history.save();
     },
 
     article_modify: function () {
