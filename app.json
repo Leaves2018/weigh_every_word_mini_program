@@ -18,7 +18,7 @@
     "pages/familiar/familiar",
     "pages/recite_settings/recite_settings",
     "pages/history/history",
-    "pages/history2/history",
+    "pages/history_list/history_list",
     "pages/domestication/domestication",
     "pages/domestication2/domestication",
     "pages/word_detail/word_detail",
@@ -40,7 +40,7 @@
     "backgroundColor": "#f7f7fa",
     "list": [
       {
-        "pagePath": "pages/history2/history",
+        "pagePath": "pages/history_list/history_list",
         "text": "历史",
         "iconPath": "images/tabbar_icon_recite_default.png",
         "selectedIconPath": "images/tabbar_icon_recite_active.png"
