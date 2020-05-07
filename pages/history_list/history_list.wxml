@@ -5,11 +5,11 @@
   </view>
 
   <view class="page__body">
-      <view class="history-slidecells" wx:for="{{historyKeys}}" wx:key="*this">
+      <view class="history-slidecells" wx:for="{{uuids}}" wx:key="*this">
         <mp-slideview data-historyuuid="{{item}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapNavigateButton" bindbuttontap="tapSlideButton" style="margin-bottom: {{(index === words.length - 1) ? '64rpx' : '0rpx'}}">
           <view class="history-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
-          <icon type="{{historyList[item].done ? 'success' : 'info'}}" size="25"/>
-            {{index + 1}}. {{historyList[item].headline}}
+          <icon type="{{items[item].done ? 'success' : 'info'}}" size="25"/>
+            {{index + 1}}. {{items[item].headline}}
           </view>
         </mp-slideview>
       </view>

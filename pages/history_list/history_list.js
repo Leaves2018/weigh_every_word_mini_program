@@ -1,4 +1,3 @@
-// pages/history2/history.js
 const utilHis = require('../../utils/history.js');
 const utilTrie = require('../../utils/trie.js');
 const base64 = require("../../images/base64");
@@ -17,8 +16,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    _headlines: [],
-    historyList: {},
   },
 
   /**
@@ -37,16 +34,25 @@ Component({
       });
     },
     onShow: function() {
-      let historyList = utilHis.getHistoryListFromStorage().items;
+      this.historyList = utilHis.getHistoryListFromStorage();
       // 为搜索获取headlines
-      let headlines = [];
-      for (let element in historyList) {
-        headlines.push(historyList[element].headline);
+      this.headlines = [];
+      for (let element in this.historyList.items) {
+        this.headlines.push(this.historyList.items[element].headline);
       };
       this.setData({
-        _headlines: headlines,
-        historyList: historyList,
-        historyKeys: Object.keys(historyList),
+        uuids: Object.keys(this.historyList.items),
+        items: this.historyList.items,
+      })
+    },
+
+    /**
+     * 更新视图元素
+     */
+    updateWXML: function () {
+      this.setData({
+        uuids: Object.keys(this.historyList.items),
+        items: this.historyList.items,
       })
     },
     /**
@@ -54,7 +60,6 @@ Component({
      */
     tapSlideButton(e) {
       var that = this;
-      let historyList = utilHis.getHistoryListFromStorage();
       let historyuuid = e.currentTarget.dataset.historyuuid;
       console.log("In slideButtonTap(), historyuuid=" + historyuuid);
       switch (e.detail.index) {
@@ -69,10 +74,8 @@ Component({
             content: '你确定要删除此历史记录吗？（已确认的生词不会被删除）',
             success: function(res) {
               if (res.confirm) {
-                historyList.deleteHistory(historyuuid);
-                that.setData({
-                  historyList: historyList.items,
-                })
+                that.historyList.deleteHistory(historyuuid);
+                that.updateWXML();
               }
             }
           })
@@ -93,10 +96,11 @@ Component({
      * 搜索
      */
     search: function(value) {
+      var that = this;
       return new Promise((resolve, reject) => {
         if (value.length > 0) {
           setTimeout(() => {
-            var hl_temp = this.data._headlines.filter(x => x.indexOf(value) !== -1);
+            var hl_temp = that.headlines.filter(x => x.indexOf(value) !== -1);
             resolve(hl_temp.map(ans => {
               return {
                 text: ans
@@ -128,7 +132,7 @@ Component({
      */
     selectResult: function(e) {
       console.log('select result: ', e.detail.item.text);
-      var indexHighlight = this.data._headlines.indexOf(e.detail.item.text);
+      var indexHighlight = this.headlines.indexOf(e.detail.item.text);
       this.setData({
         indexHighlight: indexHighlight,
       })

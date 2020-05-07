@@ -3,14 +3,14 @@
   <view class="body-view">
     <view class="title_edit">
       <text>标题</text>
-      <button class='btn' style="width:40vw" type="default" bindtap="article_modify">修改</button>
+      <button class='btn' style="width:40vw" type="default" bindtap="redirectToModify">修改</button>
     </view>
     <view class="divLine"></view>
     <text>{{history.headline}}</text>
     <view class="divLine"></view>
     <view class="title_edit">
       <text>正文</text>
-      <button class='btn' style="width:40vw" type="default" bindtap="recite"> 背诵 </button>
+      <button class='btn' style="width:40vw" type="default" bindtap="redirectToRecite"> 背诵 </button>
     </view>
     <view class="divLine"></view>
     <view class="body-view">
