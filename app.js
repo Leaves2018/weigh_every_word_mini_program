@@ -37,17 +37,16 @@ App({
         }
       }
     })
-    const utilWord = require('./utils/word2.js');
-    this.familiarTrie = utilWord.getFamiliar();
-    this.vocabularyTrie = utilWord.getVocabulary();
+    const utilTrie = require('./utils/trie.js');
+    this.familiarTrie = utilTrie.getFamiliarTrie();
+    this.vocabularyTrie = utilTrie.getVocabularyTrie();
     this.getOpenid();
     this.getWindowSize();
   },
   onHide: function() {
     console.log("App onHide() called")
-    const utilWord = require('./utils/word2.js');
-    utilWord.saveFamiliar();
-    utilWord.saveVocabulary();
+    this.familiarTrie.save();
+    this.vocabularyTrie.save();
   },
   // 获取用户openid
   getOpenid() {
