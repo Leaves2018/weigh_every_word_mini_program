@@ -119,13 +119,10 @@ class History {
   }
 
   save = (refreshPlus = false) => {
-    wx.setStorageSync(this.uuid, this);
-    let historyList = getHistoryListFromStorage();
-    historyList.appendHistory(this);
     if (refreshPlus) {
       this.plus = 0;
       let lengthofwords = 0;
-      for (let key in Object.keys(this.words)) {
+      for (let key in this.words) {
         if (this.words[key].tag === 'fa') {
           this.plus += 1;
         }
@@ -133,6 +130,9 @@ class History {
       }
       this.done = (this.plus === lengthofwords);
     }
+    wx.setStorageSync(this.uuid, this);
+    let historyList = getHistoryListFromStorage();
+    historyList.appendHistory(this);
   }
   uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
