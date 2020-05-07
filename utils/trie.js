@@ -1,5 +1,8 @@
 class Trie {
   constructor(root = new TrieNode(null)) {
+    if (typeof(root) === 'string') {
+      root = new TrieNode(null);
+    }
     this.root = root;
     this.allData = [];
     this.number = 0;
@@ -312,10 +315,60 @@ for (let element of testData) {
 console.timeEnd("字典树测试时间：")
  */
 
+/**
+ * 定义一个继承Trie类的单词树类
+ * 规定应实现添加、删除、保存方法
+ * 根据指定的key从缓存中取数据，以及保存自身至缓存
+ */
+class WordTrie extends Trie {
+  constructor(key) {
+    super(wx.getStorageSync(key).root);
+    this.key = key;
+  }
+  add(words) {
+    try {
+      words.forEach(value => {
+        this.insertData(value)
+      })
+    } catch (e) {
+      console.warn(`An error occured when WordTrie.add() was called.\n${e}`)
+    }
+  }
+  del(words) {
+    try {
+      words.forEach(value => {
+        this.deleteData(value)
+      })
+    } catch (e) {
+      console.warn(`An error occured when WordTrie.del() was called.\n${e}`)
+    }
+  }
+  save() {
+    wx.setStorage({
+      key: this.key,
+      data: this,
+    })
+  }
+}
+
+/**
+ * 每次调用都必然会执行一次WordTrie的构造方法
+ * 将首先试图从本地缓存中寻找对应key的数据
+ * 如果没有则创建新的
+ */
+const getFamiliarTrie = () => {
+  return new WordTrie('familiar_list')
+}
+
+const getVocabularyTrie = () => {
+  return new WordTrie('vocabulary_list')
+}
 
 module.exports = {
   Trie: Trie,
   getTrieFromStorage: getTrieFromStorage,
   setTrieInStorage: setTrieInStorage,
   getTrieFromStringArray: getTrieFromStringArray,
+  getFamiliarTrie: getFamiliarTrie,
+  getVocabularyTrie: getVocabularyTrie,
 }
