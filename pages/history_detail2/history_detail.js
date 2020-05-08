@@ -34,6 +34,7 @@ Component({
     }, {
       text: "记得"
     }],
+    his_headline:'',
   },
 
   /**
@@ -43,12 +44,7 @@ Component({
     onLoad: function () { },
     //将修改存至本地
     onUnload: function () {
-<<<<<<< Updated upstream
-      let history = new utilsHis.History(this.data.history);
-      history.save(true);
-=======
-      this.history.save();
->>>>>>> Stashed changes
+      this.history.save(true);
     },
 
     redirectToModify: function () {
@@ -171,6 +167,7 @@ Component({
       this.setData({
         passageFragments: passageFragments,
         towxmlArray: towxmlArray,
+        his_headline: this.history.headline,
       });
     },
   }
