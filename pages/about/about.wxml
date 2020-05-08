@@ -1,1 +1,2 @@
-<tappable-passage passage="{{passage}}" highlight="{{highlight}}"/>
+<tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord"/>
+<button bindtap="remarkTest">测试重新标记</button>
