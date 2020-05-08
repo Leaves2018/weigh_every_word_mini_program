@@ -34,6 +34,7 @@ Component({
     }, {
       text: "记得"
     }],
+    his_headline:'',
   },
 
   /**
@@ -43,12 +44,12 @@ Component({
     onLoad: function () { },
     //将修改存至本地
     onUnload: function () {
-      this.history.save();
+      this.history.save(true);
     },
 
     redirectToModify: function () {
       wx.redirectTo({
-        url: `/pages/history_detail_modify/history_detail_modify?historyuuid=${this.data.historyuuid}`,
+        url: `/pages/history_detail_modify2/history_detail_modify?historyuuid=${this.data.historyuuid}`,
       });
     },
 
@@ -166,6 +167,7 @@ Component({
       this.setData({
         passageFragments: passageFragments,
         towxmlArray: towxmlArray,
+        his_headline: this.history.headline,
       });
     },
   }

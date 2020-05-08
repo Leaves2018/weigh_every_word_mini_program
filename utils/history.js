@@ -121,12 +121,14 @@ class History {
   save = (refreshPlus = false) => {
     if (refreshPlus) {
       this.plus = 0;
+      let lengthofwords = 0;
       for (let key in this.words) {
         if (this.words[key].tag === 'fa') {
           this.plus += 1;
         }
+        lengthofwords += 1;
       }
-      this.done = (this.plus === Object.keys(this.words).length);
+      this.done = (this.plus === lengthofwords);
     }
     wx.setStorageSync(this.uuid, this);
     let historyList = getHistoryListFromStorage();
