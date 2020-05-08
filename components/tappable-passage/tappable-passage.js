@@ -11,7 +11,7 @@ Component({
       value: "",
     },
     highlight: {
-      type: Object,
+      type: Array,
       value: null,
     },
     /**
