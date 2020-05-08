@@ -1,0 +1,21 @@
+/* pages/input2/input.wxss */
+page {
+  height:100%;
+}
+
+.page-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.condition {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.white {
+  height: 300rpx;
+}

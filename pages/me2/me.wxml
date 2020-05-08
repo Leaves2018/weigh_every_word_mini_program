@@ -1,0 +1,50 @@
+<!--pages/me2/me.wxml-->
+  <view class="userinfo">
+
+    <button 
+      wx:if="{{!hasUserInfo && canIUse}}" 
+      open-type="getUserInfo"     
+      bindgetuserinfo="getUserInfo"> 获取头像昵称 
+    </button>
+
+    <block 
+      wx:else>
+      <image 
+        bindtap="bindViewTap" 
+        class="userinfo-avatar" 
+        src="{{userInfo.avatarUrl}}" 
+        mode="aspectFit">
+      </image>
+
+      <text 
+        class="userinfo-nickname">{{userInfo.nickName}}
+      </text>
+
+    </block>
+    
+  </view>
+
+
+  <view class="page_cells">
+
+    <!-- <mp-cells title="消息">
+      <mp-cell link url="/pages/history/history" value="历史记录"></mp-cell>
+    </mp-cells> -->
+    
+    <mp-cells title="单词本">
+      <mp-cell link url="/pages/vocabulary/vocabulary" value="生词本" footer="生词数：{{vocabularyWordsLength}}"></mp-cell>
+      <mp-cell link url="/pages/familiar/familiar" value="熟词本" footer="词汇量：{{familiarWordsLength}}"></mp-cell>
+    </mp-cells>
+
+    <mp-cells title="背诵">
+      <mp-cell link url="/pages/recite_settings/recite_settings" value="设置"></mp-cell>
+      <mp-cell link url="/pages/domestication2/domestication?filename=20200430.txt" value="熟词本初始化"></mp-cell>
+    </mp-cells>
+
+    <mp-cells title="其他">
+      <mp-cell link url="/pages/tutorial2/tutorial" value="使用教程"></mp-cell>
+      <mp-cell link url="/pages/about/about" value="关于"></mp-cell>
+    </mp-cells>
+
+  </view>
+

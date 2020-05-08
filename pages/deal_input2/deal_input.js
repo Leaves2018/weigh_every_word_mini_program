@@ -100,7 +100,7 @@ Component({
       // 如果已经录入或者为空，返回主页（input）
       if (filename === todayArticle || '') {
         wx.switchTab({
-          url: '/pages/input/input',
+          url: '/pages/input2/input',
         })
       } else {
         wx.cloud.downloadFile({
