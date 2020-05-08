@@ -1,0 +1,21 @@
+/* pages/history_detail_modify2/history_detail_modify2.wxss */
+page {
+  height:100%;
+  padding: 0rpx;
+}
+
+.textarea {
+  border: 3rpx solid rgb(0, 0, 0);
+  background: #f0f0ee;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title_edit{
+  display: flex;
+  flex-direction: row;
+}
+
+.btn{
+  right: 50rpx;
+}

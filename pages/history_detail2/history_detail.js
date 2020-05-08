@@ -49,7 +49,7 @@ Component({
 
     redirectToModify: function () {
       wx.redirectTo({
-        url: `/pages/history_detail_modify/history_detail_modify?historyuuid=${this.data.historyuuid}`,
+        url: `/pages/history_detail_modify2/history_detail_modify?historyuuid=${this.data.historyuuid}`,
       });
     },
 
