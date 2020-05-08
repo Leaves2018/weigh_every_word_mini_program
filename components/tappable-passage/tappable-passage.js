@@ -10,6 +10,22 @@ Component({
       type: String,
       value: "",
     },
+    thisword: {
+      type: Object,
+      value: null
+    },
+    /**
+     * 一个例子
+    thisword: {
+      type: Object,
+      value: {
+        word: "word",
+        style: {
+          "background": "greenyellow",
+        }
+      } 
+    },
+     */
     highlight: {
       type: Array,
       value: null,
