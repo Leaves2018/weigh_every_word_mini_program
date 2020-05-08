@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "mp-loading": "../../components/loading/loading"
+    "tappable-passage": "../../components/tappable-passage/tappable-passage"
   },
-  "navigationBarTitleText": "UI组件库"
+  "navigationBarTitleText": "关于"
 }

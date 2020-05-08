@@ -1,0 +1,6 @@
+<wxs src="./tutorial.wxs" module="tutorial" />
+<view class="passage">
+  <view class="paragraph" wx:for="{{passageFragments}}" wx:for-index="para" wx:for-item="paragraph" wx:key="*this">
+    <view class="item {{item.tag === 'word' ? item.text : item.tag}}" wx:for="{{paragraph}}" wx:key="text" data-text="{{item.text}}" bindtap="{{tutorial.tapWordView}}">{{item.text}}</view> 
+  </view>
+</view>

@@ -1,0 +1,35 @@
+module.exports = {
+  tapWordView: function(event, ownerInstance) {
+    console.log("tutorial.wxs tapWordView() is called.")
+    console.log(JSON.stringify(event))
+    var className = '.item' + '.' + event.currentTarget.dataset.text;
+    console.log(className)
+    var instance = ownerInstance.selectAllComponents(className)
+    for (var i = 0; i < instance.length; i++) {
+      instance[i].setStyle({
+        "background": "greenyellow",
+      })
+    }
+    console.log(JSON.stringify(instance))
+    return true;
+  },
+  highlight: function(newValue, oldValue, ownerInstance, instance) {
+    if (newValue) {
+      console.log(JSON.stringify(newValue))
+      console.log('newValue.length=' + newValue.length)
+      for (var i = 0; i < newValue.length; i++) {
+        var words = newValue[i]['words'];
+        var style = newValue[i]['style'];
+        console.log('i=' + i)
+        console.log(JSON.stringify(words))
+        console.log(JSON.stringify(style))
+        for (var j = 0; j < words.length; j++) {
+          var instance = ownerInstance.selectAllComponents('.item.' + words[j]);
+          for (var k = 0; k < instance.length; k++) {
+            instance[k].setStyle(style);
+          }
+        }
+      }
+    }
+  }
+}

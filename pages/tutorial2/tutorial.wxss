@@ -1,0 +1,16 @@
+/* pages/tutorial2/tutorial.wxss */
+
+.paragraph {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  margin: 0rpx 0rpx 50rpx 0rpx;
+}
+
+.item {
+  margin: 5rpx 0rpx 5rpx 10rpx;
+}
+
+.item.other {
+  margin: 5rpx 10rpx 5rpx 0rpx;
+}
