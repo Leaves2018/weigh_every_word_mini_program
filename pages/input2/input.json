@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "mp-searchbar": "../../components/searchbar/searchbar"
+  },
+  "navigationBarTitleText": "录入"
+}
