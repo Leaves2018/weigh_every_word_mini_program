@@ -23,7 +23,7 @@ The UN body that oversees international climate negotiations, the UNFCCC, has po
       thisword: {
         word: "climate",
         style: {
-          "background": "black",
+          "background": "red",
         }
       }
     })

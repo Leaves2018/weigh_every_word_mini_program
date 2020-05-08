@@ -1,7 +1,3 @@
-var defaultItemWxss = {
-  "background": "white",
-  "border": "none"
-}
 module.exports = {
   // 点击方法：标记所有符合class定位的词
   tap: function(event, ownerInstance) {
@@ -18,11 +14,10 @@ module.exports = {
   },
   // 根据逻辑层反馈，重新设置当前单词样式
   remarkThisWord: function (newValue, oldValue, ownerInstance, instance) {
-    console.log("remarkThisWord() is called")
     if (newValue) {
       var instance = ownerInstance.selectAllComponents('.item.' + newValue['word']);
       for (var i = 0; i < instance.length; i++) {
-        instance[i].setStyle(defaultItemWxss); // 首先设置回默认样式
+        // instance[i].setStyle(defaultItemWxss); // 首先设置回默认样式
         instance[i].setStyle(newValue['style']) // 再根据要求设置为新样式
       }
     }
