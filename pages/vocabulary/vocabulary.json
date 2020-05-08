@@ -6,6 +6,5 @@
     "mp-slideview": "../../components/slideview/slideview",
     "word-card": "../../components/word-card/word-card"
   },
-  "pureDataPattern": "^_",
   "navigationBarTitleText": "生词本"
 }
