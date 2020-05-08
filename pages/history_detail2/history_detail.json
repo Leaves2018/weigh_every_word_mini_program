@@ -3,6 +3,7 @@
     "mp-dialog": "../../components/dialog/dialog",
     "towxml": "/towxml/towxml",
     "word-card": "../../components/word-card/word-card",
+    "tappable-passage": "../../components/tappable-passage/tappable-passage",
     "mp-halfScreenDialog": "../../components/half-screen-dialog/half-screen-dialog"
   },
   "navigationBarTitleText": "文章详情",

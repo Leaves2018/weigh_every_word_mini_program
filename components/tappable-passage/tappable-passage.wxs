@@ -17,7 +17,6 @@ module.exports = {
     if (newValue) {
       var instance = ownerInstance.selectAllComponents('.item.' + newValue['word']);
       for (var i = 0; i < instance.length; i++) {
-        // instance[i].setStyle(defaultItemWxss); // 首先设置回默认样式
         instance[i].setStyle(newValue['style']) // 再根据要求设置为新样式
       }
     }

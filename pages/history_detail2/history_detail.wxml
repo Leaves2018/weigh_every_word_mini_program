@@ -14,17 +14,10 @@
     </view>
     <view class="divLine"></view>
     <view class="body-view">
-    <block wx:for="{{towxmlArray}}" wx:for-item="idxi" wx:for-item="para" wx:key="*this">
-      <block wx:for="{{para}}" wx:for-item="idxj" wx:for-item="sent" wx:key="*this">
-        <towxml nodes="{{sent}}"/>
-      </block>
-    </block>
+    <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord"/>
     </view>
-    <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
+    <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
       <word-card word="{{dialogContent}}"></word-card>
     </mp-dialog>
-    <!-- <mp-halfScreenDialog bindbuttontap="buttontap" show="{{unknown_dialogShow}}" maskClosable="{{false}}" buttons="{{buttons0}}">
-      <word-card word="{{dialogContent}}"></word-card>
-    </mp-halfScreenDialog> -->
   </view>
 </view>

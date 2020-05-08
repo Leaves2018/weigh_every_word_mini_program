@@ -7,10 +7,17 @@ const utilsDeal = require('../../utils/deal.js');
 const util = require('../../utils/util.js');
 const app = getApp();
 
-const markdownTagToSymbol = {
-  'mark': '==',
-  'em': '*',
-  'ins': '++',
+const wxss = {
+  fa: {
+    "background": "white",
+    "border": "none"
+  },
+  vo: {
+    "background": "#7FFFAA"
+    },
+  un: {
+    "border-bottom": "3px solid #8B4513"
+    },
 }
 
 Component({
@@ -60,43 +67,14 @@ Component({
       });
     },
 
-    /**
-     * 封装towxml，提供默认参数
-     */
-    markdownTowxml: function (text) {
-      return app.towxml(text, 'markdown', {
-        theme: 'light',
-        events: {
-          tap: (e) => {
-            console.log('tap', e);
-            /**
-             * deal_word被改变时（即点击了某个单词），显示对话框
-             */
-            this.deal_word = e.currentTarget.dataset.data.child[0].text;
-            this.deal_word_tag = e.currentTarget.dataset.data._e.tag;
-            this.setData({
-              dialogTitle: this.deal_word,
-              dialogContent: this.deal_word,
-              dialogShow: true
-            })
-          }
-        }
-      })
-    },
-
-    /**
-     * 调整属性与局部渲染文本
-     */
-    setTo: function (sourceMark, targetMark, key, word) {
-      console.log(`将${key}由${sourceMark}改为${targetMark}`)
-      let [para, sent] = word.location.split('.').map(x => Number(x));
-      let tempwxml = this.markdownTowxml(this.data.passageFragments[para][sent].replace(`${sourceMark}${key}${sourceMark}`, `${targetMark}${key}${targetMark}`));
-      let towxmlArray = this.data.towxmlArray;
-      towxmlArray[para][sent] = tempwxml;
+    tapWord: function (e) {
+      console.log(e);
+      this.deal_word = e.detail.text;
       this.setData({
-        dialogShow: false,
-        towxmlArray: towxmlArray,
-      });
+        dialogTitle: this.deal_word,
+        dialogContent: this.deal_word,
+        dialogShow: true
+      })
     },
 
     /**
@@ -113,7 +91,6 @@ Component({
           app.vocabularyTrie.insertData(key);
           app.familiarTrie.deleteData(key);
           word.tag = 'vo';
-          var targetTag = markdownTagToSymbol['mark'];
           break;
         case 1:
           if (word.tag === 'fa') {
@@ -124,15 +101,19 @@ Component({
           app.familiarTrie.insertData(key);
           app.vocabularyTrie.deleteData(key);
           word.tag = 'fa';
-          var targetTag = ''; // 熟词无需标记（但还需要*的斜体标记，以获得词）
           break;
         default:
           app.familiarTrie.deleteData(key);
           app.vocabularyTrie.deleteData(key);
           word.tag = 'un';
-          var targetTag = markdownTagToSymbol['ins']
       }
-      this.setTo(markdownTagToSymbol[this.deal_word_tag], targetTag, key, word);
+      this.setData({
+        thisword:{
+          word:this.deal_word,
+          style: wxss[word.tag],
+        },
+        dialogShow: false,
+      })
     },
   },
 
@@ -157,18 +138,17 @@ Component({
         }
       }
       // 页面第一次渲染
-      passage = utilsTomd.markTextAll(passage, markdownTagToSymbol['em']); // 标记所有文本为斜体
-      passage = utilsTomd.markPassage(passage, vocabulary, markdownTagToSymbol['mark']); // 标记生词为黄色高亮
-      passage = utilsTomd.markPassage(passage, unknown, markdownTagToSymbol['ins']); // 标记未知词为下划线
-      let passageFragments = util.splitPassage(passage); // 标记完后拆分文章为段句二维数组结构
-
-      let that = this;
-      let towxmlArray = passageFragments.map(para => para.map(sent => that.markdownTowxml(sent))); // 按句转wxml
       this.setData({
-        passageFragments: passageFragments,
-        towxmlArray: towxmlArray,
+        passage: passage,
+        highlight: [{
+          words: unknown,
+          style: wxss.un,
+        }, {
+          words: vocabulary,
+          style: wxss.vo,
+        }],
         his_headline: this.history.headline,
-      });
+      })
     },
   }
 })
