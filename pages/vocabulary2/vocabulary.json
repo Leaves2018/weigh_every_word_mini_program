@@ -1,4 +1,5 @@
 {
+  "component": true,
   "usingComponents": {
     "mp-searchbar": "../../components/searchbar/searchbar",
     "mp-cells": "../../components/cells/cells",
@@ -6,6 +7,5 @@
     "mp-slideview": "../../components/slideview/slideview",
     "word-card": "../../components/word-card/word-card"
   },
-  "pureDataPattern": "^_",
   "navigationBarTitleText": "生词本"
 }

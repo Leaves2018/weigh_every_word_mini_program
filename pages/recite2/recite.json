@@ -6,6 +6,5 @@
     "towxml": "/towxml/towxml",
     "word-card": "../../components/word-card/word-card"
   },
-  "pureDataPattern": "^_",
   "navigationBarTitleText": "背诵"
 }

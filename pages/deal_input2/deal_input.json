@@ -1,6 +1,5 @@
 {
   "component": true,
   "usingComponents": {},
-  "pureDataPattern": "^_",
   "navigationBarTitleText": "输入处理"
 }

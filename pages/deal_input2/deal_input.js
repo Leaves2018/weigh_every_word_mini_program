@@ -14,6 +14,13 @@ Component({
   },
 
   /**
+   * 配置选项
+   */
+  options: {
+    pureDataPattern: /^_/,
+  },
+
+  /**
    * 组件的初始数据
    */
   data: {

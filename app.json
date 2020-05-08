@@ -7,22 +7,17 @@
   },
   "pages": [
     "pages/input/input",
-    "pages/deal_input/deal_input",
     "pages/deal_input2/deal_input",
     "pages/me/me",
-    "pages/recite/recite",
     "pages/recite2/recite",
     "pages/index/index",
     "pages/logs/logs",
     "pages/vocabulary/vocabulary",
     "pages/familiar/familiar",
     "pages/recite_settings/recite_settings",
-    "pages/history/history",
     "pages/history_list/history_list",
-    "pages/domestication/domestication",
     "pages/domestication2/domestication",
-    "pages/word_detail/word_detail",
-    "pages/tutorial/tutorial",
+    "pages/tutorial2/tutorial",
     "pages/about/about"
   ],
   "window": {

@@ -1,0 +1,46 @@
+/* pages/vocabulary/vocabulary.wxss */
+page{background-color:#F7F7F7;height: 100%;}
+
+.page__head {
+  z-index: 100;
+  position:fixed;
+  top:0;
+  width: 750rpx;
+}
+
+.page__body {
+  z-index: -1;
+  margin-top: 100rpx;
+}
+
+.weui-slidecell{
+  margin:8px;
+  background-color:#FFFFFF;
+  border-radius:8px;
+  padding:24px;
+  line-height:1.4;
+  font-size:17px;
+  color:rgba(0,0,0,.9);
+}
+
+.word__card {
+  height: 100%;
+}
+
+#goback-button {
+  width: 750rpx;
+  position: fixed;
+  bottom: 0;
+}
+
+.recite__done {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.recite__done .recite-done-image {
+  width: 400rpx;
+  height: 400rpx;
+}

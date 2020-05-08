@@ -1,6 +1,7 @@
-var base64 = require("../../images/base64")
 const utilTrie = require('../../utils/trie.js');
 const utilWord = require('../../utils/word2.js');
+
+const base64 = require("../../images/base64")
 
 var familiarWords = [];
 var vocabularyTrie = null;
