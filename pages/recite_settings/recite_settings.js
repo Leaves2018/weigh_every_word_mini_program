@@ -8,6 +8,22 @@ Page({
     isDown: false,
     percent: 0,
     nHidden: true,
+    storagepercent: 0,
+    currentSize: 0,
+    limitSize: 0,
+  },
+  onLoad: function () {
+    var that = this;
+    wx.getStorageInfo({
+      success(res) {
+        that.setData({
+          storagepercent: (res.currentSize / res.limitSize)*100,
+          currentSize: res.currentSize,
+          limitSize: res.limitSize - res.currentSize,
+        })
+      }
+    })
+    
   },
   local_to_cloud: function () {
     this.setData({

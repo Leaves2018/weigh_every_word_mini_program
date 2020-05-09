@@ -1,11 +1,10 @@
 <view class="page">
-
   <view class="section section_gap">
-    <!-- <text class="section__title">忘记后强制记忆时间(秒)</text>
+    <text class="section__title">已用缓存{{currentSize}}Kb,剩余可用{{limitSize}}Kb</text>
     <view class="body-view">
-      <slider bindchange="sliderchange" value="5" max="60" show-value/>
+      <progress percent="{{storagepercent}}" show-info stroke-width="14" />
     </view>
-    <view class="divLine"></view> -->
+    <view class="divLine"></view>
     <view>
       <text>清除缓存（包含生词本、熟词本、历史记录）</text>
     <view class="divLine"></view>
