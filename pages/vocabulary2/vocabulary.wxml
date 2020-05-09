@@ -4,7 +4,7 @@
   </view>
   <view wx:if="{{!reciteDone}}" class="page__body">
     <view class="weui-slidecells">
-      <mp-slideview wx:for="{{words}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons" style="margin-bottom: {{(index === words.length - 1) ? '64rpx' : '0rpx'}}">
+      <mp-slideview wx:for="{{wordList}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons" style="margin-bottom: {{(index === wordList.length - 1) ? '64rpx' : '0rpx'}}">
         <view class="weui-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
           {{index+1}}. {{item}}
         </view>
