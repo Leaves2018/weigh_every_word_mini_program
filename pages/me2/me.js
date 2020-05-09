@@ -64,8 +64,8 @@ Component({
       
       // 由于已经使用了全局变量，可以每次动态获取而不是读其他页面缓存
       this.setData({
-        vocabularyWordsLength: app.vocabularyTrie.getAllData().length,
-        familiarWordsLength: app.familiarTrie.getAllData().length,
+        vocabularyWordsLength: app.vocabularyTrie.number,
+        familiarWordsLength: app.familiarTrie.number,
       })
       
     },

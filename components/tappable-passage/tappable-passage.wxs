@@ -1,15 +1,17 @@
 module.exports = {
   // 点击方法：标记所有符合class定位的词
   tap: function(event, ownerInstance) {
-    var text = event.currentTarget.dataset.text;
+    var extra = event.currentTarget.dataset.extra;
+    var text = extra[0];
+    var location = extra[1];
     var instance = ownerInstance.selectAllComponents('.item.' + text);
     for (var i = 0; i < instance.length; i++) {
       instance[i].setStyle({
         "background": "greenyellow",
       })
     }
-    // 触发事件tapword，传递点击的单词信息
-    ownerInstance.triggerEvent('tapword', {text: event.currentTarget.dataset.text})
+    // 触发事件tapword，传递点击的文本数据及位置信息
+    ownerInstance.triggerEvent('tapword', {text: text, location: location})
     return true;
   },
   // 根据逻辑层反馈，重新设置当前单词样式

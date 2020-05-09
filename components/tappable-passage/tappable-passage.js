@@ -1,5 +1,5 @@
-const util = require('./util.js')
-
+const localUtil = require('./util.js')
+const util = require('../../utils/util.js')
 
 Component({
   /**
@@ -70,7 +70,7 @@ Component({
   observers: {
     'passage': function(passage) {
       this.setData({
-        passageFragments: passage.split(/\n+/).map(x => util.splitBomb(x))
+        passageFragments: util.splitPassage(passage).map(para => para.map(sent => localUtil.splitBomb(sent)))
       })
     }
   },

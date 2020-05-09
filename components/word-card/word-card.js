@@ -44,10 +44,10 @@ Component({
    */
   lifetimes: {
     attached: function () {
-      console.log('word-card attached')
+      // console.log('word-card attached')
     },
     detached: function () {
-      console.log('word-card detached')
+      // console.log('word-card detached')
     }
   },
 
@@ -68,7 +68,7 @@ Component({
         })
       } else {  // 如果没有lemma，直接播放一遍音频
         this.data.wordcard.playAudio();
-        console.log("tapShowOriginal audio")
+        // console.log("tapShowOriginal audio")
       }
     },
     /**
@@ -123,14 +123,14 @@ Component({
           // 判断向上滑动还是向下滑动
           if (yOffset < 0) {
             this.triggerEvent("swipeup", myEventDetail);
-            console.log("SwipeUp")
+            // console.log("SwipeUp")
           } else {
-            console.log("SwipeDown")
+            // console.log("SwipeDown")
             this.triggerEvent("swipedown", myEventDetail);
           }
         }
       } else {
-        console.log("滑动时间过短", touchTime);
+        // console.log("滑动时间过短", touchTime);
       }
     },
   },
@@ -161,7 +161,7 @@ Component({
           wordcard: res,
         })
         res.playAudio();
-        console.log("'word' audio")
+        // console.log("'word' audio")
         let lemma = res.getExchange()["0"];
         if (lemma) {
           utilWord.getWord(lemma).then(res2 => {

@@ -1,6 +1,8 @@
 <wxs src="./tappable-passage.wxs" module="wxs" />
 <view class="passage" highlight="{{highlight}}" change:highlight="{{wxs.highlight}}" thisword="{{thisword}}" change:thisword="{{wxs.remarkThisWord}}">
   <view class="paragraph" wx:for="{{passageFragments}}" wx:for-index="para" wx:for-item="paragraph">
-    <view class="item {{item.tag === 'word' ? item.text : item.tag}}" wx:for="{{paragraph}}" data-text="{{item.text}}" bindtap="{{wxs.tap}}">{{item.text}}</view> 
+    <view class="sentence" wx:for="{{paragraph}}" wx:for-index="sent" wx:for-item="sentence">
+      <view class="item {{item.tag === 'word' ? item.text : item.tag}}" wx:for="{{sentence}}" data-extra="{{[item.text, para+'.'+sent]}}" bindtap="{{wxs.tap}}">{{item.text}}</view> 
+    </view>
   </view>
 </view>

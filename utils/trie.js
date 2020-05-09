@@ -114,9 +114,14 @@ class Trie {
     return ans;
   }
 
-  // 删除字符串
+  // 用以统计单词数目，然后调用真正的删除方法
   deleteData(stringData) {
     this.number -= 1;
+    this.deleteDataHelper(stringData);
+  }
+
+  // 删除字符串
+  deleteDataHelper(stringData) {
     if (this.search(stringData)) { // 判断是否存在该单词（字符串）
       for (let i in this.root.children) {
         if (this.delNext(this.root, i, stringData, stringData)) {
@@ -146,7 +151,7 @@ class Trie {
         // 删除叶子节点，利用父节点删除子节点原理
         parent.children.splice(index, 1);
         // 字符串从尾部移除一个字符后，继续遍历删除方法
-        this.deleteData(delStr.substring(0, delStr.length - 1));
+        this.deleteDataHelper(delStr.substring(0, delStr.length - 1));
       } else if (children.length > 0 && stringData.length > 1) { // 既不是叶子节点，也不是最后一个字符，则继续递归查找
         for (let i in children) {
           if (children[i].key == stringData[1]) {
@@ -182,6 +187,7 @@ class Trie {
    */
   getAllData(refresh = false) {
     if (refresh || this.allData.length === 0) {
+      this.allData = []; // 先清空，再重新生成
       for (let i in this.root.children) {
         this.getAllDataHelper(this.root.children[i], [this.root.children[i].key]);
       }
@@ -322,8 +328,11 @@ console.timeEnd("字典树测试时间：")
  */
 class WordTrie extends Trie {
   constructor(key) {
-    super(wx.getStorageSync(key).root);
+    let wordTrieInStorage = wx.getStorageSync(key);
+    super(wordTrieInStorage.root);
     this.key = key;
+    this.number = wordTrieInStorage.number;
+    this.allData = wordTrieInStorage.allData;
   }
   add(words) {
     try {
@@ -344,9 +353,15 @@ class WordTrie extends Trie {
     }
   }
   save() {
+    // 不需要存储allData，每次打开生词本或熟词本都会强制刷新重新生成
+    // 不需要存储key，每次key都是由get方法指定得到的
     wx.setStorage({
       key: this.key,
-      data: this,
+      data: {
+        root: this.root,
+        allData: [],
+        number: this.allData.length, // 校正
+      },
     })
   }
 }

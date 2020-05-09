@@ -1,0 +1,17 @@
+<view class="page__head">
+    <mp-searchbar bindselectresult="selectResult" search="{{search}}" bindfocus="searchFocus" bindblur="searchBlur" searchState="{{searchState}}"></mp-searchbar>
+</view>
+
+<view class="page__body">
+  <view class="alphabet" wx:for="{{initials}}" wx:key="*this" wx:for-index="initialIndex" wx:for-item="initialValue">
+    <view class="initial">{{initialValue}}</view>
+    <view class="words-container">
+      <view class="item" data-position="{{initialIndex}}.{{index}}" wx:for="{{wordList[initialIndex]}}" wx:key="*this" bindtap="showWordCard" style="background-color: {{(initialIndex === initialHighlight && index === indexHighlight) ? 'yellow' : 'white'}};">{{item}}</view>
+    </view>
+  </view>
+</view>
+
+
+<mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButtons" buttons="{{buttons}}">
+  <word-card word="{{thisWord}}"></word-card>
+</mp-dialog>
