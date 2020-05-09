@@ -1,10 +1,17 @@
 /* pages/tutorial2/tutorial.wxss */
 
+
 .paragraph {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   margin: 0rpx 0rpx 50rpx 0rpx;
+}
+
+.sentence {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
 }
 
 .item {
