@@ -39,21 +39,21 @@
     "list": [
       {
         "pagePath": "pages/history_list/history_list",
-        "text": "历史",
-        "iconPath": "images/tabbar_icon_recite_default.png",
-        "selectedIconPath": "images/tabbar_icon_recite_active.png"
+        "text": "档案",
+        "iconPath": "images/history.png",
+        "selectedIconPath": "images/history_green.png"
       },
       {
         "pagePath": "pages/input2/input",
-        "text": "录入",
-        "iconPath": "images/tabbar_icon_input_default.png",
-        "selectedIconPath": "images/tabbar_icon_input_active.png"
+        "text": "添加",
+        "iconPath": "images/add.png",
+        "selectedIconPath": "images/add_green.png"
       },
       {
         "pagePath": "pages/me2/me",
         "text": "我",
-        "iconPath": "images/tabbar_icon_me_default.png",
-        "selectedIconPath": "images/tabbar_icon_me_active.png"
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/me_green.png"
       }
     ]
   }
