@@ -57,10 +57,17 @@ Component({
     },
     onShow: function () {
       // 如果第一次打开直接查看，这里是否会为空？
+      // this.setData({
+      //   vocabularyWordsLength: wx.getStorageSync('vocabularyWordsLength'),
+      //   familiarWordsLength: wx.getStorageSync('familiarWordsLength'),
+      // });
+      
+      // 由于已经使用了全局变量，可以每次动态获取而不是读其他页面缓存
       this.setData({
-        vocabularyWordsLength: wx.getStorageSync('vocabularyWordsLength'),
-        familiarWordsLength: wx.getStorageSync('familiarWordsLength'),
-      });
+        vocabularyWordsLength: app.vocabularyTrie.getAllData().length,
+        familiarWordsLength: app.familiarTrie.getAllData().length,
+      })
+      
     },
     getUserInfo: function (e) {
       console.log(e)
