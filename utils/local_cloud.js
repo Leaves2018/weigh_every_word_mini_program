@@ -73,27 +73,27 @@ const local_to_cloud = () => {
       console.log(res);
     }
   });
-  let aaa = [{ "name": "xx", "value": "小学词汇" }, { "name": "gk", "value": "高中词汇" }, { "name": "cet4", "value": "四级词汇" }, { "name": "cet6", "value": "六级词汇" }, { "name": "ky", "value": "考研词汇" }, { "name": "toefl", "value": "托福词汇" }, { "name": "ielts", "value": "雅思词汇" }];
-  let bbb = JSON.stringify(aaa);
-  fileSystemManager.writeFile({
-    filePath: filePaths + "/lexicon.json",
-    data: bbb,
-    success: res => {
-      console.log("success");
-      wx.cloud.uploadFile({
-        filePath: filePaths + "/lexicon.json",
-        cloudPath: "lexicon/lexicon.json", // 文件路径
-      }).then(res => {
-        // get resource ID
-        console.log(res.fileID)
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-    fail: res => {
-      console.log(res);
-    }
-  });
+  // let aaa = [{"name":"zk","value":"初中词汇"},{"name":"gk","value":"高中词汇"},{"name":"cet4","value":"四级词汇"},{"name":"cet6","value":"六级词汇"},{"name":"ky","value":"考研词汇"},{"name":"toefl","value":"托福词汇"},{"name":"ielts","value":"雅思词汇"},{"name":"gre","value":"GRE词汇"}];
+  // let bbb = JSON.stringify(aaa);
+  // fileSystemManager.writeFile({
+  //   filePath: filePaths + "/lexicon.json",
+  //   data: bbb,
+  //   success: res => {
+  //     console.log("success");
+  //     wx.cloud.uploadFile({
+  //       filePath: filePaths + "/lexicon.json",
+  //       cloudPath: "lexicon/lexicon.json", // 文件路径
+  //     }).then(res => {
+  //       // get resource ID
+  //       console.log(res.fileID)
+  //     }).catch(error => {
+  //       console.log(error)
+  //     })
+  //   },
+  //   fail: res => {
+  //     console.log(res);
+  //   }
+  // });
 }
 
 const cloud_to_local = (passage) => {
