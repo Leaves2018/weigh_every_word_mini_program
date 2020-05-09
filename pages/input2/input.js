@@ -33,9 +33,7 @@ Component({
               title: '是否录入当前剪贴板信息？',
               content: res.data,
               success: function (res1) {
-                if (res1.cancel) {
-                  //点击取消,默认隐藏弹框
-                } else {
+                if (res1.confirm) {
                   //点击确定
                   wx.setStorage({
                     key: 'input_passage_information',

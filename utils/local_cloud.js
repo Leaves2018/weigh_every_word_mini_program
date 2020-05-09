@@ -5,8 +5,7 @@ var filePaths = wx.env.USER_DATA_PATH;
 const fileSystemManager = wx.getFileSystemManager();
 
 const local_to_cloud = () => {
-  var fam_trie = utils_word.getFamiliar(); // 从本地获取熟词库
-  var fam_trie_temp = fam_trie.getAllData();
+  var fam_trie_temp = app.familiarTrie.getAllData();
   var fam_trie_data = fam_trie_temp.join("\n");
   fileSystemManager.writeFile({
     filePath: filePaths + "/" + app.globalData.openid + "_familiar.csv",
@@ -27,8 +26,7 @@ const local_to_cloud = () => {
       console.log(res);
     }
   });
-  var voc_trie = utils_word.getVocabulary(); // 从本地获取熟词库
-  var voc_trie_temp = voc_trie.getAllData();
+  var voc_trie_temp = app.vocabularyTrie.getAllData();
   var voc_trie_data = voc_trie_temp.join("\n");
   fileSystemManager.writeFile({
     filePath: filePaths + "/" + app.globalData.openid + "_vocabulary.csv",
@@ -75,6 +73,27 @@ const local_to_cloud = () => {
       console.log(res);
     }
   });
+  let aaa = [{ "name": "xx", "value": "小学词汇" }, { "name": "gk", "value": "高中词汇" }, { "name": "cet4", "value": "四级词汇" }, { "name": "cet6", "value": "六级词汇" }, { "name": "ky", "value": "考研词汇" }, { "name": "toefl", "value": "托福词汇" }, { "name": "ielts", "value": "雅思词汇" }];
+  let bbb = JSON.stringify(aaa);
+  fileSystemManager.writeFile({
+    filePath: filePaths + "/lexicon.json",
+    data: bbb,
+    success: res => {
+      console.log("success");
+      wx.cloud.uploadFile({
+        filePath: filePaths + "/lexicon.json",
+        cloudPath: "lexicon/lexicon.json", // 文件路径
+      }).then(res => {
+        // get resource ID
+        console.log(res.fileID)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    fail: res => {
+      console.log(res);
+    }
+  });
 }
 
 const cloud_to_local = (passage) => {
@@ -86,7 +105,7 @@ const cloud_to_local = (passage) => {
         encoding: 'utf8',
         success: res => {
           let word_familiar_list = res.data.split("\n");
-          utils_word.appendFamiliar(word_familiar_list);
+          app.familiarTrie.add(word_familiar_list);
         },
         fail: err => {
           console.log('readFile fail', err)
@@ -103,7 +122,7 @@ const cloud_to_local = (passage) => {
         encoding: 'utf8',
         success: res => {
           let word_vocabulary_list = res.data.split("\n");
-          utils_word.appendVocabulary(word_vocabulary_list);
+          app.vocabularyTrie.add(word_vocabulary_list);
         },
         fail: err => {
           console.log('readFile fail', err)

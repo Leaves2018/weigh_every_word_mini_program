@@ -41,10 +41,7 @@ Component({
         title: '提示',
         content: '确认保存修改吗？',
         success: function (res) { 
-          if (res.cancel) {
-            //点击取消,默认隐藏弹框
-          } else {
-            //点击确定
+          if (res.confirm) {
             let historyList = utils_his.getHistoryListFromStorage();
             historyList.deleteHistory(historyuuid);
             that.history = new utils_his.History(that.data.his_body, that.data.his_headline);
