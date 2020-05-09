@@ -94,7 +94,7 @@ class Word2 {
     if (typeof (this.audio) === 'string' || timestamp > this.audio.expired_time) {
       return undefined;
     } else {
-      console.log("In getAudio()," + this.audio.filename)
+      // console.log("In getAudio()," + this.audio.filename)
       // 返回音频地址
       return this.audio.filename;
     }
@@ -104,7 +104,7 @@ class Word2 {
     const innerAudioContext = wx.createInnerAudioContext();
     innerAudioContext.autoplay = false;
     innerAudioContext.onPlay(() => {
-      console.log("开始播放")
+      // console.log("开始播放")
     })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
@@ -119,7 +119,7 @@ class Word2 {
         tts: true,
         content: that._id,
         success: function (res) {
-          console.log("succ tts", res.filename)
+          // console.log("succ tts", res.filename)
           that.audio = res;
           setWord(that);  //  保存音频临时链接等信息
           innerAudioContext.src = res.filename;
@@ -127,7 +127,7 @@ class Word2 {
         }
       })
     } else {
-      console.log("使用临时链接成功")
+      // console.log("使用临时链接成功")
       innerAudioContext.src = tempAudioPath;
       innerAudioContext.play();
     }
