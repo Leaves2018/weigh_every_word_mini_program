@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mp-searchbar": "../../components/searchbar/searchbar",
+    "mp-dialog": "../../components/dialog/dialog",
+    "word-card": "../../components/word-card/word-card"
+  },
+  "navigationBarTitleText": "熟词本"
+}
