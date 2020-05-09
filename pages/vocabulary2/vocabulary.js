@@ -49,7 +49,7 @@ Component({
      */
     onShow: function() {
       this.setData({
-        wordList: app.vocabularyTrie.getAllData(),
+        wordList: app.vocabularyTrie.getAllData(true), // 强制刷新
       })
     },
     /**
