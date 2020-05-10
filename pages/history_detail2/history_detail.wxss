@@ -4,6 +4,32 @@ page {
   padding: 0rpx;
 }
 
+.modify {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  top: 10px;
+  right: 10px;
+}
+
+.headtext{
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.untext {
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  border-radius: 10%;
+  background-color: rgb(252, 164, 0);
+}
+.votext {
+  font-weight: 700;
+  color:rgb(255, 255, 255);
+  border-radius: 10%;
+  background-color:  rgb(42, 211, 0);
+}
+
 .divLine{
  background: #E0E3DA;
  width: 100%;
@@ -22,9 +48,6 @@ page {
   display: flex;
   flex-direction: row;
 }
-.btn{
-  right: 5rpx;
-}
 
 #wordscontainer{
   display: grid;
@@ -40,4 +63,10 @@ page {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.wordsbtn {
+  background-color: rgb(0, 221, 0);
+  color: white;
+  top: 30rpx;
 }

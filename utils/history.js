@@ -43,6 +43,7 @@ class HistoryListItem {
     this.date = history.date;
     this.done = history.done;
     this.plus = history.plus;
+    this.numberOfWords = history.numberOfWords;
   }
 }
 class History {
@@ -56,6 +57,7 @@ class History {
       this.uuid = passage.uuid;
       this.done = passage.done;
       this.plus = passage.plus;
+      this.numberOfWords = passage.numberOfWords;
       this.passageFragments = passage.passageFragments;
       for (let word in passage.words) {
         if (getApp().familiarTrie.search(word)) {
@@ -68,7 +70,7 @@ class History {
       }
       this.words = passage.words;
     } else {
-      this.date = new Date();
+      this.date = utils_util.formatTime(new Date());
       this.uuid = this.uuid();
       this.done = false;
       this.plus = 0;
@@ -94,7 +96,7 @@ class History {
       //分开生词和未知词
       var voc_really = words.filter(x => getApp().vocabularyTrie.search(x)); //生词
       var unknown_words = utils_util.arrSub(voc_temp, voc_really); //未知词
-
+      this.numberOfWords = voc_really.length + unknown_words.length;
       this.words = {};
       for (var element of voc_really) {
         for (var i = 0; i < this.passageFragments.length; i++) {

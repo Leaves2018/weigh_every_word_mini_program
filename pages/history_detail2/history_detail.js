@@ -42,13 +42,34 @@ Component({
       text: "记得"
     }],
     his_headline: '',
+    numberOfUn:0,
+    numberOfVo:0,
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    onLoad: function() {},
+    onLoad: function() {
+      let that = this;
+      // 获取系统信息
+      wx.getSystemInfo({
+        success: function (res) {
+          // 获取可使用窗口宽度
+          let clientHeight = res.windowHeight;
+          // 获取可使用窗口高度
+          let clientWidth = res.windowWidth;
+          // 算出比例
+          let ratio = 750 / clientWidth;
+          // 算出高度(单位rpx)
+          let height = clientHeight * ratio;
+          // 设置高度
+          that.setData({
+            passage_height: height - 280 + "rpx",
+          });
+        }
+      });
+    },
     //将修改存至本地
     onUnload: function() {
       this.history.save(true);
@@ -131,13 +152,17 @@ Component({
       var passage = util.joinPassage(this.history.passageFragments);
       var vocabulary = [];
       var unknown = [];
+      var numberOfUn = 0;
+      var numberOfVo = 0;
       for (let word in this.history.words) {
         switch (this.history.words[word].tag) {
           case 'vo':
             vocabulary.push(word);
+            numberOfVo += 1;
             break;
           case 'un':
             unknown.push(word);
+            numberOfUn += 1;
             break;
         }
       }
@@ -152,6 +177,8 @@ Component({
           style: wxss.vo,
         }],
         his_headline: this.history.headline,
+        numberOfUn: numberOfUn,
+        numberOfVo: numberOfVo,
       })
     },
   }

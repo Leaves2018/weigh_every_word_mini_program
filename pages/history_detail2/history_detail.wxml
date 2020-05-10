@@ -2,19 +2,18 @@
 <view class="page">
   <view class="body-view">
     <view class="title_edit">
-      <text>标题</text>
-      <button class='btn' style="width:40vw" type="default" bindtap="redirectToModify">修改</button>
+      <image class="modify" bindtap="redirectToModify" src="/images/xiugai.svg"></image>
+    </view>
+    <text class="headtext">{{his_headline}}</text>
+    <view class="retext">
+      <text class="untext">未处理</text> <text space="ensp">{{numberOfUn}}     </text> <text class="votext">生词</text>{{numberOfVo}}
     </view>
     <view class="divLine"></view>
-    <text>{{his_headline}}</text>
-    <view class="divLine"></view>
-    <view class="title_edit">
-      <text>正文</text>
-      <button class='btn' style="width:40vw" type="default" bindtap="redirectToRecite"> 背诵 </button>
-    </view>
-    <view class="divLine"></view>
-    <view class="body-view">
+    <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">
     <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord"/>
+    </scroll-view>
+    <view class="title_edit">
+      <button class='wordsbtn' style="width:40vw" type="default" bindtap="redirectToRecite"> 查看所有单词 </button>
     </view>
     <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
       <word-card word="{{dialogContent}}"></word-card>
