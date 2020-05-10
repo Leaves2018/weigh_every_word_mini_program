@@ -81,6 +81,12 @@ Component({
       });
     },
 
+    return: function () {
+      wx.navigateBack({
+        url: '/pages/history_list/history_list',
+      });
+    },
+
     //背诵
     redirectToRecite: function() {
       wx.redirectTo({

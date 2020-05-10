@@ -2,18 +2,19 @@
 <view class="page">
   <view class="body-view">
     <view class="title_edit">
-      <image class="modify" bindtap="redirectToModify" src="/images/xiugai.svg"></image>
+      <image class="modify" bindtap="redirectToModify" src="/images/edit.png"></image>
     </view>
     <text class="headtext">{{his_headline}}</text>
     <view class="retext">
-      <text class="untext">未处理</text> <text space="ensp">{{numberOfUn}}     </text> <text class="votext">生词</text>{{numberOfVo}}
+      <text space="ensp">   .</text><text space="ensp" class="untext"> 未处理 </text> <text space="ensp">{{numberOfUn}}           </text> <text space="ensp" class="votext"> 生词 </text>{{numberOfVo}}
     </view>
     <view class="divLine"></view>
     <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">
     <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord"/>
     </scroll-view>
     <view class="title_edit">
-      <button class='wordsbtn' style="width:40vw" type="default" bindtap="redirectToRecite"> 查看所有单词 </button>
+      <button class='wordsbtn' style="width:30vw" type="default" bindtap="return"> 返回 </button>
+      <button class='wordsbtn' type="default" bindtap="redirectToRecite"> 查看所有单词 </button>
     </view>
     <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
       <word-card word="{{dialogContent}}"></word-card>
