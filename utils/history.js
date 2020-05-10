@@ -177,6 +177,7 @@ const getHistoryFromStorage = uuid => {
 
 
 module.exports = {
+  Word:Word,
   History: History,
   getHistoryFromStorage: getHistoryFromStorage,
   getHistoryListFromStorage: getHistoryListFromStorage,

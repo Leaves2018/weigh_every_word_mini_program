@@ -1,6 +1,5 @@
 <view class="page">
   <view class="page__head">
-  <!-- <button id="test_button" bindtap="tapTestButton">测试按钮</button> -->
   <mp-searchbar bindselectresult="selectResult" search="{{search}}" bindblur="searchBlur" bindfocus="searchFocus" searchState="{{searchState}}"></mp-searchbar>
   </view>
 
