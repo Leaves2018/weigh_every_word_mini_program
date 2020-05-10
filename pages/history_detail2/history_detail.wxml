@@ -6,7 +6,7 @@
     </view>
     <text class="headtext">{{his_headline}}</text>
     <view class="retext">
-      <text space="ensp">   .</text><text space="ensp" class="untext"> 未处理 </text> <text space="ensp">{{numberOfUn}}           </text> <text space="ensp" class="votext"> 生词 </text>{{numberOfVo}}
+      <text space="ensp" class="untext"> 未处理 </text> <text space="ensp">{{numberOfUn}}           </text> <text space="ensp" class="votext"> 生词 </text>{{numberOfVo}}
     </view>
     <view class="divLine"></view>
     <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">

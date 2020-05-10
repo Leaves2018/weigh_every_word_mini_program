@@ -12,6 +12,10 @@ page {
   right: 10px;
 }
 
+.retext {
+  margin-left: 50rpx;
+}
+
 .headtext{
   font-weight: 700;
   font-size: 30px;
