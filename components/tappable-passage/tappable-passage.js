@@ -69,8 +69,17 @@ Component({
 
   observers: {
     'passage': function(passage) {
+      var passageFragmentsMapForClassName = {}; // 为了忽略大小写设置class名称，并且由于视图层不能使用toLowerCase()，在这里计算一个映射
+      let passageFragments = util.splitPassage(passage).map(para => para.map(sent => {
+        let bombRes = localUtil.splitBomb(sent);
+        bombRes.forEach((value, index, array) => {
+          passageFragmentsMapForClassName[value.text] = value.text.toLowerCase();
+        })
+        return bombRes;
+      }));
       this.setData({
-        passageFragments: util.splitPassage(passage).map(para => para.map(sent => localUtil.splitBomb(sent)))
+        passageFragments: passageFragments,
+        passageFragmentsMapForClassName: passageFragmentsMapForClassName,
       })
     }
   },
