@@ -186,7 +186,7 @@ class Trie {
    * refresh为true时，将强制刷新；否则显示上一次转换结果
    */
   getAllData(refresh = false) {
-    if (refresh || this.allData.length === 0) {
+    if (refresh || !this.allData || this.allData.length === 0) {
       this.allData = []; // 先清空，再重新生成
       for (let i in this.root.children) {
         this.getAllDataHelper(this.root.children[i], [this.root.children[i].key]);
@@ -360,7 +360,7 @@ class WordTrie extends Trie {
       data: {
         root: this.root,
         allData: [],
-        number: this.allData.length, // 校正
+        number: this.getAllData().length, // 校正
       },
     })
   }

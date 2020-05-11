@@ -94,7 +94,7 @@ Component({
      * 向左滑动处理方法
      */
     swipeLeft: function() {
-      console.log("swipeLeft in recite2")
+      // console.log("swipeLeft in recite2")
       animation.translateX(-windowWidth).step(); //  向左移出窗口
       animation.translateY(windowHeight).step();
       animation.translateX(0).step(); // 移动到窗口正下方
@@ -111,8 +111,9 @@ Component({
     /**
      * 向右滑动处理方法
      */
-    swipeRight: function() {
+    swipeRight: function(e) {
       console.log("swipeRight in recite2")
+      console.log(e.detail)
       // 动画处理
       animation.translateX(windowWidth).step(); // 向右移出窗口
       animation.translateY(windowHeight).step();

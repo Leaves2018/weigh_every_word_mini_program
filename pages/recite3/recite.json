@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "word-card": "../../components/word-card/word-card",
+    "recycle-view": "../../miniprogram_npm/miniprogram-recycle-view/recycle-view",
+    "recycle-item": "../../miniprogram_npm/miniprogram-recycle-view/recycle-item"
+  },
+  "navigationBarTitleText": "背诵"  
+}

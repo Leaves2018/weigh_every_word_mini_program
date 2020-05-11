@@ -12,6 +12,6 @@
 </view>
 
 
-<mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" bindbuttontap="tapDialogButtons" buttons="{{buttons}}">
+<mp-dialog show="{{dialogShow}}" bindbuttontap="tapDialogButtons" buttons="{{buttons}}">
   <word-card word="{{thisWord}}"></word-card>
 </mp-dialog>

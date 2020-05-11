@@ -1,5 +1,7 @@
 {
   "component": true,
-  "usingComponents": {},
+  "usingComponents": {
+    "recite": "../recite3/recite"
+  },
   "navigationBarTitleText": "帮助"
 }

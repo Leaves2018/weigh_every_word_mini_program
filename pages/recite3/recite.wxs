@@ -1,0 +1,14 @@
+module.exports = {
+  // adjustHeight: function(newValue, oldValue, ownerInstance, instance) {
+  //   if (newValue) {
+  //     // console.log("windowsize: " + JSON.stringify(newValue))
+  //     var wordCardInstances = ownerInstance.selectAllComponents(".word-card-container")
+  //     for (var i = 0; i < wordCardInstances.length; i++) {
+  //       wordCardInstances[i].setStyle({
+  //         "height": Math.floor(newValue.windowHeight * 0.618) + "px",
+  //         "width": Math.floor(newValue.windowWidth * 0.8) + "px"
+  //       })
+  //     }
+  //   }
+  // }
+}

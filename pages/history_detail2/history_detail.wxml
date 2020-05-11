@@ -15,8 +15,10 @@
     <view class="title_edit">
       <button class='wordsbtn' style="width:40vw" type="default" bindtap="redirectToRecite"> 查看所有单词 </button>
     </view>
-    <mp-dialog title="{{dialogTitle}}" show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
-      <word-card word="{{dialogContent}}"></word-card>
+    <mp-dialog show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
+      <!-- <word-card word="{{dialogContent}}"/> -->
+      <word-card word="{{dialogContent}}" detail="{{wordDetail}}" extClass="word-card"></word-card>
     </mp-dialog>
+    <recite show="{{reciteShow}}" history="{{reciteHistory}}" bindmodifymark="modifyMark"/>
   </view>
 </view>

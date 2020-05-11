@@ -51,7 +51,7 @@ const splitWithPunc = (text, re = /[\.\!\?]/) => {
  * level为1时分段->一维数组
  * level为2时分分再分句->二维数组
  */
-const splitPassage = (article, level = 2, paragraphSeparator = /\n/, sentenceSeparator = /[\.|\?|\!\。\？\！][\"\']?/) => {
+const splitPassage = (article, level = 2, paragraphSeparator = /\n+/, sentenceSeparator = /[\.|\?|\!\。\？\！][\"\']?/) => {
   let paragraphs = article.split(paragraphSeparator).filter(s => s && s.trim());
   if (level === 1) return paragraphs;
   let sentences = paragraphs.map(paragraph => splitWithPunc(paragraph, sentenceSeparator))

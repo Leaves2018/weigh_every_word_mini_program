@@ -1,14 +1,40 @@
-<view class="wrapper" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchcancel="touchCancel">
-    <view class="wordcard__tag">「{{wordcardTag}}」</view>
-    <view class="wordcard__id" bindtap="tapShowOriginal">{{wordcard._id}}</view>
-    <view class="wordcard__phonetic">[{{wordcard.phonetic}}]</view>
-    <towxml wx:if="{{showdetail}}" nodes="{{wordcardDetailWXML}}"/>
-    <view class="wordcard__translation">
-      <text wx:for="{{wordcard.translation}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
+<wxs src="./word-card.wxs" module="wxs" />
+<view class="word-card {{extClass}}" bindtouchstart="{{wxs.touchStart}}" bindtouchend="{{wxs.touchEnd}}" bindtouchcancel="{{wxs.touchCancel}}" bindtouchmove="{{wxs.touchMove}}">
+
+  <view wx:if="{{showFront}}" class="front">
+    <image class="play-audio-btn" src='/images/laba.png' bindtap="playAudio" />
+    <image wx:if="{{showTranslation}}" class="ec-switch-btn" src='/images/English.svg' bindtap="ecSwitch" />
+    <image wx:else class="ec-switch-btn" src='/images/zhong.svg' bindtap="ecSwitch" />
+    <text class="wordcard-id" bindtap="flipCard">{{wordcard._id}}</text>
+    <!-- <view class="wordcard-tag">{{wordcardTag}}</view> -->
+    <view class="wordcard-phonetic">{{wordcard.phonetic ? '|' + wordcard.phonetic + '|' : ''}}</view>
+
+    <view wx:if="{{showTranslation}}" class="wordcard-translation">
+      <view wx:for="{{translationKeys}}" class="pos-container {{itemt}}" wx:key="*this" wx:for-index="indext" wx:for-item="itemt">
+        <view class="part-of-speech {{itemt}}">{{itemt}}</view>
+        <text class="wordcard-ec" wx:for="{{wordcard.translation[itemt]}}" wx:key="*this">- {{item}}\n</text>
+      </view>
     </view>
-    <view class="wordcard__definition">
-      <text wx:for="{{wordcard.definition}}" wx:key="*this">({{index+1}}): {{item}}\n</text>
+
+    <view wx:else class="wordcard-definition">
+      <view wx:for="{{definitionKeys}}" class="pos-container {{itemd}}" wx:key="*this" wx:for-index="indexd" wx:for-item="itemd">
+        <view class="part-of-speech {{itemd}}">{{itemd}}</view>
+        <text class="wordcard-ec" wx:for="{{wordcard.definition[itemd]}}" wx:key="*this">- {{item}}\n</text>
+      </view>
     </view>
-  <!-- <image class="modify-button" src='/images/xiugai.svg' bindtap="tapModifyButton"/> -->
-  <slot></slot>
+
+    <!-- <button wx:if="{{hasLemma}}" class="lemma-switch-btn"  bindtap="tapLemmaSwitchButton">{{showLemmaNow ? 'back' : 'lemma'}}</button> -->
+    <block wx:if="{{buttons && buttons.length}}">
+      <view wx:for="{{buttons}}" class="weui-dialog__btn" data-index="{{index}}" bindtap="buttonTap">{{item.text}}</view>
+    </block>
+    <slot></slot>
+  </view>
+
+  <view wx:else class="back">
+    <image class="play-audio-btn" src='/images/laba.png' bindtap="playAudio" />
+    <text class="wordcard-id" bindtap="flipCard">{{wordcard._id}}</text>
+    <text class="wordcard-detail">{{detail}}</text>
+    <!-- <tappable-passage class="wordcard-detail" passage="{{detail}}" thisword="{{word}}"/> -->
+  </view>
+
 </view>

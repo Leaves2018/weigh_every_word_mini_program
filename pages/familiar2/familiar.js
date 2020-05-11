@@ -118,7 +118,6 @@ Component({
       [this.currentInitialIndex, this.currentWordIndex] = e.currentTarget.dataset.position.split('.');
       let _id = this.familiarWordList[this.currentInitialIndex][this.currentWordIndex];
       this.setData({
-        dialogTitle: _id,
         thisWord: _id,
         dialogShow: true
       })

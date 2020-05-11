@@ -42,8 +42,8 @@ Component({
       text: "记得"
     }],
     his_headline: '',
-    numberOfUn:0,
-    numberOfVo:0,
+    numberOfUn: 0,
+    numberOfVo: 0,
   },
 
   /**
@@ -54,7 +54,7 @@ Component({
       let that = this;
       // 获取系统信息
       wx.getSystemInfo({
-        success: function (res) {
+        success: function(res) {
           // 获取可使用窗口宽度
           let clientHeight = res.windowHeight;
           // 获取可使用窗口高度
@@ -83,19 +83,32 @@ Component({
 
     //背诵
     redirectToRecite: function() {
-      wx.redirectTo({
-        url: `/pages/recite2/recite?historyuuid=${this.data.historyuuid}`,
-      });
+      // wx.redirectTo({
+      //   url: `/pages/recite2/recite?historyuuid=${this.data.historyuuid}`,
+      // });
+      console.log("redirectToRecite() is called")
+      this.setData({
+        reciteHistory: this.history,
+        reciteShow: true,
+      })
+    },
+
+    modifyMark: function(e) {
+      console.log("In modifyMark(), " + e);
     },
 
     tapWord: function(e) {
       console.log(e);
       this.deal_word = e.detail.text;
       this.deal_word_location = e.detail.location;
+
+      let [para, sent] = e.detail.location.split('.');
+      let wordDetail = this.history.passageFragments[para][sent];
+
       this.setData({
-        dialogTitle: this.deal_word,
         dialogContent: this.deal_word,
-        dialogShow: true
+        dialogShow: true,
+        wordDetail: wordDetail,
       })
     },
 
@@ -110,7 +123,7 @@ Component({
         case 0:
           if (word === undefined) {
             this.history.words[key] = new utilsHis.Word('vo', location);
-          }else if (word.tag === 'vo') {
+          } else if (word.tag === 'vo') {
             break;
           }
           app.vocabularyTrie.insertData(key);
@@ -118,7 +131,7 @@ Component({
           this.history.words[key].tag = 'vo';
           break;
         case 1:
-          if (word.tag === 'fa') {
+          if (word === undefined || word.tag === 'fa') {
             break;
           } else {
             this.history.plus += 1;

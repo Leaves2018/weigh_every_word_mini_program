@@ -34,18 +34,38 @@ class Word2 {
     this.getExchange();
   }
 
+  reform = (text) => {
+    // console.log(text)
+    var res = {};
+    text = text.split(/\n|\\n/); // 与在console中直接运行表现不一致；这里文本中的\n会被自动转换成\\n，但直接用\\n分割还是有问题（\nn识别不了）
+    // console.log("text="+JSON.stringify(text));
+    text.forEach((value, index, array) => {
+      let re = /\s+/g;
+      // console.log(value);
+      let temp = re.exec(value);
+      // console.log(JSON.stringify(temp))
+      let partOfSpeech = value.substring(0, re.lastIndex).trim();
+      // console.log(partOfSpeech);
+      if (!res[partOfSpeech]) {
+        res[partOfSpeech] = [];
+      }
+      res[partOfSpeech].push(value.substring(re.lastIndex));
+    })
+    return res;
+  }
+
   getDefinition = () => {
     if (typeof(this.definition) === 'string') {
-      this.definition = this.definition.split(/\\n/);
+      this.definition = this.reform(this.definition);
     }
-    return this.definition.filter(s => s && s.trim());
+    return this.definition;
   }
 
   getTranslation = () => {
     if (typeof(this.translation) === 'string') {
-      this.translation = this.translation.split(/\\n/);
+      this.translation = this.reform(this.translation);
     }
-    return this.translation.filter(s => s && s.trim());
+    return this.translation;
   }
 
   getTag = () => {
@@ -148,15 +168,16 @@ const getWord = async (id) => {
     if (typeof (word) === "string") {
       throw id + " is undefined in storage."
     }
+    word = new Word2(word); // 从缓存中取得得数据已经转换过格式，无需再转
   } catch (e) {
     console.log(e);
     await dictionary.where({_id: _.eq(id).or(_.eq(id.toLowerCase()))}).get().then(res => {
-      word = new Word2(res.data[0], true);
+      word = new Word2(res.data[0], true); // 从数据库获得的数据，部分字段需要转换格式
       setWord(word);
     }).catch(reason => {
       console.warn(reason);
       console.warn(`Fail to get word '${id}' from cloud database lexicon.`)
-      word = new Word2({ _id: id });
+      word = new Word2({ _id: id });  // 找不到，占位用，无需转换格式
     })
   }
   return word;
@@ -180,131 +201,133 @@ const setWord = (word) => {
 
 
 
-/**
- * 从本地缓存中获取熟词树
- * 如果缓存中没有，则会得到getTrieFromStorage()创建的一棵新树
- */
-const getFamiliar = () => {
-    var familiarTrie = utilTrie.getTrieFromStorage('familiar_list');
-}
 
-/**
- * 保存熟词树至缓存
- * 风险：如果传入参数familiar出错，可能导致数据丢失
- */
-const setFamiliar = (familiar) => {
-  utilTrie.setTrieInStorage('familiar_list', familiar);
-}
 
-const saveFamiliar = () => {
-  utilTrie.setTrieInStorage('familiar_list', getApp().vocabularyTrie);
-}
+// /**
+//  * 从本地缓存中获取熟词树
+//  * 如果缓存中没有，则会得到getTrieFromStorage()创建的一棵新树
+//  */
+// const getFamiliar = () => {
+//     var familiarTrie = utilTrie.getTrieFromStorage('familiar_list');
+// }
 
-/**
- * 将字符串数组类型变量挨个导入familiarTrie中，并保存至本地缓存
- */
-const appendFamiliar = (familiarWords) => {
-  if (familiarWords.length > 0) {
-    var familiarTrie = getFamiliar();
-    familiarWords.forEach(value => {
-      familiarTrie.insertData(value);
-    })
-    setFamiliar(familiarTrie);
-  }
-}
+// /**
+//  * 保存熟词树至缓存
+//  * 风险：如果传入参数familiar出错，可能导致数据丢失
+//  */
+// const setFamiliar = (familiar) => {
+//   utilTrie.setTrieInStorage('familiar_list', familiar);
+// }
 
-/**
- * 从熟词本中删去生词
- * 命名delete后是“删什么”而不是“从哪删”
- * 输入应为字符串数组类型
- */
-const deleteVocabulary = (vocabularyWords) => {
-  if (vocabularyWords.length > 0) {
-    var familiarTrie = getFamiliar();
-    vocabularyWords.forEach(value => {
-      familiarTrie.deleteData(value);
-    })
-    setFamiliar(familiarTrie);
-  }
-}
+// const saveFamiliar = () => {
+//   utilTrie.setTrieInStorage('familiar_list', getApp().vocabularyTrie);
+// }
 
-/**
- * 从本地缓存获取生词树
- */
-const getVocabulary = () => {
-  return utilTrie.getTrieFromStorage('vocabulary_list');
-}
+// /**
+//  * 将字符串数组类型变量挨个导入familiarTrie中，并保存至本地缓存
+//  */
+// const appendFamiliar = (familiarWords) => {
+//   if (familiarWords.length > 0) {
+//     var familiarTrie = getFamiliar();
+//     familiarWords.forEach(value => {
+//       familiarTrie.insertData(value);
+//     })
+//     setFamiliar(familiarTrie);
+//   }
+// }
 
-/**
- * 保存生词树至本地缓存
- * 风险：如果传入参数vocabulary出错，可能导致数据丢失
- */
-const setVocabulary = (vocabulary) => {
-  utilTrie.setTrieInStorage('vocabulary_list', vocabulary);
-}
+// /**
+//  * 从熟词本中删去生词
+//  * 命名delete后是“删什么”而不是“从哪删”
+//  * 输入应为字符串数组类型
+//  */
+// const deleteVocabulary = (vocabularyWords) => {
+//   if (vocabularyWords.length > 0) {
+//     var familiarTrie = getFamiliar();
+//     vocabularyWords.forEach(value => {
+//       familiarTrie.deleteData(value);
+//     })
+//     setFamiliar(familiarTrie);
+//   }
+// }
 
-const saveVocabulary = () => {
-  utilTrie.setTrieInStorage('vocabulary_list', getApp().vocabularyTrie);
-}
+// /**
+//  * 从本地缓存获取生词树
+//  */
+// const getVocabulary = () => {
+//   return utilTrie.getTrieFromStorage('vocabulary_list');
+// }
 
-const appendVocabulary = (vocabulary_words) => {
-  if (vocabulary_words.length === 0) {
-    return;
-  }
-  var vocabulary_trie = getVocabulary();
-  vocabulary_words.map(word => {
-    vocabulary_trie.insertData(word);
-  })
-  setVocabulary(vocabulary_trie);
-}
+// /**
+//  * 保存生词树至本地缓存
+//  * 风险：如果传入参数vocabulary出错，可能导致数据丢失
+//  */
+// const setVocabulary = (vocabulary) => {
+//   utilTrie.setTrieInStorage('vocabulary_list', vocabulary);
+// }
 
-const deleteFamiliar = (familiar_words) => {
-  if (familiar_words.length === 0) {
-    return;
-  }
-  var vocabulary_trie = getVocabulary();
-  familiar_words.map(word => {
-    vocabulary_trie.deleteData(word);
-  })
-  setVocabulary(vocabulary_trie);
-}
+// const saveVocabulary = () => {
+//   utilTrie.setTrieInStorage('vocabulary_list', getApp().vocabularyTrie);
+// }
 
-const deleteVocabularyFromVocabularyTrie = (vocabulary_words) => {
-  if (vocabulary_words.length === 0) {
-    return;
-  }
-  var vocabulary_trie = getVocabulary();
-  vocabulary_words.map(word => {
-    vocabulary_trie.deleteData(word);
-  })
-  setVocabulary(vocabulary_trie);
-}
+// const appendVocabulary = (vocabulary_words) => {
+//   if (vocabulary_words.length === 0) {
+//     return;
+//   }
+//   var vocabulary_trie = getVocabulary();
+//   vocabulary_words.map(word => {
+//     vocabulary_trie.insertData(word);
+//   })
+//   setVocabulary(vocabulary_trie);
+// }
 
-const deleteFamiliarFromFamiliarTrie = (familiar_words) => {
-  if (familiar_words.length === 0) {
-    return;
-  }
-  var familiar_trie = getFamiliar();
-  familiar_words.map(word => {
-    familiar_trie.deleteData(word);
-  })
-  setFamiliar(familiar_trie);
-}
+// const deleteFamiliar = (familiar_words) => {
+//   if (familiar_words.length === 0) {
+//     return;
+//   }
+//   var vocabulary_trie = getVocabulary();
+//   familiar_words.map(word => {
+//     vocabulary_trie.deleteData(word);
+//   })
+//   setVocabulary(vocabulary_trie);
+// }
+
+// const deleteVocabularyFromVocabularyTrie = (vocabulary_words) => {
+//   if (vocabulary_words.length === 0) {
+//     return;
+//   }
+//   var vocabulary_trie = getVocabulary();
+//   vocabulary_words.map(word => {
+//     vocabulary_trie.deleteData(word);
+//   })
+//   setVocabulary(vocabulary_trie);
+// }
+
+// const deleteFamiliarFromFamiliarTrie = (familiar_words) => {
+//   if (familiar_words.length === 0) {
+//     return;
+//   }
+//   var familiar_trie = getFamiliar();
+//   familiar_words.map(word => {
+//     familiar_trie.deleteData(word);
+//   })
+//   setFamiliar(familiar_trie);
+// }
 
 module.exports = {
   Word: Word2,
   getWord: getWord,
   setWord: setWord,
-  getFamiliar: getFamiliar,
+  // getFamiliar: getFamiliar,
   // setFamiliar: setFamiliar,
-  saveFamiliar: saveFamiliar,
-  appendFamiliar: appendFamiliar,
-  deleteFamiliar: deleteFamiliar,
-  getVocabulary: getVocabulary,
+  // saveFamiliar: saveFamiliar,
+  // appendFamiliar: appendFamiliar,
+  // deleteFamiliar: deleteFamiliar,
+  // getVocabulary: getVocabulary,
   // setVocabulary: setVocabulary,
-  saveVocabulary: saveVocabulary,
-  appendVocabulary: appendVocabulary,
-  deleteVocabulary: deleteVocabulary,
-  deleteVocabularyFromVocabularyTrie: deleteVocabularyFromVocabularyTrie,
-  deleteFamiliarFromFamiliarTrie: deleteFamiliarFromFamiliarTrie,
+  // saveVocabulary: saveVocabulary,
+  // appendVocabulary: appendVocabulary,
+  // deleteVocabulary: deleteVocabulary,
+  // deleteVocabularyFromVocabularyTrie: deleteVocabularyFromVocabularyTrie,
+  // deleteFamiliarFromFamiliarTrie: deleteFamiliarFromFamiliarTrie,
 } 

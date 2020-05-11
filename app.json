@@ -40,20 +40,20 @@
       {
         "pagePath": "pages/history_list/history_list",
         "text": "档案",
-        "iconPath": "images/history.png",
-        "selectedIconPath": "images/history_green.png"
+        "iconPath": "images/history_off.png",
+        "selectedIconPath": "images/history_on.png"
       },
       {
         "pagePath": "pages/input2/input",
         "text": "添加",
-        "iconPath": "images/add.png",
-        "selectedIconPath": "images/add_green.png"
+        "iconPath": "images/add_off.png",
+        "selectedIconPath": "images/add_on.png"
       },
       {
         "pagePath": "pages/me2/me",
         "text": "我",
-        "iconPath": "images/me.png",
-        "selectedIconPath": "images/me_green.png"
+        "iconPath": "images/me_off.png",
+        "selectedIconPath": "images/me_on.png"
       }
     ]
   }

@@ -43,7 +43,7 @@
 
     <mp-cells title="其他">
       <mp-cell link url="/pages/tutorial2/tutorial" value="使用教程"></mp-cell>
-      <mp-cell link url="/pages/about/about" value="关于"></mp-cell>
+      <mp-cell link url="/pages/about/about" value="测试"></mp-cell>
     </mp-cells>
 
   </view>
