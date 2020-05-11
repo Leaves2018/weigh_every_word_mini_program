@@ -1,0 +1,14 @@
+<wxs src="./word-card.wxs" module="wxs" />
+<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}"></view>
+<view wx:if="{{show}}" bindtap="close" class="weui-dialog__wrp {{extClass}}">
+  <view class="weui-dialog" catchtap="stopEvent">
+    <view class="weui-dialog__bd">
+      <word-card word="{{word}}" detail="{{detail}}" autoplayAudio="{{autoplayAudio}}" showButtons="{{false}}"></word-card>
+    </view>
+
+    <view class="bottom">
+      <view class="btn forget" data-info="{{[0, word]}}" bindtap="{{wxs.bottomButtonTap}}">忘记</view>
+      <view class="btn remember" data-info="{{[1, word]}}" bindtap="{{wxs.bottomButtonTap}}">记得</view>
+    </view>
+  </view>
+</view>
