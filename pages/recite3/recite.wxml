@@ -2,11 +2,11 @@
 
 <view wx:if="{{show}}" class="container" bindtap="close">
   <view class="weui-dialog" catchtap="stopEvent">
-    <recycle-view batch="{{batchSetRecycleData}}" id="wordCardRrecycleId" height="{{recycleViewHeight}}">
+    <recycle-view batch="{{batchSetRecycleData}}" id="wordCardRrecycleId" height="{{recycleViewHeight}}" width="{{recycleViewWidth}}">
       <!-- <view slot="before">长列表前面的内容</view> -->
       <recycle-item wx:for="{{wordCardList}}" wx:key="key">
         <view class="word-card-container item{{index}}" style="height: {{wordCardHeight}}; width: {{wordCardWidth}};">
-          <word-card word="{{item.key}}" detail="{{history.passageFragments[item.loc[0]][item.loc[1]]}}" autoplayaudio="{{false}}" showButtons="{{true}}" bindbuttontap="buttonTap"/>
+          <word-card word="{{item.key}}" detail="{{history.passageFragments[item.loc[0]][item.loc[1]]}}" autoplayAudio="{{false}}" showButtons="{{true}}" bindbuttontap="buttonTap"/>
         </view>
       </recycle-item>
       <!-- <view slot="after">长列表后面的内容</view> -->

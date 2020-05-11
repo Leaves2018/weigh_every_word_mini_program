@@ -55,6 +55,7 @@ Component({
         wordCardWidth: wordCardWidth + "px",
         wordCardHeight: wordCardHeight + "px",
         recycleViewHeight: app.globalData.windowHeight,
+        recycleViewWidth: app.globalData.windowWidth * 0.8,
       })
       var ctx = createRecycleContext({
         id: 'wordCardRrecycleId',
@@ -72,8 +73,8 @@ Component({
    */
   methods: {
     close: function close() {
-      var data = this.data;
-      if (!data.maskClosable) return;
+      console.log("In recite3, close() is called.")
+      if (!this.data.maskClosable) return;
       this.setData({
         show: false
       });
@@ -82,13 +83,15 @@ Component({
     stopEvent: function stopEvent() { },
     buttonTap: function(e) {
       console.log(e);
+      this.triggerEvent("buttontap", e.detail, {}); // 继续触发事件，向上冒泡
     },
   },
   /**
    * 数据监听器
    */
   observers: {
-    'history': function(history) {
+    'show': function(show) {
+      let history = this.data.history;
       if (history) {
         var wordCardList = [];
         for (let key in history.words) {
