@@ -6,6 +6,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    maskClosable: {
+      type: Boolean,
+      value: true
+    },
+    mask: {
+      type: Boolean,
+      value: true
+    },
     show: {
       type: Boolean,
       value: false,
@@ -27,16 +35,11 @@ Component({
    * 组件的初始数据
    */
   data: {
-    // wordCardDisplayQueue: [{
-    //   _id: "weigh",
-    //   detail: "This is the test of weigh's detail."
-    // }, {
-    //   _id: "every",
-    //   detail: "This is the test of every's detail."
-    // }, {
-    //   _id: "word",
-    //   detail: "This is the test of word's detail."
-    // }],
+    buttons: [{
+      text: "忘了"
+    }, {
+      text: "记得"
+    }],
   },
 
   lifetimes: {
@@ -45,19 +48,13 @@ Component({
      */
     attached: function() {
       console.log("recite component is attached")
-      // var that = this;
-      // wx.getSystemInfo({
-      //   success: function(res) {
-      //     that.setData({
-      //       windowsize: res,
-      //     })
-      //   },
-      // })
+
       let wordCardWidth = app.globalData.windowWidth * 0.8;
       let wordCardHeight = app.globalData.windowHeight * 0.618;
       this.setData({
         wordCardWidth: wordCardWidth + "px",
         wordCardHeight: wordCardHeight + "px",
+        recycleViewHeight: app.globalData.windowHeight,
       })
       var ctx = createRecycleContext({
         id: 'wordCardRrecycleId',
@@ -74,8 +71,18 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
-
+    close: function close() {
+      var data = this.data;
+      if (!data.maskClosable) return;
+      this.setData({
+        show: false
+      });
+      this.triggerEvent('close', {}, {});
+    },
+    stopEvent: function stopEvent() { },
+    buttonTap: function(e) {
+      console.log(e);
+    },
   },
   /**
    * 数据监听器

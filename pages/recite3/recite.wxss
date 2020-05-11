@@ -1,8 +1,8 @@
 /* pages/recite3/recite.wxss */
 
-.background-mask {
+.weui-mask {
   position: fixed;
-  z-index: 3000;
+  z-index: 1000;
   top: 0;
   right: 0;
   left: 0;
@@ -10,13 +10,22 @@
   background: rgba(0, 0, 0, 0.6);
 }
 
+.weui-mask_transparent {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
 .container {
   position: fixed;
   z-index: 5000;
-  top: 16px;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
+  top: 0rpx;
+  bottom: 0rpx;
+  left: 0rpx;
+  right: 0rpx;
   text-align: center;
   font-size: 0;
   display: -webkit-box;
@@ -32,7 +41,30 @@
 .word-card-container {
   margin-bottom: 25px;
   background-color: white;
-  border-width: 1px;
+  border-width: 0px;
   border-style: solid;
   border-radius: 15px;
+}
+
+.weui-mask.weui-mask_hidden {
+  opacity: 0;
+  transform: scale3d(1, 1, 0);
+}
+
+.weui-mask {
+  opacity: 1;
+  transform: scale3d(1, 1, 1);
+  transition: all 0.3s ease-in;
+}
+
+.weui-dialog.weui-dialog_hidden {
+  opacity: 0;
+  transform: scale3d(1, 1, 0);
+}
+
+.weui-dialog {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  transition: all 0.3s ease-in;
 }

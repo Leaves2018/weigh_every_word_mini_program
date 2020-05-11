@@ -25,6 +25,10 @@ Component({
     autoplayaudio: {
       type: Boolean,
       value: true,
+    },
+    showButtons: {
+      type: Boolean,
+      value: false,
     }
   },
 
@@ -51,24 +55,9 @@ Component({
    */
   lifetimes: {
     attached: function() {
-      this.setData({
-        wordCardHeight: app.globalData.windowHeight * 0.618,
-      })
-      // console.log('word-card attached')
-      // let wordCardHeight = Math.floor(app.globalData.windowHeight * 0.618);
-      // const query = wx.createSelectorQuery();
-      // query.select('#wordcard-id')
-      // query.select('#wordcard-phonetic')
-      // query.select('#lemma-switch-btn')
-      // query.exec(res => {
-      //   console.log(JSON.stringify(res));
-      //   let remainingHeight = Math.floor(wordCardHeight - (res[0].bottom - res[0].top) - (res[1].bottom - res[1].top) - (res[2].bottom - res[2].top));
-      //   this.setData({
-      //     wordCardHeight: wordCardHeight + "px",
-      //     tndHeight: remainingHeight + "px",
-      //   })
+      // this.setData({
+      //   wordCardHeight: app.globalData.windowHeight * 0.618,
       // })
-
     },
     detached: function() {
       // console.log('word-card detached')
@@ -118,67 +107,41 @@ Component({
     flipCard: function() {
       var that = this;
       this.animate('.word-card', [{
-        opacity: 1.0,
-        rotateX: 0
-      },
+          opacity: 1.0
+        },
         {
           opacity: 0.5,
-          rotateX: 45
         },
         {
           opacity: 0.0,
-          rotateX: 90
-        }], 300, function() {
-          that.setData({
-            showFront: !this.data.showFront,
-          });
-          that.animate('.word-card', [{
-            opacity: 0.0,
-            rotateX: -90
-          },{
-            opacity: 0.5,
-            rotateX: -45,
-          },{
-            opacity: 1.0,
-            rotateX: 0,
-          }], 300, function() {
-            that.clearAnimation('.wordcard', {
-              opacity: true,
-              rotate: true
-            }, function () {
-              console.log("清除了.wordcard上的opacity和rotate属性")
-            })
-          }.bind(that))
-        }.bind(this))
-        
-      // this.animate('.word-card', [{
-      //     opacity: 1.0,
-      //     rotateX: 0
-      //   },
-      //   {
-      //     opacity: 0.5,
-      //     rotateX: 90
-      //   },
-      //   {
-      //     opacity: 0.0,
-      //     rotateX: 180
-      //   },
-      //   {
-      //     opacity: 0.5,
-      //     rotateX: 270
-      //   },
-      //   {
-      //     opacity: 1.0,
-      //     rotateX: 360
-      //   },
-      // ], 1000, function() {
-      //   this.clearAnimation('.wordcard', {
-      //     opacity: true,
-      //     rotate: true
-      //   }, function() {
-      //     console.log("清除了.wordcard上的opacity和rotate属性")
-      //   })
-      // }.bind(this))
+        }
+      ], 500, function() {
+        that.setData({
+          showFront: !this.data.showFront,
+        });
+        that.animate('.word-card', [{
+          opacity: 0.0,
+        }, {
+          opacity: 0.5,
+        }, {
+          opacity: 1.0,
+        }], 500, function() {
+          that.clearAnimation('.wordcard', {
+            opacity: true,
+            rotate: true
+          }, function() {
+            console.log("清除了.wordcard上的opacity和rotate属性")
+          })
+        }.bind(that))
+      }.bind(this))
+    },
+    /**
+     * 按钮点击方法
+     */
+    buttonTap: function buttonTap(e) {
+      var index = e.currentTarget.dataset.index;
+
+      this.triggerEvent('buttontap', { index: index, item: this.data.buttons[index] }, {});
     },
     /**
      * 点击方法：单词修改方法

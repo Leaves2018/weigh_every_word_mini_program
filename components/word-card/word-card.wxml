@@ -22,19 +22,17 @@
         <text class="wordcard-ec" wx:for="{{wordcard.definition[itemd]}}" wx:key="*this">- {{item}}\n</text>
       </view>
     </view>
-
     <!-- <button wx:if="{{hasLemma}}" class="lemma-switch-btn"  bindtap="tapLemmaSwitchButton">{{showLemmaNow ? 'back' : 'lemma'}}</button> -->
-    <block wx:if="{{buttons && buttons.length}}">
-      <view wx:for="{{buttons}}" class="weui-dialog__btn" data-index="{{index}}" bindtap="buttonTap">{{item.text}}</view>
-    </block>
-    <slot></slot>
+    <view class="bottom" wx:if="{{showButtons}}">
+      <view class="btn forget" data-index="0" bindtap="{{wxs.bottomButtonTap}}">忘记</view>
+      <view class="btn remember" data-index="1" bindtap="{{wxs.bottomButtonTap}}">记得</view>
+    </view>
   </view>
 
   <view wx:else class="back">
     <image class="play-audio-btn" src='/images/laba.png' bindtap="playAudio" />
     <text class="wordcard-id" bindtap="flipCard">{{wordcard._id}}</text>
     <text class="wordcard-detail">{{detail}}</text>
-    <!-- <tappable-passage class="wordcard-detail" passage="{{detail}}" thisword="{{word}}"/> -->
   </view>
 
 </view>

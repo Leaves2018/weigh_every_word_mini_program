@@ -1,19 +1,15 @@
-<!-- <wxs src="./recite.wxs" module="wxs" /> -->
-<!-- <view class="background-mask"/> -->
-<!-- <view wx:if="{{show}}" class="container" windowsize="{{windowsize}}" change:windowsize="{{wxs.adjustHeight}}">
-  <view wx:for="{{wordCardDisplayQueue}}" class="word-card-container item{{index}}">
-    <word-card word="{{item.key}}" detail="{{history.passageFragments[item.loc[0]][item.loc[1]]}}" autoplayaudio="{{false}}"/>
-  </view>
-</view> -->
+<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}"></view>
 
-<view wx:if="{{show}}" class="container">
-  <recycle-view batch="{{batchSetRecycleData}}" id="wordCardRrecycleId">
-    <!-- <view slot="before">长列表前面的内容</view> -->
-    <recycle-item wx:for="{{wordCardList}}" wx:key="key" >
-    <view class="word-card-container item{{index}}" style="height: {{wordCardHeight}}; width: {{wordCardWidth}};">
-      <word-card word="{{item.key}}" detail="{{history.passageFragments[item.loc[0]][item.loc[1]]}}" autoplayaudio="{{false}}" />
-    </view>
-    </recycle-item>
-    <!-- <view slot="after">长列表后面的内容</view> -->
-  </recycle-view>
+<view wx:if="{{show}}" class="container" bindtap="close">
+  <view class="weui-dialog" catchtap="stopEvent">
+    <recycle-view batch="{{batchSetRecycleData}}" id="wordCardRrecycleId" height="{{recycleViewHeight}}">
+      <!-- <view slot="before">长列表前面的内容</view> -->
+      <recycle-item wx:for="{{wordCardList}}" wx:key="key">
+        <view class="word-card-container item{{index}}" style="height: {{wordCardHeight}}; width: {{wordCardWidth}};">
+          <word-card word="{{item.key}}" detail="{{history.passageFragments[item.loc[0]][item.loc[1]]}}" autoplayaudio="{{false}}" showButtons="{{true}}" bindbuttontap="buttonTap"/>
+        </view>
+      </recycle-item>
+      <!-- <view slot="after">长列表后面的内容</view> -->
+    </recycle-view>
+  </view>
 </view>

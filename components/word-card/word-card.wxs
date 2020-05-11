@@ -6,10 +6,10 @@ var startY = 0;
 // var startTime = 0;
 
 module.exports = {
-  // buttonTap: function(event, ownerInstance) {
-  //   var index = event.currentTarget.dataset.index;
-  //   ownerInstance.triggerEvent('buttontap', { index: index}, {});
-  // },
+  bottomButtonTap: function(event, ownerInstance) {
+    var index = event.currentTarget.dataset.index;
+    ownerInstance.triggerEvent('buttontap', {index: index}, {});
+  },
   touchMove: function(event, ownerInstance) {
     // console.log(JSON.stringify(event));
   },
