@@ -16,6 +16,17 @@ page {
   margin-top: 100rpx;
 }
 
+.headtext{
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.plus{
+  color: rgb(42, 211, 0);
+  font-weight: 700;
+  font-size: 20px;
+}
+
 .history-slidecell {
   margin:8px;
   background-color:#FFFFFF;
