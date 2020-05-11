@@ -7,8 +7,10 @@ var startY = 0;
 
 module.exports = {
   bottomButtonTap: function(event, ownerInstance) {
-    var index = event.currentTarget.dataset.index;
-    ownerInstance.triggerEvent('buttontap', {index: index}, {});
+    var info = event.currentTarget.dataset.info;
+    var index = info[0];
+    var _id = info[1];
+    ownerInstance.triggerEvent('buttontap', {index: index, _id: _id}, {});
   },
   touchMove: function(event, ownerInstance) {
     // console.log(JSON.stringify(event));
