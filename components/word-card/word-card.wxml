@@ -24,8 +24,8 @@
     </view>
     <!-- <button wx:if="{{hasLemma}}" class="lemma-switch-btn"  bindtap="tapLemmaSwitchButton">{{showLemmaNow ? 'back' : 'lemma'}}</button> -->
     <view class="bottom" wx:if="{{showButtons}}">
-      <view class="btn forget" data-index="0" bindtap="{{wxs.bottomButtonTap}}">忘记</view>
-      <view class="btn remember" data-index="1" bindtap="{{wxs.bottomButtonTap}}">记得</view>
+      <view class="btn forget" data-info="{{[0, wordcard._id]}}" bindtap="{{wxs.bottomButtonTap}}">忘记</view>
+      <view class="btn remember" data-info="{{[1, wordcard._id]}}" bindtap="{{wxs.bottomButtonTap}}">记得</view>
     </view>
   </view>
 
