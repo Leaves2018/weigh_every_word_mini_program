@@ -2,7 +2,7 @@
   "usingComponents": {
     "mp-dialog": "../../components/dialog/dialog",
     "towxml": "/towxml/towxml",
-    "word-card": "../../components/word-card/word-card",
+    "word-card-dialog": "../../components/word-card/word-card-dialog",
     "tappable-passage": "../../components/tappable-passage/tappable-passage",
     "mp-halfScreenDialog": "../../components/half-screen-dialog/half-screen-dialog",
     "recite": "../recite3/recite"
