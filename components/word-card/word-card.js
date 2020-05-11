@@ -22,7 +22,7 @@ Component({
       type: String,
       value: "",
     },
-    autoplayaudio: {
+    autoplayAudio: {
       type: Boolean,
       value: true,
     },
@@ -246,7 +246,7 @@ Component({
             }
           },
         })
-        if (this.data.autoplayaudio) {
+        if (this.data.autoplayAudio) {
           this.original.playAudio();
         }
         let lemmaID = this.original.getExchange()["0"];
