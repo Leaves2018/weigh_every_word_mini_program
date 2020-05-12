@@ -20,6 +20,12 @@ page {
   font-weight: 700;
   font-size: 20px;
 }
+.divLine{
+ background: #E0E3DA;
+ width: 100%;
+ height: 5rpx;
+}
+
 
 .plus{
   color: rgb(42, 211, 0);

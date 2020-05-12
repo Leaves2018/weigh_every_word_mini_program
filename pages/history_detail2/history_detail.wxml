@@ -1,9 +1,7 @@
 <!--pages/history_detail2/history_detail.wxml-->
 <view class="page">
   <view class="body-view">
-    <view class="title_edit">
-      <image class="modify" bindtap="redirectToModify" src="/images/edit.png"></image>
-    </view>
+    <image class="modify" bindtap="redirectToModify" src="/images/edit.png"></image>
     <text class="headtext">{{his_headline}}</text>
     <view class="retext">
       <text space="ensp" class="untext"> 未处理 </text> <text space="ensp">{{numberOfUn}}           </text> <text space="ensp" class="votext"> 生词 </text>{{numberOfVo}}
@@ -12,8 +10,8 @@
     <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">
     <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord"/>
     </scroll-view>
-    <view class="title_edit">
-      <button class='wordsbtn' style="width:30vw" type="default" bindtap="return"> 返回 </button>
+    <view class="button_edit">
+      <button class='returnbtn' style="width:30vw" type="default" bindtap="return"> 返回 </button>
       <button class='wordsbtn' type="default" bindtap="redirectToRecite"> 查看所有单词 </button>
     </view>
     <!-- <mp-dialog show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
