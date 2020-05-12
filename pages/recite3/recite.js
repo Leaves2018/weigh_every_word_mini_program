@@ -65,6 +65,7 @@ Component({
      */
     detached: function() {
       console.log("recite component is detached");
+      // 离开页面时销毁ctx(可能没有必要手动调用)
       if (this.ctx) this.ctx.destroy();
     }
   },
@@ -83,6 +84,16 @@ Component({
     stopEvent: function stopEvent() {},
     buttonTap: function(e) {
       console.log(e);
+      // 滑动到下一个卡片位置（下一张卡片上边缘与屏幕上边缘平齐）
+      // let nextIndex = Math.floor(this.ctx.getScrollTop() / parseInt(this.data.wordCardHeight)) + 1;
+      // console.log("nextIndex="+nextIndex)
+      // this.setData({
+      //   scrollToIndex: nextIndex,
+      // })
+      // 滑动一张卡片高度的距离（包括卡片的下边距）
+      this.setData({
+        scrollTop: this.ctx.getScrollTop() + parseInt(this.data.wordCardHeight) + 25,
+      })
       this.triggerEvent("buttontap", e.detail, {}); // 继续触发事件，向上冒泡
     },
   },

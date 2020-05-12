@@ -2,7 +2,7 @@
 
 <view class="container" bindtap="close" style="height: {{ show ? recycleViewHeight + 'px': 0}}">
   <view class="weui-dialog" catchtap="stopEvent">
-    <recycle-view batch="{{batchSetRecycleData}}" id="wordCardRrecycleId" height="{{ show ? recycleViewHeight : 0}}" width="{{recycleViewWidth}}">
+    <recycle-view batch="{{batchSetRecycleData}}" id="wordCardRrecycleId" height="{{ show ? recycleViewHeight : 0}}" width="{{recycleViewWidth}}" scrollTop="{{scrollTop}}" scrollWithAnimation="{{true}}" placeholderImage='/images/kongkongruye.svg'>
       <!-- <view slot="before">长列表前面的内容</view> -->
       <recycle-item wx:for="{{wordCardList}}" wx:key="key">
         <view class="word-card-container item{{index}}" style="height: {{wordCardHeight}}; width: {{wordCardWidth}};">
