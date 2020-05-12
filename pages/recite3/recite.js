@@ -91,22 +91,25 @@ Component({
    */
   observers: {
     'show': function(show) {
-      let history = this.data.history;
-      if (history) {
-        var wordCardList = [];
-        for (let key in history.words) {
-          let word = history.words[key];
-          if (word.tag !== 'fa') {
-            wordCardList.push({
-              key: key,
-              tag: word.tag,
-              loc: word.location.split('.'),
-            })
+      console.log('show=' + JSON.stringify(show))
+      if (show) {
+        let history = this.data.history;
+        if (history) {
+          var wordCardList = [];
+          for (let key in history.words) {
+            let word = history.words[key];
+            if (word.tag !== 'fa') {
+              wordCardList.push({
+                key: key,
+                tag: word.tag,
+                loc: word.location.split('.'),
+              })
+            }
           }
+          this.setData({
+            wordCardList: wordCardList,
+          })
         }
-        this.setData({
-          wordCardList: wordCardList,
-        })
       }
     }
   }
