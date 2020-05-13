@@ -129,16 +129,23 @@ Component({
             this.history.words[key] = new utilsHis.Word('vo', this.deal_word_location);
           } else if (word.tag === 'vo') {
             break;
+          } else if (word.tag === 'un') {
+            this.numberOfUn -= 1;
           }
           app.vocabularyTrie.insertData(key);
           app.familiarTrie.deleteData(key);
           this.history.words[key].tag = 'vo';
+          this.numberOfVo += 1;
           break;
         case 1:
           if (word === undefined || word.tag === 'fa') {
             break;
+          } else if (word.tag === 'vo'){
+            this.history.plus += 1;
+            this.numberOfVo -= 1;
           } else {
             this.history.plus += 1;
+            this.numberOfUn -= 1;
           }
           app.familiarTrie.insertData(key);
           app.vocabularyTrie.deleteData(key);
@@ -155,6 +162,8 @@ Component({
           style: this.history.words[key] ? wxss[this.history.words[key].tag] : wxss.fa, // 如果history.words没有记录，则认为是熟词
         },
         dialogShow: false,
+        numberOfUn: this.numberOfUn,
+        numberOfVo: this.numberOfVo,
       })
     },
     // dealRememberAndForget(index, key, location=this.history.words[key].location) {
@@ -227,17 +236,17 @@ Component({
       var passage = util.joinPassage(this.history.passageFragments);
       var vocabulary = [];
       var unknown = [];
-      var numberOfUn = 0;
-      var numberOfVo = 0;
+      this.numberOfUn = 0;
+      this.numberOfVo = 0;
       for (let word in this.history.words) {
         switch (this.history.words[word].tag) {
           case 'vo':
             vocabulary.push(word);
-            numberOfVo += 1;
+            this.numberOfVo += 1;
             break;
           case 'un':
             unknown.push(word);
-            numberOfUn += 1;
+            this.numberOfUn += 1;
             break;
         }
       }
@@ -252,8 +261,8 @@ Component({
           style: wxss.vo,
         }],
         his_headline: this.history.headline,
-        numberOfUn: numberOfUn,
-        numberOfVo: numberOfVo,
+        numberOfUn: this.numberOfUn,
+        numberOfVo: this.numberOfVo,
       })
     },
   }
