@@ -4,6 +4,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  line-height: 28rpx;
+  background-color: rgba(2, 194, 97, 1);
+  text-align: center;
+  border: 0px solid rgba(187, 187, 187, 1);
+  border-radius: 15px;
+  margin: 20rpx;
+  padding: 20rpx;
 }
 
 .userinfo-avatar {
@@ -14,9 +21,44 @@
 }
 
 .userinfo-nickname {
-  color: #aaa;
+  color: white;
 }
 
 .usermotto {
   margin-top: 200px;
+}
+
+.word-book-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 100rpx 20rpx;
+}
+
+.word-book {
+  width: 200rpx;
+  height: 250rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  line-height: 20rpx;
+  border: 0px solid rgba(187, 187, 187, 1);
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.74);
+  padding: 30rpx;
+  color: white;
+  text-align: left;
+  font-size: 36rpx;
+  font-family: PingFangSC-bold;
+}
+
+.vocabulary.word-book {
+  background-color: rgba(76, 210, 142, 1);
+}
+
+.word-book>.word-book-size {
+  font-size: 24rpx;
+  margin-top: 25rpx;
 }
