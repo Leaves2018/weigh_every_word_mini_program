@@ -1,6 +1,6 @@
 class Trie {
   constructor(root = new TrieNode(null)) {
-    if (typeof (root) === 'string') {
+    if (typeof(root) === 'string') {
       root = new TrieNode(null);
     }
     this.root = root;
@@ -45,52 +45,88 @@ class Trie {
 
   // 查询字符串辅助方法：
   searchHelper(queryData, node) {
-    console.log("In searchHelper, queryData=" + queryData)
-    console.log("node=" + JSON.stringify(node))
-    if (queryData.length === 0 && node.isWord) {  // 查询字符串为空字符串（由于不断截取），且标志是否为单词的变量为true时，搜索成功
-      console.log("searchHelper is returning true")
-      console.log("node=" + JSON.stringify(node))
+    // console.log("In searchHelper, queryData=" + queryData)
+    // console.log("node=" + JSON.stringify(node))
+    if (queryData.length === 0 && node.isWord) { // 查询字符串为空字符串（由于不断截取），且标志是否为单词的变量为true时，搜索成功
+      // console.log("searchHelper is returning true")
+      // console.log("node=" + JSON.stringify(node))
       return true;
-    } else if (queryData.length > 0 && node.children[queryData[0]]) { 
+    } else if (queryData.length > 0 && node.children[queryData[0]]) {
       // 字符串还没有搜索完毕，则在node的子节点中继续查询，若有则递归查询，否则返回false
       return this.searchHelper(queryData.substring(1), node.children[queryData[0]]);
     }
     return false;
   }
 
+
+  // 前缀搜索入口方法
+  findPrefix(prefix) {
+    if (this.inputVerification(prefix)) {
+      return this.findPrefixHelper(prefix, this.root).map(value => prefix + value);
+    } else {
+      return [];
+    }
+  }
+  // 递归找到前缀字符串最末字符对应节点
+  findPrefixHelper(prefix, node) {
+    if (prefix.length === 0 && node.isWord) {
+      var allData = [];
+      this.findPrefixHelper2(node, allData);
+      return allData;
+    } else if (prefix.length > 0 && node.children[prefix[0]]) {
+      return this.findPrefixHelper(prefix.substring(1), node.children[prefix[0]]);
+    }
+    return [];
+  }
+  // 递归搜索指定节点node向下的所有单词（并将结果push入allData中）
+  findPrefixHelper2(node, allData, data = []) {
+    if (node.isWord) {
+      allData.push(data.join(''));
+    }
+    for (let i in node.children) {
+      data.push(i);
+      this.findPrefixHelper2(node.children[i], allData, data);
+      data.pop();
+    }
+  }
+
   // 搜索以指定字符串为前缀的所有数据，打包为数组返回
-  findPrefix(prefixStr) {
-    if (this.inputVerification(prefixStr)) return [];
-    let prefix = prefixStr; // 记录下原值，方便与dfs结果组合成单词
-    let curNode = this.root;
-    let firstChar = prefixStr[0];
-    // 查找前缀字符串是否存在于字典树中
-    while (true) {
-      if (!curNode) return [];
-      curNode = curNode.children[firstChar];
-      prefixStr = prefixStr.substring(1);
-      if (prefixStr === "") break;
-      firstChar = prefixStr[0];
-    }
-    // 如果存在，则从前缀字符串的最后一个字符对应的节点开始，进行深度优先遍历以获取所有符合条件的字符串
-    return curNode ? this.dfs(curNode, prefix) : [];
-  }
-  
+  // findPrefix(prefixStr) {
+  //   if (this.inputVerification(prefixStr)) return [];
+  //   let prefix = prefixStr; // 记录下原值，方便与dfs结果组合成单词
+  //   let curNode = this.root;
+  //   // let firstChar = prefixStr[0];
+  //   // 查找前缀字符串是否存在于字典树中
+  //   while (true) {
+  //     if (!curNode) return [];
+  //     curNode = curNode.children[prefixStr[0]];
+  //     prefixStr = prefixStr.substring(1);
+  //     if (prefixStr === "") break;
+  //     // firstChar = prefixStr[0];
+  //   }
+  //   // 如果存在，则从前缀字符串的最后一个字符对应的节点开始，进行深度优先遍历以获取所有符合条件的字符串
+  //   // return curNode ? this.dfs(curNode, prefix) : [];
+  //   // return this.dfs(curNode, prefix);
+  //   var allData = [];
+  //   this.findPrefixHelper(curNode, allData);
+  //   return allData.map(value => prefix + value);
+  // }
+
   // 用于前缀搜索的深度优先搜索方法
-  dfs(node, curStr = "", ans = []) {
-    let flag = false;
-    for (const next in node.children) {
-      let child = node.children[next];
-      if (child) {
-        flag = true;
-        this.dfs(child, curStr + next, ans);
-      }
-    }
-    if (!flag) {
-      ans.push(curStr);
-    }
-    return ans;
-  }
+  // dfs(node, curStr = "", ans = []) {
+  //   let flag = false;
+  //   for (const next in node.children) {
+  //     let child = node.children[next];
+  //     if (child) {
+  //       flag = true;
+  //       this.dfs(child, curStr + next, ans);
+  //     }
+  //   }
+  //   if (!flag) {
+  //     ans.push(curStr);
+  //   }
+  //   return ans;
+  // }
 
   // 删除字符串
   deleteData(stringData) {
@@ -106,21 +142,21 @@ class Trie {
     if (stringData.length === 1) { // 删除最末字符对应节点逻辑
       // 查询字符串为长度为1（由于不断截取），且当前节点的子节点有该字符
       // 找到输入字符串最末一个字符对应的节点（不一定是叶子节点），开始执行删除逻辑
-      if (Object.keys(child.children).length > 0) { 
+      if (Object.keys(child.children).length > 0) {
         // 先判断子节点有没有子节点，有则证明还有单词依托于此节点
         // 在这种情况下，无需真的删除，删除isWord标记就可以
         // 此时，也不需要再继续向上删除，计数并结束递归
-        console.log("In deleteDataHelper(), when stringData.length === 1 and Object.keys(child.children).length > 0:")
-        console.log("child=" + JSON.stringify(child))
+        // console.log("In deleteDataHelper(), when stringData.length === 1 and Object.keys(child.children).length > 0:")
+        // console.log("child=" + JSON.stringify(child))
         delete child["isWord"]
-        console.log("after delete node['isWord'], child=" + JSON.stringify(child))
+        // console.log("after delete node['isWord'], child=" + JSON.stringify(child))
         this.number -= 1; // 计数
         return true; // 结束递归，告知上层无需继续删除
       } else { // 是叶子节点，则一直往上删除，直到找到一个isWord标记为true的节点或者根节点
         delete node.children[stringData[0]] // 删除操作
         return false; // 返回false，告知上层要继续删除
       }
-      return true; // 应该执行不到
+      // return true; // 应该执行不到
     } else if (stringData.length > 0) { // 删除其他字符对应节点逻辑
       // 字符串还没有搜索完毕，则在node的子节点中继续查询
       // 若有则递归查询，否则返回false
@@ -142,22 +178,26 @@ class Trie {
         }
       }
     }
-    return false; // 应该执行不到
+    // return false; // 应该执行不到
   }
 
   // 打印字符串
   printData() {
-    for (let i in this.root.children) {
-      this.printHelper(this.root.children[i], [i]);
-    }
+    // for (let i in this.root.children) {
+    //   this.printHelper(this.root.children[i], [i]);
+    // }
+    this.printHelper(this.root);
   }
 
   // 递归输出字符串
-  printHelper(node, data) {
-    if (Object.keys(node.children) === 0) {
-      console.log('>', data.join(''));
-      return;
+  printHelper(node, data = []) {
+    if (node.isWord) {
+      console.log('>', data.join(''))
     }
+    // else if (Object.keys(node.children) === 0) {
+    //   console.log('>', data.join(''));
+    //   return;
+    // }
     for (let i in node.children) {
       data.push(i);
       this.printHelper(node.children[i], data);
@@ -172,19 +212,23 @@ class Trie {
   getAllData(refresh = false) {
     if (refresh || !this.allData || this.allData.length === 0) {
       this.allData = []; // 先清空，再重新生成
-      for (let i in this.root.children) {
-        this.getAllDataHelper(this.root.children[i], [i]);
-      }
+      // for (let i in this.root.children) {
+      //   this.getAllDataHelper(this.root.children[i], [i]);
+      // }
+      this.getAllDataHelper(this.root);
       this.number = this.allData.length;
     }
     return this.allData;
   }
 
-  getAllDataHelper(node, data) {
-    if (Object.keys(node.children).length === 0) {
+  getAllDataHelper(node, data = []) {
+    if (node.isWord) {
       this.allData.push(data.join(''));
-      return;
     }
+    // if (Object.keys(node.children).length === 0) {
+    //   this.allData.push(data.join(''));
+    //   return;
+    // }
     for (let i in node.children) {
       data.push(i);
       this.getAllDataHelper(node.children[i], data);
@@ -308,7 +352,7 @@ console.timeEnd("字典树测试时间：")
 
 /**
  * 定义一个继承Trie类的单词树类
- * 规定应实现添加、删除、保存方法
+ * 规定应实现批量添加、删除、保存方法（传入参数为Array<String>类型）
  * 根据指定的key从缓存中取数据，以及保存自身至缓存
  */
 class WordTrie extends Trie {
