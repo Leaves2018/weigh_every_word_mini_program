@@ -69,9 +69,10 @@ class Trie {
   }
   // 递归找到前缀字符串最末字符对应节点
   findPrefixHelper(prefix, node) {
-    if (prefix.length === 0 && node.isWord) {
+    // if (prefix.length === 0 && node.isWord) { // 此时搜索的是前缀，不要求输入为单词，只要搜索到最末字符就可以了
+    if (prefix.length === 0) {
       var allData = [];
-      this.findPrefixHelper2(node, allData);
+      this.findPrefixHelper2(node, allData); // 从node开始向下搜索并记录每个节点的结果
       return allData;
     } else if (prefix.length > 0 && node.children[prefix[0]]) {
       return this.findPrefixHelper(prefix.substring(1), node.children[prefix[0]]);
@@ -80,7 +81,7 @@ class Trie {
   }
   // 递归搜索指定节点node向下的所有单词（并将结果push入allData中）
   findPrefixHelper2(node, allData, data = []) {
-    if (node.isWord) {
+    if (node.isWord) { // 只要是单词就输出，不需要是叶子节点
       allData.push(data.join(''));
     }
     for (let i in node.children) {
