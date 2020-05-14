@@ -1,5 +1,5 @@
 const utilWord = require('../../utils/word2.js');
-const utilTrie = require('../../utils/trie.js');
+const utilTrie = require('../../utils/trie2.js');
 var base64 = require("../../images/base64");
 var familiarTrie = null;
 var familiarWords = [];

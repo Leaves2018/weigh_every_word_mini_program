@@ -2,7 +2,7 @@
 const utils_his = require('../../utils/history.js');
 const utils_tomd = require('../../utils/tomd.js');
 const util_word = require('../../utils/word2.js');
-const util_trie = require('../../utils/trie.js');
+// const util_trie = require('../../utils/trie.js');
 const utils_deal = require('../../utils/deal.js');
 const util = require('../../utils/util.js');
 const app = getApp();

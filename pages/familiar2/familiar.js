@@ -1,5 +1,5 @@
 const utilWord = require('../../utils/word2.js');
-const utilTrie = require('../../utils/trie.js');
+const utilTrie = require('../../utils/trie2.js');
 
 const base64 = require("../../images/base64");
 const app = getApp();
@@ -34,16 +34,14 @@ Component({
       this.initials = [];
       this.familiarWordList = [];
       app.familiarTrie.allData = [];
-      for (let child of app.familiarTrie.root.children) {
-        this.initials.push(child.key);
-        var tempTrie = new utilTrie.Trie();
-        tempTrie.root.children[0] = child;
-        var tempData = tempTrie.getAllData(true); // 强制刷新
-        this.data.numOfWords += tempData.length;
-        this.familiarWordList.push(tempData);
-        app.familiarTrie.allData = app.familiarTrie.allData.concat(tempData);
+      // 遍历第一层子节点（单词首字母）
+      for (let key in app.familiarTrie.root.children) {
+        this.initials.push(key); // 记录首字母数组
+        let tempData = app.familiarTrie.findPrefix(key);
+        this.familiarWordList.push(tempData); // 前缀查找，获取同样该首字母开头的所有单词
+        app.familiarTrie.allData = app.familiarTrie.allData.concat(tempData); // 分多次填充allData（而不是用getAllData）
       }
-      app.familiarTrie.number = app.familiarTrie.allData.length;
+      app.familiarTrie.number = app.familiarTrie.allData.length; // 校正单词数目
       this.setData({
         search: this.search.bind(this),
         initials: this.initials,

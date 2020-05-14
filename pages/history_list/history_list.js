@@ -1,5 +1,5 @@
 const utilHis = require('../../utils/history.js');
-const utilTrie = require('../../utils/trie.js');
+// const utilTrie = require('../../utils/trie2.js');
 const base64 = require("../../images/base64");
 
 const app = getApp();

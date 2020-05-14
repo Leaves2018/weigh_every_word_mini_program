@@ -37,7 +37,7 @@ App({
         }
       }
     })
-    const utilTrie = require('./utils/trie.js');
+    const utilTrie = require('./utils/trie2.js');
     this.familiarTrie = utilTrie.getFamiliarTrie();
     this.vocabularyTrie = utilTrie.getVocabularyTrie();
     this.getOpenid();

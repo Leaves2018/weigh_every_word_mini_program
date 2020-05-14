@@ -1,7 +1,7 @@
 // pages/recite2/recite.js
 const util = require('../../utils/util.js');
 const utilHis = require('../../utils/history.js');
-const utilTrie = require('../../utils/trie.js');
+// const utilTrie = require('../../utils/trie2.js');
 const utilWord = require('../../utils/word2.js');
 const utilTomd = require('../../utils/tomd.js');
 

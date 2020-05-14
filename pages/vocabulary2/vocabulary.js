@@ -1,4 +1,4 @@
-const utilTrie = require('../../utils/trie.js');
+const utilTrie = require('../../utils/trie2.js');
 const utilWord = require('../../utils/word2.js');
 
 const base64 = require("../../images/base64")

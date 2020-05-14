@@ -1,6 +1,6 @@
 //search.js
 const utils_his = require('../../utils/history.js');
-const utils_trie = require('../../utils/trie.js');
+// const utils_trie = require('../../utils/trie2.js');
 var base64 = require("../../images/base64");
 var number;
 var history_list;
