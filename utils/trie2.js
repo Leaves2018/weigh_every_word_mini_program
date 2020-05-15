@@ -10,7 +10,7 @@ class Trie {
 
   // 输入校验：如果不是指定正则表达式匹配的字符，插入、删除、搜索都将被拒绝
   inputVerification(stringData) {
-    return /[a-zA-Z\-\']/.test(stringData.trim())
+    return /^[A-Za-z]+[\-\']?[a-zA-Z]+$/.test(stringData.trim())
   }
 
   // 插入字符串：功能入口
@@ -66,7 +66,8 @@ class Trie {
 
   // 前缀搜索入口方法
   findPrefix(prefix) {
-    if (this.inputVerification(prefix)) {
+    if (this.inputVerification(prefix) || (prefix.length === 1 && /[a-zA-Z]/.test(prefix))) { 
+      // 由于更改了合法输入规则，导致至少2个字符才能算有效输入，故前缀搜索需要单独考虑输入为单个字符的情况
       return this.findPrefixHelper(prefix, this.root).map(value => prefix + value);
     } else {
       return [];
@@ -136,7 +137,8 @@ class Trie {
 
   // 删除字符串
   deleteData(stringData) {
-    if (this.search(stringData)) { // 判断是否存在该单词（字符串）
+    let searchRes = this.search(stringData);
+    if (searchRes && searchRes === stringData) { // 判断是否存在该单词（字符串），且必须是原形（而不是转小写之后的形式）
       return this.deleteDataHelper(stringData, this.root);
     }
     return false;
