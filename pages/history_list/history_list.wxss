@@ -1,13 +1,13 @@
 page {
-  height:100%;
+  height: 100%;
   padding: 0rpx;
-  background-color:#F7F7F7;
+  background-color: #f7f7f7;
 }
 
 .page__head {
   z-index: 100;
-  position:fixed;
-  top:0;
+  position: fixed;
+  top: 0;
   width: 750rpx;
 }
 
@@ -16,31 +16,36 @@ page {
   margin-top: 100rpx;
 }
 
-.headtext{
+.headtext {
   font-weight: 700;
-  font-size: 20px;
-}
-.divLine{
- background: #E0E3DA;
- width: 100%;
- height: 5rpx;
+  font-size: 35rpx;
 }
 
+.divLine {
+  background: #e0e3da;
+  width: 100%;
+  height: 2rpx;
+}
 
-.plus{
+.plus {
   position: fixed;
   color: rgb(42, 211, 0);
   font-weight: 700;
-  font-size: 20px;
-  right: 40px;
+  font-size: 30rpx;
+  right: 40rpx;
+}
+
+.text0 {
+  font-weight: 400;
+  font-size: 18rpx;
 }
 
 .history-slidecell {
-  margin:8px;
-  background-color:#FFFFFF;
-  border-radius:8px;
-  padding:24px;
-  line-height:1.4;
-  font-size:17px;
-  color:rgba(0,0,0,.9);
+  margin: 8rpx;
+  background-color: #fff;
+  border-radius: 8rpx;
+  padding: 24rpx;
+  line-height: 1.4;
+  font-size: 17rpx;
+  color: rgba(0, 0, 0, 0.9);
 }

@@ -10,9 +10,9 @@
           <icon type="{{items[item].done ? 'success' : 'info'}}" size="25"/>
             <text class="headtext">{{items[item].headline}} </text> 
             <view class="divLine"></view> 
-            <text space="ensp">{{items[item].date}}</text><text class="plus">+{{items[item].plus}}</text>
+            <text class="text0" space="ensp">{{items[item].date}}</text>
             <view></view>
-            <text> Total: {{items[item].numberOfWords}} words</text>
+            <text class="text0"> Total: {{items[item].numberOfWords}} words</text><text class="plus">+{{items[item].plus}}</text>
           </view>
         </mp-slideview>
       </view>
