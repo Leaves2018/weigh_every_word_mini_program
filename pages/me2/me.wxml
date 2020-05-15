@@ -8,8 +8,13 @@
     <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit">
     </image>
 
-    <text class="userinfo-nickname">{{userInfo.nickName}}
+    <view class="userinfo-textinfo">
+
+      <text class="userinfo-nickname">{{userInfo.nickName}}
       </text>
+      <text class="userinfo-motto">{{motto}}
+      </text>
+    </view>
 
   </block>
 
@@ -30,18 +35,44 @@
   </navigator>
 </view>
 
+<view class="other-entrance">
+  <navigator url="/pages/recite_settings/recite_settings">
+    <view class="cell">
+      <image src="/images/shangchuan.svg" class="icon"></image>
+      <text class="text">上传云端保存</text>
+    </view>
+  </navigator>
+  <navigator url="/pages/domestication2/domestication">
+    <view class="cell">
+      <image src="/images/chilun.svg" class="icon"></image>
+      <text class="text">设置基础词汇量</text>
+    </view>
+  </navigator>
+  <navigator url="/pages/tutorial2/tutorial">
+    <view class="cell">
+      <image src="/images/guide.svg" class="icon"></image>
+      <text class="text">使用教程</text>
+    </view>
+  </navigator>
+  <navigator url="/pages/about/about">
+    <view class="cell">
+      <image src="/images/guanyu.svg" class="icon"></image>
+      <text class="text">关于</text>
+    </view>
+  </navigator>
+</view>
 
 
-<view class="page_cells">
+<!-- <view class="page_cells">
 
-  <!-- <mp-cells title="消息">
+  <mp-cells title="消息">
       <mp-cell link url="/pages/history/history" value="历史记录"></mp-cell>
-    </mp-cells> -->
+    </mp-cells>
 
-  <!-- <mp-cells title="单词本">
+  <mp-cells title="单词本">
     <mp-cell link url="/pages/vocabulary2/vocabulary" value="生词本" footer="生词数：{{vocabularyWordsLength}}"></mp-cell>
     <mp-cell link url="/pages/familiar2/familiar" value="熟词本" footer="词汇量：{{familiarWordsLength}}"></mp-cell>
-  </mp-cells> -->
+  </mp-cells>
 
   <mp-cells title="数据">
     <mp-cell link url="/pages/recite_settings/recite_settings" value="同步设置"></mp-cell>
@@ -53,4 +84,4 @@
     <mp-cell link url="/pages/about/about" value="测试"></mp-cell>
   </mp-cells>
 
-</view>
+</view> -->

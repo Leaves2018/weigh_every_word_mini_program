@@ -2,30 +2,40 @@
 
 .userinfo {
   display: flex;
-  flex-direction: column;
+  flex-flow: row;
+  justify-content: flex-start;
   align-items: center;
   line-height: 28rpx;
-  background-color: rgba(2, 194, 97, 1);
   text-align: center;
-  border: 0px solid rgba(187, 187, 187, 1);
-  border-radius: 15px;
-  margin: 20rpx;
+  border: 1rpx solid black;
+  margin: 20rpx 50rpx;
   padding: 20rpx;
 }
 
 .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
+  /* margin: 20rpx; *//* border-radius: 10%; */
+}
+
+.userinfo-textinfo {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  color: black;
   margin: 20rpx;
-  border-radius: 10%;
 }
 
 .userinfo-nickname {
-  color: white;
+  font-family: PingFangSC-bold;
+  font-size: 48rpx;
 }
 
-.usermotto {
-  margin-top: 200px;
+.userinfo-motto {
+  margin-top: 50rpx;
+  font-size: 24rpx;
 }
 
 .word-book-container {
@@ -33,12 +43,12 @@
   flex-flow: row;
   justify-content: space-around;
   align-items: center;
-  margin: 100rpx 20rpx;
+  margin: 50rpx 20rpx;
 }
 
 .word-book {
-  width: 200rpx;
-  height: 250rpx;
+  width: 250rpx;
+  height: 100rpx;
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -46,8 +56,8 @@
   line-height: 20rpx;
   border: 0px solid rgba(187, 187, 187, 1);
   border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.74);
-  padding: 30rpx;
+  background-color: rgba(0, 0, 0, 0.78);
+  padding: 50rpx 30rpx;
   color: white;
   text-align: left;
   font-size: 36rpx;
@@ -59,6 +69,42 @@
 }
 
 .word-book>.word-book-size {
-  font-size: 24rpx;
+  font-size: 28rpx;
   margin-top: 25rpx;
+}
+
+.other-entrance {
+  width: 650rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20rpx 50rpx;
+}
+
+.cell {
+  width: 650rpx;
+  height: 100rpx;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 15rpx;
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1rpx solid rgba(46, 16, 16, 0);
+  margin: 10rpx 0rpx;
+}
+
+.cell>.icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin: 10rpx 20rpx;
+}
+
+.cell>.text {
+  color: rgba(16, 16, 16, 1);
+  font-size: 36rpx;
+  text-align: left;
+  font-family: PingFangSC-regular;
+  margin: 10rpx 20rpx;
 }
