@@ -34,10 +34,15 @@ class Trie {
     this.insertHelper(stringData.substring(1), node.children[stringData[0]]); // 递归调用，插入下一个字符
   }
 
-  // 查询字符串：同时查询输入字符串以及输入字符串转小写后版本，以忽略首字母大小写的影响（是否为短路或？以及有无必要实现更复杂的完全忽略大小写搜索？）
+  // 查询字符串：同时查询输入字符串以及输入字符串转小写后版本，以忽略首字母大小写的影响（有无必要实现更复杂的完全忽略大小写搜索？）
+  // 如果能查询到，返回查到的结果（原来的输入形式还是转小写之后的）
   search(queryData) {
     if (this.inputVerification(queryData)) {
-      return this.searchHelper(queryData, this.root) || this.searchHelper(queryData.toLowerCase(), this.root);
+      if (this.searchHelper(queryData, this.root)) {
+        return queryData;
+      } else if (this.searchHelper(queryData.toLowerCase(), this.root)) {
+        return queryData.toLowerCase();
+      }
     } else {
       return false;
     }

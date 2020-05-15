@@ -8,11 +8,11 @@
   margin: 0rpx 0rpx 50rpx 0rpx;
 }
 
-.sentence {
+/* .sentence {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-}
+} */
 
 .item {
   margin: 5rpx 0rpx 5rpx 10rpx;
