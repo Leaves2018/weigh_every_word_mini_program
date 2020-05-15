@@ -73,6 +73,8 @@ Component({
     //将修改存至本地
     onUnload: function() {
       this.history.save(true);
+      app.familiarTrie.save();
+      app.vocabularyTrie.save();
     },
 
     redirectToModify: function() {

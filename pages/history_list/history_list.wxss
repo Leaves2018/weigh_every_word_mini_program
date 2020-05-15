@@ -28,9 +28,11 @@ page {
 
 
 .plus{
+  position: fixed;
   color: rgb(42, 211, 0);
   font-weight: 700;
   font-size: 20px;
+  right: 40px;
 }
 
 .history-slidecell {

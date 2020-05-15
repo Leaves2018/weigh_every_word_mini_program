@@ -47,6 +47,14 @@ App({
     console.log("App onHide() called")
     this.familiarTrie.save();
     this.vocabularyTrie.save();
+    wx.setStorage({
+      key: 'last_num_of_words',
+      data: this.familiarTrie.getAllData(true).length + this.vocabularyTrie.getAllData(true).length,
+    })
+    wx.setStorage({
+      key: 'last_launch_date',
+      data: (new Date()).toString().substring(8, 10),
+    })
   },
   // 获取用户openid
   getOpenid() {
