@@ -103,17 +103,18 @@ Component({
 
     tapWord: function(e) {
       console.log(e);
-      this.deal_word = e.detail.text;
-      this.deal_word_location = e.detail.location;
+      if (/^[A-Za-z]+[\-\']?[a-zA-Z]+$/.test(e.detail.text)) {
+        this.deal_word = e.detail.text;
+        this.deal_word_location = e.detail.location;
+        let [para, sent] = e.detail.location.split('.');
+        let wordDetail = this.history.passageFragments[para][sent];
 
-      let [para, sent] = e.detail.location.split('.');
-      let wordDetail = this.history.passageFragments[para][sent];
-
-      this.setData({
-        dialogContent: this.deal_word,
-        dialogShow: true,
-        wordDetail: wordDetail,
-      })
+        this.setData({
+          dialogContent: this.deal_word,
+          dialogShow: true,
+          wordDetail: wordDetail,
+        })
+      }
     },
 
     /**
