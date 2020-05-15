@@ -7,6 +7,5 @@
     "mp-halfScreenDialog": "../../components/half-screen-dialog/half-screen-dialog",
     "recite": "../recite3/recite"
   },
-  "navigationBarTitleText": "文章详情",
-  "pureDataPattern": "^_"
+  "navigationBarTitleText": "文章详情"
 }
