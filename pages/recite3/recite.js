@@ -118,6 +118,19 @@ Component({
               })
             }
           }
+          if (wordCardList.length <= 0) {
+            var that = this;
+            wx.showToast({
+              title: '全部处理完成',
+              icon: 'success',
+              duration: 2000,
+              success: function() {
+                that.setData({
+                  show: false
+                });
+              }
+            })
+          }
           // 销毁原有的ctx，重新建立ctx并赋予新数据
           if (this.ctx) this.ctx.destroy();
           this.ctx = createRecycleContext({
