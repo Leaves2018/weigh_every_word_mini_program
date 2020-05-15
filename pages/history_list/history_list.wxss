@@ -27,17 +27,24 @@ page {
   height: 2rpx;
 }
 
+.iconstatus {
+  position: absolute;
+  right: 40rpx;
+  top: 20rpx;
+}
+
 .plus {
-  position: fixed;
+  position: absolute;
   color: rgb(42, 211, 0);
   font-weight: 700;
-  font-size: 30rpx;
+  font-size: 40rpx;
   right: 40rpx;
+  bottom: 20rpx;
 }
 
 .text0 {
-  font-weight: 400;
-  font-size: 18rpx;
+  font-weight: 500;
+  font-size: 26rpx;
 }
 
 .history-slidecell {
