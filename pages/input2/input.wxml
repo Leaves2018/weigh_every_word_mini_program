@@ -1,11 +1,28 @@
 <!--pages/input2/input.wxml-->
 <view class="page">
   <view class="page-body">
-    <view class='condition'>
-      <mp-searchbar bindfocus="navigate_deal" cancel="false" placeholder="录入文本"></mp-searchbar>
-      <view class="white"></view>
-      <image class="addpictures" mode="aspectFit" bindtap="addpicture" src="/images/icon_input_camera.png"></image>
+    <view>
+      <text class="greet" wx:if="{{condition === 0}}">早上好！</text>
+      <text class="greet" wx:if="{{condition === 1}}">下午好！</text>
+      <text class="greet" wx:if="{{condition === 2}}">晚上好！</text>
     </view>
+    <view class="whitespace"></view>
+    <view class="white">
+      <!-- <text space="ensp">   {{showmonth}}</text> -->
+      <view class="words-container">
+        <view class="item" data-position="{{index}}" wx:for="{{showday}}" wx:key="*this" style="background-color: {{(item !==null&&item !=='') ? '#43e702' : '#dadbd9'}};" bindtap="showWordCard"></view>
+      </view>
+    </view>
+    <view class="camera">
+      <view class="greenbackground" bindtap="addpicture">
+        <image class="addpictures" src="/images/camera.png"></image>
+        <view class="whitespace"></view>
+        <text class="remindtext">扫描文稿</text>
+      </view>
+      <view class="craftbackground" wx:if="{{draftcondition === 1}}" bindtap="navigatetodraft">
+        <text class="remindtext" wx:if="{{draftcondition === 1}}">查看草稿</text>
+      </view>
+    </view>
+
   </view>
 </view>
-

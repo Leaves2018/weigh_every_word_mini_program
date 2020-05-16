@@ -10,6 +10,10 @@ Component({
     filename:{
       type:String,
       value:''
+    },
+    listnumber: {
+      type: Number,
+      value: undefined
     }
   },
 
@@ -54,19 +58,6 @@ Component({
     },
 
     onShow: function () {
-      var that = this;
-      let passage_temp = wx.getStorageSync('input_passage_information');
-      if (passage_temp === "") {
-        return;
-      } else {
-        wx.setStorage({
-          key: 'input_passage_information',
-          data: "",
-        })
-        that.setData({
-          s: passage_temp,
-        })
-      }
     },
 
     bindFormSubmit: function (e) {
@@ -77,18 +68,20 @@ Component({
 
     //处理文本
     deal_article: function () {
-      if (this.data.s === "") {
-        return;
-      }
-      let history = new utilHistory.History(this.data.s);
+      let passage_temp = wx.getStorageSync('input_passage_information');
+      passage_temp[this.listnumber] = this.data.s;
+      wx.setStorage({
+        key: 'input_passage_information',
+        data: passage_temp,
+      })
       wx.redirectTo({
-        url: `/pages/history_detail2/history_detail?historyuuid=${history.uuid}`,
+        url: '/pages/draft/draft',
       })
     },
 
     deal_clear: function (e) {
-      this.setData({
-        s: '',
+      wx.redirectTo({
+        url: '/pages/draft/draft',
       })
     },
   },
@@ -130,6 +123,15 @@ Component({
           }
         })
       }
+    },
+
+    'listnumber': function (listnumber) {
+      this.listnumber = listnumber;
+      console.log(listnumber);
+      let passage_temp = wx.getStorageSync('input_passage_information')[listnumber];
+      this.setData({
+        s: passage_temp,
+      })
     }
   }
 })

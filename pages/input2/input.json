@@ -1,6 +1,4 @@
 {
-  "usingComponents": {
-    "mp-searchbar": "../../components/searchbar/searchbar"
-  },
-  "navigationBarTitleText": "录入"
+  "usingComponents": {},
+  "navigationBarTitleText": "字斟句酌背单词"
 }

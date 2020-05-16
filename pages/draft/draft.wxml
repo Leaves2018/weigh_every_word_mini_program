@@ -1,0 +1,21 @@
+<!--pages/draft/draft.wxml-->
+<view>
+  <view class="body">
+    <view class="draftbackground">
+      <view class="words-container">
+        <view class="item" data-position="{{index}}" wx:for="{{showinformation}}" wx:key="*this" bindtap="showpassagefragment">{{index+1}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="greenbackground" bindtap="addpicture">
+    <image class="addpictures" src="/images/camera.png"></image>
+  </view>
+  <view class="button_edit">
+    <view class='returnbtn' bindtap="returntoinput">
+      <text class="text">返回</text>
+    </view>
+    <view class='wordsbtn' bindtap="redirectToHistory">
+      <text class="text">处理</text>
+    </view>
+  </view>
+</view>
