@@ -7,8 +7,8 @@
       <view class="history-slidecells" wx:for="{{uuids}}" wx:key="*this">
         <mp-slideview data-historyuuid="{{item}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapNavigateButton" bindbuttontap="tapSlideButton" style="margin-bottom: {{(index === words.length - 1) ? '64rpx' : '0rpx'}}">
           <view class="history-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
-          <icon type="{{items[item].done ? 'success' : 'info'}}" size="25"/>
             <text class="headtext">{{items[item].headline}} </text> 
+            <icon class="iconstatus" type="{{items[item].done ? 'success' : 'info'}}" size="25"/>
             <view class="divLine"></view> 
             <text class="text0" space="ensp">{{items[item].date}}</text>
             <view></view>
