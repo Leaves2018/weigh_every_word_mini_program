@@ -56,12 +56,13 @@
   line-height: 20rpx;
   border: 0px solid rgba(187, 187, 187, 1);
   border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.78);
+  background-color: rgba(62, 121, 225, 0.75);
   padding: 50rpx 30rpx;
   color: white;
   text-align: left;
   font-size: 36rpx;
   font-family: PingFangSC-bold;
+  box-shadow: 0rpx 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
 }
 
 .vocabulary.word-book {
@@ -84,7 +85,7 @@
 
 .cell {
   width: 650rpx;
-  height: 100rpx;
+  height: 75rpx;
   display: flex;
   flex-flow: row;
   justify-content: flex-start;
@@ -96,15 +97,37 @@
 }
 
 .cell>.icon {
-  width: 40rpx;
-  height: 40rpx;
+  width: 30rpx;
+  height: 30rpx;
   margin: 10rpx 20rpx;
 }
 
 .cell>.text {
   color: rgba(16, 16, 16, 1);
-  font-size: 36rpx;
+  font-size: 28rpx;
   text-align: left;
   font-family: PingFangSC-regular;
   margin: 10rpx 20rpx;
+}
+
+.cell-info {
+  border-radius: 15rpx 15rpx 0rpx 0rpx;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.82);
+  font-size: 20rpx;
+  font-style: italic;
+  text-align: left;
+  font-family: PingFang SC;
+  border: 2rpx solid rgba(255, 255, 255, 0);
+  padding-left: 50rpx;
+}
+
+.cell.upload {
+  margin-top: 0rpx;
+  margin-bottom: 5rpx;
+  border-radius: 0rpx 0rpx 15rpx 15rpx;
+}
+
+.cell.download {
+  margin-top: 5rpx;
 }

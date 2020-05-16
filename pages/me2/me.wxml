@@ -37,25 +37,34 @@
 
 <view class="other-entrance">
   <navigator url="/pages/recite_settings/recite_settings">
-    <view class="cell">
+    <view class="cell-info">
+      <text class="cell-info-text">上次更新：今天上午9:30</text>
+    </view>
+    <view class="cell upload">
       <image src="/images/shangchuan.svg" class="icon"></image>
       <text class="text">上传云端保存</text>
     </view>
   </navigator>
+  <navigator url="/pages/recite_settings/recite_settings">
+    <view class="cell download">
+      <image src="/images/xiazai.svg" class="icon"></image>
+      <text class="text">下载最新备份</text>
+    </view>
+  </navigator>
   <navigator url="/pages/domestication2/domestication">
-    <view class="cell">
+    <view class="cell domestication">
       <image src="/images/chilun.svg" class="icon"></image>
       <text class="text">设置基础词汇量</text>
     </view>
   </navigator>
   <navigator url="/pages/tutorial2/tutorial">
-    <view class="cell">
+    <view class="cell tutorial">
       <image src="/images/guide.svg" class="icon"></image>
       <text class="text">使用教程</text>
     </view>
   </navigator>
   <navigator url="/pages/about/about">
-    <view class="cell">
+    <view class="cell about">
       <image src="/images/guanyu.svg" class="icon"></image>
       <text class="text">关于</text>
     </view>
