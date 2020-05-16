@@ -1,0 +1,22 @@
+<!--components/word-card/word-card-set.wxml-->
+<wxs src="./word-card.wxs" module="wxs" />
+<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}"></view>
+
+<view class="container" bindtap="close" wx:if="{{show}}">
+  <view class="weui-dialog">
+    <scroll-view scroll-x="{{true}}" enable-flex="{{true}}" scroll-with-animation="{{true}}" scroll-left="{{scrollLeft}}" scroll-into-view="{{scrollIntoView}}" bindscrolltolower="scrollToLower" style="height: {{wordCardSetHeight}}">
+      <view class="word-card-set-container">
+        <scroll-view wx:for="{{wordCardList}}" wx:key="_id" scroll-y="{{true}}" enable-flex="{{true}}" class="set-scroll-view" style="width: {{wordCardWidth}}; height: {{wordCardHeight}}" catchtap="stopEvent">
+          <view class="word-card-container {{'item' + index}}" style="height: {{wordCardHeight}}">
+            <word-card word="{{item._id}}" showFront="{{false}}" detail="{{history.passageFragments[item.loc[0]][item.loc[1]]}}" showButtons="{{false}}" autoplayAudio="{{false}}" />
+            <view class="bottom" style="height: {{bottomHeight}}" bindbuttontap="buttonTap">
+              <view class="btn forget" data-info="{{[0, item._id, 'set', index]}}" bindtap="{{wxs.bottomButtonTap}}">忘记</view>
+              <view class="btn remember" data-info="{{[1, item._id, 'set', index]}}" bindtap="{{wxs.bottomButtonTap}}">记得</view>
+            </view>
+          </view>
+        </scroll-view>
+
+      </view>
+    </scroll-view>
+  </view>
+</view>

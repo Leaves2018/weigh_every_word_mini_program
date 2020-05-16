@@ -3,7 +3,7 @@
 <view wx:if="{{show}}" bindtap="close" class="weui-dialog__wrp {{extClass}}">
   <view class="weui-dialog" catchtap="stopEvent">
     <view class="weui-dialog__bd">
-      <word-card word="{{word}}" detail="{{detail}}" autoplayAudio="{{autoplayAudio}}" showButtons="{{false}}"></word-card>
+      <word-card word="{{word}}" detail="{{detail}}" autoplayAudio="{{autoplayAudio}}" showButtons="{{false}}" showFront="{{true}}"></word-card>
     </view>
 
     <view class="bottom">

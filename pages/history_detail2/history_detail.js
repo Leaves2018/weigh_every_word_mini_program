@@ -94,7 +94,8 @@ Component({
       // wx.redirectTo({
       //   url: `/pages/recite2/recite?historyuuid=${this.data.historyuuid}`,
       // });
-      console.log("redirectToRecite() is called")
+      // console.log("redirectToRecite() is called")
+      // console.log(JSON.stringify(this.history.words))
       this.setData({
         reciteHistory: this.history,
         reciteShow: true,
@@ -123,7 +124,7 @@ Component({
      * 
      */
     dealRememberAndForget(e) {
-      console.log("In history_detail, dealRememberAndForget() is called" + JSON.stringify(e))
+      // console.log("In history_detail, dealRememberAndForget() is called" + JSON.stringify(e))
       let key = e.detail._id;
       let word = this.history.words[key];
       switch (e.detail.index) {

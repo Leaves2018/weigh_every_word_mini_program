@@ -2,13 +2,6 @@
 const utilWord = require('../../utils/word2.js')
 const app = getApp();
 
-// 用于实现滑动手势操作
-// const minOffset = 30;
-// const minTime = 60;
-// var startX = 0;
-// var startY = 0;
-// var startTime = 0;
-
 Component({
   /**
    * 组件的属性列表
@@ -17,6 +10,10 @@ Component({
     word: {
       type: String,
       value: "",
+    },
+    showFront: {
+      type: Boolean,
+      value: true,
     },
     detail: {
       type: String,
@@ -37,9 +34,6 @@ Component({
    */
   data: {
     wordcard: {}, // 用于展示在页面上的单词数据
-    showFront: true,
-    hasLemma: false,
-    showLemmaNow: false,
     showTranslation: true,
   },
 
@@ -68,17 +62,14 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    scrollToItem: function (res) {
+      console.log('In word-card, selector=' + res.selector)
+    },
     /**
      * 播放单词音频
      */
     playAudio: function() {
-      if (!this.data.showFront) {
-        // 朗读例句
-      } else if (this.data.showLemmaNow) {
-        this.lemma.playAudio();
-      } else {
-        this.original.playAudio();
-      }
+      this.original.playAudio();
     },
     /**
      * 中英文解释切换
@@ -88,19 +79,7 @@ Component({
         showTranslation: !this.data.showTranslation,
       })
     },
-    /**
-     * 点击方法：显示单词在原文本中的形式
-     */
-    tapLemmaSwitchButton: function() {
-      var show = this.data.showLemmaNow ? this.original : this.lemma;
-      show.playAudio();
-      this.setData({
-        wordcard: show,
-        definitionKeys: Object.keys(show.definition),
-        translationKeys: Object.keys(show.translation),
-        showLemmaNow: !this.data.showLemmaNow,
-      })
-    },
+
     /**
      * 翻转卡片
      */
@@ -117,7 +96,7 @@ Component({
         }
       ], 500, function() {
         that.setData({
-          showFront: !this.data.showFront,
+          front: !this.data.front,
         });
         that.animate('.word-card', [{
           opacity: 0.0,
@@ -143,127 +122,47 @@ Component({
 
       this.triggerEvent('buttontap', { index: index, item: this.data.buttons[index] }, {});
     },
-    /**
-     * 点击方法：单词修改方法
-     */
-    // tapModifyButton: function() {
-    //   console.log("In component word-card, tapModifyButton() is called.")
-    //   wx.navigateTo({
-    //     url: '../../pages/tutorial/tutorial',
-    //   })
-    // },
-    // /**
-    //  * 触摸控制：触摸开始
-    //  */
-    // touchStart: function(e) {
-    //   startX = e.touches[0].pageX;
-    //   startY = e.touches[0].pageY;
-    //   startTime = new Date().getTime();
-    // },
-    // /**
-    //  * 触摸控制：触摸取消
-    //  */
-    // touchCancel: function(e) {
-    //   startX = 0;
-    //   startY = 0;
-    //   startTime = 0;
-    // },
-    // /**
-    //  * 触摸控制：触摸结束事件（主要的判断流程）
-    //  */
-    // touchEnd: function(e) {
-    //   var endX = e.changedTouches[0].pageX;
-    //   var endY = e.changedTouches[0].pageY;
-    //   var touchTime = new Date().getTime() - startTime;
-
-    //   // 开始判断
-    //   // 1. 时间是否达到阈值
-    //   if (touchTime >= minTime) {
-    //     // 2. 偏移量是否达到阈值
-    //     var xOffset = endX - startX;
-    //     var yOffset = endY - startY;
-    //     var myEventDetail = {
-    //       xOffset: xOffset,
-    //       yOffset: yOffset,
-    //       touchTime: touchTime,
-    //       lemmaID: this.data._lemma ? this.data._lemma._id : undefined, // 回传lemma的ID（如果有lemma）
-    //     };
-    //     // 判断左右滑动还是上下滑动
-    //     if (Math.abs(xOffset) >= Math.abs(yOffset) && Math.abs(xOffset) >= minOffset) {
-    //       // 判断向左滑动还是向右滑动
-    //       if (xOffset < 0) {
-    //         this.triggerEvent("swipeleft", myEventDetail);
-    //       } else {
-    //         this.triggerEvent("swiperight", myEventDetail);
-    //       }
-    //     } else if (Math.abs(xOffset) < Math.abs(yOffset) && Math.abs(yOffset) >= minOffset) {
-    //       // 判断向上滑动还是向下滑动
-    //       if (yOffset < 0) {
-    //         this.triggerEvent("swipeup", myEventDetail);
-    //         // console.log("SwipeUp")
-    //       } else {
-    //         // console.log("SwipeDown")
-    //         this.triggerEvent("swipedown", myEventDetail);
-    //       }
-    //     }
-    //   } else {
-    //     // console.log("滑动时间过短", touchTime);
-    //   }
-    // },
   },
 
   /**
    * 数据监听器
    */
   observers: {
-    'word': function(word) {
-      // 避免输入为空的情况
-      if (!word) {
-        return;
-      }
-
-      utilWord.getWord(word).then(wordRes => {
-        // res = new utilWord.Word(res)
-        // 如果有向单词卡片传递detail，则受托将其保存
-        // if (detail) {
-        //   wordRes.detail = this.data.detail;
-        //   utilWord.setWord(wordRes);
-        // } else if (wordRes.detail) {
-        //   this.setData({
-        //     detail: wordRes.detail,
-        //   })
-        // }
-        this.original = wordRes;
-        this.setData({
-          showFront: true,
-          wordcard: this.original,
-          definitionKeys: Object.keys(this.original.definition),
-          translationKeys: Object.keys(this.original.translation),
-          thisword: {
-            word: word,
-            style: {
-              "background": "yellow",
-            }
-          },
-        })
-        if (this.data.autoplayAudio) {
-          this.original.playAudio();
-        }
-        let lemmaID = this.original.getExchange()["0"];
-        if (lemmaID) {
-          utilWord.getWord(lemmaID).then(lemmaRes => {
-            this.lemma = lemmaRes;
-            this.setData({
-              hasLemma: true,
-            })
-          })
-        } else {
-          this.lemma = undefined;
+    'word': function (word) { // 新word设置时触发
+      if (word) { // 检测新word不为空
+        if (this.data.showFront) { // 且要求显示正面，则触发front监听器请求数据
           this.setData({
-            hasLemma: false,
+            front: true, // 手动触发front的observer
+          })
+        } else { // 要求显示背面时，仅设置单词ID（例句已通过property自动赋值）
+          this.setData({
+            wordcard: { _id: this.data.word },
           })
         }
-      })
+      }
     },
+    'front': function (front) { // 要求显示正面
+      if (front) {
+        if (this.data._hasFront && this.original._id === this.data.word) { // 如果有正面，而且word没有赋新值，直接加载原有数据
+          if (this.data.autoplayAudio) {
+            this.original.playAudio();
+          }
+        } else { // 否则查询新word再赋值
+          var that = this;
+          utilWord.getWord(that.data.word).then(wordRes => {
+            that.original = wordRes;
+            that.setData({
+              _hasFront: true, // 现在有正面了
+              wordcard: that.original,
+              definitionKeys: Object.keys(that.original.definition),
+              translationKeys: Object.keys(that.original.translation),
+            })
+            if (that.data.autoplayAudio) {
+              that.original.playAudio();
+            }
+          })
+        }
+      }
+    }
   },
 })

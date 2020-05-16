@@ -10,7 +10,24 @@ module.exports = {
     var info = event.currentTarget.dataset.info;
     var index = info[0];
     var _id = info[1];
-    ownerInstance.triggerEvent('buttontap', {index: index, _id: _id}, {});
+    var eventDetail = {
+      index: index,
+      _id: _id
+    };
+    if (info.length > 2) {
+      var source = info[2];
+      if (source === 'set') {
+        var number = info[3];
+        var instance = ownerInstance.selectComponent('.word-card-container.item' + (number + 0));
+        // console.log(JSON.stringify(instance));
+        instance.setStyle({
+          "background-color": index === 0 ? "#DC9FB4" : "#66BAB7",
+        })
+        // 滚动到下一个单词位置（是否可以不经过逻辑层，直接wxs设置滚动位置？）
+        eventDetail['selector'] = '.word-card-container.item' + (number + 1);
+      }
+    }
+    ownerInstance.triggerEvent('buttontap', eventDetail, {});
   },
   touchMove: function(event, ownerInstance) {
     // console.log(JSON.stringify(event));
@@ -25,7 +42,7 @@ module.exports = {
     startY = 0;
     // startTime = 0;
   },
-  touchEnd: function (event, ownerInstance) {
+  touchEnd: function(event, ownerInstance) {
     var endX = event.changedTouches[0].pageX;
     var endY = event.changedTouches[0].pageY;
     // var touchTime = new Date().getTime() - startTime;
@@ -33,31 +50,31 @@ module.exports = {
     // 开始判断
     // 1. 时间是否达到阈值
     // if (touchTime >= minTime) {
-      // 2. 偏移量是否达到阈值
-      var xOffset = endX - startX;
-      var yOffset = endY - startY;
-      var myEventDetail = {
-        xOffset: xOffset,
-        yOffset: yOffset,
-        // touchTime: touchTime,
-        // lemmaID: this.data._lemma ? this.data._lemma._id : undefined, // 回传lemma的ID（如果有lemma）
-      };
-      // 判断左右滑动还是上下滑动
-      if (Math.abs(xOffset) >= Math.abs(yOffset) && Math.abs(xOffset) >= minOffset) {
-        // 判断向左滑动还是向右滑动
-        if (xOffset < 0) {
-          ownerInstance.triggerEvent('swipeleft', myEventDetail);
-        } else {
-          ownerInstance.triggerEvent('swiperight', myEventDetail);
-        }
-      } else if (Math.abs(xOffset) < Math.abs(yOffset) && Math.abs(yOffset) >= minOffset) {
-        // 判断向上滑动还是向下滑动
-        if (yOffset < 0) {
-          ownerInstance.triggerEvent('swipeup', myEventDetail);
-        } else {
-          ownerInstance.triggerEvent('swipedown', myEventDetail);
-        }
+    // 2. 偏移量是否达到阈值
+    var xOffset = endX - startX;
+    var yOffset = endY - startY;
+    var myEventDetail = {
+      xOffset: xOffset,
+      yOffset: yOffset,
+      // touchTime: touchTime,
+      // lemmaID: this.data._lemma ? this.data._lemma._id : undefined, // 回传lemma的ID（如果有lemma）
+    };
+    // 判断左右滑动还是上下滑动
+    if (Math.abs(xOffset) >= Math.abs(yOffset) && Math.abs(xOffset) >= minOffset) {
+      // 判断向左滑动还是向右滑动
+      if (xOffset < 0) {
+        ownerInstance.triggerEvent('swipeleft', myEventDetail);
+      } else {
+        ownerInstance.triggerEvent('swiperight', myEventDetail);
       }
+    } else if (Math.abs(xOffset) < Math.abs(yOffset) && Math.abs(yOffset) >= minOffset) {
+      // 判断向上滑动还是向下滑动
+      if (yOffset < 0) {
+        ownerInstance.triggerEvent('swipeup', myEventDetail);
+      } else {
+        ownerInstance.triggerEvent('swipedown', myEventDetail);
+      }
+    }
     // } else {
     //   // console.log("滑动时间过短", touchTime);
     // }

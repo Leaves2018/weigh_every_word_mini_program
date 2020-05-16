@@ -8,27 +8,32 @@
 .front {
   width: 100%;
   height: 100%;
-  position: relative;
+  /* position: relative; */
   display: flex;
   flex-flow: column;
   text-align: center;
-  padding-top: 50rpx;
+  /* padding-top: 50rpx; */
 }
 
-.front>.play-audio-btn { 
-  position: absolute;
-  width: 50rpx;
-  height: 50rpx;
-  left: 25rpx;
-  top: 25rpx;
+.front-head {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center; 
 }
 
-.front>.ec-switch-btn {
-  position: absolute;
+.front-head>.play-audio-btn { 
   width: 50rpx;
   height: 50rpx;
-  right: 25rpx;
-  top: 25rpx;
+  margin: 25rpx;
+  align-self: flex-start;
+}
+
+.front-head>.ec-switch-btn {
+  width: 50rpx;
+  height: 50rpx;
+  margin: 25rpx;
+  align-self: flex-end;
 }
 
 .front>.wordcard-id {
@@ -116,37 +121,37 @@
 .back {
   width: 100%;
   height: 100%;
-  position: relative;
-}
-.back>.play-audio-btn { 
-  position: absolute;
-  width: 50rpx;
-  height: 50rpx;
-  left: 25rpx;
-  top: 25rpx;
+  display: flex;
+  flex-flow: column;
+  text-align: left;
 }
 
-.back>.wordcard-id {
-  position: absolute;
-  left: 100rpx;
-  top: 25rpx;
-  color: black;
+.back-head {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.back-head>.play-audio-btn { 
+  width: 50rpx;
+  height: 50rpx;
+  margin: 25rpx;
+}
+
+.back-head>.wordcard-id {
+  margin: 25rpx;
   font-size: 36rpx;
-  text-align: left;
   font-family: PingFangSC-bold;
 }
 
 .back>.wordcard-detail {
-  position: absolute;
-  top: 100rpx;
-  bottom: 25rpx;
-  left: 25rpx;
-  right: 25rpx;
-  text-align: left;
+  flex-grow: 1;
   color: black;
-  font-size: 14px;
+  font-size: 28rpx;
   font-family: -apple-system;
-  border: 1px solid #4CD28E;
-  border-radius: 15px;
+  border: 2rpx solid #4CD28E;
+  border-radius: 30rpx;
   padding: 20rpx;
+  margin: 20rpx;
 }

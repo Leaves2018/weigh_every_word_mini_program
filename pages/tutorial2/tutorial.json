@@ -1,7 +1,7 @@
 {
-  "component": true,
   "usingComponents": {
-    "recite": "../recite3/recite"
+    "recycle-view-horizontal": "../../miniprogram_npm/miniprogram-recycle-view-horizontal/recycle-view",
+    "recycle-item-horizontal": "../../miniprogram_npm/miniprogram-recycle-view-horizontal/recycle-item"
   },
   "navigationBarTitleText": "帮助"
 }

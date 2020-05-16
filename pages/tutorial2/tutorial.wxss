@@ -1,16 +1,30 @@
 /* pages/tutorial2/tutorial.wxss */
+.scroll-view_H {
+  margin-top: 0;
+  width: 100%;
+  /* width: 750rpx; */
+  background-color: gray;
+}
 
-.paragraph {
+.container {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  margin: 0rpx 0rpx 50rpx 0rpx;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
-.item {
-  margin: 5rpx 0rpx 5rpx 10rpx;
+.scroll-view-item_H{
+  flex-shrink: 0;
+  width: 600rpx;
+  height: 600rpx;
+  margin: 20rpx 50rpx;
 }
 
-.item.other {
-  margin: 5rpx 10rpx 5rpx 0rpx;
+.demo-text-1 {
+  background-color: red;
+}
+.demo-text-2 {
+  background-color: green;
+}
+.demo-text-3 {
+  background-color: blue;
 }

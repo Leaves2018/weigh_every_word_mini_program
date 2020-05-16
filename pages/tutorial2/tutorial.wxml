@@ -1,2 +1,7 @@
-<view>/pages/tutorial2/tutorial2</view>
-<recite/>
+<scroll-view class="scroll-view_H" scroll-x="{{true}}" bindscroll="scroll" enable-flex="{{true}}">
+  <view class="container">
+    <view id="demo1" class="scroll-view-item_H demo-text-1"></view>
+    <view id="demo2" class="scroll-view-item_H demo-text-2"></view>
+    <view id="demo3" class="scroll-view-item_H demo-text-3"></view>
+  </view>
+</scroll-view>

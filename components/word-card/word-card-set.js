@@ -1,6 +1,4 @@
-// pages/recite3/recite.js
-const app = getApp();
-const createRecycleContext = require('miniprogram-recycle-view')
+// components/word-card/word-card-set.js
 Component({
   /**
    * 组件的属性列表
@@ -36,45 +34,46 @@ Component({
    */
   data: {},
 
+  /**
+   * 组件的生命周期方法
+   */
   lifetimes: {
     /**
      * 组件被放置到组件树上时，计算屏幕宽高，并依此设置卡片宽高
      */
     attached: function() {
-      console.log("recite component is attached")
-
+      // console.log("word-card-set component is attached")
     },
     /**
      * 视图层渲染完成
      */
     ready: function() {
-      console.log("recite component is ready")
+      // console.log("word-card-set  component is ready")
       let systemInfo = wx.getSystemInfoSync();
-      console.log(JSON.stringify(systemInfo))
+      // console.log(JSON.stringify(systemInfo))
       let wordCardWidth = Math.round(systemInfo.windowWidth * 0.8);
-      let wordCardHeight = Math.round(systemInfo.windowHeight * 0.618);
+      let wordCardHeight = Math.round(systemInfo.windowHeight * 0.8);
       this.setData({
+        wordCardSetHeight: wordCardHeight + "px",
         wordCardWidth: wordCardWidth + "px",
-        wordCardHeight: wordCardHeight + "px",
-        recycleViewHeight: systemInfo.windowHeight,
-        recycleViewWidth: systemInfo.windowWidth * 0.8,
+        wordCardHeight: Math.round(0.90 * wordCardHeight) + "px",
+        bottomHeight: Math.round(0.10 * wordCardHeight) + "px",
       })
     },
     /**
      * 组件卸载
      */
     detached: function() {
-      console.log("recite component is detached");
-      // 离开页面时销毁ctx(可能没有必要手动调用)
-      if (this.ctx) this.ctx.destroy();
+      // console.log("word-card-set component is detached");
     }
   },
+
   /**
    * 组件的方法列表
    */
   methods: {
     close: function close() {
-      console.log("In recite3, close() is called.");
+      // console.log("In recite3, close() is called.");
       if (!this.data.maskClosable) return;
       this.setData({
         show: false
@@ -82,37 +81,50 @@ Component({
       this.triggerEvent('close', {}, {});
     },
     stopEvent: function stopEvent() {},
-    buttonTap: function(e) {
+    buttonTap: function(e) { // 似乎触发不到
       console.log(e);
-      // 滑动到下一个卡片位置（下一张卡片上边缘与屏幕上边缘平齐）
-      // let nextIndex = Math.floor(this.ctx.getScrollTop() / parseInt(this.data.wordCardHeight)) + 1;
-      // console.log("nextIndex="+nextIndex)
-      // this.setData({
-      //   scrollToIndex: nextIndex,
-      // })
-      // 滑动一张卡片高度的距离（包括卡片的下边距）
-      this.setData({
-        scrollTop: this.ctx.getScrollTop() + parseInt(this.data.wordCardHeight) + 25,
-      })
+      this.scrollToItem(e.detail.selector);
+
       this.triggerEvent("buttontap", e.detail, {}); // 继续触发事件，向上冒泡
     },
+    scrollToItem: function(res) {
+      console.log('selector=' + res)
+      this.setData({
+        scrollIntoView: res.selector,
+      })
+    },
+    scrollToLower: function() {
+      var that = this;
+      wx.showModal({
+        title: '浏览完毕',
+        content: '是否返回？',
+        success: function(res) {
+          if (res.confirm) {
+            that.setData({
+              show: false
+            });
+          }
+        }
+      })
+    }
   },
+
   /**
    * 数据监听器
    */
   observers: {
     'show': function(show) {
-      console.log('show=' + JSON.stringify(show))
+      // console.log('show=' + JSON.stringify(show))
       if (show) {
         // 每次显示时，重新读取历史记录并解析
         let history = this.data.history;
         if (history) {
           var wordCardList = [];
-          for (let key in history.words) {
-            let word = history.words[key];
+          for (let _id in history.words) {
+            let word = history.words[_id];
             if (word.tag !== 'fa') {
               wordCardList.push({
-                key: key,
+                _id: _id,
                 tag: word.tag,
                 loc: word.location.split('.'),
               })
@@ -130,25 +142,13 @@ Component({
                 });
               }
             })
+          } else {
+            this.setData({
+              wordCardList: wordCardList,
+            })
           }
-          // 销毁原有的ctx，重新建立ctx并赋予新数据
-          if (this.ctx) this.ctx.destroy();
-          this.ctx = createRecycleContext({
-            id: 'wordCardRrecycleId',
-            dataKey: 'wordCardList',
-            page: this,
-            itemSize: {
-              width: parseInt(this.data.wordCardWidth),
-              height: parseInt(this.data.wordCardHeight) + 25,
-            }
-          })
-          this.ctx.append(wordCardList)
         }
       }
     },
-    'history': function(history) {
-      console.log('In recite3 history observer,')
-      console.log(history)
-    }
   }
 })

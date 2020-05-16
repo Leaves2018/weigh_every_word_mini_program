@@ -22,6 +22,7 @@
 
 
     <word-card-dialog show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}"/>
-    <recite show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget"/>
+    <!-- <recite show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget"/> -->
+    <word-card-set show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget"/>
   </view>
 </view>
