@@ -114,7 +114,7 @@ Component({
                   //点击确定
                   wx.setStorage({
                     key: 'input_passage_information',
-                    data: res.data.split('res'),
+                    data: [res.data],
                     success: (res) => {
                       wx.navigateTo({
                         url: '/pages/draft/draft',
