@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "recycle-view-horizontal": "../../miniprogram_npm/miniprogram-recycle-view-horizontal/recycle-view",
-    "recycle-item-horizontal": "../../miniprogram_npm/miniprogram-recycle-view-horizontal/recycle-item"
+    "recycle-item-horizontal": "../../miniprogram_npm/miniprogram-recycle-view-horizontal/recycle-item",
+    "mp-halfScreenDialog": "../../components/half-screen-dialog/half-screen-dialog",
+    "word-card": "../../components/word-card/word-card"
   },
   "navigationBarTitleText": "帮助"
 }
