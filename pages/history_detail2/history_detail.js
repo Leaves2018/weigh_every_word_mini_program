@@ -59,7 +59,7 @@ Component({
           let height = clientHeight * ratio;
           // 设置高度
           that.setData({
-            passage_height: height - 280 + "rpx",
+            passage_height: height - 160 + "rpx",
           });
         }
       });

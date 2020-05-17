@@ -7,10 +7,10 @@ page {
 
 .modify {
   position: fixed;
-  width: 50rpx;
-  height: 50rpx;
-  top: 5rpx;
-  right: 10rpx;
+  width: 65rpx;
+  height: 65rpx;
+  top: 50rpx;
+  right: 15rpx;
 }
 
 .retext {
@@ -40,7 +40,6 @@ page {
 .body-view {
   border-radius: 2%;
   background-color: rgb(0, 0, 0, 0.03);
-  margin-bottom: 100rpx;
 }
 
 .button_edit {
@@ -94,6 +93,6 @@ page {
   position: fixed;
   width: 80rpx;
   height: 80rpx;
-  bottom: 20rpx;
+  bottom: 80rpx;
   right: 20rpx;
 }

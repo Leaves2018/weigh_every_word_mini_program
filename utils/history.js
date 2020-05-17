@@ -81,7 +81,7 @@ class History {
         this.headline = headline;
       } else {
         headline = this.passageFragments[0][0];
-        this.headline = headline.length > 140 ? headline.substring(0, 140) : headline;
+        this.headline = headline.length > 24 ? headline.substring(0, 24) : headline;
       }
 
       var words = passage.replace(/[^a-zA-Z\-]/g, ' ').split(" ");
