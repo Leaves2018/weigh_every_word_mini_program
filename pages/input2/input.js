@@ -47,7 +47,6 @@ Component({
           this.appendday = [''];
         }
         this.day = this.day.concat(this.appendday);
-        console.log(this.day);
       }
       // let datemonth = parseInt(util.formatTime(new Date()).substring(5, 7));
       // let showmonth = [];
@@ -114,7 +113,7 @@ Component({
                   //点击确定
                   wx.setStorage({
                     key: 'input_passage_information',
-                    data: [res.data],
+                    data: [res.data], 
                     success: (res) => {
                       wx.navigateTo({
                         url: '/pages/draft/draft',
@@ -126,6 +125,11 @@ Component({
             })
           }
         }
+      })
+    },
+    addtext: function () {
+      wx.navigateTo({
+        url: '/pages/draft/draft',
       })
     },
     navigatetodraft: function () {
