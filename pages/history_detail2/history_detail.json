@@ -2,6 +2,7 @@
   "usingComponents": {
     "mp-dialog": "../../components/dialog/dialog",
     "towxml": "/towxml/towxml",
+    "word-card-halfScreenDialog": "../../components/word-card/word-card-halfScreenDialog",
     "word-card-dialog": "../../components/word-card/word-card-dialog",
     "word-card-set": "../../components/word-card/word-card-set",
     "tappable-passage": "../../components/tappable-passage/tappable-passage",

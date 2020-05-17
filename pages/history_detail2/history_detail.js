@@ -36,11 +36,6 @@ Component({
    */
   data: {
     dialogShow: false,
-    buttons: [{
-      text: "忘了"
-    }, {
-      text: "记得"
-    }],
     his_headline: '',
     numberOfUn: 0,
     numberOfVo: 0,
@@ -124,7 +119,8 @@ Component({
      * 
      */
     dealRememberAndForget(e) {
-      // console.log("In history_detail, dealRememberAndForget() is called" + JSON.stringify(e))
+      // console.log("In history_detail, dealRememberAndForget() is called")
+      console.log(e)
       let key = e.detail._id;
       let word = this.history.words[key];
       switch (e.detail.index) {
