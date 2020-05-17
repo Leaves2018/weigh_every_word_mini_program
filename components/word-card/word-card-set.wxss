@@ -61,7 +61,6 @@
   transition: all 0.3s ease-in;
 }
 
-
 .word-card-set-container {
   width: 750rpx;
   display: flex;
@@ -69,18 +68,18 @@
   align-items: center;
 }
 
-.set-scroll-view {
+.word-card-container {
   flex-shrink: 0;
   background-color: white;
+  position: relative;
+  display: flex;
+  flex-flow: column;
   border: 0rpx solid;
   border-radius: 30rpx;
   margin: 0rpx 50rpx;
 }
 
-.word-card-container {
-  position: relative;
-  display: flex;
-  flex-flow: column;
+.word-card-scroll-view {
   border: 0rpx solid;
   border-radius: 30rpx;
 }
@@ -109,11 +108,11 @@
 }
 
 .btn.forget {
-  background: #4CD28E;
+  background: #4cd28e;
   color: white;
 }
 
 .btn.remember {
-  background: #DDDDDD;
+  background: #ddd;
   color: black;
 }

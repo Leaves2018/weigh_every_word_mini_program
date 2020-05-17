@@ -150,6 +150,7 @@
   color: black;
   font-size: 28rpx;
   font-family: -apple-system;
+  font-style: italic;
   border: 2rpx solid #4CD28E;
   border-radius: 30rpx;
   padding: 20rpx;
