@@ -1,5 +1,5 @@
 <wxs src="./word-card.wxs" module="wxs" />
-<view class="word-card {{extClass}}" bindtouchstart="{{wxs.touchStart}}" bindtouchend="{{wxs.touchEnd}}" bindtouchcancel="{{wxs.touchCancel}}" bindtouchmove="{{wxs.touchMove}}" bindlongtap="flipCard">
+<view class="word-card {{extClass}}" bindtouchstart="{{wxs.touchStart}}" bindtouchend="{{wxs.touchEnd}}" bindtouchcancel="{{wxs.touchCancel}}" bindtouchmove="{{wxs.touchMove}}" bindlongpress="flipCard">
 
   <view wx:if="{{front}}" class="front">
     <view class="front-head">
@@ -30,7 +30,7 @@
     </view>
   </view>
 
-  <view wx:else class="back">
+  <view wx:elif="{{!front && detail !== ''}}" class="back">
     <view class="back-head">
       <image class="play-audio-btn" src='/images/laba.png' bindtap="playAudio" />
       <text class="wordcard-id" bindtap="flipCard">{{wordcard._id}}</text>

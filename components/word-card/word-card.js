@@ -84,6 +84,7 @@ Component({
      * 翻转卡片
      */
     flipCard: function() {
+      if (this.data.detail === '') return; // 如果detail为空，则不允许翻面
       var that = this;
       this.animate('.word-card', [{
           opacity: 1.0
