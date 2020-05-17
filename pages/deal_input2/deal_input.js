@@ -1,16 +1,12 @@
 // pages/deal_input2/deal_input.js
 const utilHistory = require('../../utils/history.js');
-const fileSystemManager = wx.getFileSystemManager();
 
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    filename:{
-      type:String,
-      value:''
-    },
+    
     listnumber: {
       type: Number,
       value: undefined
@@ -87,44 +83,6 @@ Component({
   },
 
   observers: {
-    'filename':function(filename){
-      console.log(filename);
-      let todayArticle = wx.getStorageSync('today_article_address');
-      // 如果已经录入或者为空，返回主页（input）
-      if (filename === todayArticle || '') {
-        wx.switchTab({
-          url: '/pages/input2/input',
-        })
-      } else {
-        wx.cloud.downloadFile({
-          fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/daily-push/' + filename, // 文件 ID
-          success: res => {
-            console.log(res.tempFilePath);
-            fileSystemManager.readFile({
-              filePath: res.tempFilePath,
-              encoding: 'utf8',
-              success: res1 => {
-                this.setData({
-                  s: res1.data,
-                })
-                wx.setStorage({
-                  key: 'today_article_address',
-                  data: filename,
-                });
-                this.deal_article();
-              },
-              fail: err => {
-                console.log('readFile fail', err)
-              }
-            });
-          },
-          fail: err => {
-            console.log('downFile fail', err)
-          }
-        })
-      }
-    },
-
     'listnumber': function (listnumber) {
       this.listnumber = listnumber;
       console.log(listnumber);

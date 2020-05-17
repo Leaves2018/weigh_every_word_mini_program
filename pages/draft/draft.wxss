@@ -32,7 +32,38 @@
   justify-content: center;
   background-color: #ffffff;
 }
-
+.textbackground {
+  left: 100rpx;
+  bottom: 140rpx;
+  width: 160rpx;
+  height: 160rpx;
+  line-height: 20rpx;
+  border-radius: 15rpx;
+  background-color: rgb(37, 224, 248);
+  text-align: center;
+  border: 1rpx solid rgba(187, 187, 187, 1);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.clickbackground {
+  left: 285rpx;
+  bottom: 140rpx;
+  width: 180rpx;
+  height: 160rpx;
+  line-height: 20rpx;
+  border-radius: 15rpx;
+  background-color: rgb(255, 208, 0);
+  text-align: center;
+  border: 1rpx solid rgba(187, 187, 187, 1);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .greenbackground {
   right: 100rpx;
   bottom: 140rpx;
@@ -67,7 +98,7 @@
   bottom: 15rpx;
   right: 50rpx;
   width: 350rpx;
-  height: 70rpx;
+  height: 80rpx;
   line-height: 26rpx;
   border-radius: 15rpx;
   background-color: rgba(2, 194, 97, 1);
@@ -84,7 +115,7 @@
   bottom: 15rpx;
   left: 50rpx;
   width: 200rpx;
-  height: 70rpx;
+  height: 80rpx;
   line-height: 26rpx;
   border-radius: 15rpx;
   background-color: rgba(0, 0, 0, 0.74);

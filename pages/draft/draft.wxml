@@ -7,6 +7,12 @@
       </view>
     </view>
   </view>
+  <view class="textbackground" bindtap="addtext">
+    <text class="text">添加文本</text>
+  </view>
+  <view class="clickbackground" bindtap="addclick">
+    <text class="text">添加剪贴板</text>
+  </view>
   <view class="greenbackground" bindtap="addpicture">
     <image class="addpictures" src="/images/camera.png"></image>
   </view>

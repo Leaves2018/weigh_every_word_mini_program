@@ -60,9 +60,9 @@
 			"current": -1,
 			"list": [
 				{
-					"id": 0,
-					"name": "pages/deal_input/deal_input",
-					"pathName": "pages/deal_input2/deal_input",
+					"id": -1,
+					"name": "pages/draft/draft",
+					"pathName": "pages/draft/draft",
 					"query": "filename=20200430.txt",
 					"scene": null
 				}

@@ -1,11 +1,15 @@
 // pages/draft/draft.js
 const utilHistory = require('../../utils/history.js');
+const fileSystemManager = wx.getFileSystemManager();
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-
+    filename: {
+      type: String,
+      value: ''
+    },
   },
 
   /**
@@ -36,7 +40,45 @@ Component({
         url: `/pages/deal_input2/deal_input?listnumber=${e.currentTarget.dataset.position}`,
       })
     },
-
+    addtext: function () {
+      wx.redirectTo({
+        url: '/pages/deal_input2/deal_input',
+      })
+    },
+    addclick: function () {
+      var that = this;
+      this.clipboardData;
+      wx.getClipboardData({
+        success(res) {
+          if (that.clipboardData === res.data) {
+            return;
+          } else {
+            that.clipboardData = res.data;
+            wx.showModal({
+              title: '是否录入当前剪贴板信息？',
+              content: res.data,
+              success: function (res1) {
+                if (res1.confirm) {
+                  //点击确定
+                  let input_passage_information = wx.getStorageSync('input_passage_information');
+                  if (input_passage_information === "") {
+                    input_passage_information = [];
+                  }
+                  input_passage_information.push(res.data);
+                  wx.setStorage({
+                    key: 'input_passage_information',
+                    data: input_passage_information,
+                  })
+                  that.setData({
+                    showinformation: input_passage_information,
+                  });
+                }
+              },
+            })
+          }
+        }
+      })
+    },
     addpicture: function () {
       var that = this;
       wx.chooseImage({
@@ -106,6 +148,51 @@ Component({
       wx.redirectTo({
         url: `/pages/history_detail2/history_detail?historyuuid=${history.uuid}`,
       })
+    },
+  },
+
+  observers: {
+    'filename': function (filename) {
+      var that = this;
+      console.log(filename);
+      let todayArticle = wx.getStorageSync('today_article_address');
+      // 如果已经录入或者为空，返回主页（input）
+      if (filename === todayArticle || '') {
+        wx.switchTab({
+          url: '/pages/input2/input',
+        })
+      } else {
+        wx.cloud.downloadFile({
+          fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/daily-push/' + filename, // 文件 ID
+          success: res => {
+            console.log(res.tempFilePath);
+            fileSystemManager.readFile({
+              filePath: res.tempFilePath,
+              encoding: 'utf8',
+              success: res1 => {
+                that.setData({
+                  showinformation: [res1.data],
+                });
+                wx.setStorage({
+                  key: 'input_passage_information',
+                  data: [res1.data],
+                });
+                wx.setStorage({
+                  key: 'today_article_address',
+                  data: filename,
+                });
+                this.redirectToHistory();
+              },
+              fail: err => {
+                console.log('readFile fail', err)
+              }
+            });
+          },
+          fail: err => {
+            console.log('downFile fail', err)
+          }
+        })
+      }
     },
   }
 })

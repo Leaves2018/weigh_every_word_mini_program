@@ -24,13 +24,13 @@ page {
 .words-container {
   display: grid;
   grid-template-columns: repeat(20, 1fr);
-  grid-auto-rows: 30rpx;
+  grid-auto-rows: 35rpx;
   justify-content: center; /** 水平居中 */
 }
 
 .item {
   /* font-size: 4em; */
-  border: 1rpx solid #fbfdfb;
+  border: 2rpx solid #fbfdfb;
   display: flex;
   align-items: center;
   justify-content: center;
