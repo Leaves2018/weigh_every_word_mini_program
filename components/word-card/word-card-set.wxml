@@ -12,8 +12,8 @@
             <word-card word="{{item._id}}" showFront="{{false}}" detail="{{history.passageFragments[item.loc[0]][item.loc[1]]}}" showButtons="{{false}}" autoplayAudio="{{false}}" />
           </scroll-view>
           <view class="bottom" style="height: {{bottomHeight}}" bindbuttontap="buttonTap">
-            <view class="btn forget" data-info="{{[0, item._id, 'set', index]}}" bindtap="{{wxs.bottomButtonTap}}">忘记</view>
-            <view class="btn remember" data-info="{{[1, item._id, 'set', index]}}" bindtap="{{wxs.bottomButtonTap}}">记得</view>
+            <view class="btn forget" data-type="wordCardSet" data-info="{{[0, item._id, index]}}" catchtap="{{wxs.bottomButtonTap}}">忘记</view>
+            <view class="btn remember" data-type="wordCardSet" data-info="{{[1, item._id, index]}}" catchtap="{{wxs.bottomButtonTap}}">记得</view>
           </view>
         </view>
 
