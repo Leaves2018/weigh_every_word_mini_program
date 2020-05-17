@@ -99,6 +99,10 @@ Component({
         addGlobalClass: true
     },
     properties: {
+        showHead: {
+          type: Boolean,
+          value: true,
+        },
         closabled: {
             type: Boolean,
             value: true

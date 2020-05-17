@@ -1,7 +1,7 @@
 <view class="{{show ? 'weui-show' :'weui-hidden'}}"> 
   <view class="weui-mask init" wx:if="{{mask}}" bindtap="close" data-type="tap"></view>
   <view class="weui-half-screen-dialog {{extClass}}">
-    <view class="weui-half-screen-dialog__hd">
+    <view wx:if="{{showHead}}" class="weui-half-screen-dialog__hd">
       <view wx:if="{{closabled}}" class="weui-half-screen-dialog__hd__side" bindtap="close" data-type="close">
         <view class="weui-icon-btn weui-icon-btn_close">关闭</view>
       </view>
