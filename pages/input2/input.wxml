@@ -14,7 +14,7 @@
       </view>
     </view>
     <view class="camera">
-      <view class="greenbackground" bindtap="addpicture" bindlongtap="addtext">
+      <view class="greenbackground" bindtap="addpicture" bindlongpress="addtext">
         <image class="addpictures" src="/images/camera.png"></image>
         <view class="whitespace"></view>
         <text class="remindtext">扫描文稿</text>

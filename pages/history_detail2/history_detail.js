@@ -9,7 +9,6 @@ const app = getApp();
 
 const wxss = {
   fa: {
-    "background": "white",
     "border": "none"
   },
   vo: {
