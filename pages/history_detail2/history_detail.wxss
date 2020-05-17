@@ -6,7 +6,7 @@ page {
 }
 
 .modify {
-  position: absolute;
+  position: fixed;
   width: 50rpx;
   height: 50rpx;
   top: 5rpx;
@@ -27,9 +27,7 @@ page {
   font-weight: 700;
   color: rgb(0, 0, 0);
   border-radius: 10%;
-  text-decoration-line: underline;
-  background-color: rgb(0, 0, 0, 0.03);
-  border-color: #000;
+  background-color: rgb(255, 174, 52);
 }
 
 .votext {
@@ -90,4 +88,12 @@ page {
 .text0 {
   font-weight: 700;
   font-size: 35rpx;
+}
+
+.showallwords {
+  position: fixed;
+  width: 80rpx;
+  height: 80rpx;
+  bottom: 20rpx;
+  right: 20rpx;
 }

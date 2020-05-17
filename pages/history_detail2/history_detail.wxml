@@ -1,32 +1,29 @@
 <!--pages/history_detail2/history_detail.wxml-->
 <view class="page">
-  <view class="body">
+  <view class="retext">
+    <text class="headtext">{{his_headline}}</text>
+    <image class="modify" bindtap="redirectToModify" src="/images/edit.png"></image>
     <view class="retext">
-      <view class="retext">
-        <text space="ensp" class="votext"> 生词 </text>
-        <text space="ensp"> {{numberOfVo}}           </text>
-        <text space="ensp" class="untext">未处理</text>
-        <text space="ensp"> {{numberOfUn}}</text>
-        <image class="modify" bindtap="redirectToModify" src="/images/edit.png"></image>
-      </view>
-      <text class="headtext">{{his_headline}}</text>
-      <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">
-        <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord" />
-      </scroll-view>
+      <text space="ensp" class="votext"> 生词 </text>
+      <text space="ensp"> {{numberOfVo}}           </text>
+      <text space="ensp" class="untext"> 未处理 </text>
+      <text space="ensp"> {{numberOfUn}}</text>
     </view>
-    <view class="button_edit">
-      <view class='returnbtn' bindtap="return">
-        <text class="text0"> 返回 </text>
-      </view>
-      <view class='wordsbtn' bindtap="redirectToRecite">
-        <text class="text0">查看所有单词</text>
-      </view>
-    </view>
-
-
+    <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">
+      <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord" />
+    </scroll-view>
+    <image class="showallwords" bindtap="showallwords" src="/images/tabbar_icon_recite_active.png"></image>
+  </view>
+  <!-- <view class="button_edit">
+    <view class='returnbtn' bindtap="return">
+      <text class="text0"> 返回 </text>
+    <iew>
+    <view class='wordsbtn' bindtap="redirectToRecite"> 
+      <text class="text0">查看所有单词</text>
+    <view>
+  <view> -->
     <!-- <word-card-dialog show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}"/> -->
     <word-card-halfScreenDialog show="{{dialogShow}}" mask-closable="{{true}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}"/>
     <!-- <recite show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget"/> -->
     <word-card-set show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget" />
-  </view>
 </view>
