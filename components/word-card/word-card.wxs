@@ -7,25 +7,35 @@ var startY = 0;
 
 module.exports = {
   bottomButtonTap: function(event, ownerInstance) {
+    var type = event.currentTarget.dataset.type;
     var info = event.currentTarget.dataset.info;
-    var index = info[0];
-    var _id = info[1];
-    var eventDetail = {
-      index: index,
-      _id: _id
-    };
-    if (info.length > 2) {
-      var source = info[2];
-      if (source === 'set') {
-        var number = info[3];
-        var instance = ownerInstance.selectComponent('.word-card-container.item' + (number + 0));
-        // console.log(JSON.stringify(instance));
-        instance.setStyle({
-          "background-color": index === 0 ? "#DC9FB4" : "#66BAB7",
-        })
-        // 滚动到下一个单词位置（是否可以不经过逻辑层，直接wxs设置滚动位置？）
-        eventDetail['selector'] = '.word-card-container.item' + (number + 1);
+    // console.log('type=' + JSON.stringify(type))
+    // console.log('info=' + JSON.stringify(info))
+    // 处理halfScreenDialog和wordCardSet两处的按钮点击事件，包装成统一形式再向上触发
+    // wxs暂不允许处理自定义事件，故halfScreenDialog处理方法移动到word-card-halfScreenDialog.js中
+    if (type === 'halfScreenDialog') {
+      var index = event.detail.index;
+      var _id = event.currentTarget.dataset.info;
+      var eventDetail = {
+        type: type,
+        index: index,
+        _id: _id,
       }
+    } else if (type === 'wordCardSet') {
+      var index = info[0];
+      var _id = info[1];
+      var eventDetail = {
+        type: type,
+        index: index,
+        _id: _id
+      };
+      var number = info[2];
+      var instance = ownerInstance.selectComponent('.word-card-container.item' + (number + 0));
+      instance.setStyle({
+        "background-color": index === 0 ? "#DC9FB4" : "#66BAB7",
+      })
+      // 滚动到下一个单词位置（是否可以不经过逻辑层，直接wxs设置滚动位置？）
+      eventDetail['selector'] = '.word-card-container.item' + (number + 1);
     }
     ownerInstance.triggerEvent('buttontap', eventDetail, {});
   },
