@@ -1,0 +1,6 @@
+<!--components/word-card/word-card-halfScreenDialog.wxml-->
+<mp-halfScreenDialog catchbuttontap="buttonTap" show="{{show}}" maskClosable="{{maskClosable}}" buttons="{{buttons}}" showHead="{{false}}" data-type="halfScreenDialog" data-info="{{word}}">
+<scroll-view slot="desc" scroll-y="{{true}}" style="height: {{scrollViewHeight}}">
+  <word-card word="{{word}}" showFront="{{true}}" detail="{{detail}}" autoplayAudio="{{autoplayAudio}}"/>
+</scroll-view>
+</mp-halfScreenDialog>
