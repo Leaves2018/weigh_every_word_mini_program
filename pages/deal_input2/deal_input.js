@@ -64,11 +64,18 @@ Component({
 
     //处理文本
     deal_article: function () {
-      let passage_temp = wx.getStorageSync('input_passage_information');
-      passage_temp[this.listnumber] = this.data.s;
+      let input_passage_information = wx.getStorageSync('input_passage_information');
+      if (input_passage_information === "") {
+        input_passage_information = [];
+        input_passage_information.push(this.data.s);
+      } else if (this.listnumber === undefined){
+        input_passage_information.push(this.data.s);
+      } else {
+        input_passage_information[this.listnumber] = this.data.s;
+      }
       wx.setStorage({
         key: 'input_passage_information',
-        data: passage_temp,
+        data: input_passage_information,
       })
       wx.redirectTo({
         url: '/pages/draft/draft',
