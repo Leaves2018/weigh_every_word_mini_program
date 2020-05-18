@@ -15,7 +15,7 @@ const wxss = {
     "background": "#7FFFAA"
   },
   un: {
-    "border-bottom": "3px solid #8B4513"
+    "background": "rgb(255, 196, 107)"
   },
 }
 
@@ -77,14 +77,14 @@ Component({
       });
     },
 
-    return: function () {
-      wx.navigateBack({
-        url: '/pages/history_list/history_list',
-      });
-    },
+    // return: function () {
+    //   wx.navigateBack({
+    //     url: '/pages/history_list/history_list',
+    //   });
+    // },
 
     //背诵
-    redirectToRecite: function() {
+    showallwords: function() {
       // wx.redirectTo({
       //   url: `/pages/recite2/recite?historyuuid=${this.data.historyuuid}`,
       // });
