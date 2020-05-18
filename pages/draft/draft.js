@@ -35,6 +35,26 @@ Component({
         showinformation: input_passage_information,
       });
     },
+    longdelete: function (e) {
+      var that = this;
+      wx.showModal({
+        title: '提示',
+        content: '确认删除此片段吗？',
+        success: function (res) {
+          if (res.confirm) {
+            let input_passage_information = wx.getStorageSync('input_passage_information');
+            input_passage_information.splice(e.currentTarget.dataset.position,1);
+            wx.setStorage({
+              key: 'input_passage_information',
+              data: input_passage_information,
+            })
+            that.setData({
+              showinformation: input_passage_information,
+            });
+          }
+        },
+      })
+    },
     showpassagefragment: function (e) {
       wx.redirectTo({
         url: `/pages/deal_input2/deal_input?listnumber=${e.currentTarget.dataset.position}`,
@@ -133,13 +153,11 @@ Component({
         complete: function (res) { },
       })
     },
-    returntoinput: function () {
-      wx.navigateBack({
-        url: '/pages/input2/input',
-      })
-    },
-    redirectToHistory: function () {
+    deal_passage: function () {
       let input_passage_information = wx.getStorageSync('input_passage_information');
+      if (input_passage_information === '') {
+        return;
+      }
       let history = new utilHistory.History(input_passage_information.join(' '));
       wx.setStorage({
         key: 'input_passage_information',

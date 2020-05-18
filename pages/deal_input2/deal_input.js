@@ -63,15 +63,20 @@ Component({
     },
 
     //处理文本
-    deal_article: function () {
+    modify_confirm: function () {
       let input_passage_information = wx.getStorageSync('input_passage_information');
       if (input_passage_information === "") {
-        input_passage_information = [];
-        input_passage_information.push(this.data.s);
-      } else if (this.listnumber === undefined){
-        input_passage_information.push(this.data.s);
+        if(this.data.s !== '') {
+          input_passage_information = [];
+          input_passage_information.push(this.data.s);
+          console.log(this.listnumber);
+        }
       } else {
-        input_passage_information[this.listnumber] = this.data.s;
+        if (this.data.s === '') {
+          input_passage_information.splice(this.listnumber,1)
+        }else{
+          input_passage_information[this.listnumber] = this.data.s;
+        }
       }
       wx.setStorage({
         key: 'input_passage_information',
@@ -82,7 +87,7 @@ Component({
       })
     },
 
-    deal_clear: function (e) {
+    modify_return: function (e) {
       wx.redirectTo({
         url: '/pages/draft/draft',
       })

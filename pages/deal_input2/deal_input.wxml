@@ -5,8 +5,8 @@
     <view class="section">
       <textarea class="textarea0" value="{{s}}" bindinput="bindFormSubmit" maxlength = "-1" style="height:{{textarea_height}}" show-confirm-bar="false" placeholder="请输入要筛选的文本" />
       <view class='btnarea'>
-        <button class='btn' style="width:40vw" type="default" bindtap="deal_clear"> 返回 </button>
-        <button class='btn' style="width:40vw" type="default" bindtap="deal_article"> 确认修改 </button>
+        <button class='btn' style="width:40vw" type="default" bindtap="modify_return"> 返回 </button>
+        <button class='btn' style="width:40vw" type="default" bindtap="modify_confirm"> 确认 </button>
       </view>
     </view>
 
