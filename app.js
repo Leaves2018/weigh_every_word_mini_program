@@ -42,6 +42,37 @@ App({
     this.vocabularyTrie = utilTrie.getVocabularyTrie();
     this.getOpenid();
     this.getWindowSize();
+    this.clipboardData = '';
+  },
+  onShow: function() {
+    var that = this;
+    wx.getClipboardData({
+      success(res) {
+        if (that.clipboardData === res.data) {
+          return;
+        } else {
+          that.clipboardData = res.data;
+          wx.showModal({
+            title: '是否录入当前剪贴板信息？',
+            content: res.data,
+            success: function (res1) {
+              if (res1.confirm) {
+                //点击确定
+                wx.setStorage({
+                  key: 'input_passage_information',
+                  data: [res.data],
+                  success: (res) => {
+                    wx.navigateTo({
+                      url: '/pages/draft/draft',
+                    })
+                  }
+                })
+              }
+            },
+          })
+        }
+      }
+    })
   },
   onHide: function() {
     console.log("App onHide() called")
