@@ -7,18 +7,15 @@
       </view>
     </view>
   </view>
-  <view class="textbackground" bindtap="addtext">
-    <text class="text">添加文本</text>
-  </view>
-  <view class="clickbackground" bindtap="addclick">
-    <text class="text">添加剪贴板</text>
-  </view>
   <view class="greenbackground" bindtap="addpicture">
     <image class="addpictures" src="/images/camera.png"></image>
+    <text class="text">扫描文稿</text>
   </view>
-  <view class="button_edit">
-    <view class='wordsbtn' bindtap="deal_passage">
-      <text class="text">处理</text>
-    </view>
+  <view class="textbackground" bindtap="addtext">
+    <image class="addpictures" src="/images/input.png"></image>
+    <text class="text">输入文本</text>
+  </view>
+  <view class='wordsbtn' bindtap="deal_passage">
+    <text class="text">加入到档案</text>
   </view>
 </view>
