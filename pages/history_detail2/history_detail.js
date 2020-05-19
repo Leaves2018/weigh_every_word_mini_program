@@ -84,7 +84,18 @@ Component({
     // },
 
     //背诵
-    showallwords: function() {
+    showallvowords: function () {
+      // wx.redirectTo({
+      //   url: `/pages/recite2/recite?historyuuid=${this.data.historyuuid}`,
+      // });
+      // console.log("redirectToRecite() is called")
+      // console.log(JSON.stringify(this.history.words))
+      this.setData({
+        reciteHistory: this.history,
+        reciteShow: true,
+      })
+    },
+    showallunwords: function () {
       // wx.redirectTo({
       //   url: `/pages/recite2/recite?historyuuid=${this.data.historyuuid}`,
       // });
