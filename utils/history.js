@@ -11,9 +11,9 @@ class Word {
 }
 class HistoryList {
   constructor(items = {}) {
-    if(items.items!==undefined){
+    if (items.items !== undefined) {
       this.items = items.items;
-    }else {
+    } else {
       this.items = items;
     }
     this.save();
@@ -83,7 +83,22 @@ class History {
         this.headline = headline;
       } else {
         headline = this.passageFragments[0][0];
-        this.headline = headline.length > 24 ? headline.substring(0, 24) : headline;
+        if (headline.length < 24) {
+          this.headline = headline;
+        } else {
+          let wordsofheadline = headline.split(' ');
+          let length = 0;
+          let index;
+          for (var i = 0; i < wordsofheadline.length; i++) {
+            length += wordsofheadline[i].length;
+            length += 1;
+            if (length > 24) {
+              index = i;
+              break;
+            }
+          }
+          this.headline = wordsofheadline.slice(0, index).join(' ');
+        }
       }
 
       var words = passage.replace(/[^a-zA-Z\-]/g, ' ').split(" ");
@@ -185,7 +200,7 @@ const getHistoryFromStorage = uuid => {
 
 
 module.exports = {
-  Word:Word,
+  Word: Word,
   History: History,
   getHistoryFromStorage: getHistoryFromStorage,
   getHistoryListFromStorage: getHistoryListFromStorage,
