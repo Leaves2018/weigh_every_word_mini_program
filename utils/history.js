@@ -44,6 +44,7 @@ class HistoryListItem {
     this.done = history.done;
     this.plus = history.plus;
     this.numberOfWords = history.numberOfWords;
+    this.numOfUn = history.numOfUn;
   }
 }
 class History {
@@ -58,6 +59,7 @@ class History {
       this.done = passage.done;
       this.plus = passage.plus;
       this.numberOfWords = passage.numberOfWords;
+      this.numOfUn = passage.numOfUn;
       this.passageFragments = passage.passageFragments;
       for (let word in passage.words) {
         if (getApp().familiarTrie.search(word)) {
@@ -70,7 +72,7 @@ class History {
       }
       this.words = passage.words;
     } else {
-      this.date = utils_util.formatTime(new Date());
+      this.date = utils_util.formatTime(new Date()).substring(0, 10);
       this.uuid = this.uuid();
       this.done = false;
       this.plus = 0;
@@ -96,6 +98,7 @@ class History {
       //分开生词和未知词
       var voc_really = words.filter(x => getApp().vocabularyTrie.search(x)); //生词
       var unknown_words = utils_util.arrSub(voc_temp, voc_really); //未知词
+      this.numOfUn = unknown_words.length;
       this.numberOfWords = voc_really.length + unknown_words.length;
       this.words = {};
       for (var element of voc_really) {
@@ -123,10 +126,13 @@ class History {
   save = (refreshPlus = false) => {
     if (refreshPlus) {
       this.plus = 0;
+      this.numOfUn = 0;
       let lengthofwords = 0;
       for (let key in this.words) {
         if (this.words[key].tag === 'fa') {
           this.plus += 1;
+        } else if (this.words[key].tag === 'un') {
+          this.numOfUn += 1;
         }
         lengthofwords += 1;
       }
