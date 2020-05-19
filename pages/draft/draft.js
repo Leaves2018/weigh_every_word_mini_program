@@ -199,7 +199,7 @@ Component({
                   key: 'today_article_address',
                   data: filename,
                 });
-                this.redirectToHistory();
+                this.deal_passage();
               },
               fail: err => {
                 console.log('readFile fail', err)

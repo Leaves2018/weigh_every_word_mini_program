@@ -51,9 +51,10 @@ App({
       key: 'last_num_of_words',
       data: this.familiarTrie.getAllData(true).length + this.vocabularyTrie.getAllData(true).length,
     })
+    const util = require('./utils/util.js');
     wx.setStorage({
       key: 'last_launch_date',
-      data: (new Date()).toString().substring(8, 10),
+      data: util.formatTime(new Date()).substring(0, 10),
     })
   },
   // 获取用户openid

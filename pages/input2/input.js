@@ -26,7 +26,7 @@ Component({
       if (this.last_launch_date === '') {
         this.last_launch_date = 0;
       }
-      let nowdate = util.formatTime(new Date()).substring(8, 10);
+      let nowdate = util.formatTime(new Date()).substring(0, 10);
       if (this.totalday===''){
         this.totalday = [, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,];
       }
