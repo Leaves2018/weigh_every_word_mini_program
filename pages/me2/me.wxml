@@ -36,21 +36,21 @@
 </view>
 
 <view class="other-entrance">
-  <navigator url="/pages/recite_settings/recite_settings">
+  <view bindtap="uploadfiles">
     <view class="cell-info">
-      <text class="cell-info-text">上次更新：今天上午9:30</text>
+      <text class="cell-info-text">{{upgradetime}}</text>
     </view>
     <view class="cell upload">
       <image src="/images/shangchuan.svg" class="icon"></image>
       <text class="text">上传云端保存</text>
     </view>
-  </navigator>
-  <navigator url="/pages/recite_settings/recite_settings">
+  </view>
+  <view bindtap="downloadfiles">
     <view class="cell download">
       <image src="/images/xiazai.svg" class="icon"></image>
       <text class="text">下载最新备份</text>
     </view>
-  </navigator>
+  </view>
   <navigator url="/pages/domestication2/domestication">
     <view class="cell domestication">
       <image src="/images/chilun.svg" class="icon"></image>
