@@ -4,5 +4,6 @@
     "mp-checkbox-group": "../../components/checkbox-group/checkbox-group",
     "mp-checkbox": "../../components/checkbox/checkbox"
   },
-  "navigationBarTitleText": "熟词本初始化"
+  "navigationBarTitleText": "设置词汇量",
+  "enablePullDownRefresh": true
 }

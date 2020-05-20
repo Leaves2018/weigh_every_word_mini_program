@@ -1,8 +1,19 @@
-<view class="page">
+<!-- <view class="page">
   <mp-checkbox-group bindchange="checkboxChange">
     <label class="checkbox" wx:for="{{items}}">
-      <mp-checkbox value="{{item.name}}" label="{{item.value}}" checked="{{familiar_lexicon[item.name]}}"/>
+      <mp-checkbox value="{{item.name}}" label="{{item.value}}" checked="{{familiar_lexicon[item.name]}}" />
     </label>
   </mp-checkbox-group>
-  
+</view> -->
+
+<view class="page">
+  <view class="page-head">
+    <text class="page-title">设置基础词汇量</text>
+  </view>
+  <view class="page-body">
+    <view wx:for="{{keys}}" class="tag-container" style="background-color: {{lexiconConfiguration[item].checked ? '#02C261' : '#FBFBFB'}};" data-key="{{item}}" bindtap="check">
+      <image class="tag-icon" src="/images/shu_02.svg"></image>
+      <text class="tag-text">{{lexiconConfiguration[item].name}}</text>
+    </view>
+  </view>
 </view>
