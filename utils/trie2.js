@@ -25,8 +25,10 @@ class Trie {
   // 插入字符串辅助方法：递归调用
   insertHelper(stringData, node) {
     if (stringData === '') {
-      node.isWord = true; // 标记插入单词成功（如果遇到整个插入的输入即为空，如何处理？是否有这样的情况？）
-      this.number += 1; // 计数
+      if (!node.isWord) { // 判断是否已经插入过该单词，如果是则不重复插入，也不计数
+        node.isWord = true; // 标记插入单词成功（如果遇到整个插入的输入即为空，如何处理？是否有这样的情况？）
+        this.number += 1; // 计数
+      }
       return; // 输入字符串为空时，不需要插入或者插入完毕，结束插入
     } else if (!node.children[stringData[0]]) { // 如果children中没有与输入字符串第一个字符相同的key，那么建一个新的
       node.children[stringData[0]] = new TrieNode();
