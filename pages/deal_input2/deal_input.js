@@ -94,8 +94,8 @@ Component({
       if (this.uuid_para_sent) {
         let historyList = utilHistory.getHistoryListFromStorage();
         historyList.deleteHistory(this.history.uuid);
-        this.history.passageFragments[this.para][this.sent] = this.data.s,
-        this.history = new utilHistory.History(util.joinPassage(this.history.passageFragments));
+        this.history.passageFragments[this.para] = util.splitWithPunc(this.data.s),
+        this.history = new utilHistory.History(util.joinPassage(this.history.passageFragments), this.before_headline);
         wx.redirectTo({
           url: `/pages/history_detail2/history_detail?historyuuid=${this.history.uuid}`,
         });
@@ -131,8 +131,9 @@ Component({
       this.para = uuid_para_sent.split('!!!')[1];
       this.sent = uuid_para_sent.split('!!!')[2];
       this.history = new utilHistory.History(wx.getStorageSync(this.uuid));
+      this.before_headline = this.history.headline;
       this.setData({
-        s: this.history.passageFragments[this.para][this.sent],
+        s: this.history.passageFragments[this.para].join(' '),
       });
     }
   }
