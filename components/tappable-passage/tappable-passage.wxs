@@ -1,9 +1,19 @@
 module.exports = {
+  // 长按事件：把所在段、句信息向上传递
+  longPress: function(event, ownerInstance) {
+    console.log(JSON.stringify(event));
+    var extra = event.currentTarget.dataset.extra;
+    var text = event.currentTarget.dataset.text;
+    var para = event.currentTarget.dataset.para;
+    var sent = event.currentTarget.dataset.sent;
+    // 触发事件longpressword，传递点击的文本数据及位置信息
+    ownerInstance.triggerEvent('longpressword', { text: text, para: para, sent: sent })
+    return false;
+  },
   // 点击方法：标记所有符合class定位的词
   tap: function(event, ownerInstance) {
-    var extra = event.currentTarget.dataset.extra;
-    var text = extra[0];
-    var location = extra[1];
+    var text = event.currentTarget.dataset.text;
+    var location = event.currentTarget.dataset.para + '.' + event.currentTarget.dataset.sent;
     var instance = ownerInstance.selectAllComponents('.item.' + text);
     for (var i = 0; i < instance.length; i++) {
       instance[i].setStyle({
@@ -12,7 +22,7 @@ module.exports = {
     }
     // 触发事件tapword，传递点击的文本数据及位置信息
     ownerInstance.triggerEvent('tapword', {text: text, location: location})
-    return true;
+    return false;
   },
   // 根据逻辑层反馈，重新设置当前单词样式
   remarkThisWord: function (newValue, oldValue, ownerInstance, instance) {
