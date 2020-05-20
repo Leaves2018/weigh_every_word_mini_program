@@ -15,11 +15,11 @@
       </view>
     </view>
     <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">
-      <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord" />
+      <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindlongpressword="longpressword" bindtapword="tapWord" />
     </scroll-view>
   </view>
   <!-- <word-card-dialog show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}"/> -->
   <word-card-halfScreenDialog show="{{dialogShow}}" mask-closable="{{true}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}" />
   <!-- <recite show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget"/> -->
-  <word-card-set show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget" />
+  <word-card-set show="{{reciteShow}}" passageFragments="{{recitePassageFragments}}" words="{{reciteWords}}" bindbuttontap="dealRememberAndForget" />
 </view>

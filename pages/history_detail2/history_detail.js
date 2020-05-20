@@ -38,6 +38,7 @@ Component({
     his_headline: '',
     numberOfUn: 0,
     numberOfVo: 0,
+    reciteWords:[],
   },
 
   /**
@@ -84,21 +85,50 @@ Component({
     // },
 
     //背诵
-    showallvowords: function () {
+    showallvowords: function() {
+      let vocabularytemp = [];
+      let allWords = this.history.words;
+      for (let _id in allWords) {
+        let word = allWords[_id];
+        switch (word.tag) {
+          case 'vo':
+            vocabularytemp.push({
+              '_id': _id,
+              'tag': word.tag,
+              'location': word.location.split('.'),
+            });
+            break;
+        }
+      }
       this.setData({
-        reciteHistory: this.history,
+        recitePassageFragments: this.history.passageFragments,
+        reciteWords: vocabularytemp,
         reciteShow: true,
       })
     },
-    showallunwords: function () {
+    showallunwords: function() {
+      let unknowntemp = [];
+      let allWords = this.history.words;
+      for (let _id in allWords) {
+        let word = allWords[_id];
+        switch (word.tag) {
+          case 'un':
+            unknowntemp.push({
+              '_id': _id,
+              'tag': word.tag,
+              'location': word.location.split('.'),
+            });
+            break;
+        }
+      }
       this.setData({
         reciteHistory: this.history,
+        reciteWords: unknowntemp,
         reciteShow: true,
       })
     },
 
     tapWord: function(e) {
-      console.log(e);
       if (/^[A-Za-z]+[\-\']?[a-zA-Z]+$/.test(e.detail.text)) {
         this.deal_word = e.detail.text;
         this.deal_word_location = e.detail.location;
@@ -111,6 +141,9 @@ Component({
           wordDetail: wordDetail,
         })
       }
+    },
+    longpressword: function(e) {
+      console.log(e);
     },
 
     /**
@@ -140,7 +173,7 @@ Component({
         case 1:
           if (word === undefined || word.tag === 'fa') {
             break;
-          } else if (word.tag === 'vo'){
+          } else if (word.tag === 'vo') {
             this.history.plus += 1;
             this.numberOfVo -= 1;
           } else {

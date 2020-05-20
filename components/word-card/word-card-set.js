@@ -123,7 +123,7 @@ Component({
   observers: {
     'show': function(show) {
       if (show) {
-        if (words.length <= 0) {
+        if (this.data.words.length <= 0) {
           var that = this;
           wx.showToast({
             title: '全部处理完成',
