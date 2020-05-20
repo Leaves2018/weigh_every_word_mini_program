@@ -4,13 +4,14 @@
   </view>
 
   <view class="page__body">
-    <view class="history-slidecells" wx:for="{{uuids}}" wx:key="*this">
+    <view class="history-slidecells" wx:for="{{uuids}}" wx:key="*this" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
       <mp-slideview data-historyuuid="{{item}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapNavigateButton" bindbuttontap="tapSlideButton" style="margin-bottom: {{(index === words.length - 1) ? '64rpx' : '0rpx'}}">
-        <view class="history-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
+        <view class="history-slidecell">
           <view class="cell-info">
-            <view class="blueblock" style="width:{{items[item].plus * 688 / items[item].numberOfWords -8}}rpx"></view>
-            <view class="orangeblock" style="width:{{items[item].numOfUn * 688 / items[item].numberOfWords -8}}rpx"></view>
-            <view class="greenblock" style="width:{{(items[item].numberOfWords-items[item].plus-items[item].numOfUn) * 688 / items[item].numberOfWords -8}}rpx"></view>
+
+            <view class="blueblock" style="width:{{items[item].plus / items[item].numberOfWords * 700}}rpx; border-top-right-radius: {{items[item].plus === items[item].numberOfWords ? 15 : 0}}rpx;"></view>
+            <view class="orangeblock" style="width:{{items[item].numOfUn / items[item].numberOfWords * 700}}rpx; border-radius: {{items[item].plus ? 0 : 15}}rpx {{items[item].plus + items[item].numOfUn === items[item].numberOfWords ? 15 : 0}}rpx 0 0"></view>
+            <view class="greenblock" style="border-top-left-radius:{{items[item].plus + items[item].numOfUn === 0 ? 15 : 0}}rpx"></view>
           </view>
           <view class="headdivpartition"></view>
           <text class="headtext" space="ensp"> {{items[item].headline}} </text>

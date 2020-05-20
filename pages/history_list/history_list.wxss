@@ -1,7 +1,6 @@
 page {
   height: 100%;
-  padding: 0rpx;
-  background-color: #f7f7f7;
+  background-color: #EDEDED;
 }
 
 .page__head {
@@ -14,34 +13,58 @@ page {
 .page__body {
   z-index: -1;
   margin-top: 100rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.history-slidecells {
+  width: 700rpx;
+  margin: 15rpx 0rpx;
+  border-radius: 15rpx;
+  background-color: white;
+}
+
+.history-slidecell {
+  width: 700rpx;
+  border-radius: 15rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  text-align: left;
 }
 
 .cell-info {
+  overflow: hidden;
+  height: 32rpx;
   display: flex;
-  height: 40rpx;
-  border-radius: 30rpx 30rpx 0rpx 0rpx;
-  background-color: rgba(0, 0, 0, 0.1);
+  flex-flow: row nowrap;
 }
 
 .blueblock {
-  overflow: hidden;
-  border: 2px solid rgb(255, 255, 255);
+  order: 0;
+  flex-grow: 0;
+  border-radius: 15rpx 0 0 0;
   background-color: rgba(10, 211, 238, 0.432);
 }
 
 .orangeblock {
-  overflow: hidden;
-  border: 2px solid rgb(255, 255, 255);
+  order: 1;
+  flex-grow: 0;
   background-color: rgba(255, 166, 0, 0.432);
 }
 
 .greenblock {
-  overflow: hidden;
-  border: 2px solid rgb(255, 255, 255);
+  order: 2;
+  flex-grow: 1;
+  border-radius: 0 15rpx 0 0; 
   background-color: rgba(0, 255, 42, 0.432);
 }
 
 .headtext {
+  margin: 0rpx 20rpx;
   font-weight: 700;
   font-size: 45rpx;
 }
@@ -79,14 +102,4 @@ page {
   font-weight: 500;
   font-size: 24rpx;
   font-style: italic;
-}
-
-.history-slidecell {
-  margin: 8rpx;
-  background-color: #fff;
-  border-radius: 8rpx;
-  padding: 24rpx;
-  line-height: 1.4;
-  font-size: 17rpx;
-  color: rgba(0, 0, 0, 0.9);
 }
