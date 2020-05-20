@@ -9,7 +9,7 @@
         <view class="history-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
           <view class="cell-info">
             <view class="blueblock" style="width:{{items[item].plus * 688 / items[item].numberOfWords -8}}rpx"></view>
-            <view class="orangeblock" style="left:{{items[item].plus * 688 / items[item].numberOfWords}}rpx;width:{{items[item].numOfUn * 688 / items[item].numberOfWords -8}}rpx"></view>
+            <view class="orangeblock" style="width:{{items[item].numOfUn * 688 / items[item].numberOfWords -8}}rpx"></view>
             <view class="greenblock" style="width:{{(items[item].numberOfWords-items[item].plus-items[item].numOfUn) * 688 / items[item].numberOfWords -8}}rpx"></view>
           </view>
           <view class="headdivpartition"></view>

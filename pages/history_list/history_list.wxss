@@ -17,47 +17,28 @@ page {
 }
 
 .cell-info {
-  position: relative;
+  display: flex;
   height: 40rpx;
-  border-radius: 15rpx 15rpx 0rpx 0rpx;
+  border-radius: 30rpx 30rpx 0rpx 0rpx;
   background-color: rgba(0, 0, 0, 0.1);
-  color: rgba(0, 0, 0, 0.82);
-  font-size: 20rpx;
-  font-style: italic;
-  text-align: left;
-  font-family: PingFang SC;
-  padding-left: 50rpx;
 }
 
 .blueblock {
-  position: absolute;
-  height: 32rpx;
-  border-radius: 15rpx 0rpx 0rpx 0rpx;
+  overflow: hidden;
   border: 2px solid rgb(255, 255, 255);
   background-color: rgba(10, 211, 238, 0.432);
-  left: 0rpx;
-  top: 0rpx;
-  width: 0rpx;
 }
 
 .orangeblock {
-  position: absolute;
-  height: 32rpx;
+  overflow: hidden;
   border: 2px solid rgb(255, 255, 255);
   background-color: rgba(255, 166, 0, 0.432);
-  top: 0rpx;
-  width: 0rpx;
 }
 
 .greenblock {
-  position: absolute;
-  height: 32rpx;
-  border-radius: 0rpx 15rpx 0rpx 0rpx;
+  overflow: hidden;
   border: 2px solid rgb(255, 255, 255);
   background-color: rgba(0, 255, 42, 0.432);
-  top: 0rpx;
-  right: 0rpx;
-  width: 0rpx;
 }
 
 .headtext {

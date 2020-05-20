@@ -67,7 +67,10 @@ Component({
     },
     //将修改存至本地
     onUnload: function() {
-      this.history = new utilsHis.History(this.history, this.data.his_headline);
+      if (this.before_headline !== this.data.his_headline){
+        this.history = new utilsHis.History(this.history, this.data.his_headline);
+      }
+      this.history.save(true); 
       app.familiarTrie.save();
       app.vocabularyTrie.save();
     },
@@ -296,6 +299,7 @@ Component({
             break;
         }
       }
+      this.before_headline = this.history.headline;
       // 页面第一次渲染
       this.setData({
         passage: passage,
