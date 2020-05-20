@@ -4,10 +4,14 @@
 
 <view class="container" bindtap="close" wx:if="{{show}}">
   <view class="weui-dialog">
-    <scroll-view scroll-x="{{true}}" enable-flex="{{true}}" scroll-with-animation="{{true}}" scroll-left="{{scrollLeft}}" scroll-into-view="{{scrollIntoView}}" bindscrolltolower="scrollToLower" style="height: {{wordCardSetHeight}};">
+    <scroll-view scroll-x="{{true}}" enable-flex="{{true}}" scroll-with-animation="{{true}}" scroll-left="{{scrollLeft}}" scroll-into-view="{{scrollIntoView}}" bindscrolltolower="scrollToLower" >
       <view class="word-card-set-container">
 
-        <view wx:for="{{words}}" wx:key="*this" class="word-card-container {{'item' + index}}" style="height: {{wordCardSetHeight}};" catchtap="stopEvent">
+        <view wx:for="{{words}}" wx:key="*this" class="word-card-container {{'item' + index}}" style="height: {{wordCardSetHeight}}; border-color: {{tagMap[item.tag].backgroundColor}};" catchtap="stopEvent">
+          <!-- <view class="word-card-head" style="background-color: {{tagMap[item.tag].backgroundColor}}; height: {{wordCardHeadHeight}}">
+            <image class="word-card-head-image" src="{{tagMap[item.tag].image}}"></image>
+            <text class="word-card-head-name">{{tagMap[item.tag].name}}</text>
+          </view> -->
           <scroll-view scroll-y="{{true}}" enable-flex="{{true}}" class="word-card-scroll-view" style="width: {{wordCardWidth}}; height: {{wordCardHeight}}">
             <word-card word="{{item._id}}" showFront="{{false}}" detail="{{passageFragments[item.location[0]][item.location[1]]}}" showButtons="{{false}}" autoplayAudio="{{false}}" />
           </scroll-view>

@@ -74,9 +74,32 @@
   position: relative;
   display: flex;
   flex-flow: column;
-  border: 0rpx solid;
+  border: 8rpx solid;
   border-radius: 30rpx;
   margin: 0rpx 50rpx;
+}
+
+.word-card-head {
+  /* border-radius: 30rpx 30rpx 0rpx 0rpx; */
+  overflow: hidden;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.word-card-head>.word-card-head-image {
+  width: 30rpx;
+  height: 30rpx;
+  /* margin: 25rpx; */
+}
+
+.word-card-head>.word-card-head-name {
+  color: rgba(250, 250, 250, 1);
+  font-size: 24rpx;
+  font-style: italic;
+  text-align: center;
+  font-family: -apple-system;
 }
 
 .word-card-scroll-view {

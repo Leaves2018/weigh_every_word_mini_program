@@ -27,6 +27,8 @@
     <view class="bottom" wx:if="{{showButtons}}">
       <view class="btn forget" data-info="{{[0, wordcard._id]}}" bindtap="{{wxs.bottomButtonTap}}">忘记</view>
       <view class="btn remember" data-info="{{[1, wordcard._id]}}" bindtap="{{wxs.bottomButtonTap}}">记得</view>
+      <!-- <view class="btn forget" data-info="{{[0, wordcard._id]}}" bindtap="bottomButtonTap">忘记</view>
+      <view class="btn remember" data-info="{{[1, wordcard._id]}}" bindtap="bottomButtonTap">记得</view> -->
     </view>
   </view>
 
