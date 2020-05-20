@@ -16,9 +16,17 @@ Component({
       type: Boolean,
       value: false,
     },
-    history: {
+    // history: {
+    //   type: Object,
+    //   value: null,
+    // },
+    words: {
       type: Object,
       value: null,
+    },
+    passageFragments: {
+      type: Array,
+      value: [],
     }
   },
 
@@ -117,38 +125,39 @@ Component({
       // console.log('show=' + JSON.stringify(show))
       if (show) {
         // 每次显示时，重新读取历史记录并解析
-        let history = this.data.history;
-        if (history) {
-          var wordCardList = [];
-          for (let _id in history.words) {
-            let word = history.words[_id];
-            if (word.tag !== 'fa') {
-              wordCardList.push({
-                _id: _id,
-                tag: word.tag,
-                loc: word.location.split('.'),
-              })
+        // let history = this.data.history;
+        // if (history) {
+        //   var wordCardList = [];
+        //   for (let _id in history.words) {
+        //     let word = history.words[_id];
+        //     if (word.tag !== 'fa') {
+        //       wordCardList.push({
+        //         _id: _id,
+        //         tag: word.tag,
+        //         loc: word.location.split('.'),
+        //       })
+        //     }
+        //   }
+        let wordCardKeys = Object.keys(this.data.words);
+        if (wordCardKeys.length <= 0) {
+          var that = this;
+          wx.showToast({
+            title: '全部处理完成',
+            icon: 'success',
+            duration: 2000,
+            success: function() {
+              that.setData({
+                show: false
+              });
             }
-          }
-          if (wordCardList.length <= 0) {
-            var that = this;
-            wx.showToast({
-              title: '全部处理完成',
-              icon: 'success',
-              duration: 2000,
-              success: function() {
-                that.setData({
-                  show: false
-                });
-              }
-            })
-          } else {
-            this.setData({
-              wordCardList: wordCardList,
-            })
-          }
+          })
+        } else {
+          this.setData({
+            wordCardKeys: wordCardKeys,
+          })
         }
       }
+      // }
     },
   }
 })
