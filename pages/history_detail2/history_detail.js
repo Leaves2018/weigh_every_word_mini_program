@@ -46,6 +46,9 @@ Component({
    */
   methods: {
     onLoad: function() {
+      wx.setNavigationBarTitle({
+        title: '详情',
+      })
       let that = this;
       // 获取系统信息
       wx.getSystemInfo({
