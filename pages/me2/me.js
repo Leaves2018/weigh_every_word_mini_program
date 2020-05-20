@@ -14,7 +14,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    motto: 'Hello World',
+    motto: '',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -60,8 +60,13 @@ Component({
       if (upgradetime === '') {
         upgradetime = '暂无上传记录';
       }
+      let motto = wx.getStorageSync("motto_for_yourself");
+      if (motto === '') {
+        motto = 'Hello World!';
+      }
       this.setData({
         upgradetime: upgradetime,
+        motto: motto,
       })
     },
     onShow: function () {
@@ -115,6 +120,15 @@ Component({
         title: '加载中',
       });
       utils_lc.cloud_to_local();
+    },
+    mottochange: function(e) {
+      wx.setStorage({
+        key: 'motto_for_yourself',
+        data: this.data.motto,
+      })
+      this.setData({
+        motto: e.detail.value
+      })
     },
   }
 })

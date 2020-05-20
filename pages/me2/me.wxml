@@ -12,8 +12,7 @@
 
       <text class="userinfo-nickname">{{userInfo.nickName}}
       </text>
-      <text class="userinfo-motto">{{motto}}
-      </text>
+      <input class="userinfo-motto" value="{{motto}}" bindinput="mottochange"></input>
     </view>
 
   </block>
