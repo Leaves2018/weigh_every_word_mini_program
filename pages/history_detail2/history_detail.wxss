@@ -5,14 +5,6 @@ page {
   padding: 0rpx;
 }
 
-.modify {
-  position: fixed;
-  width: 65rpx;
-  height: 65rpx;
-  top: 50rpx;
-  right: 15rpx;
-}
-
 .retext {
   margin-left: 20rpx;
   margin-right: 20rpx;
@@ -54,10 +46,12 @@ page {
   height: 40rpx;
   margin-left: 10rpx;
 }
+
 .divLineview {
   width: 100%;
   height: 10rpx;
 }
+
 .textbackground {
   width: 280rpx;
   height: 70rpx;

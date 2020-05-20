@@ -75,18 +75,6 @@ Component({
       app.vocabularyTrie.save();
     },
 
-    redirectToModify: function() {
-      wx.redirectTo({
-        url: `/pages/history_detail_modify2/history_detail_modify?historyuuid=${this.data.historyuuid}`,
-      });
-    },
-
-    // return: function () {
-    //   wx.navigateBack({
-    //     url: '/pages/history_list/history_list',
-    //   });
-    // },
-
     //背诵
     showallvowords: function() {
       wx.showLoading({

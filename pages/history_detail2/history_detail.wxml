@@ -3,7 +3,6 @@
   <view class="retext">
     <input value="{{his_headline}}" style="font-weight:700;font-size:50rpx;height:70rpx" bindinput="headline_bindFormSubmit"></input>
     <view class="divLineview"></view>
-    <image class="modify" bindtap="redirectToModify" src="/images/edit.png"></image>
     <view class="retext0">
       <view class="greenbackground" bindtap="showallvowords">
         <image class="addpictures0" src="/images/eye.png"></image>
