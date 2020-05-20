@@ -131,11 +131,11 @@
 }
 
 .btn.forget {
-  background: #4cd28e;
+  background: #02C261 100%;
   color: white;
 }
 
 .btn.remember {
-  background: #ddd;
-  color: black;
+  background: #3E79E1 88%;
+  color: white;
 }

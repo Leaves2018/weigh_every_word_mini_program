@@ -45,12 +45,12 @@ Component({
       'vo': {
         name: '生词',
         image: '/images/new.svg',
-        backgroundColor: 'rgba(62, 121, 225, 1)',
+        backgroundColor: 'rgba(2, 194, 97, 1)',
       },
       'fa': {
         name: '熟词',
         image: '/images/queding.svg',
-        backgroundColor: 'rgba(2, 194, 97, 1)',
+        backgroundColor: 'rgba(62, 121, 225, 1)',
       },
       'un': {
         name: '未知词',
