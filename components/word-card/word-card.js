@@ -1,5 +1,6 @@
 // components/word-card/word-card.js
 const utilWord = require('../../utils/word2.js')
+const util = require('../../utils/tomd.js')
 const app = getApp();
 
 Component({
@@ -62,7 +63,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    scrollToItem: function (res) {
+    scrollToItem: function(res) {
       console.log('In word-card, selector=' + res.selector)
     },
     /**
@@ -121,7 +122,10 @@ Component({
     buttonTap: function buttonTap(e) {
       var index = e.currentTarget.dataset.index;
 
-      this.triggerEvent('buttontap', { index: index, item: this.data.buttons[index] }, {});
+      this.triggerEvent('buttontap', {
+        index: index,
+        item: this.data.buttons[index]
+      }, {});
     },
   },
 
@@ -129,7 +133,7 @@ Component({
    * 数据监听器
    */
   observers: {
-    'word': function (word) { // 新word设置时触发
+    'word': function(word) { // 新word设置时触发
       if (word) { // 检测新word不为空
         if (this.data.showFront) { // 且要求显示正面，则触发front监听器请求数据
           this.setData({
@@ -137,12 +141,14 @@ Component({
           })
         } else { // 要求显示背面时，仅设置单词ID（例句已通过property自动赋值）
           this.setData({
-            wordcard: { _id: this.data.word },
+            wordcard: {
+              _id: this.data.word
+            },
           })
         }
       }
     },
-    'front': function (front) { // 要求显示正面
+    'front': function(front) { // 要求显示正面
       if (front) {
         if (this.data._hasFront && this.original._id === this.data.word) { // 如果有正面，而且word没有赋新值，直接加载原有数据
           if (this.data.autoplayAudio) {
@@ -163,6 +169,20 @@ Component({
             }
           })
         }
+      }
+    },
+    'detail': function(detail) { // 转为html格式再赋值
+      if (detail) {
+        let word = this.data.word;
+        // detail = detail.replace(new RegExp(word, 'gi'), `<b>&nbsp;${word}</b>`)
+        // let htmlDetail = `<div class="div_class">
+        // <p class="p">&nbsp;<i>${detail}</i>&nbsp;</p>
+        // </div>`;
+        // console.log(htmlDetail)
+        detail = util.markText(detail, word, '**');
+        this.setData({
+          wxmlDetail: app.towxml(`*${detail}*`, 'markdown'),
+        })
       }
     }
   },

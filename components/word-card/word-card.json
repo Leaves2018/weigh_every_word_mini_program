@@ -1,7 +1,8 @@
 {
   "component": true,
   "usingComponents": {
-    "tappable-passage": "../tappable-passage/tappable-passage"
+    "tappable-passage": "../tappable-passage/tappable-passage",
+    "towxml": "/towxml/towxml"
   },
   "pureDataPattern": "^_"
 }

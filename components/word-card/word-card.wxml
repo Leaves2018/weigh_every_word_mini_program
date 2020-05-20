@@ -37,7 +37,9 @@
       <image class="play-audio-btn" src='/images/laba.png' bindtap="playAudio" />
       <text class="wordcard-id" bindtap="flipCard">{{wordcard._id}}</text>
     </view>
-    <text class="wordcard-detail">{{detail}}</text>
+    <!-- <text class="wordcard-detail">{{detail}}</text> -->
+    <!-- <rich-text nodes="{{htmlDetail}}"></rich-text> -->
+    <towxml nodes="{{wxmlDetail}}"/>
   </view>
 
 </view>
