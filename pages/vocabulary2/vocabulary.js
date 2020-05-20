@@ -33,6 +33,9 @@ Component({
    */
   methods: {
     onLoad: function() {
+      wx.setNavigationBarTitle({
+        title: '生词本',
+      })
       this.setData({
         search: this.search.bind(this),
         icon: base64.icon20,

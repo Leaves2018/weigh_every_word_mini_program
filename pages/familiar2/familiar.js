@@ -28,6 +28,9 @@ Component({
    */
   methods: {
     onLoad: function() {
+      wx.setNavigationBarTitle({
+        title: '熟词本',
+      })
       // 每次取树的一个子节点创建新树，利用新树的getAllData()方法获取首字母相同的单词数组
       // 考虑封装到Trie类结构中，或者修改Trie的定义
       // 在这里设计刷新app.familiarTrie的allData和number属性
