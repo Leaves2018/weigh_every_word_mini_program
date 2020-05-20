@@ -114,24 +114,8 @@ Component({
 
     //   this.triggerEvent("buttontap", e.detail, {}); // 继续触发事件，向上冒泡
     // },
-    bottomButtonTap: function(event) {
-      var type = event.currentTarget.dataset.type;
-      var info = event.currentTarget.dataset.info;
-      var index = info[0];
-      var _id = info[1];
-      var eventDetail = {
-        type: type,
-        index: index,
-        _id: _id
-      };
-      var number = info[2];
-      // 滚动到下一个单词位置（是否可以不经过逻辑层，直接wxs设置滚动位置？）
-      // eventDetail['selector'] = '.word-card-container.item' + (number + 1);
-      f
-      this.triggerEvent('buttontap', eventDetail, {});
-    },
-    scrollToItem: function(res) {
-      console.log('selector=' + res)
+    scroll: function(res) {
+      console.log('selector=' + res.selector)
       this.setData({
         scrollIntoView: res.selector,
       })

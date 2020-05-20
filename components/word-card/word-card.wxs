@@ -35,7 +35,10 @@ module.exports = {
         "border-color": index === 0 ? 'rgba(2, 194, 97, 1)' : 'rgba(62, 121, 225, 1)',
       })
       // 滚动到下一个单词位置（是否可以不经过逻辑层，直接wxs设置滚动位置？）
-      eventDetail['selector'] = '.word-card-container.item' + (number + 1);
+      // eventDetail['selector'] = '.word-card-container.item' + (number + 1);
+      ownerInstance.callMethod('scroll', {
+        'selector': 'item' + (number + 1)
+      })
     }
     ownerInstance.triggerEvent('buttontap', eventDetail, {});
   },
