@@ -3,27 +3,23 @@
   <view class="retext">
     <text class="headtext">{{his_headline}}</text>
     <image class="modify" bindtap="redirectToModify" src="/images/edit.png"></image>
-    <view class="retext">
-      <text space="ensp" class="votext"> 生词 </text>
-      <text space="ensp"> {{numberOfVo}}           </text>
-      <text space="ensp" class="untext"> 未处理 </text>
-      <text space="ensp"> {{numberOfUn}}</text>
+    <view class="retext0">
+      <view class="greenbackground" bindtap="showallvowords">
+        <image class="addpictures0" src="/images/eye.png"></image>
+        <text space="ensp" class="text0"> 生词 {{numberOfVo}}</text>
+      </view>
+      <view class="partition"></view>
+      <view class="textbackground" bindtap="showallunwords">
+        <image class="addpictures1" src="/images/view_all.png"></image>
+        <text space="ensp" class="text0"> 未处理 {{numberOfUn}}</text>
+      </view>
     </view>
     <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">
       <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindtapword="tapWord" />
     </scroll-view>
-    <image class="showallwords" bindtap="showallwords" src="/images/tabbar_icon_recite_active.png"></image>
   </view>
-  <!-- <view class="button_edit">
-    <view class='returnbtn' bindtap="return">
-      <text class="text0"> 返回 </text>
-    <iew>
-    <view class='wordsbtn' bindtap="redirectToRecite"> 
-      <text class="text0">查看所有单词</text>
-    <view>
-  <view> -->
-    <!-- <word-card-dialog show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}"/> -->
-    <word-card-halfScreenDialog show="{{dialogShow}}" mask-closable="{{true}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}"/>
-    <!-- <recite show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget"/> -->
-    <word-card-set show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget" />
+  <!-- <word-card-dialog show="{{dialogShow}}" mask-closable="{{false}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}"/> -->
+  <word-card-halfScreenDialog show="{{dialogShow}}" mask-closable="{{true}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}" />
+  <!-- <recite show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget"/> -->
+  <word-card-set show="{{reciteShow}}" history="{{reciteHistory}}" bindbuttontap="dealRememberAndForget" />
 </view>

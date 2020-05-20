@@ -24,9 +24,9 @@ Component({
    */
   methods: {
     onLoad: function() {
-      
+
     },
-    onShow: function () {
+    onShow: function() {
       let input_passage_information = wx.getStorageSync('input_passage_information');
       if (input_passage_information === "") {
         return;
@@ -35,55 +35,42 @@ Component({
         showinformation: input_passage_information,
       });
     },
-    showpassagefragment: function (e) {
+    longdelete: function(e) {
+      var that = this;
+      wx.showModal({
+        title: '提示',
+        content: '确认删除此片段吗？',
+        success: function(res) {
+          if (res.confirm) {
+            let input_passage_information = wx.getStorageSync('input_passage_information');
+            input_passage_information.splice(e.currentTarget.dataset.position, 1);
+            wx.setStorage({
+              key: 'input_passage_information',
+              data: input_passage_information,
+            })
+            that.setData({
+              showinformation: input_passage_information,
+            });
+          }
+        },
+      })
+    },
+    showpassagefragment: function(e) {
       wx.redirectTo({
         url: `/pages/deal_input2/deal_input?listnumber=${e.currentTarget.dataset.position}`,
       })
     },
-    addtext: function () {
+    addtext: function() {
       wx.redirectTo({
         url: '/pages/deal_input2/deal_input',
       })
     },
-    addclick: function () {
-      var that = this;
-      this.clipboardData;
-      wx.getClipboardData({
-        success(res) {
-          if (that.clipboardData === res.data) {
-            return;
-          } else {
-            that.clipboardData = res.data;
-            wx.showModal({
-              title: '是否录入当前剪贴板信息？',
-              content: res.data,
-              success: function (res1) {
-                if (res1.confirm) {
-                  //点击确定
-                  let input_passage_information = wx.getStorageSync('input_passage_information');
-                  if (input_passage_information === "") {
-                    input_passage_information = [];
-                  }
-                  input_passage_information.push(res.data);
-                  wx.setStorage({
-                    key: 'input_passage_information',
-                    data: input_passage_information,
-                  })
-                  that.setData({
-                    showinformation: input_passage_information,
-                  });
-                }
-              },
-            })
-          }
-        }
-      })
-    },
-    addpicture: function () {
+
+    addpicture: function() {
       var that = this;
       wx.chooseImage({
         count: 1,
-        success: async function (res) {
+        success: async function(res) {
           console.log(res.tempFilePaths);
           wx.showToast({
             title: '加载中...',
@@ -129,17 +116,15 @@ Component({
             })
           }
         },
-        fail: function (res) { },
-        complete: function (res) { },
+        fail: function(res) {},
+        complete: function(res) {},
       })
     },
-    returntoinput: function () {
-      wx.navigateBack({
-        url: '/pages/input2/input',
-      })
-    },
-    redirectToHistory: function () {
+    deal_passage: function() {
       let input_passage_information = wx.getStorageSync('input_passage_information');
+      if (input_passage_information === '') {
+        return;
+      }
       let history = new utilHistory.History(input_passage_information.join(' '));
       wx.setStorage({
         key: 'input_passage_information',
@@ -152,7 +137,7 @@ Component({
   },
 
   observers: {
-    'filename': function (filename) {
+    'filename': function(filename) {
       var that = this;
       console.log(filename);
       let todayArticle = wx.getStorageSync('today_article_address');
@@ -181,7 +166,7 @@ Component({
                   key: 'today_article_address',
                   data: filename,
                 });
-                this.redirectToHistory();
+                this.deal_passage();
               },
               fail: err => {
                 console.log('readFile fail', err)

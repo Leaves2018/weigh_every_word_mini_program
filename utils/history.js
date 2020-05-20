@@ -11,9 +11,9 @@ class Word {
 }
 class HistoryList {
   constructor(items = {}) {
-    if(items.items!==undefined){
+    if (items.items !== undefined) {
       this.items = items.items;
-    }else {
+    } else {
       this.items = items;
     }
     this.save();
@@ -44,6 +44,7 @@ class HistoryListItem {
     this.done = history.done;
     this.plus = history.plus;
     this.numberOfWords = history.numberOfWords;
+    this.numOfUn = history.numOfUn;
   }
 }
 class History {
@@ -58,6 +59,7 @@ class History {
       this.done = passage.done;
       this.plus = passage.plus;
       this.numberOfWords = passage.numberOfWords;
+      this.numOfUn = passage.numOfUn;
       this.passageFragments = passage.passageFragments;
       for (let word in passage.words) {
         if (getApp().familiarTrie.search(word)) {
@@ -70,7 +72,7 @@ class History {
       }
       this.words = passage.words;
     } else {
-      this.date = utils_util.formatTime(new Date());
+      this.date = utils_util.formatTime(new Date()).substring(0, 10);
       this.uuid = this.uuid();
       this.done = false;
       this.plus = 0;
@@ -81,7 +83,22 @@ class History {
         this.headline = headline;
       } else {
         headline = this.passageFragments[0][0];
-        this.headline = headline.length > 24 ? headline.substring(0, 24) : headline;
+        if (headline.length < 24) {
+          this.headline = headline;
+        } else {
+          let wordsofheadline = headline.split(' ');
+          let length = 0;
+          let index;
+          for (var i = 0; i < wordsofheadline.length; i++) {
+            length += wordsofheadline[i].length;
+            length += 1;
+            if (length > 24) {
+              index = i;
+              break;
+            }
+          }
+          this.headline = wordsofheadline.slice(0, index).join(' ');
+        }
       }
 
       var words = passage.replace(/[^a-zA-Z\-]/g, ' ').split(" ");
@@ -96,6 +113,7 @@ class History {
       //分开生词和未知词
       var voc_really = words.filter(x => getApp().vocabularyTrie.search(x)); //生词
       var unknown_words = utils_util.arrSub(voc_temp, voc_really); //未知词
+      this.numOfUn = unknown_words.length;
       this.numberOfWords = voc_really.length + unknown_words.length;
       this.words = {};
       for (var element of voc_really) {
@@ -123,10 +141,13 @@ class History {
   save = (refreshPlus = false) => {
     if (refreshPlus) {
       this.plus = 0;
+      this.numOfUn = 0;
       let lengthofwords = 0;
       for (let key in this.words) {
         if (this.words[key].tag === 'fa') {
           this.plus += 1;
+        } else if (this.words[key].tag === 'un') {
+          this.numOfUn += 1;
         }
         lengthofwords += 1;
       }
@@ -179,7 +200,7 @@ const getHistoryFromStorage = uuid => {
 
 
 module.exports = {
-  Word:Word,
+  Word: Word,
   History: History,
   getHistoryFromStorage: getHistoryFromStorage,
   getHistoryListFromStorage: getHistoryListFromStorage,

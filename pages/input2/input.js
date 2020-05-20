@@ -26,7 +26,7 @@ Component({
       if (this.last_launch_date === '') {
         this.last_launch_date = 0;
       }
-      let nowdate = util.formatTime(new Date()).substring(8, 10);
+      let nowdate = util.formatTime(new Date()).substring(0, 10);
       if (this.totalday===''){
         this.totalday = [, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,];
       }
@@ -56,7 +56,6 @@ Component({
       //   showmonth = this.data.month.slice(datemonth - 5, datemonth);
       // }
       // showmonth = showmonth.join('      ');
-      this.clipboardData = '';
       let datetime = parseInt(util.formatTime(new Date()).substring(11, 13));
       let condition;
       if (datetime < 12) {
@@ -97,34 +96,6 @@ Component({
       wx.setStorage({
         key: 'show140days',
         data: this.totalday.concat(this.day),
-      })
-      var that = this;
-      wx.getClipboardData({
-        success(res) {
-          if (that.clipboardData === res.data) {
-            return;
-          } else {
-            that.clipboardData = res.data;
-            wx.showModal({
-              title: '是否录入当前剪贴板信息？',
-              content: res.data,
-              success: function(res1) {
-                if (res1.confirm) {
-                  //点击确定
-                  wx.setStorage({
-                    key: 'input_passage_information',
-                    data: [res.data], 
-                    success: (res) => {
-                      wx.navigateTo({
-                        url: '/pages/draft/draft',
-                      })
-                    }
-                  })
-                }
-              },
-            })
-          }
-        }
       })
     },
     addtext: function () {

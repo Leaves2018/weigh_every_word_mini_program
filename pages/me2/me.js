@@ -1,5 +1,7 @@
 // pages/me2/me.js
 const app = getApp();
+const util = require('../../utils/util.js');
+const utils_lc = require('../../utils/local_cloud.js');
 Component({
   /**
    * 组件的属性列表
@@ -54,6 +56,13 @@ Component({
           }
         })
       }
+      let upgradetime = wx.getStorageSync("upgradetime");
+      if (upgradetime === '') {
+        upgradetime = '暂无上传记录';
+      }
+      this.setData({
+        upgradetime: upgradetime,
+      })
     },
     onShow: function () {
       // 如果第一次打开直接查看，这里是否会为空？
@@ -76,6 +85,36 @@ Component({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       })
+    },
+    uploadfiles: function() {
+      wx.showLoading({
+        title: '加载中',
+        duration: 3000
+      });
+      utils_lc.local_to_cloud();
+      let datetime = parseInt(util.formatTime(new Date()).substring(11, 13));
+      let condition;
+      if (datetime < 12) {
+        condition = '上午';
+      } else if (datetime < 18) {
+        condition = '下午';
+      } else {
+        condition = '晚上';
+      }
+      let upgradetime = '上次更新，今天'+condition+datetime+'点';
+      wx.setStorage({
+        key: 'upgradetime',
+        data: upgradetime,
+      })
+      this.setData({
+        upgradetime: upgradetime,
+      })
+    },
+    downloadfiles: function () {
+      wx.showLoading({
+        title: '加载中',
+      });
+      utils_lc.cloud_to_local();
     },
   }
 })

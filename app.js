@@ -42,6 +42,37 @@ App({
     this.vocabularyTrie = utilTrie.getVocabularyTrie();
     this.getOpenid();
     this.getWindowSize();
+    this.clipboardData = '';
+  },
+  onShow: function() {
+    var that = this;
+    wx.getClipboardData({
+      success(res) {
+        if (that.clipboardData === res.data) {
+          return;
+        } else {
+          that.clipboardData = res.data;
+          wx.showModal({
+            title: '是否录入当前剪贴板信息？',
+            content: res.data,
+            success: function (res1) {
+              if (res1.confirm) {
+                //点击确定
+                wx.setStorage({
+                  key: 'input_passage_information',
+                  data: [res.data],
+                  success: (res) => {
+                    wx.navigateTo({
+                      url: '/pages/draft/draft',
+                    })
+                  }
+                })
+              }
+            },
+          })
+        }
+      }
+    })
   },
   onHide: function() {
     console.log("App onHide() called")
@@ -51,9 +82,10 @@ App({
       key: 'last_num_of_words',
       data: this.familiarTrie.getAllData(true).length + this.vocabularyTrie.getAllData(true).length,
     })
+    const util = require('./utils/util.js');
     wx.setStorage({
       key: 'last_launch_date',
-      data: (new Date()).toString().substring(8, 10),
+      data: util.formatTime(new Date()).substring(0, 10),
     })
   },
   // 获取用户openid

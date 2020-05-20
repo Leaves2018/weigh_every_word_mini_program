@@ -23,8 +23,7 @@ Component({
   /**
    * 组件的初始数据
    */
-  data: {
-  },
+  data: {},
 
   /**
    * 组件的方法列表
@@ -49,7 +48,7 @@ Component({
         this.headlines.push(this.historyList.items[element].headline);
       };
       this.setData({
-        uuids: Object.keys(this.historyList.items),
+        uuids: Object.keys(this.historyList.items).reverse(),
         items: this.historyList.items,
       })
     },
@@ -57,7 +56,7 @@ Component({
     /**
      * 更新视图元素
      */
-    updateWXML: function () {
+    updateWXML: function() {
       this.setData({
         uuids: Object.keys(this.historyList.items),
         items: this.historyList.items,
