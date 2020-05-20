@@ -42,7 +42,7 @@
   border-radius: 30rpx;
   background-color: rgb(80, 85, 89, 1);
   text-align: center;
-  border: 1rpx solid rgba(255, 255, 255, 1);
+  border: 0rpx solid rgba(255, 255, 255, 1);
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.4);
   position: fixed;
   display: flex;
@@ -58,7 +58,7 @@
   border-radius: 30rpx;
   background-color: rgba(2, 194, 97, 1);
   text-align: center;
-  border: 1rpx solid rgba(255, 255, 255, 1);
+  border: 0rpx solid rgba(255, 255, 255, 1);
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.4);
   position: fixed;
   display: flex;
