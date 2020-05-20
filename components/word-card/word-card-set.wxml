@@ -7,9 +7,9 @@
     <scroll-view scroll-x="{{true}}" enable-flex="{{true}}" scroll-with-animation="{{true}}" scroll-left="{{scrollLeft}}" scroll-into-view="{{scrollIntoView}}" bindscrolltolower="scrollToLower" style="height: {{wordCardSetHeight}};">
       <view class="word-card-set-container">
 
-        <view wx:for="{{wordCardList}}" wx:key="_id" class="word-card-container {{'item' + index}}" style="height: {{wordCardSetHeight}};" catchtap="stopEvent">
+        <view wx:for="{{wordCardKeys}}" wx:key="_id" class="word-card-container {{'item' + index}}" style="height: {{wordCardSetHeight}};" catchtap="stopEvent">
           <scroll-view scroll-y="{{true}}" enable-flex="{{true}}" class="word-card-scroll-view" style="width: {{wordCardWidth}}; height: {{wordCardHeight}}">
-            <word-card word="{{item._id}}" showFront="{{false}}" detail="{{history.passageFragments[item.loc[0]][item.loc[1]]}}" showButtons="{{false}}" autoplayAudio="{{false}}" />
+            <word-card word="{{item}}" showFront="{{false}}" detail="{{passageFragments[words[item].loc[0]][words[item].loc[1]]}}" showButtons="{{false}}" autoplayAudio="{{false}}" />
           </scroll-view>
           <view class="bottom" style="height: {{bottomHeight}}" bindbuttontap="buttonTap">
             <view class="btn forget" data-type="wordCardSet" data-info="{{[0, item._id, index]}}" catchtap="{{wxs.bottomButtonTap}}">忘记</view>
