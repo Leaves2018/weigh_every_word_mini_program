@@ -1,4 +1,5 @@
-<mp-halfScreenDialog bindbuttontap="buttontap" show="{{show}}" maskClosable="{{false}}" buttons="{{buttons}}" maskClosable="{{true}}" showHead="{{false}}" data-type="halfScreenDialog" data-info="{{['helicopter']}}">
-  <word-card slot="desc" word="helicopter" showFront="{{true}}" detail="This is a real helicopter!" />
-</mp-halfScreenDialog>
-<button class="weui-btn" type="primary" bindtap="open">Open</button>
+<view class="progress-box">
+  <progress class="progress" percent="60" active stroke-width="20"/>
+</view>
+<view class="progress-box">
+</view>

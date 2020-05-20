@@ -1,27 +1,21 @@
+// canvas.js
 Page({
-  data: {
-    show: false,
-    buttons: [
-      {
-        type: 'default',
-        className: '',
-        text: '忘记',
-        value: 0
-      },
-      {
-        type: 'primary',
-        className: '',
-        text: '记得',
-        value: 1
-      }
-    ]
+  onReady() {
   },
-  open: function () {
-    this.setData({
-      show: true
-    })
-  },
-  buttontap(e) {
-    console.log(e)
+  buttonTap: function() {
+    const query = wx.createSelectorQuery()
+    query.select('#myCanvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        const canvas = res[0].node
+        const ctx = canvas.getContext('2d')
+
+        const dpr = wx.getSystemInfoSync().pixelRatio
+        canvas.width = res[0].width * dpr
+        canvas.height = res[0].height * dpr
+        ctx.scale(dpr, dpr)
+
+        ctx.fillRect(0, 0, 100, 100)
+      })
   }
-});
+})

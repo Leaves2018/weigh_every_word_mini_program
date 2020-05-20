@@ -19,7 +19,6 @@ page {
   align-items: center;
 }
 
-
 .history-slidecells {
   width: 700rpx;
   margin: 15rpx 0rpx;
@@ -37,7 +36,6 @@ page {
 }
 
 .cell-info {
-  overflow: hidden;
   height: 32rpx;
   display: flex;
   flex-flow: row nowrap;
