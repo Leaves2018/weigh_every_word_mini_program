@@ -62,10 +62,16 @@
       <text class="text">使用教程</text>
     </view>
   </navigator>
-  <navigator url="/pages/about/about">
+  <!-- <navigator url="/pages/about/about">
     <view class="cell about">
       <image src="/images/guanyu.svg" class="icon"></image>
       <text class="text">关于</text>
+    </view>
+  </navigator> -->
+  <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=2824124&hash=f0cd" version="release">
+    <view class="cell about">
+      <image src="/images/wenjuan.svg" class="icon"></image>
+      <text class="text">调查问卷</text>
     </view>
   </navigator>
 </view>

@@ -57,5 +57,8 @@
         "selectedIconPath": "images/me_on.png"
       }
     ]
-  }
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wxebadf544ddae62cb"
+  ]
 }
