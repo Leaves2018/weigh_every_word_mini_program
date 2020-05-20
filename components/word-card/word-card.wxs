@@ -32,7 +32,7 @@ module.exports = {
       var number = info[2];
       var instance = ownerInstance.selectComponent('.word-card-container.item' + (number + 0));
       instance.setStyle({
-        "background-color": index === 0 ? "#DC9FB4" : "#66BAB7",
+        "border-color": index === 0 ? 'rgba(2, 194, 97, 1)' : 'rgba(62, 121, 225, 1)',
       })
       // 滚动到下一个单词位置（是否可以不经过逻辑层，直接wxs设置滚动位置？）
       eventDetail['selector'] = '.word-card-container.item' + (number + 1);

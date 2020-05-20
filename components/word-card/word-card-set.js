@@ -40,7 +40,25 @@ Component({
   /**
    * 组件的初始数据
    */
-  data: {},
+  data: {
+    tagMap: {
+      'vo': {
+        name: '生词',
+        image: '/images/new.svg',
+        backgroundColor: 'rgba(62, 121, 225, 1)',
+      },
+      'fa': {
+        name: '熟词',
+        image: '/images/queding.svg',
+        backgroundColor: 'rgba(2, 194, 97, 1)',
+      },
+      'un': {
+        name: '未知词',
+        image: '/images/banshou.svg',
+        backgroundColor: 'rgba(255, 153, 7, 1)',
+      },
+    }
+  },
 
   /**
    * 组件的生命周期方法
@@ -59,13 +77,14 @@ Component({
       // console.log("word-card-set  component is ready")
       let systemInfo = wx.getSystemInfoSync();
       // console.log(JSON.stringify(systemInfo))
-      let wordCardWidth = Math.round(systemInfo.windowWidth * 0.8);
-      let wordCardHeight = Math.round(systemInfo.windowHeight * 0.8);
+      let wordCardWidth = Math.floor(systemInfo.windowWidth * 0.8);
+      let wordCardHeight = Math.floor(systemInfo.windowHeight * 0.8);
       this.setData({
         wordCardSetHeight: wordCardHeight + "px",
+        wordCardHeadHeight: Math.floor(0.05 * wordCardHeight) + "px",
         wordCardWidth: wordCardWidth + "px",
-        wordCardHeight: Math.round(0.90 * wordCardHeight) + "px",
-        bottomHeight: Math.round(0.10 * wordCardHeight) + "px",
+        wordCardHeight: Math.floor(0.85 * wordCardHeight) + "px",
+        bottomHeight: Math.floor(0.10 * wordCardHeight) + "px",
       })
     },
     /**
@@ -89,11 +108,27 @@ Component({
       this.triggerEvent('close', {}, {});
     },
     stopEvent: function stopEvent() {},
-    buttonTap: function(e) { // 似乎触发不到
-      console.log(e);
-      this.scrollToItem(e.detail.selector);
+    // buttonTap: function(e) { // 似乎触发不到
+    //   console.log(e);
+    //   this.scrollToItem(e.detail.selector);
 
-      this.triggerEvent("buttontap", e.detail, {}); // 继续触发事件，向上冒泡
+    //   this.triggerEvent("buttontap", e.detail, {}); // 继续触发事件，向上冒泡
+    // },
+    bottomButtonTap: function(event) {
+      var type = event.currentTarget.dataset.type;
+      var info = event.currentTarget.dataset.info;
+      var index = info[0];
+      var _id = info[1];
+      var eventDetail = {
+        type: type,
+        index: index,
+        _id: _id
+      };
+      var number = info[2];
+      // 滚动到下一个单词位置（是否可以不经过逻辑层，直接wxs设置滚动位置？）
+      // eventDetail['selector'] = '.word-card-container.item' + (number + 1);
+      f
+      this.triggerEvent('buttontap', eventDetail, {});
     },
     scrollToItem: function(res) {
       console.log('selector=' + res)
@@ -123,6 +158,9 @@ Component({
   observers: {
     'show': function(show) {
       if (show) {
+        setTimeout(function() {
+          wx.hideLoading();
+        }, 2000);
         if (this.data.words.length <= 0) {
           var that = this;
           wx.showToast({
