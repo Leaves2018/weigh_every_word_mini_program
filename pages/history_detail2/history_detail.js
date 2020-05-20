@@ -86,6 +86,9 @@ Component({
 
     //背诵
     showallvowords: function() {
+      wx.showLoading({
+        title: '加载中',
+      })
       let vocabularytemp = [];
       let allWords = this.history.words;
       for (let _id in allWords) {
@@ -107,6 +110,9 @@ Component({
       })
     },
     showallunwords: function() {
+      wx.showLoading({
+        title: '加载中',
+      })
       let unknowntemp = [];
       let allWords = this.history.words;
       for (let _id in allWords) {
@@ -122,7 +128,7 @@ Component({
         }
       }
       this.setData({
-        reciteHistory: this.history,
+        recitePassageFragments: this.history.passageFragments,
         reciteWords: unknowntemp,
         reciteShow: true,
       })

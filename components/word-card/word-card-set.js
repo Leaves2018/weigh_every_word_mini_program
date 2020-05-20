@@ -123,6 +123,9 @@ Component({
   observers: {
     'show': function(show) {
       if (show) {
+        setTimeout(function() {
+          wx.hideLoading();
+        }, 2000);
         if (this.data.words.length <= 0) {
           var that = this;
           wx.showToast({
