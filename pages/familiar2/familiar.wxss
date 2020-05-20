@@ -1,9 +1,11 @@
-page{background-color:#F7F7F7;}
+page {
+  background-color: #ededed;
+}
 
 .page__head {
   z-index: 100;
-  position:fixed;
-  top:0;
+  position: fixed;
+  top: 0;
   width: 750rpx;
 }
 
