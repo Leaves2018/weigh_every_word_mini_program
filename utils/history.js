@@ -53,7 +53,11 @@ class History {
       return;
     }
     if (typeof(passage) === "object") {
-      this.headline = passage.headline;
+      if (typeof (headline) === "string" && headline.trim()) {
+        this.headline = headline;
+      } else {
+        this.headline = passage.headline;
+      }
       this.date = passage.date;
       this.uuid = passage.uuid;
       this.done = passage.done;

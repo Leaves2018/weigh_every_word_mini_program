@@ -38,7 +38,7 @@ Component({
     his_headline: '',
     numberOfUn: 0,
     numberOfVo: 0,
-    reciteWords:[],
+    reciteWords: [],
   },
 
   /**
@@ -67,7 +67,7 @@ Component({
     },
     //将修改存至本地
     onUnload: function() {
-      this.history.save(true);
+      this.history = new utilsHis.History(this.history, this.data.his_headline);
       app.familiarTrie.save();
       app.vocabularyTrie.save();
     },
@@ -127,7 +127,11 @@ Component({
         reciteShow: true,
       })
     },
-
+    headline_bindFormSubmit: function(e) {
+      this.setData({
+        his_headline: e.detail.value
+      })
+    },
     tapWord: function(e) {
       if (/^[A-Za-z]+[\-\']?[a-zA-Z]+$/.test(e.detail.text)) {
         this.deal_word = e.detail.text;
@@ -144,6 +148,9 @@ Component({
     },
     longpressword: function(e) {
       console.log(e);
+      wx.redirectTo({
+        url: `/pages/deal_input2/deal_input?uuid_para_sent=${this.data.historyuuid + '!!!' + e.detail.para+'!!!'+e.detail.sent}`,
+      })
     },
 
     /**

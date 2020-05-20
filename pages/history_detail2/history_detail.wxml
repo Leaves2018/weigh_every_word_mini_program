@@ -1,7 +1,8 @@
 <!--pages/history_detail2/history_detail.wxml-->
 <view class="page">
   <view class="retext">
-    <text class="headtext">{{his_headline}}</text>
+    <input value="{{his_headline}}" style="font-weight:700;font-size:50rpx;height:70rpx" bindinput="headline_bindFormSubmit"></input>
+    <view class="divLineview"></view>
     <image class="modify" bindtap="redirectToModify" src="/images/edit.png"></image>
     <view class="retext0">
       <view class="greenbackground" bindtap="showallvowords">
@@ -14,6 +15,7 @@
         <text space="ensp" class="text0"> 未处理 {{numberOfUn}}</text>
       </view>
     </view>
+    <view class="divLineview"></view>
     <scroll-view class="body-view" scroll-y="true" style="height: {{passage_height}};">
       <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindlongpressword="longpressword" bindtapword="tapWord" />
     </scroll-view>

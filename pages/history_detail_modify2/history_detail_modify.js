@@ -84,7 +84,6 @@ Component({
           // 设置高度
         }
       });
-      this.historyuuid = historyuuid;
       this.history = new utils_his.History(wx.getStorageSync(historyuuid));
       this.setData({
         his_headline: this.history.headline,
