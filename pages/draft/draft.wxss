@@ -84,11 +84,11 @@
   background-color: rgba(2, 194, 97, 1);
   color: rgba(255, 255, 255, 1);
   border: 1rpx solid rgba(187, 187, 187, 1);
-  font-size: 14px;
   text-align: center;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.4);
   font-family: Arial;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
