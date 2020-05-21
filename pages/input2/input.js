@@ -70,6 +70,16 @@ Component({
       } else {
         condition = 2;
       }
+      let areyoufreshman = wx.getStorageSync('areyoufreshman');
+      if (areyoufreshman === '') {
+        wx.navigateTo({
+          url: '/pages/tutorial2/tutorial',
+        })
+        wx.setStorage({
+          key: 'areyoufreshman',
+          data: 'I am old hand',
+        })
+      }
       this.setData({
         condition: condition,
         //showmonth: showmonth,
