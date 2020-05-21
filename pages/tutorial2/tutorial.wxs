@@ -1,34 +1,50 @@
 module.exports = {
-  top: function(newValue, oldValue, ownerInstance, instance) {
-    if (oldValue) {
+  adjustZindex: function (newValue, oldValue, ownerInstance, instance) {
+    if (oldValue.length > 0) {
       // console.log('oldValue=' + JSON.stringify(oldValue))
-      var oldInstance = ownerInstance.selectComponent(oldValue);
+      var oldInstance = ownerInstance.selectComponent(oldValue[0]);
       oldInstance.setStyle({
-        'z-index': 0,
+        'z-index': 0, // 原有的恢复到0
       })
     }
-    if (newValue) {
+    if (newValue.length > 0) {
       // console.log('newValue=' + JSON.stringify(newValue))
-      var newInstance = ownerInstance.selectComponent(newValue);
+      var newInstance = ownerInstance.selectComponent(newValue[0]);
       newInstance.setStyle({
-        'z-index': 10000,
-      })
-    }
-  },
-  bottom: function (newValue, oldValue, ownerInstance, instance) {
-    if (oldValue) {
-      // console.log('oldValue=' + JSON.stringify(oldValue))
-      var oldInstance = ownerInstance.selectComponent(oldValue);
-      oldInstance.setStyle({
-        'z-index': 0,
-      })
-    }
-    if (newValue) {
-      // console.log('newValue=' + JSON.stringify(newValue))
-      var newInstance = ownerInstance.selectComponent(newValue);
-      newInstance.setStyle({
-        'z-index': -1,
+        'z-index': newValue[1], // 根据指定要求设置zindex
       })
     }
   }
+  // top: function(newValue, oldValue, ownerInstance, instance) {
+  //   if (oldValue) {
+  //     // console.log('oldValue=' + JSON.stringify(oldValue))
+  //     var oldInstance = ownerInstance.selectComponent(oldValue);
+  //     oldInstance.setStyle({
+  //       'z-index': 0,
+  //     })
+  //   }
+  //   if (newValue) {
+  //     // console.log('newValue=' + JSON.stringify(newValue))
+  //     var newInstance = ownerInstance.selectComponent(newValue);
+  //     newInstance.setStyle({
+  //       'z-index': 10000,
+  //     })
+  //   }
+  // },
+  // bottom: function (newValue, oldValue, ownerInstance, instance) {
+  //   if (oldValue) {
+  //     // console.log('oldValue=' + JSON.stringify(oldValue))
+  //     var oldInstance = ownerInstance.selectComponent(oldValue);
+  //     oldInstance.setStyle({
+  //       'z-index': 0,
+  //     })
+  //   }
+  //   if (newValue) {
+  //     // console.log('newValue=' + JSON.stringify(newValue))
+  //     var newInstance = ownerInstance.selectComponent(newValue);
+  //     newInstance.setStyle({
+  //       'z-index': -1,
+  //     })
+  //   }
+  // }
 }

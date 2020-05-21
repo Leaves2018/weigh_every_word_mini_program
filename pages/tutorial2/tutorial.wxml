@@ -1,6 +1,6 @@
 <!--pages/tutorial2/tutorial.wxml-->
 <wxs module="tutorial" src="./tutorial.wxs"></wxs>
-<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}" selector="{{selector}}" change:selector="{{tutorial.bottom}}"></view>
+<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}" maskzindex="{{[selector, zindex]}}" change:maskzindex="{{tutorial.adjustZindex}}"></view>
 
 <view class="page">
   <view wx:if="{{index !== 0}}" id="skip-button" bindtap="skipButtonTap">Skip</view>
@@ -64,7 +64,7 @@
             <image class="icon-image" src="/images/queding.svg"></image>
             <text class="tag-title">熟词</text>
           </view>
-          <text class="tag-detail">您记得这个单词，加入熟词本📘。</text>
+          <view class="tag-detail">您记得这个单词，加入熟词本📘。</view>
         </view>
 
         <view class="word-card-demo vocabulary">
@@ -72,7 +72,7 @@
             <image class="icon-image" src="/images/new.svg"></image>
             <text class="tag-title">生词</text>
           </view>
-          <text class="tag-detail">您忘记了这个单词。将这个单词加入到生词本中📗。</text>
+          <view class="tag-detail">您忘记了这个单词。将这个单词加入到生词本中📗。</view>
         </view>
 
         <view class="word-card-demo unknown">
@@ -80,7 +80,7 @@
             <image class="icon-image" src="/images/banshou.svg"></image>
             <text class="tag-title">未知词</text>
           </view>
-          <text class="tag-detail">这些单词没有加入到您的熟词本📘之中，尚不知道您是否记得这个单词。</text>
+          <view class="tag-detail">这些单词没有加入到您的熟词本📘之中，尚不知道您是否记得这个单词。</view>
         </view>
 
       </block>

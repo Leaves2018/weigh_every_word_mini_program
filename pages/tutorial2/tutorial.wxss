@@ -225,40 +225,44 @@
 .page4>.hover-view.text1 {
   width: 550rpx;
   left: 100rpx;
-  top: 100rpx;
+  top: 200rpx;
 }
 
 .page4>.word-card-demo {
-  width: 400rpx;
-  height: 600rpx;
+  padding: 20rpx;
+  width: 350rpx;
+  height: 500rpx;
   border: 8rpx solid;
   position: fixed;
   background-color: white;
-  border-radius: 15rpx;
+  border-radius: 30rpx;
 }
 
 .page4>.word-card-demo.familiar {
   left: 20rpx;
-  top: 500rpx;
+  top: 300rpx;
   border-color: rgba(62, 121, 225, 1);
 }
 
 .page4>.word-card-demo.vocabulary {
   left: 50rpx;
-  top: 800rpx;
+  top: 550rpx;
   border-color: rgba(2, 194, 97, 1);
 }
 
 .page4>.word-card-demo.unknown {
-  right: 20rpx;
-  top: 650rpx;
+  left: 320rpx;
+  top: 400rpx;
   border-color: rgba(255, 153, 7, 1);
 }
 
 .word-card-tag {
+  width: 150rpx;
+  height: 60rpx;
+  border-radius: 20rpx;
   display: flex;
   flex-flow: row;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   color: rgba(246, 255, 237, 1);
   font-size: 32rpx;
@@ -281,7 +285,6 @@
 .icon-image {
   width: 30rpx;
   height: 30rpx;
-  margin: 10rpx;
 }
 
 .tag-text {
@@ -297,4 +300,12 @@
   font-size: 28rpx;
   text-align: left;
   font-family: -apple-system;
+}
+
+.familiar>.tag-detail {
+  width: 250rpx;
+}
+
+.vocabulary>.tag-detail {
+  width: 250rpx;
 }

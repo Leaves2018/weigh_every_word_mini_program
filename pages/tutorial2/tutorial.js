@@ -49,7 +49,7 @@ Component({
         case 0:
           this.setData({
             index: this.data.index + 1,
-            selector: '.weui-mask'
+            maskzindex: ['.weui-mask', -1]
           });
           break;
         case 1:
@@ -72,6 +72,10 @@ Component({
         case 4:
           switch (this.data.subindex) {
             case 0:
+              this.setData({
+                index: this.data.index + 0.1,
+                maskzindex: ['.weui-mask', 1000], // 恢复遮罩层
+              })
             case 1:
             case 2:
             case 3:
