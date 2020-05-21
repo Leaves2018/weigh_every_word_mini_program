@@ -1,4 +1,4 @@
-<!--pages/tutorial2/tutorial.wxml-->
+<!-- pages/tutorial2/tutorial.wxml
 <view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}"></view>
 <view class="container" bindtap="close" wx:if="{{index === 0}}">
   <view class="weui-dialog" catchtap="stopEvent">
@@ -13,4 +13,5 @@
       <view class="green-button">开始介绍</view>
     </view>
   </view>
-</view>
+</view> -->
+<page-draft storageKey='storageKey'></page-draft>

@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "page-input": "../input2/input"
+    "page-input": "../input2/input",
+    "page-draft": "../draft/draft"
   }
 }

@@ -10,6 +10,10 @@ Component({
       type: String,
       value: ''
     },
+    storageKey: {
+      type: String,
+      value: ''
+    },
   },
 
   /**
@@ -179,5 +183,23 @@ Component({
         })
       }
     },
+    'storageKey': function (storageKey) {
+      var that = this;
+      if(storageKey){
+        wx.getStorage({
+          key: 'storageKey',
+          success: function(res) {
+            that.setData({
+              showinformation: [res.data],
+            });
+            let history = new utilHistory.History(res.data);
+            wx.setStorage({
+              key: 'input_passage_information',
+              data: '',
+            })
+          },
+        })
+      }
+    }
   }
 })
