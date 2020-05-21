@@ -5,14 +5,14 @@ page {
 }
 
 .greet {
-  left: 25rpx;
-  top: 97rpx;
-  width: 325rpx;
-  height: 50rpx;
-  color: rgba(16, 16, 16, 1);
-  font-size: 36rpx;
-  text-align: left;
-  font-family: PingFangSC-bold;
+  margin-left: 20rpx;
+  margin-top: 20rpx;
+  font-size: 70rpx;
+  font-weight: 700;
+}
+
+.whitespace {
+  height: 30rpx;
 }
 
 .white {
@@ -77,10 +77,6 @@ page {
 .addpictures {
   width: 200rpx;
   height: 200rpx;
-}
-
-.whitespace {
-  height: 40rpx;
 }
 
 .remindtext {
