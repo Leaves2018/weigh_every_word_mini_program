@@ -70,7 +70,14 @@ Component({
      * 播放单词音频
      */
     playAudio: function() {
-      this.original.playAudio();
+      if (!(this.original || this.front)) {
+        this.setData({
+          front: true,
+          autoplayAudio: true,
+        })
+      } else {
+        this.original.playAudio();
+      }
     },
     /**
      * 中英文解释切换
