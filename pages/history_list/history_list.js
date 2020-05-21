@@ -9,7 +9,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    storageKey: {
+      type: String,
+      value: ''
+    },
   },
 
   /**
@@ -152,5 +155,21 @@ Component({
         });
       })
     },
+  },
+  observers: {
+    'storageKey': function (storageKey) {
+      if (storageKey) {
+        this.historyList = utilHis.getHistoryListFromStorage();
+        // 为搜索获取headlines
+        this.headlines = [];
+        for (let element in this.historyList.items) {
+          this.headlines.push(this.historyList.items[element].headline);
+        };
+        this.setData({
+          uuids: Object.keys(this.historyList.items).reverse(),
+          items: this.historyList.items,
+        })
+      }
+    }
   }
 })

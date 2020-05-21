@@ -28,6 +28,10 @@ Component({
       type: String,
       value: ''
     },
+    storageKey: {
+      type: String,
+      value: ''
+    },
   },
 
   /**
@@ -306,5 +310,48 @@ Component({
         numberOfVo: this.numberOfVo,
       })
     },
+    'storageKey': function (storageKey) {
+      var that = this;
+      if (storageKey) {
+        wx.getStorage({
+          key: 'storageKey',
+          success: function (res) {
+            that.history = new utilsHis.History(wx.getStorageSync(res.data));
+            var passage = util.joinPassage(that.history.passageFragments);
+            var vocabulary = [];
+            var unknown = [];
+            that.numberOfUn = 0;
+            that.numberOfVo = 0;
+            for (let word in that.history.words) {
+              switch (that.history.words[word].tag) {
+                case 'vo':
+                  vocabulary.push(word);
+                  that.numberOfVo += 1;
+                  break;
+                case 'un':
+                  unknown.push(word);
+                  that.numberOfUn += 1;
+                  break;
+              }
+            }
+            that.before_headline = that.history.headline;
+            // 页面第一次渲染
+            that.setData({
+              passage: passage,
+              highlight: [{
+                words: unknown,
+                style: wxss.un,
+              }, {
+                words: vocabulary,
+                style: wxss.vo,
+              }],
+              his_headline: that.history.headline,
+              numberOfUn: that.numberOfUn,
+              numberOfVo: that.numberOfVo,
+            })
+          },
+        })
+      }
+    }
   }
 })

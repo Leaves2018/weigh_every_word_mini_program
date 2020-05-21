@@ -194,8 +194,8 @@ Component({
             });
             let history = new utilHistory.History(res.data);
             wx.setStorage({
-              key: 'input_passage_information',
-              data: '',
+              key: 'storageKey',
+              data: history.uuid,
             })
           },
         })
