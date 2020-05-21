@@ -58,7 +58,7 @@ Component({
      */
     updateWXML: function() {
       this.setData({
-        uuids: Object.keys(this.historyList.items),
+        uuids: Object.keys(this.historyList.items).reverse(),
         items: this.historyList.items,
       })
     },
