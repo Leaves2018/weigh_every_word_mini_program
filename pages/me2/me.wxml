@@ -68,7 +68,7 @@
       <text class="text">关于</text>
     </view>
   </navigator> -->
-  <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=2824124&hash=f0cd" version="release">
+  <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=6358082&hash=9b98" version="release">
     <view class="cell about">
       <image src="/images/wenjuan.svg" class="icon"></image>
       <text class="text">调查问卷</text>

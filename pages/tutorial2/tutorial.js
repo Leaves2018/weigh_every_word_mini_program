@@ -88,14 +88,23 @@ Component({
               });
               break;
             case 1:
-            case 2:
-            case 3:
               this.setData({
                 subindex: this.data.subindex + 1,
+                selector: '.weui-mask',
+                zindex: -1,
+              });
+              break;
+            case 2:
+              this.setData({
+                index: this.data.index + 1,
               });
               break;
           }
           break;
+        case 5:
+          wx.redirectTo({
+            url: '/pages/domestication2/domestication',
+          })
       }
     }
   }

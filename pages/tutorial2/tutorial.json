@@ -5,6 +5,7 @@
     "page-draft": "../draft/draft",
     "page-history_list": "../history_list/history_list",
     "page-history_detail": "../history_detail2/history_detail",
-    "word-card": "../../components/word-card/word-card"
+    "word-card": "../../components/word-card/word-card",
+    "page-domestication": "../domestication2/domestication"
   }
 }

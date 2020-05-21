@@ -97,7 +97,54 @@
         <text class="hover-view text6">长按卡片或点击单词名称可以切换到背面，显示例句信息（如果有的话）</text>
       </block>
 
+      <block wx:if="{{subindex === 2}}">
+        <view class="hover-view text7">快速处理所有
+          <text style="color: rgba(2, 194, 97, 1);">生词</text>或
+          <text style="color: rgba(255, 153, 7, 1);">未知词</text>, 将它们标记为“
+          <text style="color: rgba(62, 121, 225, 1);">记得</text>”或者“
+          <text style="color: rgba(2, 194, 97, 1);">忘记</text>”。</view>
+        <text class="hover-view text8">长按文章中的段落/标题，进行修改。</text>
+      </block>
+
       <view class="green-button" bindtap="nextButtonTap">下一步</view>
+    </view>
+  </block>
+
+  <block wx:if="{{index === 5}}">
+    <view class="container page{{index}}" bindtap="close">
+      <view class="weui-dialog" catchtap="stopEvent">
+        <view class="card-container">
+          <text class="head1">🙌🏻 总结</text>
+
+          <view class="conclusion-container">
+            <view class="conclusion-tag">- 1 -</view>
+            <text class="conclusion-body">📷获取文本。</text>
+          </view>
+
+          <view class="conclusion-container">
+            <view class="conclusion-tag">- 2 -</view>
+            <text class="conclusion-body">📥添加到档案。</text>
+          </view>
+
+          <view class="conclusion-container">
+            <view class="conclusion-tag">- 3 -</view>
+            <text class="conclusion-body">📃打开文章。</text>
+          </view>
+
+          <view class="conclusion-container">
+            <view class="conclusion-tag">- 4 -</view>
+            <text class="conclusion-body">🔑处理单词</text>
+          </view>
+
+        </view>
+      </view>
+      <view class="white-button" bindtap="nextButtonTap">开始使用！</view>
+    </view>
+  </block>
+
+  <block wx:elif="{{index === 6}}">
+    <view class="container page{{index}}" bindtap="close">
+
     </view>
   </block>
 

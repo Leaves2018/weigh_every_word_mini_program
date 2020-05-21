@@ -357,3 +357,69 @@
   border-radius: 30rpx;
   background-color: white;
 }
+
+.page4>.hover-view.text7 {
+  height: 100rpx;
+  padding: 25rpx;
+  top: 200rpx;
+  width: 500rpx;
+}
+
+.page4>.hover-view.text8 {
+  top: 380rpx;
+  width: 500rpx;
+}
+
+.conclusion-container {
+  display: flex;
+  flex-flow: column;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  text-align: left;
+  font-family: -apple-system;
+  border: 2rpx solid rgba(76, 210, 142, 1);
+  margin: 20rpx 0rpx;
+  width: 540rpx;
+}
+
+.conclusion-tag {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  border-radius: 20rpx 20rpx 0px 0px;
+  background-color: rgba(2, 194, 97, 1);
+  color: rgba(255, 255, 255, 1);
+  font-size: 24rpx;
+  text-align: center;
+  font-family: -apple-system;
+}
+
+.conclusion-body {
+  margin: 5rpx;
+  color: rgba(16, 16, 16, 1);
+  font-size: 32rpx;
+  text-align: left;
+  font-family: -apple-system;
+}
+
+.white-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20rpx;
+  background-color: white;
+  color: rgba(2, 194, 97, 1);
+  font-size: 36rpx;
+  text-align: center;
+  box-shadow: 0px 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
+  font-family: -apple-system;
+  border: 2rpx solid rgba(255, 255, 255, 0);
+  padding: 10rpx;
+}
+
+.page5>.white-button {
+  position: relative;
+  top: 40rpx;
+  width: 350rpx;
+  height: 60rpx;
+}
