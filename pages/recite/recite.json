@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "mp-msg": "../../components/msg/msg",
-    "mp-dialog": "../../components/dialog/dialog",
-    "towxml": "/towxml/towxml",
-    "word-card": "../../components/word-card/word-card"
-  },
-  "navigationBarTitleText": "背诵"
-}

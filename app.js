@@ -46,6 +46,10 @@ App({
   },
   onShow: function() {
     var that = this;
+    let areyoufreshman = wx.getStorageSync('areyoufreshman');
+    if (areyoufreshman === '') {
+      return;
+    }
     wx.getClipboardData({
       success(res) {
         if (that.clipboardData === res.data) {

@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "towxml": "/towxml/towxml",
-    "word-card": "../../components/word-card/word-card"
-  }
-}

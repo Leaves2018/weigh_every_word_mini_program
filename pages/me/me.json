@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "mp-cell": "../../components/cell/cell",
-    "mp-cells": "../../components/cells/cells",
-    "mp-slideview": "../../components/slideview/slideview"
-  },
-  "navigationBarTitleText": "我"
-}

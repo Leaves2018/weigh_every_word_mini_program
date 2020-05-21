@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "mp-searchbar": "../../components/searchbar/searchbar",
-    "mp-cells": "../../components/cells/cells",
-    "mp-cell": "../../components/cell/cell",
-    "mp-slideview": "../../components/slideview/slideview"
-  },
-  "navigationBarTitleText": "历史记录"
-}
