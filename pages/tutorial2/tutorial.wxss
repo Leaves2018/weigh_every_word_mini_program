@@ -71,6 +71,38 @@
   justify-content: flex-start;
 }
 
+#skip-button {
+  z-index: 10000;
+  width: 100rpx;
+  font-style: italic;
+  position: fixed;
+  top: 25rpx;
+  left: 25rpx;
+  border-radius: 20rpx;
+  background-color: rgba(251, 251, 251, 0.55);
+  color: rgba(0, 0, 0, 1);
+  font-size: 24rpx;
+  text-align: center;
+  box-shadow: 0rpx 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
+  font-family: -apple-system;
+}
+
+#back-button {
+  z-index: 10000;
+  width: 100rpx;
+  font-style: italic;
+  position: fixed;
+  top: 25rpx;
+  right: 25rpx;
+  border-radius: 20rpx;
+  background-color: rgba(251, 251, 251, 0.55);
+  color: rgba(0, 0, 0, 1);
+  font-size: 24rpx;
+  text-align: center;
+  box-shadow: 0rpx 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
+  font-family: -apple-system;
+}
+
 .head1 {
   width: 550rpx;
   color: rgba(16, 16, 16, 1);
@@ -98,6 +130,9 @@
 }
 
 .green-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 20rpx;
   background-color: rgba(2, 194, 97, 1);
   color: rgba(255, 255, 255, 1);
@@ -106,8 +141,160 @@
   box-shadow: 0px 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
   font-family: -apple-system;
   border: 2rpx solid rgba(255, 255, 255, 0);
+  padding: 10rpx;
 }
 
-.card-container>.green-button {
-  align-self: flex-end;
+.page0>.green-button {
+  position: relative;
+  top: 25rpx;
+  left: 220rpx;
+  width: 200rpx;
+  height: 75rpx;
+}
+
+.hover-view {
+  width: 500rpx;
+  color: rgba(16, 16, 16, 1);
+  font-size: 28rpx;
+  text-align: left;
+  font-family: -apple-system;
+  border: 0rpx solid rgba(255, 255, 255, 0);
+  border-radius: 20rpx;
+  background-color: white;
+  position: fixed;
+  padding: 10rpx;
+}
+
+.page1>.hover-view.text1 {
+  right: 25rpx;
+  top: 320rpx;
+}
+
+.page1>.hover-view.text2 {
+  right: 25rpx;
+  bottom: 250rpx;
+}
+
+.page1>.hover-view.text3 {
+  right: 25rpx;
+  bottom: 125rpx;
+}
+
+.page1>.green-button {
+  position: fixed;
+  bottom: 25rpx;
+  right: 25rpx;
+  width: 150rpx;
+  height: 60rpx;
+}
+
+.page2>.hover-view.text1 {
+  width: 550rpx;
+  left: 100rpx;
+  top: 420rpx;
+}
+
+.page2>.hover-view.text2 {
+  width: 550rpx;
+  left: 100rpx;
+  top: 500rpx;
+}
+
+.page2>.green-button {
+  position: fixed;
+  top: 630rpx;
+  right: 80rpx;
+  width: 150rpx;
+  height: 60rpx;
+}
+
+.page3>.hover-view.text1 {
+  width: 550rpx;
+  left: 100rpx;
+  top: 500rpx;
+}
+
+.page3>.green-button {
+  position: fixed;
+  top: 630rpx;
+  right: 80rpx;
+  width: 150rpx;
+  height: 60rpx;
+}
+
+.page4>.hover-view.text1 {
+  width: 550rpx;
+  left: 100rpx;
+  top: 100rpx;
+}
+
+.page4>.word-card-demo {
+  width: 400rpx;
+  height: 600rpx;
+  border: 8rpx solid;
+  position: fixed;
+  background-color: white;
+  border-radius: 15rpx;
+}
+
+.page4>.word-card-demo.familiar {
+  left: 20rpx;
+  top: 500rpx;
+  border-color: rgba(62, 121, 225, 1);
+}
+
+.page4>.word-card-demo.vocabulary {
+  left: 50rpx;
+  top: 800rpx;
+  border-color: rgba(2, 194, 97, 1);
+}
+
+.page4>.word-card-demo.unknown {
+  right: 20rpx;
+  top: 650rpx;
+  border-color: rgba(255, 153, 7, 1);
+}
+
+.word-card-tag {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  color: rgba(246, 255, 237, 1);
+  font-size: 32rpx;
+  text-align: center;
+  font-family: -apple-system;
+}
+
+.familiar>.word-card-tag {
+  background-color: rgba(62, 121, 225, 1);
+}
+
+.vocabulary>.word-card-tag {
+  background-color: rgba(2, 194, 97, 1);
+}
+
+.unknown>.word-card-tag {
+  background-color: rgba(255, 153, 7, 1);
+}
+
+.icon-image {
+  width: 30rpx;
+  height: 30rpx;
+  margin: 10rpx;
+}
+
+.tag-text {
+  color: rgba(246, 255, 237, 1);
+  font-size: 32rpx;
+  text-align: left;
+  font-family: PingFangSC-regular;
+}
+
+.tag-detail {
+  background-color: rgba(255, 255, 255, 0);
+  color: rgba(16, 16, 16, 1);
+  font-size: 28rpx;
+  text-align: left;
+  font-family: -apple-system;
 }

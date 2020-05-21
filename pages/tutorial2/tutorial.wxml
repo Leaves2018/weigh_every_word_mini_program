@@ -1,17 +1,91 @@
-<!-- pages/tutorial2/tutorial.wxml
-<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}"></view>
-<view class="container" bindtap="close" wx:if="{{index === 0}}">
-  <view class="weui-dialog" catchtap="stopEvent">
-    <view class="card-container">
-      <text class="head1">🎉很高兴认识你！</text>
-      <text class="head2">👉主要功能</text>
-      <text class="body">从一篇文本中抽取出你可能不认识的单词来进行处理。</text>
-      <text class="head2">📃文本</text>
-      <text class="body">你能从剪贴板中直接粘贴文本，也能扫描文本，非常方便。</text>
-      <text class="head2">🔑单词</text>
-      <text class="body">你可以看它们的释义，也可以把它们加入到生词本中集中背诵。</text>
-      <view class="green-button">开始介绍</view>
+<!--pages/tutorial2/tutorial.wxml-->
+<wxs module="tutorial" src="./tutorial.wxs"></wxs>
+<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}" selector="{{selector}}" change:selector="{{tutorial.bottom}}"></view>
+
+<view class="page">
+  <view wx:if="{{index !== 0}}" id="skip-button" bindtap="skipButtonTap">Skip</view>
+  <view wx:if="{{index !== 0}}" id="back-button" bindtap="backButtonTap">Back</view>
+
+  <block wx:if="{{index === 0}}">
+    <view class="container page{{index}}" bindtap="close">
+      <view class="weui-dialog" catchtap="stopEvent">
+        <view class="card-container">
+          <text class="head1">🎉很高兴认识你！</text>
+          <text class="head2">👉主要功能</text>
+          <text class="body">从一篇文本中抽取出你可能不认识的单词来进行处理。</text>
+          <text class="head2">📃文本</text>
+          <text class="body">你能从剪贴板中直接粘贴文本，也能扫描文本，非常方便。</text>
+          <text class="head2">🔑单词</text>
+          <text class="body">你可以看它们的释义，也可以把它们加入到生词本中集中背诵。</text>
+        </view>
+      </view>
+      <view class="green-button" bindtap="nextButtonTap">开始介绍</view>
     </view>
-  </view>
-</view> -->
-<page-draft storageKey='storageKey'></page-draft>
+  </block>
+
+  <block wx:elif="{{index === 1}}">
+    <page-input></page-input>
+    <view class="container page{{index}}" bindtap="close">
+      <text class="hover-view text1">这里的日历视图显示你近三个月来的单词数量增加情况。</text>
+      <text class="hover-view text2">点击扫描你的文本！</text>
+      <text class="hover-view text3">如果你想粘贴文字，这里会直接提示你“是否使用剪贴板”</text>
+      <view class="green-button" bindtap="nextButtonTap">下一步</view>
+    </view>
+  </block>
+
+
+  <block wx:elif="{{index === 2}}">
+    <page-draft storageKey="{{draftDemoTextStorageKey}}"></page-draft>
+    <view class="container page{{index}}" bindtap="close">
+      <text class="hover-view text1">当获得一篇文本后，就把它加入“草稿”。</text>
+      <text class="hover-view text2">你可以一直向草稿中添加文本片段。
+      选择“加入到档案”后，“草稿”会清空</text>
+      <view class="green-button" bindtap="nextButtonTap">下一步</view>
+    </view>
+  </block>
+
+  <block wx:elif="{{index === 3}}">
+    <page-history_list storageKey="{{draftDemoTextStorageKey}}"></page-history_list>
+    <view class="container page{{index}}" bindtap="close">
+      <text class="hover-view text1">这是你刚才添加到“档案”的文件。
+    （我们为你准备了一篇示例文本）</text>
+      <view class="green-button" bindtap="nextButtonTap">下一步</view>
+    </view>
+  </block>
+
+  <block wx:elif="{{index === 4}}">
+    <page-history_detail storageKey="{{draftDemoTextStorageKey}}"></page-history_detail>
+    <view class="container page{{index}}" bindtap="close">
+      <block wx:if="{{subindex === 0}}">
+        <text class="hover-view text1">单击文章中的单词，查看单词卡片。</text>
+
+        <view class="word-card-demo familiar">
+          <view class="word-card-tag">
+            <image class="icon-image" src="/images/queding.svg"></image>
+            <text class="tag-title">熟词</text>
+          </view>
+          <text class="tag-detail">您记得这个单词，加入熟词本📘。</text>
+        </view>
+
+        <view class="word-card-demo vocabulary">
+          <view class="word-card-tag">
+            <image class="icon-image" src="/images/new.svg"></image>
+            <text class="tag-title">生词</text>
+          </view>
+          <text class="tag-detail">您忘记了这个单词。将这个单词加入到生词本中📗。</text>
+        </view>
+
+        <view class="word-card-demo unknown">
+          <view class="word-card-tag">
+            <image class="icon-image" src="/images/banshou.svg"></image>
+            <text class="tag-title">未知词</text>
+          </view>
+          <text class="tag-detail">这些单词没有加入到您的熟词本📘之中，尚不知道您是否记得这个单词。</text>
+        </view>
+
+      </block>
+      <view class="green-button" bindtap="nextButtonTap">下一步</view>
+    </view>
+  </block>
+
+</view>

@@ -1,0 +1,34 @@
+module.exports = {
+  top: function(newValue, oldValue, ownerInstance, instance) {
+    if (oldValue) {
+      // console.log('oldValue=' + JSON.stringify(oldValue))
+      var oldInstance = ownerInstance.selectComponent(oldValue);
+      oldInstance.setStyle({
+        'z-index': 0,
+      })
+    }
+    if (newValue) {
+      // console.log('newValue=' + JSON.stringify(newValue))
+      var newInstance = ownerInstance.selectComponent(newValue);
+      newInstance.setStyle({
+        'z-index': 10000,
+      })
+    }
+  },
+  bottom: function (newValue, oldValue, ownerInstance, instance) {
+    if (oldValue) {
+      // console.log('oldValue=' + JSON.stringify(oldValue))
+      var oldInstance = ownerInstance.selectComponent(oldValue);
+      oldInstance.setStyle({
+        'z-index': 0,
+      })
+    }
+    if (newValue) {
+      // console.log('newValue=' + JSON.stringify(newValue))
+      var newInstance = ownerInstance.selectComponent(newValue);
+      newInstance.setStyle({
+        'z-index': -1,
+      })
+    }
+  }
+}

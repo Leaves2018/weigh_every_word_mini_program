@@ -2,6 +2,8 @@
   "component": true,
   "usingComponents": {
     "page-input": "../input2/input",
-    "page-draft": "../draft/draft"
+    "page-draft": "../draft/draft",
+    "page-history_list": "../history_list/history_list",
+    "page-history_detail": "../history_detail2/history_detail"
   }
 }
