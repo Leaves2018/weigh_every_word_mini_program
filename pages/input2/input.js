@@ -6,9 +6,9 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    inTutorial: {
-      type: Boolean,
-      value: false,
+    selector: {
+      type: String,
+      value: '',
     }
   },
 
@@ -18,6 +18,7 @@ Component({
   data: {
     // month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     showday: [, , , , , , , , , , , , , 2, , , , , , , , , , , , , , , , , , , , , , , , , , , , 2, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 2, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 1, , , , 1],
+    condition: 0,
   },
 
   /**
@@ -177,11 +178,5 @@ Component({
    * 数据监听器
    */
   observers: {
-    'isTutorial': function(isTutorial) {
-      if (isTutorial) { // 如果处于教程中，调用生命周期方法显示完整布局
-        this.onLoad();
-        this.onShow();
-      }
-    }
   }
 })

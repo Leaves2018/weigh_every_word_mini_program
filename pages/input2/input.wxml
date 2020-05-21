@@ -1,5 +1,6 @@
 <!--pages/input2/input.wxml-->
-<view class="page">
+<wxs module='tutorial' src="../tutorial2/tutorial.wxs"></wxs>
+<view class="page" selector="{{selector}}" change:selector="{{tutorial.top}}">
   <view class="page-body">
     <view>
       <text class="greet" wx:if="{{condition === 0}}">早上好！</text>
@@ -9,11 +10,11 @@
     <view class="whitespace"></view>
     <view class="white">
       <!-- <text space="ensp">   {{showmonth}}</text> -->
-      <view class="words-container">
+      <view class="words-container" id="activity-record">
         <view class="item" data-position="{{index}}" wx:for="{{showday}}" wx:key="*this" style="background-color: {{(item !==null&&item !=='') ? '#43e702' : '#dadbd9'}};" bindtap="showWordCard"></view>
       </view>
     </view>
-    <view class="camera">
+    <view class="camera" id="input-view">
       <view class="greenbackground" bindtap="addpicture" bindlongpress="addtext">
         <image class="addpictures" src="/images/camera.png"></image>
         <view class="whitespace"></view>
