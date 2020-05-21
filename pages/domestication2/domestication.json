@@ -1,9 +1,6 @@
 {
   "component": true,
-  "usingComponents": {
-    "mp-checkbox-group": "../../components/checkbox-group/checkbox-group",
-    "mp-checkbox": "../../components/checkbox/checkbox"
-  },
+  "usingComponents": {},
   "navigationBarTitleText": "设置词汇量",
   "enablePullDownRefresh": true
 }

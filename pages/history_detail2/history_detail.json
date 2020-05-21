@@ -6,8 +6,7 @@
     "word-card-dialog": "../../components/word-card/word-card-dialog",
     "word-card-set": "../../components/word-card/word-card-set",
     "tappable-passage": "../../components/tappable-passage/tappable-passage",
-    "mp-halfScreenDialog": "../../components/half-screen-dialog/half-screen-dialog",
-    "recite": "../recite3/recite"
+    "mp-halfScreenDialog": "../../components/half-screen-dialog/half-screen-dialog"
   },
   "navigationBarTitleText": "文章详情"
 }
