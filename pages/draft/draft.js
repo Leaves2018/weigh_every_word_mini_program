@@ -187,14 +187,14 @@ Component({
       var that = this;
       if(storageKey){
         wx.getStorage({
-          key: 'storageKey',
+          key: storageKey,
           success: function(res) {
             that.setData({
               showinformation: [res.data],
             });
             let history = new utilHistory.History(res.data);
             wx.setStorage({
-              key: 'storageKey',
+              key: storageKey,
               data: history.uuid,
             })
           },

@@ -314,7 +314,7 @@ Component({
       var that = this;
       if (storageKey) {
         wx.getStorage({
-          key: 'storageKey',
+          key: storageKey,
           success: function (res) {
             that.history = new utilsHis.History(wx.getStorageSync(res.data));
             var passage = util.joinPassage(that.history.passageFragments);
