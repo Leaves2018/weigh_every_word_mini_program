@@ -132,7 +132,7 @@ Component({
      */
     goBack: function() {
       wx.redirectTo({
-        url: `../history_detail/history_detail?historyuuid=${this.history.uuid}`,
+        url: `../history_detail2/history_detail?historyuuid=${this.history.uuid}`,
       });
     },
   },

@@ -106,6 +106,7 @@ const cloud_to_local = (passage) => {
         success: res => {
           let word_familiar_list = res.data.split("\n");
           app.familiarTrie.add(word_familiar_list);
+          app.familiarTrie.save();
         },
         fail: err => {
           console.log('readFile fail', err)
@@ -123,6 +124,7 @@ const cloud_to_local = (passage) => {
         success: res => {
           let word_vocabulary_list = res.data.split("\n");
           app.vocabularyTrie.add(word_vocabulary_list);
+          app.vocabularyTrie.save();
         },
         fail: err => {
           console.log('readFile fail', err)

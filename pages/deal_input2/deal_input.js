@@ -68,20 +68,25 @@ Component({
 
     //处理文本
     modify_confirm: function () {
+      let input_passage_information = wx.getStorageSync('input_passage_information');
+      if (input_passage_information === "") {
+        if (this.data.s !== '') {
+          input_passage_information = [];
+          input_passage_information.push(this.data.s);
+          wx.setStorage({
+            key: 'input_passage_information',
+            data: input_passage_information,
+          })
+          wx.redirectTo({
+            url: '/pages/draft/draft',
+          })
+        }
+      }
       if(this.listnumber){
-        let input_passage_information = wx.getStorageSync('input_passage_information');
-        if (input_passage_information === "") {
-          if (this.data.s !== '') {
-            input_passage_information = [];
-            input_passage_information.push(this.data.s);
-            console.log(this.listnumber);
-          }
+        if (this.data.s === '') {
+          input_passage_information.splice(this.listnumber, 1)
         } else {
-          if (this.data.s === '') {
-            input_passage_information.splice(this.listnumber, 1)
-          } else {
-            input_passage_information[this.listnumber] = this.data.s;
-          }
+          input_passage_information[this.listnumber] = this.data.s;
         }
         wx.setStorage({
           key: 'input_passage_information',
@@ -90,7 +95,7 @@ Component({
         wx.redirectTo({
           url: '/pages/draft/draft',
         })
-      }
+      } 
       if (this.uuid_para_sent) {
         let historyList = utilHistory.getHistoryListFromStorage();
         historyList.deleteHistory(this.history.uuid);
