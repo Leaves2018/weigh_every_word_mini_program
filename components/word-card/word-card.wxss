@@ -89,7 +89,7 @@
 
 .bottom {
   position: absolute;
-  bottom: 100rpx;
+  bottom: 25rpx;
   width: 100%;
   display: flex;
   flex-flow: row;
@@ -108,13 +108,13 @@
 }
 
 .btn.forget {
-  background: #4CD28E;
+  background: rgba(2, 194, 97, 1);
   color: white;
 }
 
 .btn.remember {
-  background: #DDDDDD;
-  color: black;
+  background: rgba(62, 121, 225, 0.75);
+  color: white;
 }
 
 

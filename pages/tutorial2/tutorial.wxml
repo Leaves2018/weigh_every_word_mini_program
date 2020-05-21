@@ -1,6 +1,6 @@
 <!--pages/tutorial2/tutorial.wxml-->
 <wxs module="tutorial" src="./tutorial.wxs"></wxs>
-<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}" maskzindex="{{[selector, zindex]}}" change:maskzindex="{{tutorial.adjustZindex}}"></view>
+<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}" adjustzindex="{{[selector, zindex]}}" change:adjustzindex="{{tutorial.adjustZindex}}"></view>
 
 <view class="page">
   <view wx:if="{{index !== 0}}" id="skip-button" bindtap="skipButtonTap">Skip</view>
@@ -56,6 +56,7 @@
   <block wx:elif="{{index === 4}}">
     <page-history_detail storageKey="{{draftDemoTextStorageKey}}"></page-history_detail>
     <view class="container page{{index}}" bindtap="close">
+
       <block wx:if="{{subindex === 0}}">
         <text class="hover-view text1">单击文章中的单词，查看单词卡片。</text>
 
@@ -84,6 +85,18 @@
         </view>
 
       </block>
+
+      <block wx:if="{{subindex === 1}}">
+        <text class="hover-view text2">单词信息</text>
+        <view class="word-card-container">
+          <word-card word="word" showFront="{{true}}" autoplayAudio="{{true}}" showButtons="{{true}}" />
+        </view>
+        <text class="hover-view text3">发音</text>
+        <text class="hover-view text4">中/英解释</text>
+        <text class="hover-view text5">分词性解释</text>
+        <text class="hover-view text6">长按卡片或点击单词名称可以切换到背面，显示例句信息（如果有的话）</text>
+      </block>
+
       <view class="green-button" bindtap="nextButtonTap">下一步</view>
     </view>
   </block>

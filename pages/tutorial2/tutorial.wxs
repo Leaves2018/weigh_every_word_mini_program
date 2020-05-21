@@ -1,13 +1,13 @@
 module.exports = {
   adjustZindex: function (newValue, oldValue, ownerInstance, instance) {
-    if (oldValue.length > 0) {
+    if (oldValue && oldValue.length > 0) {
       // console.log('oldValue=' + JSON.stringify(oldValue))
       var oldInstance = ownerInstance.selectComponent(oldValue[0]);
       oldInstance.setStyle({
         'z-index': 0, // 原有的恢复到0
       })
     }
-    if (newValue.length > 0) {
+    if (newValue && newValue.length > 0) {
       // console.log('newValue=' + JSON.stringify(newValue))
       var newInstance = ownerInstance.selectComponent(newValue[0]);
       newInstance.setStyle({

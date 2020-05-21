@@ -28,6 +28,8 @@ Component({
   data: {
     index: 0,
     subindex: 0,
+    selector: '.weui-mask',
+    zindex: 1000,
   },
 
   /**
@@ -40,16 +42,23 @@ Component({
       })
     },
     backButtonTap: function(e) {
-      this.setData({
-        index: this.data.index - 1,
-      })
+      if (this.data.index === 4 && this.data.subindex !== 0) {
+        this.setData({
+          subindex: this.data.subindex - 1,
+        })
+      } else {
+        this.setData({
+          index: this.data.index - 1,
+        })
+      }
     },
     nextButtonTap: function(e) {
       switch (this.data.index) {
         case 0:
           this.setData({
             index: this.data.index + 1,
-            maskzindex: ['.weui-mask', -1]
+            selector: '.weui-mask',
+            zindex: -1,
           });
           break;
         case 1:
@@ -67,20 +76,22 @@ Component({
         case 3:
           this.setData({
             index: this.data.index + 1,
+            selector: '.weui-mask', // 恢复遮罩层
+            zindex: 1000,
           });
           break;
         case 4:
           switch (this.data.subindex) {
             case 0:
               this.setData({
-                index: this.data.index + 0.1,
-                maskzindex: ['.weui-mask', 1000], // 恢复遮罩层
-              })
+                subindex: this.data.subindex + 1,
+              });
+              break;
             case 1:
             case 2:
             case 3:
               this.setData({
-                index: this.data.index + 0.1,
+                subindex: this.data.subindex + 1,
               });
               break;
           }

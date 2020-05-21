@@ -167,7 +167,7 @@
 
 .page1>.hover-view.text1 {
   right: 25rpx;
-  top: 320rpx;
+  top: 400rpx;
 }
 
 .page1>.hover-view.text2 {
@@ -308,4 +308,52 @@
 
 .vocabulary>.tag-detail {
   width: 250rpx;
+}
+
+.page4>.green-button {
+  position: fixed;
+  right: 25rpx;
+  top: 1100rpx;
+  width: 150rpx;
+  height: 60rpx;
+}
+
+.page4>.hover-view.text2 {
+  top: 120rpx;
+  left: 317.5rpx;
+  width: 115rpx;
+}
+
+.page4>.hover-view.text3 {
+  top: 220rpx;
+  left: 10px;
+  width: 75rpx;
+}
+
+.page4>.hover-view.text4 {
+  top: 220rpx;
+  right: 10rpx;
+  width: 75rpx;
+}
+
+.page4>.hover-view.text5 {
+  top: 500rpx;
+  left: 10rpx;
+  width: 80rpx;
+}
+
+.page4>.hover-view.text6 {
+  top: 980rpx;
+  width: 500rpx;
+}
+
+.word-card-container {
+  position: fixed;
+  left: 125rpx;
+  top: 200rpx;
+  width: 500rpx;
+  height: 750rpx;
+  border: 8rpx solid rgba(255, 153, 7, 1);
+  border-radius: 30rpx;
+  background-color: white;
 }
