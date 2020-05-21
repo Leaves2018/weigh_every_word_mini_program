@@ -36,6 +36,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    onLoad: function() {
+      wx.setNavigationBarTitle({
+        title: '使用教程',
+      })
+    },
     skipButtonTap: function(e) {
       wx.switchTab({
         url: '/pages/input2/input',
