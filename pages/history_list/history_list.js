@@ -75,7 +75,7 @@ Component({
       switch (e.detail.index) {
         case 0:
           wx.navigateTo({
-            url: `/pages/recite2/recite?historyuuid=${historyuuid}`,
+            url: `/pages/history_detail2/history_detail?historyuuid=${historyuuid}&&showallwords=${historyuuid}`,
           });
           break;
         case 1:

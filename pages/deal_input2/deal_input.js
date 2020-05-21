@@ -81,6 +81,17 @@ Component({
             url: '/pages/draft/draft',
           })
         }
+      }else {
+        if (this.data.s !== '') {
+          input_passage_information.push(this.data.s);
+          wx.setStorage({
+            key: 'input_passage_information',
+            data: input_passage_information,
+          })
+          wx.redirectTo({
+            url: '/pages/draft/draft',
+          })
+        }
       }
       if(this.listnumber){
         if (this.data.s === '') {

@@ -32,6 +32,10 @@ Component({
       type: String,
       value: ''
     },
+    showallwords: {
+      type: String,
+      value: ''
+    },
   },
 
   /**
@@ -351,6 +355,11 @@ Component({
             })
           },
         })
+      }
+    },
+    'showallwords': function (showallwords) {
+      if (showallwords){
+        this.showallunwords();
       }
     }
   }

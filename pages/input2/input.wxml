@@ -10,11 +10,11 @@
     <view class="whitespace"></view>
     <view class="white">
       <!-- <text space="ensp">   {{showmonth}}</text> -->
-      <view class="words-container" id="activity-record">
-        <view class="item" data-position="{{index}}" wx:for="{{showday}}" wx:key="*this" style="background-color: {{(item !==null&&item !=='') ? '#43e702' : '#dadbd9'}};" bindtap="showWordCard"></view>
+      <view class="words-container">
+        <view class="item" data-position="{{index}}" wx:for="{{showday}}" wx:key="*this" style="background-color: {{(item !==null&&item !=='') ? '#43e702' : '#dadbd9'}};"></view>
       </view>
     </view>
-    <view class="camera" id="input-view">
+    <view class="camera">
       <view class="greenbackground" bindtap="addpicture" bindlongpress="addtext">
         <image class="addpictures" src="/images/camera.png"></image>
         <view class="whitespace"></view>
