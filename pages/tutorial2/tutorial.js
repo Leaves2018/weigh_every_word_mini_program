@@ -1,21 +1,38 @@
-// canvas.js
-Page({
-  onReady() {
+// pages/tutorial2/tutorial.js
+Component({
+  /**
+   * 组件的属性列表
+   */
+  properties: {
+    maskClosable: {
+      type: Boolean,
+      value: true
+    },
+    mask: {
+      type: Boolean,
+      value: true
+    },
+    show: {
+      type: Boolean,
+      value: true,
+    },
+    index: {
+      type: Number,
+      value: 0,
+    }
   },
-  buttonTap: function() {
-    const query = wx.createSelectorQuery()
-    query.select('#myCanvas')
-      .fields({ node: true, size: true })
-      .exec((res) => {
-        const canvas = res[0].node
-        const ctx = canvas.getContext('2d')
 
-        const dpr = wx.getSystemInfoSync().pixelRatio
-        canvas.width = res[0].width * dpr
-        canvas.height = res[0].height * dpr
-        ctx.scale(dpr, dpr)
+  /**
+   * 组件的初始数据
+   */
+  data: {
 
-        ctx.fillRect(0, 0, 100, 100)
-      })
+  },
+
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+
   }
 })

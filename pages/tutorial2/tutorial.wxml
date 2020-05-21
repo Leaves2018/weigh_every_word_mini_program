@@ -1,5 +1,16 @@
-<view class="progress-box">
-  <progress class="progress" percent="60" active stroke-width="20"/>
-</view>
-<view class="progress-box">
+<!--pages/tutorial2/tutorial.wxml-->
+<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}"></view>
+<view class="container" bindtap="close" wx:if="{{index === 0}}">
+  <view class="weui-dialog" catchtap="stopEvent">
+    <view class="card-container">
+      <text class="head1">🎉很高兴认识你！</text>
+      <text class="head2">👉主要功能</text>
+      <text class="body">从一篇文本中抽取出你可能不认识的单词来进行处理。</text>
+      <text class="head2">📃文本</text>
+      <text class="body">你能从剪贴板中直接粘贴文本，也能扫描文本，非常方便。</text>
+      <text class="head2">🔑单词</text>
+      <text class="body">你可以看它们的释义，也可以把它们加入到生词本中集中背诵。</text>
+      <view class="green-button">开始介绍</view>
+    </view>
+  </view>
 </view>

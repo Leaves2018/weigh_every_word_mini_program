@@ -52,7 +52,6 @@
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
-  align-items: flex-start;
   line-height: 20rpx;
   border: 0px solid rgba(187, 187, 187, 1);
   border-radius: 15px;
@@ -60,7 +59,7 @@
   padding: 50rpx 30rpx;
   color: white;
   text-align: left;
-  font-size: 36rpx;
+  font-size: 48rpx;
   font-family: PingFangSC-bold;
   box-shadow: 0rpx 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
 }
@@ -70,8 +69,8 @@
 }
 
 .word-book>.word-book-size {
-  font-size: 28rpx;
-  margin-top: 25rpx;
+  font-size: 36rpx;
+  margin-top: 50rpx;
 }
 
 .other-entrance {

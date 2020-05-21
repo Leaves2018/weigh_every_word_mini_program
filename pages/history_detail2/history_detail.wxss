@@ -5,6 +5,10 @@ page {
   padding: 0rpx;
 }
 
+.title-area {
+  margin: 0rpx 20rpx;
+}
+
 .retext {
   margin-left: 20rpx;
   margin-right: 20rpx;

@@ -118,6 +118,7 @@ Component({
     downloadfiles: function () {
       wx.showLoading({
         title: '加载中',
+        duration: 3000
       });
       utils_lc.cloud_to_local();
     },

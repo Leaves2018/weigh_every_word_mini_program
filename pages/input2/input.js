@@ -6,7 +6,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    inTutorial: {
+      type: Boolean,
+      value: false,
+    }
   },
 
   /**
@@ -163,5 +166,17 @@ Component({
         complete: function(res) {},
       })
     },
+  },
+
+  /**
+   * 数据监听器
+   */
+  observers: {
+    'isTutorial': function(isTutorial) {
+      if (isTutorial) { // 如果处于教程中，调用生命周期方法显示完整布局
+        this.onLoad();
+        this.onShow();
+      }
+    }
   }
 })

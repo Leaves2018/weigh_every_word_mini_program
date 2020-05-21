@@ -11,8 +11,8 @@
     <text class="page-title">设置基础词汇量</text>
   </view>
   <view class="page-body">
-    <view wx:for="{{keys}}" class="tag-container" style="background-color: {{lexiconConfiguration[item].checked ? '#02C261' : '#FBFBFB'}};" data-key="{{item}}" bindtap="check">
-      <image class="tag-icon" src="/images/shu_02.svg"></image>
+    <view wx:for="{{keys}}" class="tag-container" style="background-color: {{lexiconConfiguration[item].checked ? 'rgba(62, 121, 225, 0.88)' : 'rgba(251, 251, 251, 1)'}}; color: {{lexiconConfiguration[item].checked ? 'white' : 'black'}}" data-key="{{item}}" bindtap="check">
+      <image class="tag-icon" src="/images/{{item}}_{{lexiconConfiguration[item].checked ? 'white' : 'black'}}.svg"></image>
       <text class="tag-text">{{lexiconConfiguration[item].name}}</text>
     </view>
   </view>

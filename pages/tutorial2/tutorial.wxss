@@ -1,11 +1,113 @@
 /* pages/tutorial2/tutorial.wxss */
-.progress-box {
-  width: 750rpx;
-  height: 10px;
-  border-radius: 15px;
-  background-color: blue;
+
+.weui-mask {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
 }
 
-.progress {
-  overflow: hidden;
+.weui-mask_transparent {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.container {
+  position: fixed;
+  z-index: 5000;
+  top: 0rpx;
+  bottom: 0rpx;
+  left: 0rpx;
+  right: 0rpx;
+  text-align: center;
+  font-size: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.weui-mask.weui-mask_hidden {
+  opacity: 0;
+  transform: scale3d(1, 1, 0);
+}
+
+.weui-mask {
+  opacity: 1;
+  transform: scale3d(1, 1, 1);
+  transition: all 0.3s ease-in;
+}
+
+.weui-dialog.weui-dialog_hidden {
+  opacity: 0;
+  transform: scale3d(1, 1, 0);
+}
+
+.weui-dialog {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  transition: all 0.3s ease-in;
+}
+
+.card-container {
+  position: relative;
+  width: 650rpx;
+  height: 1000rpx;
+  padding: 50rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+}
+
+.head1 {
+  width: 550rpx;
+  color: rgba(16, 16, 16, 1);
+  font-size: 48rpx;
+  text-align: left;
+  font-family: PingFangSC-bold;
+}
+
+.head2 {
+  width: 550rpx;
+  color: rgba(16, 16, 16, 1);
+  font-size: 40rpx;
+  text-align: left;
+  font-family: -apple-system;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+
+.body {
+  width: 550rpx;
+  color: rgba(16, 16, 16, 1);
+  font-size: 28rpx;
+  text-align: left;
+  font-family: -apple-system;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+
+.green-button {
+  border-radius: 20rpx;
+  background-color: rgba(2, 194, 97, 1);
+  color: rgba(255, 255, 255, 1);
+  font-size: 36rpx;
+  text-align: center;
+  box-shadow: 0px 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
+  font-family: -apple-system;
+  border: 2rpx solid rgba(255, 255, 255, 0);
+}
+
+.card-container>.green-button {
+  align-self: flex-end;
 }

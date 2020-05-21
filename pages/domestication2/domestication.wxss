@@ -25,6 +25,9 @@
   flex-flow: column;
 }
 
+.page-head {
+  margin-top: 50rpx;
+}
 .page-title {
   margin: 50rpx;
   color: black;
@@ -34,6 +37,7 @@
 }
 
 .page-body {
+  margin-top: 50rpx;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
