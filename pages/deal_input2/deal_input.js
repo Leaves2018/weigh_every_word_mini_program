@@ -35,11 +35,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    onLoad: function () {
+    onLoad: function() {
       let that = this;
       // 获取系统信息
       wx.getSystemInfo({
-        success: function (res) {
+        success: function(res) {
           // 获取可使用窗口宽度
           let clientHeight = res.windowHeight;
           // 获取可使用窗口高度
@@ -54,50 +54,30 @@ Component({
           });
         }
       });
-      
+
     },
 
-    onShow: function () {
-    },
+    onShow: function() {},
 
-    bindFormSubmit: function (e) {
+    bindFormSubmit: function(e) {
       this.setData({
         s: e.detail.value
       })
     },
 
     //处理文本
-    modify_confirm: function () {
+    modify_confirm: function() {
       let input_passage_information = wx.getStorageSync('input_passage_information');
-      if (input_passage_information === "") {
-        if (this.data.s !== '') {
-          input_passage_information = [];
-          input_passage_information.push(this.data.s);
-          wx.setStorage({
-            key: 'input_passage_information',
-            data: input_passage_information,
-          })
-          wx.redirectTo({
-            url: '/pages/draft/draft',
-          })
-        }
-      }else {
-        if (this.data.s !== '') {
-          input_passage_information.push(this.data.s);
-          wx.setStorage({
-            key: 'input_passage_information',
-            data: input_passage_information,
-          })
-          wx.redirectTo({
-            url: '/pages/draft/draft',
-          })
-        }
-      }
-      if(this.listnumber){
-        if (this.data.s === '') {
-          input_passage_information.splice(this.listnumber, 1)
+      if (!this.listnumber && !this.uuid_para_sent && this.listnumber !==0 && this.uuid_para_sent !==0) {
+        if (input_passage_information === "") {
+          if (this.data.s !== '') {
+            input_passage_information = [];
+            input_passage_information.push(this.data.s);
+          }
         } else {
-          input_passage_information[this.listnumber] = this.data.s;
+          if (this.data.s !== '') {
+            input_passage_information.push(this.data.s);
+          }
         }
         wx.setStorage({
           key: 'input_passage_information',
@@ -106,11 +86,32 @@ Component({
         wx.redirectTo({
           url: '/pages/draft/draft',
         })
-      } 
-      if (this.uuid_para_sent) {
+      }
+      if (this.listnumber || this.listnumber === 0) {
+        if (this.data.s === '') {
+          input_passage_information.splice(this.listnumber, 1)
+        } else {
+          input_passage_information[this.listnumber] = this.data.s;
+        }
+        if (input_passage_information.length === 0) {
+          wx.setStorage({
+            key: 'input_passage_information',
+            data: '',
+          })
+        } else {
+          wx.setStorage({
+            key: 'input_passage_information',
+            data: input_passage_information,
+          })
+        }
+        wx.redirectTo({
+          url: '/pages/draft/draft',
+        })
+      }
+      if (this.uuid_para_sent || this.uuid_para_sent===0) {
         let historyList = utilHistory.getHistoryListFromStorage();
         historyList.deleteHistory(this.history.uuid);
-        this.history.passageFragments[this.para] = util.splitWithPunc(this.data.s),
+        this.history.passageFragments[this.para] = util.splitWithPunc(this.data.s);
         this.history = new utilHistory.History(util.joinPassage(this.history.passageFragments), this.before_headline);
         wx.redirectTo({
           url: `/pages/history_detail2/history_detail?historyuuid=${this.history.uuid}`,
@@ -118,22 +119,21 @@ Component({
       }
     },
 
-    modify_return: function (e) {
-      if(this.listnumber){
-        wx.redirectTo({
-          url: '/pages/draft/draft',
-        })
-      }
-      if (this.uuid_para_sent){
+    modify_return: function(e) {
+      if (this.uuid_para_sent) {
         wx.redirectTo({
           url: `/pages/history_detail2/history_detail?historyuuid=${this.history.uuid}`,
         });
+      } else {
+        wx.redirectTo({
+          url: '/pages/draft/draft',
+        })
       }
     },
   },
 
   observers: {
-    'listnumber': function (listnumber) {
+    'listnumber': function(listnumber) {
       this.listnumber = listnumber;
       console.log(listnumber);
       let passage_temp = wx.getStorageSync('input_passage_information')[listnumber];
@@ -141,7 +141,7 @@ Component({
         s: passage_temp,
       })
     },
-    'uuid_para_sent': function (uuid_para_sent) {
+    'uuid_para_sent': function(uuid_para_sent) {
       this.uuid_para_sent = uuid_para_sent;
       this.uuid = uuid_para_sent.split('!!!')[0];
       this.para = uuid_para_sent.split('!!!')[1];
