@@ -12,7 +12,7 @@ const wxss = {
     "border": "none"
   },
   vo: {
-    "background": "#7FFFAA"
+    "background": "rgba(2, 194, 97);"
   },
   un: {
     "background": "rgb(255, 196, 107)"

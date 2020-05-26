@@ -11,7 +11,7 @@
       <view class="partition"></view>
       <view class="textbackground" bindtap="showallunwords">
         <image class="addpictures1" src="/images/view_all.png"></image>
-        <text space="ensp" class="text0"> 未处理 {{numberOfUn}}</text>
+        <text space="ensp" class="text0"> 未知词 {{numberOfUn}}</text>
       </view>
     </view>
     <view class="divLineview"></view>
