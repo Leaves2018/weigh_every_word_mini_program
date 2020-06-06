@@ -1,6 +1,6 @@
 {
   "component": true,
   "usingComponents": {
-    "word-card": "../components/word-card/word-card"
+    "word-card": "../word-card/word-card"
   }
 }
