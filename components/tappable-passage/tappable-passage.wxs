@@ -15,11 +15,11 @@ module.exports = {
     var text = event.currentTarget.dataset.text;
     var location = event.currentTarget.dataset.para + '.' + event.currentTarget.dataset.sent;
     var instance = ownerInstance.selectAllComponents('.item.' + text);
-    for (var i = 0; i < instance.length; i++) {
-      instance[i].setStyle({
-        "background": "greenyellow",
-      })
-    }
+    // for (var i = 0; i < instance.length; i++) {
+    //   instance[i].setStyle({
+    //     "background": "greenyellow",
+    //   })
+    // }
     // 触发事件tapword，传递点击的文本数据及位置信息
     ownerInstance.triggerEvent('tapword', {text: text, location: location})
     return false;

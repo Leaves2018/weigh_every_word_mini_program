@@ -38,7 +38,7 @@ Component({
     buttons: [{
         type: 'default',
         className: '',
-        text: '忘了',
+        text: '忘记',
         value: 0
       },
       {

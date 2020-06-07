@@ -16,4 +16,7 @@
       <text class="tag-text">{{lexiconConfiguration[item].name}}</text>
     </view>
   </view>
+  <navigator open-type="switchTab" url="/pages/me2/me">
+    <view class="returnbutton">返回</view>
+  </navigator>
 </view>

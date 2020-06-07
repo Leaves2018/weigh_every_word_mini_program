@@ -70,3 +70,22 @@
   text-align: left;
   font-family: PingFangSC-regular;
 }
+
+.returnbutton {
+  position: fixed;
+  bottom: 0rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20rpx;
+  background-color: rgba(62, 121, 225, 1);
+  color: white;
+  font-size: 36rpx;
+  text-align: center;
+  box-shadow: 0px 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
+  font-family: -apple-system;
+  border: 2rpx solid rgba(255, 255, 255, 0);
+  padding: 10rpx;
+  width: 600rpx;
+  margin: 75rpx;  
+}

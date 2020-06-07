@@ -1,13 +1,13 @@
 <wxs src="./word-card.wxs" module="wxs" />
-<view class="word-card {{extClass}}" bindtouchstart="{{wxs.touchStart}}" bindtouchend="{{wxs.touchEnd}}" bindtouchcancel="{{wxs.touchCancel}}" bindtouchmove="{{wxs.touchMove}}" bindlongpress="flipCard">
+<view class="word-card {{extClass}}" bindtouchstart="{{wxs.touchStart}}" bindtouchend="{{wxs.touchEnd}}" bindtouchcancel="{{wxs.touchCancel}}" bindtouchmove="{{wxs.touchMove}}" catchtap="flipCard">
 
   <view wx:if="{{front}}" class="front">
     <view class="front-head">
-      <image class="play-audio-btn" src='/images/laba.png' bindtap="playAudio" />
-      <image wx:if="{{showTranslation}}" class="ec-switch-btn" src='/images/English.svg' bindtap="ecSwitch" />
-      <image wx:else class="ec-switch-btn" src='/images/zhong.svg' bindtap="ecSwitch" />
+      <image class="play-audio-btn" src='/images/laba.png' catchtap="playAudio" />
+      <image wx:if="{{showTranslation}}" class="ec-switch-btn" src='/images/English.svg' catchtap="ecSwitch" />
+      <image wx:else class="ec-switch-btn" src='/images/zhong.svg' catchtap="ecSwitch" />
     </view>
-    <text class="wordcard-id" bindtap="flipCard">{{wordcard._id}}</text>
+    <text class="wordcard-id" catchtap="flipCard">{{wordcard._id}}</text>
     <!-- <view class="wordcard-tag">{{wordcardTag}}</view> -->
     <view class="wordcard-phonetic">{{wordcard.phonetic ? '|' + wordcard.phonetic + '|' : ''}}</view>
 
@@ -25,17 +25,17 @@
       </view>
     </view>
     <view class="bottom" wx:if="{{showButtons}}">
-      <view class="btn forget" data-info="{{[0, wordcard._id]}}" bindtap="{{wxs.bottomButtonTap}}">忘记</view>
-      <view class="btn remember" data-info="{{[1, wordcard._id]}}" bindtap="{{wxs.bottomButtonTap}}">记得</view>
-      <!-- <view class="btn forget" data-info="{{[0, wordcard._id]}}" bindtap="bottomButtonTap">忘记</view>
-      <view class="btn remember" data-info="{{[1, wordcard._id]}}" bindtap="bottomButtonTap">记得</view> -->
+      <view class="btn forget" data-info="{{[0, wordcard._id]}}" catchtap="{{wxs.bottomButtonTap}}">忘记</view>
+      <view class="btn remember" data-info="{{[1, wordcard._id]}}" catchtap="{{wxs.bottomButtonTap}}">记得</view>
+      <!-- <view class="btn forget" data-info="{{[0, wordcard._id]}}" catchtap="bottomButtonTap">忘记</view>
+      <view class="btn remember" data-info="{{[1, wordcard._id]}}" catchtap="bottomButtonTap">记得</view> -->
     </view>
   </view>
 
   <view wx:elif="{{!front && detail !== ''}}" class="back">
     <view class="back-head">
-      <image class="play-audio-btn" src='/images/laba.png' bindtap="playAudio" />
-      <text class="wordcard-id" bindtap="flipCard">{{wordcard._id}}</text>
+      <image class="play-audio-btn" src='/images/laba.png' catchtap="playAudio" />
+      <text class="wordcard-id" catchtap="flipCard">{{wordcard._id}}</text>
     </view>
     <!-- <text class="wordcard-detail">{{detail}}</text> -->
     <!-- <rich-text nodes="{{htmlDetail}}"></rich-text> -->

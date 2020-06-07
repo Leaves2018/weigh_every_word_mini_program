@@ -408,9 +408,9 @@
   justify-content: center;
   align-items: center;
   border-radius: 20rpx;
-  background-color: white;
+  background-color: rgba(62, 121, 225, 1);
   /* color: rgba(2, 194, 97, 1); */
-  color: rgba(62, 121, 225, 1);
+  color: white;
   font-size: 36rpx;
   text-align: center;
   box-shadow: 0px 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);

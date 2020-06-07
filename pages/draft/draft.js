@@ -48,10 +48,18 @@ Component({
           if (res.confirm) {
             let input_passage_information = wx.getStorageSync('input_passage_information');
             input_passage_information.splice(e.currentTarget.dataset.position, 1);
-            wx.setStorage({
-              key: 'input_passage_information',
-              data: input_passage_information,
-            })
+            console.log(input_passage_information);
+            if(input_passage_information.length === 0){
+              wx.setStorage({
+                key: 'input_passage_information',
+                data: '',
+              })
+            }else{
+              wx.setStorage({
+                key: 'input_passage_information',
+                data: input_passage_information,
+              })
+            }
             that.setData({
               showinformation: input_passage_information,
             });
@@ -189,14 +197,16 @@ Component({
         wx.getStorage({
           key: storageKey,
           success: function(res) {
-            that.setData({
-              showinformation: [res.data],
-            });
-            let history = new utilHistory.History(res.data);
-            wx.setStorage({
-              key: storageKey,
-              data: history.uuid,
-            })
+            if(res.data.length !== 36){
+              that.setData({
+                showinformation: [res.data],
+              });
+              let history = new utilHistory.History(res.data);
+              wx.setStorage({
+                key: storageKey,
+                data: history.uuid,
+              })
+            }
           },
         })
       }
