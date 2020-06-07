@@ -12,10 +12,10 @@
     "pages/me2/me",
     "pages/vocabulary2/vocabulary",
     "pages/familiar2/familiar",
-    "pages/recite_settings/recite_settings",
     "pages/history_list/history_list",
     "pages/domestication2/domestication",
-    "pages/tutorial2/tutorial"
+    "pages/tutorial2/tutorial",
+    "pages/history_detail2/history_detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
