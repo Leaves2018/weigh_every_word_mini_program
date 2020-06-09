@@ -110,8 +110,11 @@ Component({
               passage += " ";
               passage += element.text;
             }
-            let input_passage_information = wx.getStorageSync('input_passage_information');
             let passage_res = passage.replace(/[\u4e00-\u9fa5]/g, '');
+            let input_passage_information = wx.getStorageSync('input_passage_information');
+            if (input_passage_information === ''){
+              input_passage_information = [];
+            }
             input_passage_information.push(passage_res);
             wx.setStorage({
               key: 'input_passage_information',
