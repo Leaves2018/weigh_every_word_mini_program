@@ -69,9 +69,15 @@
     </view>
   </navigator> -->
   <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=6358082&hash=9b98" version="release">
-    <view class="cell about">
+    <view class="cell questionnaire">
       <image src="/images/wenjuan.svg" class="icon"></image>
       <text class="text">调查问卷</text>
+    </view>
+  </navigator>
+  <navigator target="miniProgram" open-type="navigate" app-id="wx22c5547b6ff0264f" version="release">
+    <view class="cell baimiaoscan">
+      <image src="/images/OCR.svg" class="icon"></image>
+      <text class="text">OCR识别</text>
     </view>
   </navigator>
 </view>
