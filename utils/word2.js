@@ -130,27 +130,47 @@ class Word2 {
       console.log(res.errMsg)
       console.log(res.errCode)
     })
-    let tempAudioPath = this.getAudio();
-    if (!tempAudioPath) {
-      var plugin = requirePlugin("WechatSI");
-      var that = this;
-      plugin.textToSpeech({
-        lang: "en_US",
-        tts: true,
-        content: that._id,
-        success: function (res) {
-          // console.log("succ tts", res.filename)
-          that.audio = res;
-          setWord(that);  //  保存音频临时链接等信息
-          innerAudioContext.src = res.filename;
-          innerAudioContext.play();
-        }
-      })
-    } else {
-      // console.log("使用临时链接成功")
-      innerAudioContext.src = tempAudioPath;
-      innerAudioContext.play();
-    }
+    /**
+     * 使用微信同声传译插件
+     */
+    // let tempAudioPath = this.getAudio();
+    // if (!tempAudioPath) {
+    //   var plugin = requirePlugin("WechatSI");
+    //   var that = this;
+    //   plugin.textToSpeech({
+    //     lang: "en_US",
+    //     tts: true,
+    //     content: that._id,
+    //     success: function (res) {
+    //       // console.log("succ tts", res.filename)
+    //       that.audio = res;
+    //       setWord(that);  //  保存音频临时链接等信息
+    //       innerAudioContext.src = res.filename;
+    //       innerAudioContext.play();
+    //     }
+    //   })
+    // } else {
+    //   // console.log("使用临时链接成功")
+    //   innerAudioContext.src = tempAudioPath;
+    //   innerAudioContext.play();
+    // }
+    /**
+     * 使用发音链接
+     */
+    innerAudioContext.src = `http://dict.youdao.com/dictvoice?audio=${this._id}&type=2`;
+    innerAudioContext.play();
+    
+    /**
+     * 发音链接（英音）
+     */
+    // http://dict.youdao.com/dictvoice?audio=forever&type=1
+    // http://media.shanbay.com/audio/uk/forever.mp3
+    /**
+     * 发音链接（美音）
+     */
+    // http://dict.youdao.com/dictvoice?audio=forever&type=2
+    // http://media.shanbay.com/audio/us/forever.mp3
+
   }
 }
 
