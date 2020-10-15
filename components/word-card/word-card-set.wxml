@@ -4,7 +4,7 @@
 
 <view class="container" bindtap="close" wx:if="{{show}}">
   <view class="weui-dialog">
-    <scroll-view scroll-x="{{true}}" enable-flex="{{true}}" scroll-with-animation="{{true}}" scroll-left="{{scrollLeft}}" scroll-into-view="{{scrollIntoView}}" bindscrolltolower="scrollToLower" >
+    <scroll-view scroll-x="{{true}}" enable-flex="{{true}}" scroll-with-animation="{{true}}" scroll-left="{{scrollLeft}}px" scroll-into-view="{{scrollIntoView}}" bindscrolltolower="scrollToLower" >
       <view class="word-card-set-container">
 
         <view wx:for="{{words}}" wx:key="_id" class="word-card-container {{'item' + index}}" id="{{'item' + index}}" style="height: {{wordCardSetHeight}}; border-color: {{tagMap[item.tag].backgroundColor}};" catchtap="stopEvent">

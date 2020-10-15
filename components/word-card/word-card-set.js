@@ -158,6 +158,11 @@ Component({
             }
           })
         }
+      } else {
+        console.log('Hide')
+        this.setData({
+          scrollLeft: 0 // 还原到0位置
+        })
       }
     },
   }
