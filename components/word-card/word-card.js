@@ -146,12 +146,6 @@ Component({
   observers: {
     'word': function(word) { // 新word设置时触发
       if (word) { // 检测新word不为空
-        dictionaryQueryRecord.add({
-          data: {
-            wordid: word,
-            timestamp: new Date().valueOf()
-          }
-        })
         if (this.data.showFront) { // 且要求显示正面，则触发front监听器请求数据
           this.setData({
             front: true, // 手动触发front的observer
@@ -171,7 +165,7 @@ Component({
           if (this.data.autoplayAudio) {
             this.original.playAudio();
           }
-        } else { // 否则查询新word再赋值
+        } else { // 否则查询新word再赋值          
           var that = this;
           utilWord.getWord(that.data.word).then(wordRes => {
             that.original = wordRes;
@@ -183,6 +177,14 @@ Component({
             })
             if (that.data.autoplayAudio) {
               that.original.playAudio();
+            }
+          })
+          // 仅当第一次要求显示单词正面时，认为查询了一次词典
+          console.log('添加查询记录成功')
+          dictionaryQueryRecord.add({
+            data: {
+              wordid: that.data.word,
+              timestamp: new Date().valueOf()
             }
           })
         }
