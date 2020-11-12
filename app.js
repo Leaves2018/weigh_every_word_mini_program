@@ -99,6 +99,10 @@ App({
       name: 'getOpenId',
       complete: res => {
         that.globalData.openid = res.result.openid;
+        wx.setStorage({
+          data: res.result.openid,
+          key: 'myopenid',
+        })
       }
     })
   },
