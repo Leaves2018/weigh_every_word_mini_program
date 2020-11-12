@@ -2,6 +2,10 @@
 const utilWord = require('../../utils/word2.js')
 const util = require('../../utils/tomd.js')
 const app = getApp();
+const db = wx.cloud.database({
+  env: 'xingxi-p57mz'
+})
+const dictionaryQueryRecord = db.collection('dictionary_query_record');
 
 Component({
   /**
@@ -142,6 +146,12 @@ Component({
   observers: {
     'word': function(word) { // 新word设置时触发
       if (word) { // 检测新word不为空
+        dictionaryQueryRecord.add({
+          data: {
+            wordid: word,
+            timestamp: new Date().valueOf()
+          }
+        })
         if (this.data.showFront) { // 且要求显示正面，则触发front监听器请求数据
           this.setData({
             front: true, // 手动触发front的observer
