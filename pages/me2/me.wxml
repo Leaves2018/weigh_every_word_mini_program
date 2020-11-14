@@ -80,6 +80,14 @@
       <text class="text">OCR识别</text>
     </view>
   </navigator>
+
+    <navigator url="/pages/test/test">
+    <view class="cell test">
+      <image src="/images/guide.svg" class="icon"></image>
+      <text class="text">开发测试</text>
+    </view>
+  </navigator>
+
 </view>
 
 
