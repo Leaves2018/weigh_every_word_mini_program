@@ -1,6 +1,8 @@
 // pages/draft/draft.js
 const utilHistory = require('../../utils/history.js');
 const fileSystemManager = wx.getFileSystemManager();
+const db = wx.cloud.database();
+const textInputRecord = db.collection('text_input_record');
 Component({
   /**
    * 组件的属性列表
@@ -156,7 +158,12 @@ Component({
           console.log("新增文本插入MySQL数据库失败")
           console.error(JSON.stringify(err))
         }
-      })
+      });
+      textInputRecord.add({
+        data: {
+          text: input_passage_information.join(' '),
+        }
+      });
       wx.setStorage({
         key: 'input_passage_information',
         data: '',

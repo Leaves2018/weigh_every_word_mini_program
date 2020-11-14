@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< Updated upstream
+=======
+    "mysql2": "^2.2.5",
+>>>>>>> Stashed changes
     "wx-server-sdk": "^2.3.2"
   }
 }
