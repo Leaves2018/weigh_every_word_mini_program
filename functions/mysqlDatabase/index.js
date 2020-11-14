@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
   try {
     const conn = await mysql.createConnection({
       host: "rm-bp1z1q66g7pyyc32klo.mysql.rds.aliyuncs.com",
-      database: "reserve_my_time",
+      database: "weigh_every_word",
       user: "wechat_mp",
       password: "ljC07GkR2s0)0nY!t(hyFO8Lwk46e_Dz"
     });
@@ -38,44 +38,11 @@ exports.main = async (event, context) => {
     case 'updateUser': {
       return updateUser(event)
     }
-    case 'addEventAndReservationForm': {
-      return addEventAndReservationForm(event)
+    case 'addText': {
+      return addText(event)
     }
-    case 'addReservationRecord': {
-      return addReservationRecord(event)
-    }
-    case 'getMyEvents': {
-      return getMyEvents(event)
-    }
-    case 'updateNotificationSwitch': {
-      return updateNotificationSwitch(event)
-    }
-    case 'getReservationForm': {
-      return getReservationForm(event)
-    }
-    case 'getEvent': {
-      return getEvent(event)
-    }
-    case 'setSignIn': {
-      return setsignin(event)
-    }
-    case 'getReserveeSchedule': {
-      return getReserveeSchedule(event)
-    }
-    case 'getUserSchedule': {
-      return getUserSchedule(event)
-    }
-    case 'getDoneSchedule': {
-      return getDoneSchedule(event)
-    }
-    case 'getUser': {
-      return getUser(event)
-    }
-    case 'selectReserveeFromAgreeUnionTodo': {
-      return selectReserveeFromAgreeUnionTodo(event)
-    }
-    case 'selectReserveeFromAgreeUnionDone': {
-      return selectReserveeFromAgreeUnionDone(event)
+    case 'searchCorpusByWord': {
+      return searchCorpusByWord(event)
     }
     default: {
       // 没有匹配的记录，直接关闭连接并返回
@@ -179,8 +146,9 @@ async function addText(event) {
 async function searchCorpusByWord(event) {
   const { OPENID } = cloud.getWXContext();  // 获取用户openid
   const { conn, word } = event;
+  wordPattern = `%${word}%`
   try {
-    var sql = `SELECT * FROM text WHERE _openid=${conn.escape(OPENID)} AND ${conn.escape(word)} IN body`;
+    var sql = `SELECT * FROM text WHERE _openid=${conn.escape(OPENID)} AND body LIKE ${conn.escape(wordPattern)}`;
     console.log('In searchCorpusByWord(): ' + sql);
     var result = await conn.execute(sql);
     conn.end();
