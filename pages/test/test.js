@@ -35,6 +35,7 @@ Component({
       })
     },
     searchDatabase(e) {
+      let that = this;
       wx.cloud.callFunction({
         name: 'mysqlDatabase',
         data: {
@@ -43,6 +44,9 @@ Component({
         },
         success(res) {
           console.log(JSON.stringify(res.result.data[0]))
+          that.setData({
+            databaseResult: res.result.data[0]
+          })
         },
         fail(err) {
           console.error(JSON.stringify(err))

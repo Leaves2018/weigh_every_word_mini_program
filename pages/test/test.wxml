@@ -1,5 +1,11 @@
 <!--pages/test/test.wxml-->
 <text>pages/test/test.wxml</text>
-<view id="database-connect-test" bindtap="connectDatabase">数据库连接测试</view>
-<view id="database-search-test" bindtap="searchDatabase">数据库搜索测试</view>
-<view>{{databaseResult}}</view>
+<view class="page">
+  <view class="control-area">
+    <view id="database-connect-test" bindtap="connectDatabase">数据库连接测试</view>
+    <view id="database-search-test" bindtap="searchDatabase">数据库搜索测试</view>
+  </view>
+  <view class="content-area">
+    <view wx:for="{{databaseResult}}">{{index + 1}}. {{item.body}}</view>
+  </view>
+</view>
