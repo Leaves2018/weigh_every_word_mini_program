@@ -1,0 +1,10 @@
+/* pages/test/test.wxss */
+#database-connect-test {
+  background-color: skyblue;
+  color: white;
+}
+
+#database-search-test {
+  background-color: greenyellow;
+  color: white;
+}
