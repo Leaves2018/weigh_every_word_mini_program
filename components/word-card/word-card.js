@@ -198,10 +198,29 @@ Component({
         // <p class="p">&nbsp;<i>${detail}</i>&nbsp;</p>
         // </div>`;
         // console.log(htmlDetail)
-        detail = util.markText(detail, word, '**');
-        this.setData({
-          wxmlDetail: app.towxml(`*${detail}*`, 'markdown'),
+        let that = this;
+        wx.cloud.callFunction({
+          name: 'mysqlDatabase',
+          data: {
+            action: 'searchCorpusByWord',
+            word: word,
+          },
+          success(res) {
+            console.log(JSON.stringify(res.result.data[0]))
+            let bodies = res.result.data[0].map(x => x.body);
+            let markedBodies = bodies.map(x => util.markText(x, word, '**'));
+            that.setData({
+              wxmlDetails: markedBodies.map(x => app.towxml(`*${x}*`, 'markdown'))
+            })
+          },
+          fail(err) {
+            console.error(JSON.stringify(err))
+          }
         })
+        // detail = util.markText(detail, word, '**');
+        // this.setData({
+        //   wxmlDetail: app.towxml(`*${detail}*`, 'markdown'),
+        // })
       }
     }
   },
