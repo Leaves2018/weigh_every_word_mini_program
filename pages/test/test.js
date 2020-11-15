@@ -20,7 +20,8 @@ Component({
   methods: {
     connectDatabase(e) {
       wx.cloud.callFunction({
-        name: 'mysqlDatabase',
+        // name: 'mysqlDatabase',
+        name: 'mysql',
         data: {
           action: 'addText',
           title: 'My name is Ritian Zhao.',
@@ -37,7 +38,8 @@ Component({
     searchDatabase(e) {
       let that = this;
       wx.cloud.callFunction({
-        name: 'mysqlDatabase',
+        // name: 'mysqlDatabase',
+        name: 'mysql',
         data: {
           action: 'searchCorpusByWord',
           word: 'test'

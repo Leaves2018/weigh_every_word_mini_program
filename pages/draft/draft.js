@@ -144,7 +144,8 @@ Component({
       }
       let history = new utilHistory.History(input_passage_information.join(' '));
       wx.cloud.callFunction({
-        name: 'mysqlDatabase',
+        // name: 'mysqlDatabase',
+        name: 'mysql',
         data: {
           action: 'addText',
           title: history.headline,

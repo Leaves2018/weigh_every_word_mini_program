@@ -200,7 +200,8 @@ Component({
         // console.log(htmlDetail)
         let that = this;
         wx.cloud.callFunction({
-          name: 'mysqlDatabase',
+          // name: 'mysqlDatabase',
+          name: 'mysql',
           data: {
             action: 'searchCorpusByWord',
             word: word,
