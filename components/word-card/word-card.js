@@ -195,11 +195,11 @@ Component({
     'detail': function (detail) { // 转为html格式再赋值
       if (detail) {
         let word = this.data.word;
-        detail = detail.replace(new RegExp(word, 'gi'), `<b>&nbsp;${word}</b>`)
-        let htmlDetail = `<div class="div_class">
-        <p class="p">&nbsp;<i>${detail}</i>&nbsp;</p>
-        </div>`;
-        console.log(htmlDetail)
+        // detail = detail.replace(new RegExp(word, 'gi'), `<b>&nbsp;${word}</b>`)
+        // let htmlDetail = `<div class="div_class">
+        // <p class="p">&nbsp;<i>${detail}</i>&nbsp;</p>
+        // </div>`;
+        // console.log(htmlDetail)
 
         detail = util.markText(detail, word, '**');
         this.setData({
