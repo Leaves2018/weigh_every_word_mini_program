@@ -12,6 +12,8 @@ page {
   line-height: 1.4;
   font-size: 17px;
   color: rgba(0, 0, 0, 0.9);
+  border-color: gray;
+  border-style: solid;
 }
 .serial-number {
   font-size: 24rpx;

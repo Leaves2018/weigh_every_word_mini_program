@@ -40,9 +40,12 @@
     <!-- <text class="wordcard-detail">{{detail}}</text> -->
     <!-- <rich-text nodes="{{htmlDetail}}"></rich-text> -->
     <!-- <towxml nodes="{{wxmlDetail}}"/> -->
-    <block wx:for="{{wxmlDetails}}">
+
+    <!-- <block wx:for="{{wxmlDetails}}">
       <towxml nodes="{{item}}"/>
-    </block>
+    </block> -->
+    <corpus-list word="{{word}}"/>
+    
   </view>
 
 </view>
