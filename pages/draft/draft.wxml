@@ -7,10 +7,12 @@
       </view>
     </view>
   </view>
-  <view class="greenbackground" bindtap="addpicture">
-    <image class="addpictures" src="/images/camera.png"></image>
-    <text space="ensp"  class="text"> 扫描文稿</text>
-  </view>
+  <navigator target="miniProgram" open-type="navigate" app-id="wx22c5547b6ff0264f" version="release">
+    <view class="greenbackground">
+      <image class="addpictures" src="/images/camera.png"></image>
+      <text space="ensp"  class="text"> 扫描文稿</text>
+    </view>
+  </navigator>
   <view class="textbackground" bindtap="addtext">
     <image class="addpictures" src="/images/input.png"></image>
     <text space="ensp"  class="text"> 输入文本</text>

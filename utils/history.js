@@ -76,71 +76,103 @@ class History {
       }
       this.words = passage.words;
     } else {
-      this.date = utils_util.formatTime(new Date()).substring(0, 10);
-      this.uuid = this.uuid();
-      this.done = false;
-      this.plus = 0;
-
+      // this.uuid = this.uuid(this.passageFragments,passage);
       this.passageFragments = utils_util.splitPassage(passage);
+      let that = this;
+      wx.cloud.callFunction({
+        // name: 'mysqlDatabase',
+        name: 'mysql',
+        data: {
+          action: 'addText',
+          title: this.passageFragments[0][0],
+          body: passage,
+        },
+        success(res) {
+          console.log("新增文本插入MySQL数据库成功")
+          console.log(JSON.stringify(res))
+          //等待返回数据库中uuid
+          console.log(res.result.data[0].insertId);
+          that.continueProduceHistory(res.result.data[0].insertId,passage, headline);
+        },
+        fail(err) {
+          console.log("新增文本插入MySQL数据库失败")
+          console.error(JSON.stringify(err))
+        }
+      });
+    }
+  }
 
-      if (typeof(headline) === "string" && headline.trim()) {
+
+  continueProduceHistory = (id,passage, headline) =>{
+    console.log(id)
+    console.log(passage)
+    console.log(headline)
+    this.date = utils_util.formatTime(new Date()).substring(0, 10);
+    this.uuid = id;
+    this.done = false;
+    this.plus = 0;
+
+    if (typeof(headline) === "string" && headline.trim()) {
+      this.headline = headline;
+    } else {
+      headline = this.passageFragments[0][0];
+      if (headline.length < 24) {
         this.headline = headline;
       } else {
-        headline = this.passageFragments[0][0];
-        if (headline.length < 24) {
-          this.headline = headline;
-        } else {
-          let wordsofheadline = headline.split(' ');
-          let length = 0;
-          let index;
-          for (var i = 0; i < wordsofheadline.length; i++) {
-            length += wordsofheadline[i].length;
-            length += 1;
-            if (length > 24) {
-              index = i;
-              break;
-            }
+        let wordsofheadline = headline.split(' ');
+        let length = 0;
+        let index;
+        for (var i = 0; i < wordsofheadline.length; i++) {
+          length += wordsofheadline[i].length;
+          length += 1;
+          if (length > 24) {
+            index = i;
+            break;
           }
-          this.headline = wordsofheadline.slice(0, index).join(' ');
         }
+        this.headline = wordsofheadline.slice(0, index).join(' ');
       }
+    }
 
-      var words = passage.replace(/[^a-zA-Z\-]/g, ' ').split(" ");
-      words = [...new Set(words)]; //单词去重
-      words = words.filter(function(x) {
-        return x && x.trim() && x.length > 1;
-      }); //单词去空
-      words = utils_util.arrSub(words, stop_words); //去除停止词
+    var words = passage.replace(/[^a-zA-Z\-]/g, ' ').split(" ");
+    words = [...new Set(words)]; //单词去重
+    words = words.filter(function(x) {
+      return x && x.trim() && x.length > 1;
+    }); //单词去空
+    words = utils_util.arrSub(words, stop_words); //去除停止词
 
-      var voc_temp = words.filter(x => !getApp().familiarTrie.search(x));
+    var voc_temp = words.filter(x => !getApp().familiarTrie.search(x));
 
-      //分开生词和未知词
-      var voc_really = words.filter(x => getApp().vocabularyTrie.search(x)); //生词
-      var unknown_words = utils_util.arrSub(voc_temp, voc_really); //未知词
-      this.numOfUn = unknown_words.length;
-      this.numberOfWords = voc_really.length + unknown_words.length;
-      this.words = {};
-      for (var element of voc_really) {
-        for (var i = 0; i < this.passageFragments.length; i++) {
-          for (var j = 0; j < this.passageFragments[i].length; j++) {
-            if (this.passageFragments[i][j].indexOf(element) !== -1) {
-              this.words[element] = new Word('vo', i + '.' + j);
-            }
+    //分开生词和未知词
+    var voc_really = words.filter(x => getApp().vocabularyTrie.search(x)); //生词
+    var unknown_words = utils_util.arrSub(voc_temp, voc_really); //未知词
+    this.numOfUn = unknown_words.length;
+    this.numberOfWords = voc_really.length + unknown_words.length;
+    this.words = {};
+    for (var element of voc_really) {
+      for (var i = 0; i < this.passageFragments.length; i++) {
+        for (var j = 0; j < this.passageFragments[i].length; j++) {
+          if (this.passageFragments[i][j].indexOf(element) !== -1) {
+            this.words[element] = new Word('vo', i + '.' + j);
           }
         }
       }
-      for (var element of unknown_words) {
-        for (var i = 0; i < this.passageFragments.length; i++) {
-          for (var j = 0; j < this.passageFragments[i].length; j++) {
-            if (this.passageFragments[i][j].indexOf(element) !== -1) {
-              this.words[element] = new Word('vo', i + '.' + j);
-            }
+    }
+    for (var element of unknown_words) {
+      for (var i = 0; i < this.passageFragments.length; i++) {
+        for (var j = 0; j < this.passageFragments[i].length; j++) {
+          if (this.passageFragments[i][j].indexOf(element) !== -1) {
+            this.words[element] = new Word('vo', i + '.' + j);
           }
         }
       }
     }
     this.save();
+    wx.redirectTo({
+      url: `/pages/history_detail2/history_detail?historyuuid=${this.uuid}`,
+    })
   }
+
 
   save = (refreshPlus = false) => {
     if (refreshPlus) {
@@ -157,17 +189,19 @@ class History {
       }
       this.done = (this.plus === lengthofwords);
     }
-    wx.setStorageSync(this.uuid, this);
+    console.log(this)
+    wx.setStorageSync("history"+this.uuid, this);
     let historyList = getHistoryListFromStorage();
     historyList.appendHistory(this);
   }
-  uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0,
-        v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
+  // uuid(passageFragmentsMode,passage) {
+  //   // return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  //   //   var r = Math.random() * 16 | 0,
+  //   //     v = c == 'x' ? r : (r & 0x3 | 0x8);
+  //   //   return v.toString(16);
+  //   // });
+    
+  // }
 }
 
 const getHistoryListFromStorage = () => {

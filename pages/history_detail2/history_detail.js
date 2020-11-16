@@ -278,7 +278,7 @@ Component({
      */
     'historyuuid': function(historyuuid) {
       console.log(`historyuuid: ${historyuuid}`);
-      this.history = new utilsHis.History(wx.getStorageSync(historyuuid));
+      this.history = new utilsHis.History(wx.getStorageSync("history"+historyuuid));
       var passage = util.joinPassage(this.history.passageFragments);
       var vocabulary = [];
       var unknown = [];

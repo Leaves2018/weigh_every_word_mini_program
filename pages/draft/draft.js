@@ -143,35 +143,35 @@ Component({
         return;
       }
       let history = new utilHistory.History(input_passage_information.join(' '));
-      wx.cloud.callFunction({
-        // name: 'mysqlDatabase',
-        name: 'mysql',
-        data: {
-          action: 'addText',
-          title: history.headline,
-          body: input_passage_information.join(' '),
-        },
-        success(res) {
-          console.log("新增文本插入MySQL数据库成功")
-          console.log(JSON.stringify(res))
-        },
-        fail(err) {
-          console.log("新增文本插入MySQL数据库失败")
-          console.error(JSON.stringify(err))
-        }
-      });
-      textInputRecord.add({
-        data: {
-          text: input_passage_information.join(' '),
-        }
-      });
+      // wx.cloud.callFunction({
+      //   // name: 'mysqlDatabase',
+      //   name: 'mysql',
+      //   data: {
+      //     action: 'addText',
+      //     title: history.headline,
+      //     body: input_passage_information.join(' '),
+      //   },
+      //   success(res) {
+      //     console.log("新增文本插入MySQL数据库成功")
+      //     console.log(JSON.stringify(res))
+      //   },
+      //   fail(err) {
+      //     console.log("新增文本插入MySQL数据库失败")
+      //     console.error(JSON.stringify(err))
+      //   }
+      // });
+      // textInputRecord.add({
+      //   data: {
+      //     text: input_passage_information.join(' '),
+      //   }
+      // });
       wx.setStorage({
         key: 'input_passage_information',
         data: '',
       })
-      wx.redirectTo({
-        url: `/pages/history_detail2/history_detail?historyuuid=${history.uuid}`,
-      })
+      // wx.redirectTo({
+      //   url: `/pages/history_detail2/history_detail?historyuuid=${history.uuid}`,
+      // })
     },
   },
 

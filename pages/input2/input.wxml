@@ -15,11 +15,13 @@
       </view>
     </view>
     <view class="camera">
-      <view class="greenbackground" bindtap="addpicture" bindlongpress="addtext">
+      <navigator target="miniProgram" open-type="navigate" app-id="wx22c5547b6ff0264f" version="release">
+        <view class="greenbackground" bindlongpress="addtext">
         <image class="addpictures" src="/images/camera.png"></image>
         <view class="whitespace"></view>
         <text class="remindtext">扫描文稿</text>
       </view>
+      </navigator>
       <view class="craftbackground" wx:if="{{draftcondition === 1}}" bindtap="navigatetodraft">
         <text class="remindtext" wx:if="{{draftcondition === 1}}">查看草稿</text>
       </view>
