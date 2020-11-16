@@ -3,9 +3,9 @@
 
 <view class="page">
   <view class="weui-slidecells">
-      <mp-slideview wx:for="{{corpusSentenceList}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons">
+      <mp-slideview wx:for="{{corpusList}}" wx:key="_id" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons">
         <view class="weui-slidecell">
-          <towxml nodes="{{item}}"/>
+          <towxml nodes="{{corpusSentenceList[index]}}"/>
           <view class="divLine" />
           <view class="corpus-source">
             {{corpusTimeList[index]}}  {{corpusList[index].title}}
