@@ -8,12 +8,13 @@ page {
   margin: 8px;
   background-color: #fff;
   border-radius: 8px;
-  padding: 24px;
+  /* padding: 24px; */
   line-height: 1.4;
   font-size: 17px;
   color: rgba(0, 0, 0, 0.9);
-  border-color: gray;
-  border-style: solid;
+  border: solid gray 2rpx;
+  display: flex;
+  flex-flow: row;
 }
 .serial-number {
   font-size: 24rpx;

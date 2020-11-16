@@ -1,5 +1,5 @@
 <!--components/corpus-list/corpus-list.wxml-->
-<text>components/corpus-list/corpus-list.wxml</text>
+<!-- <text>components/corpus-list/corpus-list.wxml</text> -->
 
 <view class="page">
   <view class="weui-slidecells">
