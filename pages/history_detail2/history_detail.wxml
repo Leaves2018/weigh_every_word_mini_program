@@ -19,6 +19,6 @@
       <tappable-passage passage="{{passage}}" highlight="{{highlight}}" thisword="{{thisword}}" bindlongpressword="longpressword" bindtapword="tapWord" />
     </scroll-view>
   </view>
-  <word-card-halfScreenDialog show="{{dialogShow}}" mask-closable="{{true}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" detail="{{wordDetail}}" />
+  <word-card-halfScreenDialog show="{{dialogShow}}" mask-closable="{{true}}" bindbuttontap="dealRememberAndForget" word="{{dialogContent}}" />
   <word-card-set show="{{reciteShow}}" passageFragments="{{recitePassageFragments}}" words="{{reciteWords}}" bindbuttontap="dealRememberAndForget" />
 </view>

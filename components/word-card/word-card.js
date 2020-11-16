@@ -6,28 +6,34 @@ const db = wx.cloud.database({
   env: 'xingxi-p57mz'
 })
 const dictionaryQueryRecord = db.collection('dictionary_query_record');
+const corpusQueryRecord = db.collection('corpus_query_record');
 
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
+    // 设置卡片单词
     word: {
       type: String,
       value: "",
     },
+    // 要求显示正面
     showFront: {
       type: Boolean,
       value: true,
     },
+    // 设置原文例句（如不设置，则自动显示语料库查询结果）
     detail: {
       type: String,
       value: "",
     },
+    // 自动播放读音
     autoplayAudio: {
       type: Boolean,
       value: true,
     },
+    // 显示记得、忘记按钮
     showButtons: {
       type: Boolean,
       value: false,
@@ -53,12 +59,12 @@ Component({
    * 组件生命周期
    */
   lifetimes: {
-    attached: function() {
+    attached: function () {
       // this.setData({
       //   wordCardHeight: app.globalData.windowHeight * 0.618,
       // })
     },
-    detached: function() {
+    detached: function () {
       // console.log('word-card detached')
     }
   },
@@ -67,13 +73,13 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    scrollToItem: function(res) {
+    scrollToItem: function (res) {
       console.log('In word-card, selector=' + res.selector)
     },
     /**
      * 播放单词音频
      */
-    playAudio: function() {
+    playAudio: function () {
       if (!(this.original || this.front)) {
         this.setData({
           front: true,
@@ -86,7 +92,7 @@ Component({
     /**
      * 中英文解释切换
      */
-    ecSwitch: function() {
+    ecSwitch: function () {
       this.setData({
         showTranslation: !this.data.showTranslation,
       })
@@ -95,37 +101,22 @@ Component({
     /**
      * 翻转卡片
      */
-    flipCard: function() {
-      if (this.data.detail === '') return; // 如果detail为空，则不允许翻面
+    flipCard: function () {
       var that = this;
-      this.animate('.word-card', [{
-          opacity: 1.0
-        },
-        {
-          opacity: 0.5,
-        },
-        {
-          opacity: 0.0,
-        }
-      ], 500, function() {
-        that.setData({
-          front: !this.data.front,
-        });
-        that.animate('.word-card', [{
-          opacity: 0.0,
-        }, {
-          opacity: 0.5,
-        }, {
-          opacity: 1.0,
-        }], 500, function() {
-          that.clearAnimation('.wordcard', {
-            opacity: true,
-            rotate: true
-          }, function() {
-            console.log("清除了.wordcard上的opacity和rotate属性")
-          })
-        }.bind(that))
-      }.bind(this))
+      this.animate('.word-card', [{ opacity: 1.0 }, { opacity: 0.5 }, { opacity: 0.0, }], 500,
+        function () {
+          that.setData({
+            front: !this.data.front,
+          });
+          that.animate('.word-card', [{ opacity: 0.0, }, { opacity: 0.5, }, { opacity: 1.0, }], 500, function () {
+            that.clearAnimation('.wordcard', {
+              opacity: true,
+              rotate: true
+            }, function () {
+              console.log("清除了.wordcard上的opacity和rotate属性")
+            })
+          }.bind(that))
+        }.bind(this))
     },
     /**
      * 按钮点击方法
@@ -144,7 +135,7 @@ Component({
    * 数据监听器
    */
   observers: {
-    'word': function(word) { // 新word设置时触发
+    'word': function (word) { // 新word设置时触发
       if (word) { // 检测新word不为空
         if (this.data.showFront) { // 且要求显示正面，则触发front监听器请求数据
           this.setData({
@@ -159,14 +150,14 @@ Component({
         }
       }
     },
-    'front': function(front) { // 要求显示正面
-      if (front) {
+    'front': function (front) { 
+      var that = this;
+      if (front) {  // 要求显示正面
         if (this.data._hasFront && this.original._id === this.data.word) { // 如果有正面，而且word没有赋新值，直接加载原有数据
           if (this.data.autoplayAudio) {
             this.original.playAudio();
           }
         } else { // 否则查询新word再赋值          
-          var that = this;
           utilWord.getWord(that.data.word).then(wordRes => {
             that.original = wordRes;
             that.setData({
@@ -180,48 +171,40 @@ Component({
             }
           })
           // 仅当第一次要求显示单词正面时，认为查询了一次词典
-          console.log('添加查询记录成功')
+          console.log('添加词典释义查询记录成功')
           dictionaryQueryRecord.add({
             data: {
               wordid: that.data.word,
               timestamp: new Date().valueOf()
             }
-          })
+          });
+        }
+      } else {  // 要求显示背面
+        if (!this.data.detail) { // 如果没有原文例句detail，则显示语料库查询结果
+          // 仅当第一次要求显示单词正面时，认为查询了一次词典
+          console.log('添加语料库释义查询记录成功')
+          corpusQueryRecord.add({
+            data: {
+              wordid: that.data.word,
+              timestamp: new Date().valueOf()
+            }
+          });
         }
       }
     },
-    'detail': function(detail) { // 转为html格式再赋值
+    'detail': function (detail) { // 转为html格式再赋值
       if (detail) {
         let word = this.data.word;
-        // detail = detail.replace(new RegExp(word, 'gi'), `<b>&nbsp;${word}</b>`)
-        // let htmlDetail = `<div class="div_class">
-        // <p class="p">&nbsp;<i>${detail}</i>&nbsp;</p>
-        // </div>`;
-        // console.log(htmlDetail)
-        let that = this;
-        wx.cloud.callFunction({
-          // name: 'mysqlDatabase',
-          name: 'mysql',
-          data: {
-            action: 'searchCorpusByWord',
-            word: word,
-          },
-          success(res) {
-            console.log(JSON.stringify(res.result.data[0]))
-            let bodies = res.result.data[0].map(x => x.body);
-            let markedBodies = bodies.map(x => util.markText(x, word, '**'));
-            that.setData({
-              wxmlDetails: markedBodies.map(x => app.towxml(`*${x}*`, 'markdown'))
-            })
-          },
-          fail(err) {
-            console.error(JSON.stringify(err))
-          }
+        detail = detail.replace(new RegExp(word, 'gi'), `<b>&nbsp;${word}</b>`)
+        let htmlDetail = `<div class="div_class">
+        <p class="p">&nbsp;<i>${detail}</i>&nbsp;</p>
+        </div>`;
+        console.log(htmlDetail)
+
+        detail = util.markText(detail, word, '**');
+        this.setData({
+          wxmlDetail: app.towxml(`*${detail}*`, 'markdown'),
         })
-        // detail = util.markText(detail, word, '**');
-        // this.setData({
-        //   wxmlDetail: app.towxml(`*${detail}*`, 'markdown'),
-        // })
       }
     }
   },

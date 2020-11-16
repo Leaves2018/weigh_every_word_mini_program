@@ -1,6 +1,7 @@
 <wxs src="./word-card.wxs" module="wxs" />
 <view class="word-card {{extClass}}" bindtouchstart="{{wxs.touchStart}}" bindtouchend="{{wxs.touchEnd}}" bindtouchcancel="{{wxs.touchCancel}}" bindtouchmove="{{wxs.touchMove}}" catchtap="flipCard">
 
+  <!-- 单词卡片正面 -->
   <view wx:if="{{front}}" class="front">
     <view class="front-head">
       <image class="play-audio-btn" src='/images/laba.png' catchtap="playAudio" />
@@ -32,19 +33,24 @@
     </view>
   </view>
 
-  <view wx:elif="{{!front && detail !== ''}}" class="back">
+  <!-- 单词卡片背面 -->
+  <view wx:else class="back">
     <view class="back-head">
       <image class="play-audio-btn" src='/images/laba.png' catchtap="playAudio" />
       <text class="wordcard-id" catchtap="flipCard">{{wordcard._id}}</text>
     </view>
-    <!-- <text class="wordcard-detail">{{detail}}</text> -->
-    <!-- <rich-text nodes="{{htmlDetail}}"></rich-text> -->
-    <!-- <towxml nodes="{{wxmlDetail}}"/> -->
 
-    <!-- <block wx:for="{{wxmlDetails}}">
-      <towxml nodes="{{item}}"/>
-    </block> -->
-    <corpus-list word="{{word}}"/>
+    <!-- 在单词卡片背面显示原文例句detail -->
+    <view wx:if="{{detail !== ''}}" class="back-detail">
+      <!-- <text class="wordcard-detail">{{detail}}</text> -->
+      <!-- <rich-text nodes="{{htmlDetail}}"></rich-text> -->
+      <towxml nodes="{{wxmlDetail}}"/>
+    </view>
+    
+    <!-- 在单词卡片背面显示语料库查询结果 -->
+    <view wx:else>
+      <corpus-list word="{{word}}"/>
+    </view>
     
   </view>
 
