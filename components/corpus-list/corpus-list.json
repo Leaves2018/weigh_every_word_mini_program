@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "towxml": "/towxml/towxml",
+    "mp-cells": "../cells/cells",
+    "mp-cell": "../cell/cell",
+    "mp-slideview": "../slideview/slideview"
+  }
+}

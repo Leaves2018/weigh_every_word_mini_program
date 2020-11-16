@@ -1,0 +1,12 @@
+<!--components/corpus-list/corpus-list.wxml-->
+<text>components/corpus-list/corpus-list.wxml</text>
+
+<view class="page">
+  <view class="weui-slidecells">
+      <mp-slideview wx:for="{{wxmlBodies}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons">
+        <view class="weui-slidecell">
+          <towxml nodes="{{item}}"/>
+        </view>
+      </mp-slideview>
+    </view>
+</view>

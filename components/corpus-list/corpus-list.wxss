@@ -1,0 +1,19 @@
+/* components/corpus-list/corpus-list.wxss */
+page {
+  background-color: #ededed;
+  height: 100%;
+}
+
+.weui-slidecell {
+  margin: 8px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  line-height: 1.4;
+  font-size: 17px;
+  color: rgba(0, 0, 0, 0.9);
+}
+.serial-number {
+  font-size: 24rpx;
+  color: green;
+}
