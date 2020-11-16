@@ -1,0 +1,39 @@
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+
+<view class="page">
+	<view class="page-form">
+		<mp-form id="form" rules="{{rules}}" models="{{formData}}">
+
+			<mp-cells title="个人信息" footer="仅用于研究需要">
+				<mp-cell prop="studentid" title="学号" ext-class="">
+					<input value="{{formData.studentid}}" data-field="studentid" class="weui-input" placeholder="非HITWH学生可不填" bindinput="formInputChange"></input>
+				</mp-cell>
+
+				<mp-cell prop="email" title="电子邮箱" ext-class="">
+					<input value="{{formData.email}}" data-field="email" class="weui-input" placeholder="请输入邮箱地址" bindinput="formInputChange" />
+				</mp-cell>
+      </mp-cells>
+      
+      <!-- <mp-cells title="账户信息" footer="开启后，收到新预约时，你可能会收到邮件通知">
+        <view class="weui-cell weui-cell_switch">
+					<view class="weui-cell__bd">共享我的语料库</view>
+					<view class="weui-cell__ft">
+						<switch model:checked="{{searchMeSwitchChecked}}" bindchange="switchChange" data-field="searchMeSwitchChecked" />
+					</view>
+				</view>
+
+				<view class="weui-cell weui-cell_switch">
+					<view class="weui-cell__bd">查看他人语料库</view>
+					<view class="weui-cell__ft">
+						<switch model:checked="{{emailSwitchChecked}}" bindchange="switchChange" data-field="emailSwitchChecked" />
+					</view>
+				</view>
+      </mp-cells> -->
+      
+
+		</mp-form>
+	</view>
+	<view class="right-bottom-btn">
+		<image id="save-icon" src='/images/queding2.svg' catchtap="submitForm" />
+	</view>
+</view>
