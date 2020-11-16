@@ -1,5 +1,6 @@
 // components/corpus-list/corpus-list.js
 const app = getApp();
+const util = require('../../utils/util.js');
 const tomd = require('../../utils/tomd.js');
 const base64 = require("../../images/base64")
 const db = wx.cloud.database({
@@ -28,7 +29,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    
   },
 
   /**
@@ -47,17 +48,19 @@ Component({
         },
         // 搜索成功，将返回内容显示到视图中
         success(res) {
-          // 打印语料库搜索结果
-          console.log(JSON.stringify(res.result.data[0]))
           that.corpusList = res.result.data[0]
-          // 抽取每条搜索结果的正文内容，并用**进行标记
-          that.markdownBodies = that.corpusList.map(x => tomd.markText(x.body, word, '**'));
-          console.log(that.markdownBodies)
-          let wxmlBodies = that.markdownBodies.map(x => app.towxml(`${x}`, 'markdown'));
-          console.log(JSON.stringify(wxmlBodies))
+          // 抽取每条搜索结果的正文内容中包括目标单词word的句子，并用**标记（表示加粗）
+          let sentences = that.corpusList.map(x => util.findTheSentenceWhereTheWordIs(x.body, word).sentence);
+          let markdownSentences = sentences.map(x => tomd.markText(x, word, '**'));
           that.setData({
-            wxmlBodies,
+            corpusSentenceList: markdownSentences.map(x => app.towxml(`*${x}*`, 'markdown'))
           })
+          // that.corpusSentenceList = that.corpusList.map(
+          //   x => tomd.markText(util.findTheSentenceWhereTheWordIs(x.body, word).sentence, '**'));
+          // console.log(that.corpusSentenceList)
+          // that.setData({
+          //   markdownSentences: that.corpusSentenceList.map(x => app.towxml(`*${x}*`, 'markdown'))
+          // })
         },
         fail(err) {
           console.error(JSON.stringify(err))
