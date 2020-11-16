@@ -50,17 +50,11 @@ Component({
         success(res) {
           that.corpusList = res.result.data[0]
           // 抽取每条搜索结果的正文内容中包括目标单词word的句子，并用**标记（表示加粗）
-          let sentences = that.corpusList.map(x => util.findTheSentenceWhereTheWordIs(x.body, word).sentence);
+          let sentences = that.corpusList.map(x => util.findTheSentenceWhereTheWordIs(x.body, word));
           let markdownSentences = sentences.map(x => tomd.markText(x, word, '**'));
           that.setData({
             corpusSentenceList: markdownSentences.map(x => app.towxml(`*${x}*`, 'markdown'))
           })
-          // that.corpusSentenceList = that.corpusList.map(
-          //   x => tomd.markText(util.findTheSentenceWhereTheWordIs(x.body, word).sentence, '**'));
-          // console.log(that.corpusSentenceList)
-          // that.setData({
-          //   markdownSentences: that.corpusSentenceList.map(x => app.towxml(`*${x}*`, 'markdown'))
-          // })
         },
         fail(err) {
           console.error(JSON.stringify(err))
