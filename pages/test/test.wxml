@@ -1,5 +1,5 @@
 <!--pages/test/test.wxml-->
-<text>pages/test/test.wxml</text>
+<!-- <text>pages/test/test.wxml</text>
 <view class="page">
   <view class="control-area">
     <view id="database-connect-test" bindtap="connectDatabase">数据库连接测试</view>
@@ -8,4 +8,5 @@
   <view class="content-area">
     <view wx:for="{{databaseResult}}">{{index + 1}}. {{item.body}}</view>
   </view>
-</view>
+</view> -->
+<corpus-list word="test"/>
