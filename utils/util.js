@@ -82,15 +82,38 @@ const findTheSentenceWhereTheWordIs = (text, word) => {
    * 思路2：拆分文章为段句结构，然后二重循环去找单词
    * 问题：资源消耗是更大还是基本一样？
    */
+  
+  // for (let paragraph of passage) {
+  //   for (let sentence of paragraph) {
+  //     let pos = sentence.indexOf(word);
+  //     if (pos >= 0) {
+  //       return { sentence, pos };
+  //     }
+  //   }
+  // }
   let passage = splitPassage(text);
-  for (let paragraph of passage) {
-    for (let sentence of paragraph) {
+  for (let i = 0, l1 = passage.length; i < l1; i++) {
+    let paragraph = passage[i];
+    for (let j = 0, l2 = paragraph.length; j < l2; j++) {
+      let sentence = paragraph[j];
+      // 在当前句中查找单词
       let pos = sentence.indexOf(word);
       if (pos >= 0) {
-        return { sentence, pos };
+        // 找到则进行长度测量：少于140个字符则试图拼接
+        let resultString = sentence;
+        while (resultString.length < 140 && j < l2 - 1) {
+          j += 1;
+          resultString += paragraph[j]
+        }
+        // 如果待查找单词位置处于将要截取掉的部分，则将截取范围后移至以pos为中心半径70范围内
+        if (pos > 140) {
+          resultString = "..." + resultString.slice(pos - 70, pos + 70);
+        }
+        return sentence;
       }
     }
   }
+  return "Something wrong."
 }
 
 module.exports = {
