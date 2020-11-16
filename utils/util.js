@@ -62,12 +62,44 @@ const joinPassage = (passageFragments) => {
   return passageFragments.map(sentences => sentences.join(' ')).join('\n\n');
 }
 
+/**
+ * 获取单词word在文本text中第一次出现位置所在句（用以获得语料库例句）
+ * 下一步改进：获取所有位置例句，并试图拼接（如用...连接）
+ * @param {String} text 
+ * @param {String} word 
+ */
+const findTheSentenceWhereTheWordIs = (text, word) => {
+  /**
+   * 思路1：先找到单词出现位置，然后分别向前和向后查找句子结束符号，以划分一句
+   * 问题：如何实现向前向后查找？indexOf和lastIndexOf？需要用正则表达式吧？
+   */
+  // 查找并获取单词word在文本text中的开始与结束位置（仅第一次出现位置）
+  // let posStart = text.indexOf(word);
+  // let posEnd = posStart + word.length;
+  // let sentenceSeparator = /[\.|\?|\!\。\？\！][\"\']?/;
+
+  /**
+   * 思路2：拆分文章为段句结构，然后二重循环去找单词
+   * 问题：资源消耗是更大还是基本一样？
+   */
+  let passage = splitPassage(text);
+  for (let paragraph of passage) {
+    for (let sentence of paragraph) {
+      let pos = sentence.indexOf(word);
+      if (pos >= 0) {
+        return { sentence, pos };
+      }
+    }
+  }
+}
+
 module.exports = {
-  formatTime: formatTime,
-  arrSub: arrSub,
-  splitWithPunc: splitWithPunc,
-  splitPassage: splitPassage,
-  joinPassage: joinPassage,
+  formatTime,
+  arrSub,
+  splitWithPunc,
+  splitPassage,
+  joinPassage,
+  findTheSentenceWhereTheWordIs,
 }
 
 /**
