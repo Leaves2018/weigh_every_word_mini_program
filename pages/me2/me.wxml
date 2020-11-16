@@ -81,10 +81,17 @@
     </view>
   </navigator>
 
-    <navigator url="/pages/test/test">
+  <navigator url="/pages/test/test">
     <view class="cell test">
       <image src="/images/guide.svg" class="icon"></image>
       <text class="text">开发测试</text>
+    </view>
+  </navigator>
+
+  <navigator url="/pages/info_collection/info_collection">
+    <view class="cell info">
+      <image src="/images/gerenxinxi.svg" class="icon"></image>
+      <text class="text">个人信息</text>
     </view>
   </navigator>
 
