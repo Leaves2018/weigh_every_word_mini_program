@@ -38,32 +38,34 @@ Component({
   observers: {
     // 传入或设置word参数时触发
     'word': function(word) { 
-      let that = this;
-      // 调用云函数mysql，进行语料库搜索
-      wx.cloud.callFunction({
-        name: 'mysql',
-        data: {
-          action: 'searchCorpusByWord',
-          word,
-        },
-        // 搜索成功，将返回内容显示到视图中
-        success(res) {
-          let corpusList = res.result.data[0]
-          let corpusTimeList = corpusList.map(x => new Date(x.time).toLocaleString());
-          console.log(corpusList)
-          // 抽取每条搜索结果的正文内容中包括目标单词word的句子，并用**标记（表示加粗）
-          let sentences = corpusList.map(x => util.findTheSentenceWhereTheWordIs(x.body, word));
-          let markdownSentences = sentences.map(x => tomd.markText(x, word, '**'));
-          that.setData({
-            corpusSentenceList: markdownSentences.map(x => app.towxml(`*${x}*`, 'markdown')),
-            corpusList,
-            corpusTimeList,
-          })
-        },
-        fail(err) {
-          console.error(JSON.stringify(err))
-        }
-      })
+      if (word) {
+        let that = this;
+        // 调用云函数mysql，进行语料库搜索
+        wx.cloud.callFunction({
+          name: 'mysql',
+          data: {
+            action: 'searchCorpusByWord',
+            word,
+          },
+          // 搜索成功，将返回内容显示到视图中
+          success(res) {
+            let corpusList = res.result.data[0]
+            let corpusTimeList = corpusList.map(x => new Date(x.time).toLocaleString());
+            console.log(corpusList)
+            // 抽取每条搜索结果的正文内容中包括目标单词word的句子，并用**标记（表示加粗）
+            let sentences = corpusList.map(x => util.findTheSentenceWhereTheWordIs(x.body, word));
+            let markdownSentences = sentences.map(x => tomd.markText(x, word, '**'));
+            that.setData({
+              corpusSentenceList: markdownSentences.map(x => app.towxml(`*${x}*`, 'markdown')),
+              corpusList,
+              corpusTimeList,
+            })
+          },
+          fail(err) {
+            console.error(JSON.stringify(err))
+          }
+        })
+      }
     },
   }
 })
