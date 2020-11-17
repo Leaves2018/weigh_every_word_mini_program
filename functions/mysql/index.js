@@ -41,6 +41,9 @@ exports.main = async (event, context) => {
     case 'addText': {
       return addText(event)
     }
+    case 'updateText': {
+      return updateText(event)
+    }
     case 'searchCorpusByWord': {
       return searchCorpusByWord(event)
     }
@@ -137,6 +140,26 @@ async function addText(event) {
     return { data: result, sql };
   } catch (err) {
     console.error('添加文本失败')
+    var result = err;
+    conn.end();
+    return { err, sql };
+  }
+}
+
+async function updateText(event) {
+  const { OPENID } = cloud.getWXContext();  // 获取用户openid
+  const { conn, _id, title, body } = event;
+  try {
+    var sql = `
+    UPDATE text 
+    SET title=${conn.escape(title)} AND body=${conn.escape(body)} 
+    WHERE _id=${conn.escape(_id)} AND _openid=${conn.escape(OPENID)}`
+    console.log('In updateText(): ' + sql);
+    var result = await conn.execute(sql);
+    conn.end();
+    return { data: result, sql };
+  } catch (err) {
+    console.error('更新文本失败')
     var result = err;
     conn.end();
     return { err, sql };
