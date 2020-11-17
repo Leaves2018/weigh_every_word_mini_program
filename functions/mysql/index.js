@@ -152,7 +152,7 @@ async function updateText(event) {
   try {
     var sql = `
     UPDATE text 
-    SET title=${conn.escape(title)} AND body=${conn.escape(body)} 
+    SET title=${conn.escape(title)}, body=${conn.escape(body)} 
     WHERE _id=${conn.escape(_id)} AND _openid=${conn.escape(OPENID)}`
     console.log('In updateText(): ' + sql);
     var result = await conn.execute(sql);
@@ -162,7 +162,7 @@ async function updateText(event) {
     console.error('更新文本失败')
     var result = err;
     conn.end();
-    return { err, sql };
+    return { err, sql };  
   }
 }
 
@@ -171,7 +171,10 @@ async function searchCorpusByWord(event) {
   const { conn, word } = event;
   wordPattern = `%${word}%`
   try {
-    var sql = `SELECT * FROM text WHERE _openid=${conn.escape(OPENID)} AND body LIKE ${conn.escape(wordPattern)}`;
+    var sql = `
+    SELECT * 
+    FROM text 
+    WHERE _openid=${conn.escape(OPENID)} AND body LIKE ${conn.escape(wordPattern)}`;
     console.log('In searchCorpusByWord(): ' + sql);
     var result = await conn.execute(sql);
     conn.end();
