@@ -52,6 +52,22 @@ Component({
       })
     },
 
+    // 负责“共享我的语料库”和“查看他人语料库”两个开关的数据双向绑定
+    switchChange(e) {
+      const { field } = e.currentTarget.dataset
+      if (e.detail.value) {
+        if (this.data.formData.email) {
+          this.setData({
+            [`${field}`]: true
+          })
+        } else {
+          this.setData({
+            [`${field}`]: false
+          })
+        }
+      }
+    },
+
     // 校验表单
     submitForm() {
       let that = this;
@@ -115,6 +131,9 @@ Component({
           })
         }
       })
+      // wx.cloud.callFunction({
+      //   name: 
+      // })
     },
   },
   observers: {

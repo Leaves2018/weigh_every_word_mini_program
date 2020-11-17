@@ -9,5 +9,6 @@
     "mp-form": "weui-miniprogram/form/form",
     "mp-form-page": "weui-miniprogram/form-page/form-page",
     "mp-dialog": "weui-miniprogram/dialog/dialog"
-  }
+  },
+  "navigationBarTitleText": "用户设置"
 }

@@ -16,25 +16,23 @@
 				</mp-cell>
 			</mp-cells>
 
-			<mp-cells title="共享选项" footer="开启后，其他用户将可以查看你的语料库">
+			<!-- <mp-cells title="共享选项" footer="开启后，其他用户将可以查看你的语料库">
 				<view class="weui-cell weui-cell_switch">
 					<view class="weui-cell__bd">共享我的语料库</view>
 					<view class="weui-cell__ft">
-						<switch model:checked="{{searchMeSwitchChecked}}" bindchange="switchChange"
-							data-field="searchMeSwitchChecked" />
+						<switch model:checked="{{shareMine}}" bindchange="switchChange"
+							data-field="shareMineSwitchChecked" />
 					</view>
 				</view>
-			</mp-cells>
 
-			<mp-cells title="查看选项" footer="开启后，你的搜索结果中将出现其他用户的语料库内容">
 				<view class="weui-cell weui-cell_switch">
 					<view class="weui-cell__bd">查看他人语料库</view>
 					<view class="weui-cell__ft">
-						<switch model:checked="{{emailSwitchChecked}}" bindchange="switchChange"
-							data-field="emailSwitchChecked" />
+						<switch model:checked="{{lookUpOthers}}" bindchange="switchChange"
+							data-field="lookUpOthersSwitchChecked" />
 					</view>
 				</view>
-			</mp-cells>
+			</mp-cells> -->
 
 
 		</mp-form>
