@@ -27,3 +27,19 @@
   font-size: 24rpx;
   margin-left: 40rpx;
 }
+
+.recite__done {
+  display: flex;
+  flex-flow: column;
+  height: 500rpx;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 64rpx;
+  font-weight: 700;
+  opacity: 0.3;
+}
+
+.recite__done .recite-done-image {
+  width: 300rpx;
+  height: 300rpx;
+}

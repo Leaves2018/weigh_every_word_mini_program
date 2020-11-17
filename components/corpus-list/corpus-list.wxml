@@ -2,15 +2,21 @@
 <!-- <text>components/corpus-list/corpus-list.wxml</text> -->
 
 <view class="page">
-  <view class="weui-slidecells">
-      <mp-slideview wx:for="{{corpusList}}" wx:key="_id" data-id="{{corpusList[index]._id}}" buttons="{{slideButtons}}" icon="{{useIcon}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons">
-        <view class="weui-slidecell">
-          <towxml nodes="{{corpusSentenceList[index]}}"/>
-          <view class="divLine" />
-          <view class="corpus-source">
-            {{corpusTimeList[index]}}  {{corpusList[index].title}}
-          </view>
+  <view wx:if="{{haveCorpusData}}" class="weui-slidecells">
+    <mp-slideview wx:for="{{corpusList}}" wx:key="_id" data-id="{{corpusList[index]._id}}" buttons="{{slideButtons}}"
+      icon="{{useIcon}}" catchtap="tapSlideView" catchbuttontap="tapSlideViewButtons">
+      <view class="weui-slidecell">
+        <towxml nodes="{{corpusSentenceList[index]}}" />
+        <view class="divLine" />
+        <view class="corpus-source">
+          {{corpusTimeList[index]}} {{corpusList[index].title}}
         </view>
-      </mp-slideview>
-    </view>
+      </view>
+    </mp-slideview>
+  </view>
+
+  <view wx:else class="recite__done"> 
+    <image class="recite-done-image" src='/images/kongkongruye.svg'/>
+    <text>什么都没有</text>
+  </view>
 </view>
