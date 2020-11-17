@@ -65,10 +65,7 @@ class History {
       this.numberOfWords = passage.numberOfWords;
       this.numOfUn = passage.numOfUn;
       this.passageFragments = passage.passageFragments;
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
       for (let word in passage.words) {
         if (getApp().familiarTrie.search(word)) {
           passage.words[word].tag = 'fa';

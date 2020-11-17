@@ -108,7 +108,6 @@ Component({
         })
 
       }
-<<<<<<< Updated upstream
       // let his_detail_list_json = JSON.stringify(this.history);
       // fileSystemManager.writeFile({
       //   filePath: filePaths + "/history0.json",
@@ -130,9 +129,6 @@ Component({
       //   }
       // });
       this.history.save(true); 
-=======
-      this.history.save(true);
->>>>>>> Stashed changes
       app.familiarTrie.save();
       app.vocabularyTrie.save();
     },
