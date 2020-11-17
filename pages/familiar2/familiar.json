@@ -1,8 +1,8 @@
 {
   "component": true,
   "usingComponents": {
-    "mp-searchbar": "../../components/searchbar/searchbar",
-    "mp-dialog": "../../components/dialog/dialog",
+    "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
+    "mp-dialog": "weui-miniprogram/dialog/dialog",
     "word-card": "../../components/word-card/word-card"
   },
   "navigationBarTitleText": "熟词本"
