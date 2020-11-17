@@ -1,0 +1,80 @@
+/* pages/settings/settings.wxss */
+
+.page {
+  height: 100%;
+}
+
+.dialog-body {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.slider-container {
+  height: 100rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+#time-table {
+  width: 750rpx;
+  display: flex;
+  flex-flow: column;
+}
+
+.table-cell {
+  width: 50%;
+  height: 72rpx;
+  border: 0.1rpx dotted gray;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+}
+
+.table-head {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+}
+
+.table-head.table-cell {
+  background-color: gainsboro;
+}
+
+.table-body {
+  display: flex;
+  flex-flow: row;
+}
+
+.table-add {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  height: 72rpx;
+}
+
+.picker-select {
+  height: 72rpx;
+  line-height: 72rpx;
+  z-index: 0;
+}
+
+.right-bottom-btn {
+  z-index: 500;
+  position: fixed;
+  right: 50rpx;
+  bottom: 50rpx;
+}
+
+#save-icon {
+  border-radius: 50%;
+  background-color: white;
+  width: 100rpx;
+  height: 100rpx;
+}
