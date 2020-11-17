@@ -1,6 +1,6 @@
 /* pages/tutorial2/tutorial.wxss */
 
-.weui-mask {
+.myui-mask {
   position: fixed;
   z-index: 1000;
   top: 0;
@@ -10,7 +10,7 @@
   background: rgba(0, 0, 0, 0.6);
 }
 
-.weui-mask_transparent {
+.myui-mask_transparent {
   position: fixed;
   z-index: 1000;
   top: 0;
@@ -38,23 +38,23 @@
   justify-content: center;
 }
 
-.weui-mask.weui-mask_hidden {
+.myui-mask.myui-mask_hidden {
   opacity: 0;
   transform: scale3d(1, 1, 0);
 }
 
-.weui-mask {
+.myui-mask {
   opacity: 1;
   transform: scale3d(1, 1, 1);
   transition: all 0.3s ease-in;
 }
 
-.weui-dialog.weui-dialog_hidden {
+.myui-dialog.myui-dialog_hidden {
   opacity: 0;
   transform: scale3d(1, 1, 0);
 }
 
-.weui-dialog {
+.myui-dialog {
   opacity: 1;
   -webkit-transform: scale3d(1, 1, 1);
   transform: scale3d(1, 1, 1);
@@ -62,8 +62,10 @@
 }
 
 .card-container {
+  background-color: white;
+  border-radius: 20rpx;
   position: relative;
-  width: 650rpx;
+  width: 550rpx;
   height: 1000rpx;
   padding: 50rpx;
   display: flex;
@@ -71,7 +73,7 @@
   justify-content: flex-start;
 }
 
-#skip-button {
+.skip-button {
   z-index: 10000;
   width: 100rpx;
   font-style: italic;
@@ -87,7 +89,7 @@
   font-family: -apple-system;
 }
 
-#back-button {
+.back-button {
   z-index: 10000;
   width: 100rpx;
   font-style: italic;

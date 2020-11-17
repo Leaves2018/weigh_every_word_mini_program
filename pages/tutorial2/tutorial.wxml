@@ -1,14 +1,14 @@
 <!--pages/tutorial2/tutorial.wxml-->
 <wxs module="tutorial" src="./tutorial.wxs"></wxs>
-<view bindtap="close" class="weui-mask {{!show ? 'weui-mask_hidden' : '' }}" wx:if="{{mask}}" adjustzindex="{{[selector, zindex]}}" change:adjustzindex="{{tutorial.adjustZindex}}"></view>
+<view bindtap="close" class="myui-mask {{!show ? 'myui-mask_hidden' : '' }}" wx:if="{{mask}}" adjustzindex="{{[selector, zindex]}}" change:adjustzindex="{{tutorial.adjustZindex}}"></view>
 
 <view class="page">
-  <view wx:if="{{index !== 0}}" id="skip-button" bindtap="skipButtonTap">Skip</view>
-  <view wx:if="{{index !== 0}}" id="back-button" bindtap="backButtonTap">Back</view>
+  <view wx:if="{{index !== 0}}" class="skip-button" bindtap="skipButtonTap">Skip</view>
+  <view wx:if="{{index !== 0}}" class="back-button" bindtap="backButtonTap">Back</view>
 
   <block wx:if="{{index === 0}}">
     <view class="container page{{index}}" bindtap="close">
-      <view class="weui-dialog" catchtap="stopEvent">
+      <view class="myui-dialog" catchtap="stopEvent">
         <view class="card-container">
           <text class="head1">🎉很高兴认识你！</text>
           <text class="head2">👉主要功能</text>
@@ -112,7 +112,7 @@
 
   <block wx:if="{{index === 5}}">
     <view class="container page{{index}}" bindtap="close">
-      <view class="weui-dialog" catchtap="stopEvent">
+      <view class="myui-dialog" catchtap="stopEvent">
         <view class="card-container">
           <text class="head1">🙌🏻 总结</text>
 

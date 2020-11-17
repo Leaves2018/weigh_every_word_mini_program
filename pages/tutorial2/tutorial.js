@@ -28,7 +28,7 @@ Component({
   data: {
     index: 0,
     subindex: 0,
-    selector: '.weui-mask',
+    selector: '.myui-mask',
     zindex: 1000,
   },
 
@@ -62,7 +62,7 @@ Component({
         case 0:
           this.setData({
             index: this.data.index + 1,
-            selector: '.weui-mask',
+            selector: '.myui-mask',
             zindex: -1,
           });
           break;
@@ -81,7 +81,7 @@ Component({
         case 3:
           this.setData({
             index: this.data.index + 1,
-            selector: '.weui-mask', // 恢复遮罩层
+            selector: '.myui-mask', // 恢复遮罩层
             zindex: 1000,
           });
           break;
@@ -95,7 +95,7 @@ Component({
             case 1:
               this.setData({
                 subindex: this.data.subindex + 1,
-                selector: '.weui-mask',
+                selector: '.myui-mask',
                 zindex: -1,
               });
               break;
