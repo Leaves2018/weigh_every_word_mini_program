@@ -75,24 +75,24 @@
     </view>
   </navigator>
 
-  <navigator target="miniProgram" open-type="navigate" app-id="wx22c5547b6ff0264f" version="release">
+  <!-- <navigator target="miniProgram" open-type="navigate" app-id="wx22c5547b6ff0264f" version="release">
     <view class="cell baimiaoscan">
       <image src="/images/OCR.svg" class="icon"></image>
       <text class="text">OCR识别</text>
     </view>
-  </navigator>
+  </navigator> -->
 
-  <navigator url="/pages/test/test">
+  <!-- <navigator url="/pages/test/test">
     <view class="cell test">
       <image src="/images/guide.svg" class="icon"></image>
       <text class="text">开发测试</text>
     </view>
-  </navigator>
+  </navigator> -->
 
   <navigator url="/pages/info_collection/info_collection">
     <view class="cell info">
       <image src="/images/gerenxinxi.svg" class="icon"></image>
-      <text class="text">信息收集</text>
+      <text class="text">用户设置</text>
     </view>
   </navigator>
 
