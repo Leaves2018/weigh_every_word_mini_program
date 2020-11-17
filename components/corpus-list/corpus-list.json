@@ -2,8 +2,8 @@
   "component": true,
   "usingComponents": {
     "towxml": "/towxml/towxml",
-    "mp-cells": "../cells/cells",
-    "mp-cell": "../cell/cell",
-    "mp-slideview": "../slideview/slideview"
+    "mp-cells": "weui-miniprogram/cells/cells",
+    "mp-cell": "weui-miniprogram/cell/cell",
+    "mp-slideview": "weui-miniprogram/slideview/slideview"
   }
 }
