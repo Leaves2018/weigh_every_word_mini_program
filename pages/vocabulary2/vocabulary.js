@@ -47,6 +47,26 @@ Component({
         }],
       });
     },
+    onReady: function() {
+      let that = this;
+      // 获取系统信息
+      wx.getSystemInfo({
+        success: function(res) {
+          // 获取可使用窗口宽度
+          let clientHeight = res.windowHeight;
+          // 获取可使用窗口高度
+          let clientWidth = res.windowWidth;
+          // 算出比例
+          let ratio = 750 / clientWidth;
+          // 算出高度(单位rpx)
+          let height = clientHeight * ratio;
+          // 设置高度
+          that.setData({
+            windowHeight: height,
+          });
+        }
+      });
+    },
     /**
      * 页面恢复到页面栈顶时，重新加载视图中单词列表数据
      */
@@ -153,6 +173,11 @@ Component({
      * 左滑记得
      */
     swipeLeft: function (e) {
+      let that = this;
+      wx.showToast({
+        icon: 'none',
+        title: `记得${that.data.thisWord}`,
+      })
       let tempWord = app.vocabularyTrie.getAllData().splice(this.data._currentIndex, 1)[0]; // 从Array中删除（维护视图层）
       app.vocabularyTrie.deleteData(tempWord); // 从生词树删除
       app.familiarTrie.insertData(tempWord); // 添加到熟词树
@@ -165,6 +190,11 @@ Component({
      * 右滑忘记
      */
     swipeRight: function (e) {
+      let that = this;
+      wx.showToast({
+        icon: 'none',
+        title: `忘记${that.data.thisWord}`,
+      })
       // 还是生词，什么都不做；考虑记录频次
       this.setData({
         wordList: app.vocabularyTrie.getAllData(), // 更新列表视图

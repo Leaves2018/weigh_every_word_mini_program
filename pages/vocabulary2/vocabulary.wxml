@@ -1,23 +1,34 @@
-<block wx:if="{{showWordList}}" class="word__list">
-  <view class="page__head">
-    <mp-searchbar bindselectresult="selectResult" search="{{search}}" bindfocus="searchFocus" bindblur="searchBlur" searchState="{{searchState}}"></mp-searchbar>
-  </view>
-  <view wx:if="{{!reciteDone}}" class="page__body">
-    <view class="weui-slidecells">
-      <mp-slideview wx:for="{{wordList}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}" icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons" style="margin-bottom: {{(index === wordList.length - 1) ? '64rpx' : '0rpx'}}">
-        <view class="weui-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
-          {{index+1}}. {{item}}
-        </view>
-      </mp-slideview>
+<view class="page" style="height: {{windowHeight}}rpx;">
+  <block wx:if="{{showWordList}}" class="word__list">
+    <view class="page__head">
+      <mp-searchbar bindselectresult="selectResult" search="{{search}}" bindfocus="searchFocus" bindblur="searchBlur"
+        searchState="{{searchState}}"></mp-searchbar>
     </view>
-  </view>
-  <view wx:else class="recite__done"> 
-    <image class="recite-done-image" src='/images/kongkongruye.svg'></image>
-  </view>
-</block>
+    <view wx:if="{{!reciteDone}}" class="page__body">
+      <view class="weui-slidecells">
+        <mp-slideview wx:for="{{wordList}}" wx:key="*this" data-position="{{index}}" buttons="{{slideButtons}}"
+          icon="{{true}}" bindtap="tapSlideView" bindbuttontap="tapSlideViewButtons"
+          style="margin-bottom: {{(index === wordList.length - 1) ? '64rpx' : '0rpx'}}">
+          <view class="weui-slidecell" style="background-color: {{index===indexHighlight ? 'yellow' : 'white'}};">
+            {{index+1}}. {{item}}
+          </view>
+        </mp-slideview>
+      </view>
+    </view>
+    <view wx:else class="recite__done">
+      <image class="recite-done-image" src='/images/kongkongruye.svg'></image>
+      <text>什么都没有</text>
+    </view>
+  </block>
 
-<block wx:else class="recite__process">
-  <progress id="progress-overall" percent="{{progressOverall}}" show-info border-radius="5"/>
-  <word-card class="word__card" word="{{thisWord}}" showdetail="{{true}}" bindswipeleft="swipeLeft" bindswiperight="swipeRight"></word-card>
-  <button id="goback-button" bindtap="goBackToWordList">返回生词本列表</button>
-</block>
+  <block wx:else class="recite__process">
+    <progress id="progress-overall" percent="{{progressOverall}}" show-info border-radius="5" />
+    <!-- <word-card class="word__card" word="{{thisWord}}" bindswipeleft="swipeLeft" bindswiperight="swipeRight" /> -->
+    <word-card class="word__card" word="{{thisWord}}"/>
+    <view class="btn-area">
+      <view class="btn forget-btn" bindtap="swipeRight">忘记</view>
+      <view class="btn remember-btn" bindtap="swipeLeft">记得</view>
+    </view>
+    <view class="goback-button" bindtap="goBackToWordList">返回生词本列表</view>
+  </block>
+</view>
