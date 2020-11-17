@@ -49,20 +49,21 @@ Component({
     numberOfUn: 0,
     numberOfVo: 0,
     reciteWords: [],
+    _modifyCounter: 0,  // 修改计数器：标记当前修改了几次（当大于0时，文本将重新上传至数据库）
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    onLoad: function() {
+    onLoad: function () {
       wx.setNavigationBarTitle({
         title: '详情',
       })
       let that = this;
       // 获取系统信息
       wx.getSystemInfo({
-        success: function(res) {
+        success: function (res) {
           // 获取可使用窗口宽度
           let clientHeight = res.windowHeight;
           // 获取可使用窗口高度
@@ -79,10 +80,35 @@ Component({
       });
     },
     //将修改存至本地
-    onUnload: function() {
-      if (this.before_headline !== this.data.his_headline){
-        this.history = new utilsHis.History(this.history, this.data.his_headline);
+    onUnload: function () {
+      // 只要修改计数器不为0，就需要保存到本地同时上传至数据库
+      if (this.data._modifyCounter > 0) {
+        if (this.before_headline !== this.data.his_headline) {
+          this.history = new utilsHis.History(this.history, this.data.his_headline);
+        }
+        let passage = this.history;
+        passage.headline = this.data.his_headline;
+        // 将对文本的更新上传至数据库
+        wx.cloud.callFunction({
+          name: 'mysql',
+          data: {
+            action: 'updateText',
+            _id: passage.uuid,  // 更新现有的文本，需要传递已有_id
+            title: passage.headline,
+            body: util.joinPassage(passage.passageFragments)
+          },
+          success(res) {
+            console.log(res)
+            console.log("文本修改已上传至数据库")
+          },
+          fail(err) {
+            console.error(err)
+            console.error("文本修改上传失败")
+          }
+        })
+
       }
+<<<<<<< Updated upstream
       // let his_detail_list_json = JSON.stringify(this.history);
       // fileSystemManager.writeFile({
       //   filePath: filePaths + "/history0.json",
@@ -104,12 +130,15 @@ Component({
       //   }
       // });
       this.history.save(true); 
+=======
+      this.history.save(true);
+>>>>>>> Stashed changes
       app.familiarTrie.save();
       app.vocabularyTrie.save();
     },
 
     //背诵
-    showallvowords: function() {
+    showallvowords: function () {
       wx.showLoading({
         title: '加载中',
       })
@@ -133,7 +162,7 @@ Component({
         reciteShow: true,
       })
     },
-    showallunwords: function() {
+    showallunwords: function () {
       wx.showLoading({
         title: '加载中',
       })
@@ -157,12 +186,13 @@ Component({
         reciteShow: true,
       })
     },
-    headline_bindFormSubmit: function(e) {
+    headline_bindFormSubmit: function (e) {
       this.setData({
-        his_headline: e.detail.value
+        his_headline: e.detail.value,
+        _modifyCounter: this.data._modifyCounter + 1
       })
     },
-    tapWord: function(e) {
+    tapWord: function (e) {
       if (/^[A-Za-z]+[\-\']?[a-zA-Z]+$/.test(e.detail.text)) {
         this.deal_word = e.detail.text;
         this.deal_word_location = e.detail.location;
@@ -174,10 +204,13 @@ Component({
         })
       }
     },
-    longpressword: function(e) {
+    longpressword: function (e) {
+      this.setData({
+        _modifyCounter: this.data._modifyCounter + 1
+      })
       console.log(e);
       wx.redirectTo({
-        url: `/pages/deal_input2/deal_input?uuid_para_sent=${this.data.historyuuid + '!!!' + e.detail.para+'!!!'+e.detail.sent}`,
+        url: `/pages/deal_input2/deal_input?uuid_para_sent=${this.data.historyuuid + '!!!' + e.detail.para + '!!!' + e.detail.sent}`,
       })
     },
 
@@ -273,7 +306,7 @@ Component({
     /**
      * 响应对话框按钮的点击方法
      */
-    tapDialogButton: function(e) {
+    tapDialogButton: function (e) {
       console.log("In tapDialogButton(), e=" + e)
       this.dealRememberAndForget({
         index: e.detail.index,
@@ -284,7 +317,7 @@ Component({
     /**
      * 响应recite组件按钮的点击方法
      */
-    tapReciteButton: function(e) {
+    tapReciteButton: function (e) {
       let index = e.detail.index;
       let _id = e.detail._id;
       this.dealRememberAndForget({
@@ -298,9 +331,9 @@ Component({
     /**
      * 接收到uuid时，从缓存中获取该条历史记录
      */
-    'historyuuid': function(historyuuid) {
+    'historyuuid': function (historyuuid) {
       console.log(`historyuuid: ${historyuuid}`);
-      this.history = new utilsHis.History(wx.getStorageSync("history"+historyuuid));
+      this.history = new utilsHis.History(wx.getStorageSync("history" + historyuuid));
       var passage = util.joinPassage(this.history.passageFragments);
       var vocabulary = [];
       var unknown = [];
@@ -383,7 +416,7 @@ Component({
       }
     },
     'showallwords': function (showallwords) {
-      if (showallwords){
+      if (showallwords) {
         this.showallunwords();
       }
     }

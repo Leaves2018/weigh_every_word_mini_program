@@ -65,6 +65,10 @@ class History {
       this.numberOfWords = passage.numberOfWords;
       this.numOfUn = passage.numOfUn;
       this.passageFragments = passage.passageFragments;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
       for (let word in passage.words) {
         if (getApp().familiarTrie.search(word)) {
           passage.words[word].tag = 'fa';
@@ -169,9 +173,12 @@ class History {
       }
     }
     this.save();
-    wx.redirectTo({
-      url: `/pages/history_detail2/history_detail?historyuuid=${this.uuid}`,
-    })
+    let doNotRedirect = wx.getStorageSync('donotredirect');
+    if (!doNotRedirect) {
+      wx.redirectTo({
+        url: `/pages/history_detail2/history_detail?historyuuid=${this.uuid}`,
+      })
+    }
   }
 
 
