@@ -22,14 +22,41 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    icon: base64.icon20,
+    useIcon: true,
+    slideButtons: [{
+      text: '原文',
+      src: '/images/fangdajing.svg'
+    }, 
+    // {
+    //   text: '语料库',
+    //   src: '/images/yu.svg'
+    // }
+  ]
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    
+    onLoad() {
+
+    },
+    tapSlideView(e) {
+      console.log(e)
+    },
+    tapSlideViewButtons(e) {
+      var that = this;
+      let id = e.currentTarget.dataset.id;
+      console.log("In tapSlideViewButtons(), id=" + id);
+      switch (e.detail.index) {
+        case 0:
+          wx.navigateTo({
+            url: `/pages/history_detail2/history_detail?historyuuid=${id}`,
+          });
+          break;
+      }
+    }
   },
 
   /**
