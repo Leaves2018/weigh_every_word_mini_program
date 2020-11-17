@@ -3,6 +3,8 @@ const utilHistory = require('../../utils/history.js');
 const fileSystemManager = wx.getFileSystemManager();
 const db = wx.cloud.database();
 const textInputRecord = db.collection('text_input_record');
+var filePaths = wx.env.USER_DATA_PATH;
+
 Component({
   /**
    * 组件的属性列表
@@ -228,11 +230,29 @@ Component({
               that.setData({
                 showinformation: [res.data],
               });
-              let history = new utilHistory.History(res.data);
-              wx.setStorage({
-                key: storageKey,
-                data: history.uuid,
-              })
+              wx.cloud.downloadFile({
+                fileID: 'cloud://xingxi-p57mz.7869-xingxi-p57mz-1301128380/history0.json', // 文件 ID
+                success: res => {
+                  fileSystemManager.readFile({
+                    filePath: res.tempFilePath,
+                    encoding: 'utf8',
+                    success: res => {
+                      let temp = JSON.parse(res.data);
+                      let history = new utilHistory.History(temp);
+                      wx.setStorageSync('history0', res.data)
+                    },
+                    fail: err => {
+                      console.log('readFile fail', err)
+                    }
+                  });
+                },
+                fail: console.error
+              });
+              // let history = new utilHistory.History(res.data);
+              // wx.setStorage({
+              //   key: storageKey,
+              //   data: history.uuid,
+              // })
             }
           },
         })

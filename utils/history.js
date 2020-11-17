@@ -49,10 +49,10 @@ class HistoryListItem {
 }
 class History {
   constructor(passage, headline = "") {
-    if (passage === "") { // 没有内容则自动忽略
+    if (passage === "") {
       return;
     }
-    if (typeof(passage) === "object") { // 根据已有history对象生成新对象（一般用于更新标题或正文等内容时）
+    if (typeof(passage) === "object") {
       if (typeof (headline) === "string" && headline.trim()) {
         this.headline = headline;
       } else {
@@ -65,24 +65,6 @@ class History {
       this.numberOfWords = passage.numberOfWords;
       this.numOfUn = passage.numOfUn;
       this.passageFragments = passage.passageFragments;
-      // 更新上传至数据库
-      wx.cloud.callFunction({
-        name: 'mysql',
-        data: {
-          action: 'updateText',
-          _id: passage.uuid,  // 更新现有的文本，需要传递已有_id
-          title: passage.headline,
-          body: utils_util.joinPassage(passage)
-        },
-        success(res) {
-          console.log(res)
-          console.log("文本修改已上传至数据库")
-        },
-        fail(err) {
-          console.error(err)
-          console.error("文本修改上传失败")
-        }
-      })
       for (let word in passage.words) {
         if (getApp().familiarTrie.search(word)) {
           passage.words[word].tag = 'fa';
@@ -93,7 +75,8 @@ class History {
         }
       }
       this.words = passage.words;
-    } else {  // 否则认为是新建文本，进行文本分割、生熟词划分等
+      this.save(); 
+    } else {
       // this.uuid = this.uuid(this.passageFragments,passage);
       this.passageFragments = utils_util.splitPassage(passage);
       let that = this;

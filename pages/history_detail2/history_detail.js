@@ -6,6 +6,8 @@ const utilsTrie = require('../../utils/trie2.js');
 const utilsDeal = require('../../utils/deal.js');
 const util = require('../../utils/util.js');
 const app = getApp();
+const fileSystemManager = wx.getFileSystemManager();
+var filePaths = wx.env.USER_DATA_PATH;
 
 const wxss = {
   fa: {
@@ -81,6 +83,26 @@ Component({
       if (this.before_headline !== this.data.his_headline){
         this.history = new utilsHis.History(this.history, this.data.his_headline);
       }
+      // let his_detail_list_json = JSON.stringify(this.history);
+      // fileSystemManager.writeFile({
+      //   filePath: filePaths + "/history0.json",
+      //   data: his_detail_list_json,
+      //   success: res => {
+      //     console.log("success");
+      //     wx.cloud.uploadFile({
+      //       filePath: filePaths + "/history0.json",
+      //       cloudPath: 'history0.json', // 文件路径
+      //     }).then(res => {
+      //       // get resource ID
+      //       console.log(res.fileID)
+      //     }).catch(error => {
+      //       console.log(error)
+      //     })
+      //   },
+      //   fail: res => {
+      //     console.log(res);
+      //   }
+      // });
       this.history.save(true); 
       app.familiarTrie.save();
       app.vocabularyTrie.save();
@@ -315,44 +337,49 @@ Component({
     'storageKey': function (storageKey) {
       var that = this;
       if (storageKey) {
-        wx.getStorage({
-          key: storageKey,
-          success: function (res) {
-            that.history = new utilsHis.History(wx.getStorageSync(res.data));
-            var passage = util.joinPassage(that.history.passageFragments);
-            var vocabulary = [];
-            var unknown = [];
-            that.numberOfUn = 0;
-            that.numberOfVo = 0;
-            for (let word in that.history.words) {
-              switch (that.history.words[word].tag) {
-                case 'vo':
-                  vocabulary.push(word);
-                  that.numberOfVo += 1;
-                  break;
-                case 'un':
-                  unknown.push(word);
-                  that.numberOfUn += 1;
-                  break;
-              }
-            }
-            that.before_headline = that.history.headline;
-            // 页面第一次渲染
-            that.setData({
-              passage: passage,
-              highlight: [{
-                words: unknown,
-                style: wxss.un,
-              }, {
-                words: vocabulary,
-                style: wxss.vo,
-              }],
-              his_headline: that.history.headline,
-              numberOfUn: that.numberOfUn,
-              numberOfVo: that.numberOfVo,
-            })
-          },
+        let temp = JSON.parse(wx.getStorageSync('history0'));
+        that.history = new utilsHis.History(temp,temp.headline);
+        var passage = util.joinPassage(that.history.passageFragments);
+        var vocabulary = [];
+        var unknown = [];
+        that.numberOfUn = 0;
+        that.numberOfVo = 0;
+        for (let word in that.history.words) {
+          switch (that.history.words[word].tag) {
+            case 'vo':
+              vocabulary.push(word);
+              that.numberOfVo += 1;
+              break;
+            case 'un':
+              unknown.push(word);
+              that.numberOfUn += 1;
+              break;
+          }
+        }
+        that.before_headline = that.history.headline;
+        // 页面第一次渲染
+        that.setData({
+          passage: passage,
+          highlight: [{
+            words: unknown,
+            style: wxss.un,
+          }, {
+            words: vocabulary,
+            style: wxss.vo,
+          }],
+          his_headline: that.history.headline,
+          numberOfUn: that.numberOfUn,
+          numberOfVo: that.numberOfVo,
         })
+
+
+        // wx.getStorage({
+        //   key: storageKey,
+        //   success: function (res) {
+        //     that.history = new utilsHis.History(wx.getStorageSync(res.data));
+            
+        //   },
+        // })
       }
     },
     'showallwords': function (showallwords) {
