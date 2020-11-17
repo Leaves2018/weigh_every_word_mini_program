@@ -52,10 +52,6 @@
     ]
   },
   "useExtendedLib": {
-    "kbone": true,
     "weui": true
-  },
-  "navigateToMiniProgramAppIdList": [
-    "wxebadf544ddae62cb"
-  ]
+  }
 }
