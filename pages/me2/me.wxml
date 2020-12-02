@@ -35,6 +35,7 @@
 </view>
 
 <view class="other-entrance">
+  <!-- 上传本地历史记录、熟词本、生词本至云存储 -->
   <view bindtap="uploadfiles">
     <view class="cell-info">
       <text class="cell-info-text">{{upgradetime}}</text>
@@ -44,34 +45,46 @@
       <text class="text">上传云端保存</text>
     </view>
   </view>
+  <!-- 从云存储中下载用户曾经上传过的备份，覆盖本地 -->
   <view bindtap="downloadfiles">
     <view class="cell download">
       <image src="/images/xiazai.svg" class="icon"></image>
       <text class="text">下载最新备份</text>
     </view>
   </view>
+
   <navigator url="/pages/domestication2/domestication">
     <view class="cell domestication">
       <image src="/images/chilun.svg" class="icon"></image>
       <text class="text">设置基础词汇量</text>
     </view>
   </navigator>
-  <navigator url="/pages/tutorial2/tutorial">
-    <view class="cell tutorial">
-      <image src="/images/guide.svg" class="icon"></image>
-      <text class="text">使用教程</text>
-    </view>
-  </navigator>
+
   <!-- <navigator url="/pages/about/about">
     <view class="cell about">
       <image src="/images/guanyu.svg" class="icon"></image>
       <text class="text">关于</text>
     </view>
   </navigator> -->
-  <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=6358082&hash=9b98" version="release">
+
+  <!-- <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=6358082&hash=9b98" version="release">
     <view class="cell questionnaire">
       <image src="/images/wenjuan.svg" class="icon"></image>
       <text class="text">调查问卷</text>
+    </view>
+  </navigator> -->
+
+  <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=7635363&hash=4322" version="release">
+    <view class="cell questionnaire">
+      <image src="/images/cihuiliang.svg" class="icon"></image>
+      <text class="text">词汇量测试及收集表</text>
+    </view>
+  </navigator>
+
+  <navigator url="/pages/tutorial2/tutorial">
+    <view class="cell tutorial">
+      <image src="/images/guide.svg" class="icon"></image>
+      <text class="text">使用教程</text>
     </view>
   </navigator>
 
@@ -95,6 +108,21 @@
       <text class="text">用户设置</text>
     </view>
   </navigator>
+
+  <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=7635126&hash=abe1" version="release">
+    <view class="cell questionnaire">
+      <image src="/images/wenjuan.svg" class="icon"></image>
+      <text class="text">意见反馈</text>
+    </view>
+  </navigator>
+
+  <navigator url="/pages/about_us/about_us">
+    <view class="cell info">
+      <image src="/images/guanyu.svg" class="icon"></image>
+      <text class="text">关于</text>
+    </view>
+  </navigator>
+
 
 </view>
 
