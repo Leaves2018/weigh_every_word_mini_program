@@ -75,7 +75,7 @@
   </navigator> -->
 
   <navigator target="miniProgram" open-type="navigate" app-id="wxebadf544ddae62cb" path="pages/survey/index?sid=7635363&hash=4322" version="release">
-    <view class="cell questionnaire">
+    <view class="cell">
       <image src="/images/cihuiliang.svg" class="icon"></image>
       <text class="text">词汇量测试及收集表</text>
     </view>

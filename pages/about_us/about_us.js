@@ -73,7 +73,7 @@ Component({
     methods: {
         onLoad: function () {
             wx.setNavigationBarTitle({
-                title: '熟词本',
+                title: '关于',
               })
             this.setData({
                 article: app.towxml(text, 'markdown'),
