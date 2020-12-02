@@ -6,5 +6,5 @@
     "mp-cell": "weui-miniprogram/cell/cell",
     "mp-slideview": "weui-miniprogram/slideview/slideview"
   },
-  "navigationBarTitleText": "历史记录"
+  "navigationBarTitleText": "档案"
 }

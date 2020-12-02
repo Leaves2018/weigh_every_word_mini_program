@@ -18,6 +18,9 @@ Component({
   methods: {
 
     onLoad() {
+      wx.setNavigationBarTitle({
+        title: '熟词本',
+      })
       // 从缓存加载用户消息设置数据（分为user_settings和用户openid两个键主导的数据）]
       let that = this;
       try {
