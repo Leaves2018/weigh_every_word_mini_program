@@ -1,6 +1,7 @@
 # 字斟句酌背单词（微信小程序版）
 同名桌面端软件见[weighEveryWord](https://gitee.com/seek_deer/weighEveryWord)，它是小程序的前作，思路一致，但实现途径与使用方式均不相同。
 
+## 介绍
 ![封面](https://foruda.gitee.com/images/1661977704844214607/b1b787b4_1977064.jpeg "字斟句酌背单词介绍.001.jpeg")
 ![引入](https://foruda.gitee.com/images/1661977730408756706/a638066d_1977064.jpeg "字斟句酌背单词介绍.002.jpeg")
 ![录入](https://foruda.gitee.com/images/1661977759257949219/92f6c30b_1977064.jpeg "字斟句酌背单词介绍.003.jpeg")
@@ -13,3 +14,7 @@
 ![选项：设置基础词汇量](https://foruda.gitee.com/images/1661977922118605462/b3affa40_1977064.jpeg "字斟句酌背单词介绍.010.jpeg")
 ![我](https://foruda.gitee.com/images/1661977948164136467/7f133779_1977064.jpeg "字斟句酌背单词介绍.011.jpeg")
 ![为什么](https://foruda.gitee.com/images/1661977964626009731/0ccf62cc_1977064.jpeg "字斟句酌背单词介绍.012.jpeg")
+
+## 引用的开源代码
+* [towxml](https://github.com/sbfkcel/towxml)
+* [weui-wxss](https://github.com/Tencent/weui-wxss/)
