@@ -1,0 +1,15 @@
+# 字斟句酌背单词（微信小程序版）
+同名桌面端软件见[weighEveryWord](https://gitee.com/seek_deer/weighEveryWord)，它是小程序的前作，思路一致，但实现途径与使用方式均不相同。
+
+![封面](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.001.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.002.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.003.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.004.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.005.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.006.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.007.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.008.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.009.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.010.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.011.jpeg)
+![引入](./md/%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C%E8%83%8C%E5%8D%95%E8%AF%8D%E4%BB%8B%E7%BB%8D.012.jpeg)
