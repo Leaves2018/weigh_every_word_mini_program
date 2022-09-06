@@ -1,4 +1,7 @@
 # 字斟句酌背单词（微信小程序版）
+> 项目原先使用的远程仓库是码云Gitee，地址为：https://gitee.com/seek_deer/weigh_every_word_mini_program。
+如`README.md`图片加载失败，请通过Gitee链接访问。
+
 同名桌面端软件见[weighEveryWord](https://gitee.com/seek_deer/weighEveryWord)，它是小程序的前作，思路一致，但实现途径与使用方式均不相同。
 
 ## 介绍
